@@ -1,0 +1,299 @@
+{% extends "mycase_basic.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
+        <div class="row">
+            <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
+                <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
+            </div>
+            <div class="col-md-6" style="min-width:800px;max-width: 820px;">
+              <form action="/mycase" method="post">
+                  {% csrf_token %}
+                <div class="input-group">
+                  <div class="form-outline flex-fill">
+                    <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control-lg" style="color: black;" />
+                    <label class="form-label" for="form1">Enter you receipt number</label>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="box-shadow: none;">
+                    <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
+                  </button>
+                </div>
+              </form>
+
+            </div>
+        </div>
+        <br>
+         <div class="row">
+             <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;"> </div>
+             <div class="col-md-6" style="min-width: min-content;">
+                 <!-- Case status -->
+                 <div class="row" style="max-width: 820px;">
+                     <div class="col-12">
+{#                             <h3 style="color:green;">Case Was Approved</h3>#}
+                         <h3 style="color:#2d48cb;">Fingerprint Fee Was Received</h3>
+
+                         <span>Form: I-485</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                         <span>Last update on: July 1, 2022 (30 days ago)</span>
+                         <hr style="height: 1px;color: #666666">
+                         <p>
+                             On <u>July 1, 2022</u>, we accepted the fingerprint fee for your <u>Form I-485</u>,
+                             Application to Register Permanent Residence or Adjust Status, Receipt Number <u>MSC2290591656</u>.
+                             Our National Benefits Center location is working on your case.
+                             We mailed you a notice describing how we will process your case.
+                             Please follow the instructions in the notice.
+                             If you move, go to www.uscis.gov/addresschange to give us your new mailing address.
+                         </p>
+                     </div>
+                 </div>
+                 <!-- End of Case status -->
+                 <hr style="height: 0.2px;color: #ccc">
+                 <!-- Case history & Case range pie-->
+                  <div class="row row-cols-2" style="max-width: 820px;">
+                     <div class="col-md-6">
+                         <h5 class="mb-3"><i class="fa-solid fa-list-check text-primary"></i>&nbsp;&nbsp;<strong>Case history</strong></h5>
+                         <!-- Section: Timeline -->
+                         <section style="padding-left: 30px;">
+                            <style>
+                              .timeline-with-icons {
+                                border-left: 1px solid hsl(0, 0%, 90%);
+                                position: relative;
+                                list-style: none;
+                              }
+
+                              .timeline-with-icons .timeline-item {
+                                position: relative;
+                              }
+
+                              .timeline-with-icons .timeline-item:after {
+                                position: absolute;
+                                display: block;
+                                top: 0;
+                              }
+
+                              .timeline-with-icons .timeline-icon {
+                                position: absolute;
+                                left: -43px;
+                                border-radius: 50%;
+                                height: 21px;
+                                width: 21px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                              }
+
+                              .timeline-icon-blue {
+                                background-color: hsl(217, 88.2%, 90%);
+                                color: hsl(217, 88.8%, 35.1%);
+                              }
+
+                              .timeline-icon-yellow {
+                                background-color: hsl(63, 92%, 67%);
+                                color: hsl(62, 98%, 36%);
+                              }
+
+                              .timeline-icon-red {
+                                background-color: hsla(0, 92%, 85%, 0.45);
+                                color: hsl(1, 96%, 44%);
+                              }
+
+                              .timeline-icon-green {
+                                background-color: hsl(97, 88%, 90%);
+                                color: hsl(110, 92%, 33%);
+                              }
+
+                            </style>
+
+                            <ul class="timeline-with-icons">
+                              <li class="timeline-item mb-md-5">
+                                <span class="timeline-icon timeline-icon-blue">
+                                    <i class="fa-solid fa-check fa-sm fa-fw"></i>
+                                </span>
+                                <h6>Fingerprint Fee Was Received Fingerprint Fee Was Received Fingerprint Fee Was Received </h6>
+                                <p class="text-muted mb-2">July 1, 2020&nbsp;&nbsp;&nbsp;&nbsp;(33 days ago)</p>
+
+                              </li>
+
+                              <li class="timeline-item mb-md-5">
+
+                                <span class="timeline-icon timeline-icon-green">
+                                  <i class="fa-regular fa-id-card fa-sm fa-fw"></i>
+                                </span>
+                                <h6>Case Was Approved</h6>
+                                 <p class="text-muted mb-2">July 1, 2020&nbsp;&nbsp;&nbsp;&nbsp;(33 days ago)</p>
+                              </li>
+
+                              <li class="timeline-item mb-md-5">
+                                <span class="timeline-icon timeline-icon-red">
+                                  <i class="fa-solid fa-xmark fa-sm fa-fw"></i>
+                                </span>
+                                <h6>Our team exceeds 10 people</h6>
+                                <p class="text-muted mb-2">July 1, 2020&nbsp;&nbsp;&nbsp;&nbsp;(33 days ago)</p>
+                              </li>
+
+                              <li class="timeline-item mb-md-5">
+
+                                <span class="timeline-icon timeline-icon-yellow">
+                                  <i class="fa-solid fa-arrow-rotate-left fa-fw fa-sm"></i>
+                                </span>
+                                <h6>Earned the first million $!</h6>
+                                 <p class="text-muted mb-2">July 1, 2020&nbsp;&nbsp;&nbsp;&nbsp;(33 days ago)</p>
+                              </li>
+                            </ul>
+                         </section>
+                         <!-- Section: Timeline -->
+                     </div>
+                      <div class="col-md-6" style="border-left: #eee 0.2px solid;">
+                          <h5 class="mb-3"><i class="fa-solid fa-chart-pie text-primary"></i>&nbsp;&nbsp;<b>Cases in the range</b></h5>
+                          <div id="donut_chart">
+                              <canvas id="donut_case_percent_in_range" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
+                              <script>
+                                  const labels=[
+                                        'Red',
+                                        'Blue',
+                                        'Yellow'
+                                      ];
+
+                                  const data = {
+                                      labels: labels,
+                                      datasets: [{
+                                        label: 'Cases statu count in the range',
+                                        data: [300, 50, 100],
+                                        backgroundColor: [
+                                          'rgb(255, 99, 132)',
+                                          'rgb(54, 162, 235)',
+                                          'rgb(255, 205, 86)'
+                                        ],
+                                        hoverOffset: 4
+                                      }]
+                                    };
+
+                                  const config = {
+                                      type: 'doughnut',
+                                      data: data,
+                                      options: {
+                                          cutout: "50%",
+                                          radius:"80%",
+                                      },
+                                      animation:{
+                                          animateScale:true
+                                      },
+                                  };
+
+                                  const donutChart = new Chart(
+                                    document.getElementById('donut_case_percent_in_range'),
+                                    config
+                                  )
+                              </script>
+                          </div>
+                      </div>
+                 </div>
+                 <!-- End of Case history & Case range pie -->
+                 <hr style="height: 0.2px;color: #ccc">
+                  <!-- my position -->
+                 <div class="row">
+                     <div class="col-12">
+                         <h5 class="mb-3"><i class="fa-solid fa-location-dot text-primary"></i>&nbsp;&nbsp;<strong>My position</strong></h5>
+                         <div class="mb-3">Based on the range: 2290590000 - 2290594999 (1100 cases)</div>
+                         <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b></h6>
+                         <div class="card">
+                              <div class="card-body p-0 ps-3">
+                                  <param id="statu_sequence" value="MSLLQSALDFLAGPGSLGGASGRDQSDFVGQTVELGELRLRVRRVLAEGGFAFVYEAQDVGSGREYALKRLLSNEEEKNRAIIQEVCFMKKLSGHPNIVQFCSAASIGKEESDTGQAEFLLLTELCKGQLVEFLKKMESRGPLSCDTVLKIFYQTCRAVQHMHRQKPPIIHRDLKVENLLLSNQGTIKLCDFGSATTISHYPDYSWSAQRRALVEEEITRNTTPMYRTPEIIDLYSNFPIGEKQDIWALGCILYLLCFRQHPFEDGAKLRIVNGKYSIPPHDTQYTVFHSLIRAMLQVNPEERLSIAEVVHQLQEIAAARNVNPKSPITELLEQNGGYGSATLSRGPPPPVGPAGSGYSGGLALAEYDQPYGGFLDILRGGTERLFTNLKDTSSKVIQSVANYAKGDLDISYITSRIAVMSFPAEGVESALKNNIEDVRLFLDSKHPGHYAVYNLSPRTYRPSRFHNRVSECGWAARRAPHLHTLYNICRNMHAWLRQDHKNVCVVHCMDGRAASAVAVCSFLCFCRLFSTAEAAVYMFSMKRCPPGIWPSHKRYIEYMCDMVAEEPITPHSKPILVRAVVMTPVPLFSKQRSGCRPFCEVYVGDERVASTSQEYDKMRDFKIEDGKAVIPLGVTVQGDVLIVIYHARSTLGGRLQAKMASMKMFQIQFHTGFVPRNATTVKFAKYDLDACDIQEKYPDLFQVNLEVEVEPRDRPSREAPPWENSSMRGLNPKILFSSREEQQDILSKFGKPELPRQPGSTAQYDAGAGSPEAEPTDSDSPPSSSADASRFLHTLDWQEEKEAETGAENASSKESESALMEDRDESEVSDEGGSPISSEGQEPRADPEPPGLAAGLVQQDLVFEVETPAVLPEPVPQEDGVDLLGLHSEVGAGPAVPPQACKAPSSNTDLLSCLLGPPEAASQGPPEDLLSEDPLLLASPAPPLSVQSTPRGGPPAAADPFGPLLPSSGNNSQPCSNPDLFGEFLNSDSVTVPPSFPSAHSAPPPSCSADFLHLGDLPGEPSKMTASSSNPDLLGGWAAWTETAASAVAPTPATEGPLFSPGGQPAPCGSQASWTKSQNPDPFADLGDLSSGLQGSPAGFPPGGFIPKTATTPKGSSSWQTSRPPAQGASWPPQAKPPPKACTQPRPNYASNFSVIGAREERGVRAPSFAQKPKVSENDFEDLLSNQGFSSRSDKKGPKTIAEMRKQDLAKDTDPLKLKLLDWIEGKERNIRALLSTLHTVLWDGESRWTPVGMADLVAPEQVKKHYRRAVLAVHPDKAAGQPYEQHAKMIFMELNDAWSEFENQGSRPLF" />
+                                  <param id="center_name" value="GAK" />
+                                  <param id="recepit_num" value="O14976" />
+                                  <param id="form_type" value="2580" />
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <div id="controlpanel" class="col-md-4" style="width:100%;">
+                                              <div style="font:12px Verdana;font-weight:bold;">Show cases: </div>
+                                              <div style="font:14px Verdana;">
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="REC_box" value="REC" />
+                                                      <label class="form-check-label" for="REC_box">Received</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="RFE_box" value="RFE" />
+                                                      <label class="form-check-label" for="RFE_box">RFE</label>
+                                                  </div>
+
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="FP_box" value="FP" />
+                                                      <label class="form-check-label" for="FP_box">Figureprinted</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="TRF_box" value="TRF" />
+                                                      <label class="form-check-label" for="TRF_box">Transferred</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="ITV_box" value="ITV" />
+                                                      <label class="form-check-label" for="ITV_box">Interviewed</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="APV_box" value="APV" />
+                                                      <label class="form-check-label" for="APV_box">Approved</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="RJC_box" value="RJC" />
+                                                      <label class="form-check-label" for="RJC_box">Rejected</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type" id="OTH_box" value="OTH" />
+                                                      <label class="form-check-label" for="OTH_box">Other</label>
+                                                  </div>
+                                              </div>
+                                              <div style="">
+                                                <div id="legend"></div>
+                                              </div>
+                                        </div>
+                                        <!-- #control pannel -->
+                                      </div>
+                                      <!-- col-md-4 -->
+                                  </div>
+                                  <div class="row" style="max-width:820px;">
+                                      <div class="col-md-12" >
+                                          <div id="case_in_receipt_order"  style="height:125px;"></div>
+                                      </div>
+                                  </div>
+                              </div>
+                         </div>
+                         <h6><b><i class="fa-solid fa-diamond"></i> Case grouped by status and ordered in the group</b></h6>
+                         <div class="card mb-3">
+                              <div class="card-body p-0 ps-3">
+                                  <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 15%;background-color: #0a47a9;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 30%;background-color: #00b74a;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 20%;background-color: #be0626;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                  <div class="progress bg-light"style="height: 20px;">
+                                    <div class="progress-bar bg-light" role="progressbar" style="width: 46%"></div>
+                                    <div><i class="fa-solid fa-up-long"></i>  YOU</div>
+                                  </div>
+                              </div>
+                         </div>
+                     </div>
+                 </div>
+                 <!-- End of my position -->
+                 <hr style="height: 0.2px;color: #ccc">
+                  <!-- Next step -->
+                 <div class="row">
+                     <div class="col-12">
+                         <h5 class="mb-3"><i class="fa-solid fa-circle-arrow-right text-primary"></i>&nbsp;<strong>Next step</strong></h5>
+                     </div>
+                 </div>
+                 <!-- End of next step -->
+
+                 <hr style="height: 0.2px;color: #ccc">
+                  <!-- Recent changes -->
+                 <div class="row">
+                     <div class="col-12">
+                         <h5 class="mb-3"><i class="fa-solid fa-flag text-primary"></i>&nbsp;&nbsp;<strong>Recent changes</strong></h5>
+                     </div>
+                 </div>
+                 <!-- End of Recent changes -->
+
+
+
+
+            </div> <!--col-6-->
+        </div><!--row-->
+    </div>
+ {% endblock %}

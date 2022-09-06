@@ -1,0 +1,52 @@
+html,
+body,
+.main_content {
+  height: 100vh;
+}
+
+.navbar{
+  box-shadow:None;
+}
+
+.navbar-nav{
+  flex-direction: row;
+}
+
+.navbar-nav .nav-link {
+  color: white;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.nav-link:visited {
+  color: white;
+}
+
+.header-right-icon{
+  color:white;
+}
+
+#subtitle-text{
+  color:white;
+}
+
+#dashbord-btn,#today-btn{
+  box-shadow: None;
+}
+.card{
+  background-color: rgba(255,255,255,0.4);
+}
+.blue{
+  color: #2d48cb;
+}
+
+.black{
+  color:black;
+}
+
+

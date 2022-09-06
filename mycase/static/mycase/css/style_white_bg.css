@@ -1,0 +1,49 @@
+html,
+body,
+.main_content {
+  height: 100vh;
+}
+
+.navbar{
+  box-shadow:None;
+}
+.navbar-nav{
+  flex-direction: row;
+}
+.navbar-nav .nav-link {
+  color: black;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+.nav-link:visited {
+  color: black;
+}
+
+.header-right-icon{
+  color:#333;
+}
+
+#subtitle-text{
+  color:black;
+}
+
+.card {
+  box-shadow: None;
+}
+
+#dashbord-btn,#today-btn{
+  box-shadow: None;
+}
+.blue{
+  color: #2d48cb;
+}
+
+.black{
+  color:black;
+}

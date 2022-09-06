@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change beforePath="$PROJECT_DIR$/mycase/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/admin.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2CVfQQeou3VsiFRlr5P3ev53SWm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/data/status_data/yesterday",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "database.data.views"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "azure",
+      "mysql",
+      "sqlite"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data\yesterday" />
+      <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data" />
+      <recent name="F:\PyCharm_project\casegreen\mycase\functions\saved_data" />
+      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\static\ctrlpanel\css" />
+      <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data\current" />
+      <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data" />
+      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\functions" />
+      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\static\ctrlpanel\js" />
+      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\templates" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django Server.casegreen">
+    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CaseGreen" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mycase/functions" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="F:\PyCharm_project\casegreen\ctrlpanel\functions\utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="casegreen" type="Python.DjangoServer" factoryName="Django server">
+      <module name="casegreen" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="casegreen.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.utils" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="" />
+      <created>1658892655779</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1658892655779</updated>
+      <workItem from="1658892688255" duration="1894000" />
+      <workItem from="1658894683063" duration="177000" />
+      <workItem from="1658895211449" duration="581000" />
+      <workItem from="1658895838346" duration="54324000" />
+      <workItem from="1659312883057" duration="12957000" />
+      <workItem from="1659368329140" duration="19000" />
+      <workItem from="1659368875762" duration="3784000" />
+      <workItem from="1659379647510" duration="78000" />
+      <workItem from="1659379843502" duration="20788000" />
+      <workItem from="1659449406817" duration="774000" />
+      <workItem from="1659466027193" duration="1924000" />
+      <workItem from="1659492391798" duration="485000" />
+      <workItem from="1659493139741" duration="594000" />
+      <workItem from="1659496687967" duration="3325000" />
+      <workItem from="1659555574432" duration="3534000" />
+      <workItem from="1659628229522" duration="11040000" />
+      <workItem from="1659818726878" duration="7662000" />
+      <workItem from="1660104059736" duration="865000" />
+      <workItem from="1660105306974" duration="1352000" />
+      <workItem from="1660172339543" duration="7230000" />
+      <workItem from="1660429799839" duration="29527000" />
+      <workItem from="1660578258860" duration="55142000" />
+      <workItem from="1660871612391" duration="47000" />
+      <workItem from="1660873382206" duration="56000" />
+      <workItem from="1660885462340" duration="1034000" />
+      <workItem from="1660931641131" duration="767000" />
+      <workItem from="1660934871112" duration="72000" />
+      <workItem from="1660966940765" duration="152000" />
+      <workItem from="1661215854325" duration="8465000" />
+      <workItem from="1661303778733" duration="104029000" />
+      <workItem from="1661915811003" duration="1367000" />
+      <workItem from="1661951257332" duration="2444000" />
+      <workItem from="1661953722806" duration="30435000" />
+      <workItem from="1662085174419" duration="14857000" />
+      <workItem from="1662308327913" duration="44435000" />
+    </task>
+    <task id="LOCAL-00001" summary="updates">
+      <created>1660538909922</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1660538909923</updated>
+    </task>
+    <task id="LOCAL-00002" summary="updates">
+      <created>1660708262625</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1660708262625</updated>
+    </task>
+    <task id="LOCAL-00003" summary="updates">
+      <created>1660873424806</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1660873424806</updated>
+    </task>
+    <task id="LOCAL-00004" summary="updates">
+      <created>1661216579416</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1661216579416</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updates">
+      <created>1661485015366</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1661485015366</updated>
+    </task>
+    <task id="LOCAL-00006" summary="updates">
+      <created>1661835070422</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1661835070422</updated>
+    </task>
+    <task id="LOCAL-00007" summary="updates">
+      <created>1661835919968</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1661835919968</updated>
+    </task>
+    <task id="LOCAL-00008" summary="updates">
+      <created>1661912471290</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1661912471290</updated>
+    </task>
+    <task id="LOCAL-00009" summary="updates">
+      <created>1661950539458</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1661950539458</updated>
+    </task>
+    <task id="LOCAL-00010" summary="updates">
+      <created>1661952673810</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1661952673810</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CaseGreen$manage.coverage" NAME="manage Coverage Results" MODIFIED="1659312925732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CaseGreen$utils.coverage" NAME="utils Coverage Results" MODIFIED="1659450101574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mycase/functions" />
+  </component>
+</project>

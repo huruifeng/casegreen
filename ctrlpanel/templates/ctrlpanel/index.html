@@ -1,0 +1,324 @@
+{% extends "ctrl_basic.html" %}
+{% load static %}
+{% block content %}
+    <div class="row pb-3">
+        <div class="col-md-12 grid-margin">
+          <div class="d-flex justify-content-between flex-wrap">
+            <div class="d-flex align-items-end flex-wrap">
+              <div class="me-md-3 me-xl-5">
+                <h2>Good
+                    {% now "H" as current_time %}
+                    {% if current_time|add:"0" >= 18 %} evening {% elif current_time|add:"0" >= 12 %} afternoon {% else %}morning {% endif %} ...</h2>
+                <p class="mb-md-0">This is the control center for updating the data.</p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-end flex-wrap">
+                <button type="button" class="btn btn-light bg-white btn-icon me-3" onclick="location.reload()">
+                    <i class="fa-solid fa-rotate-right fa-lg text-muted"></i>
+                </button>
+                <a class="btn btn-primary me-3 mt-2 mt-xl-0" id="exportdb" href="{% url "ctrlpanel:exportdb" %}">Export DB</a>
+                <button class="btn btn-danger me-3 mt-2 mt-xl-0" id="initsys" onclick="sysinit()">Initialization</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row pb-3">
+        <div class="col-md-12 stretch-card">
+          <div class="card">
+              <div class="card-header">System settings</div>
+              <div class="card-body dashboard-tabs p-0">
+                  <div class="d-flex flex-wrap justify-content-xl-start">
+                      <div class="d-flex flex-column justify-content-around px-3 pb-2">
+                          <small class="text-muted">Centers</small>
+                          <input type="text" id="sys_centers" class="form-control"  style="width: 300px;" value="{{ sys_params.centers }}"/>
+                      </div>
+                       <div class="d-flex flex-column justify-content-around px-3 pb-2">
+                          <small class="text-muted">Fiscal years</small>
+                           <select class="form-control" id="sys_fys">
+                               <option value=1 {% if sys_params.fiscal_year_n == 1 %} selected {% endif %}>1</option>
+                               <option value=3 {% if sys_params.fiscal_year_n == 3 %} selected {% endif %}>3</option>
+                               <option value=5 {% if sys_params.fiscal_year_n == 5 %} selected {% endif %}>5</option>
+                               <option value=7 {% if sys_params.fiscal_year_n == 7 %} selected {% endif %}>7</option>
+                               <option value=10 {% if sys_params.fiscal_year_n == 10 %} selected {% endif %}>10</option>
+                           </select>
+                      </div>
+                       <div class="d-flex flex-column justify-content-around px-3 pb-2">
+                          <small class="text-muted">Crawler time</small>
+                          <div class="input-group">
+                              <span class="input-group-text" ><i class="fas fa-clock-four"></i></span>
+                            <input type="text" id="crawler_time" class="form-control" style="width: 100px;" value="{{ sys_params.crawler_time}}">
+                          </div>
+
+                       </div>
+                       <div class="d-flex flex-column justify-content-around px-3 pb-2">
+                          <small class="text-muted">Crawler number</small>
+                           <select class="form-control" id="sys_crawler_n">
+                               <option value=-1 {% if sys_params.crawler_number == -1 %} selected {% endif %}>-1</option>
+                               <option value=0 {% if sys_params.crawler_number == 0 %} selected {% endif %}>0</option>
+                               <option value=1 {% if sys_params.crawler_number == 1 %} selected {% endif %}>1</option>
+                               <option value=2 {% if sys_params.crawler_number == 2 %} selected {% endif %}>2</option>
+                               <option value=4 {% if sys_params.crawler_number == 4 %} selected {% endif %}>4</option>
+                               <option value=6 {% if sys_params.crawler_number == 6 %} selected {% endif %}>6</option>
+                               <option value=8 {% if sys_params.crawler_number == 8 %} selected {% endif %}>8</option>
+                           </select>
+                      </div>
+                       <div class="d-flex flex-column justify-content-around px-3 pb-2">
+                          <small class="text-muted">System status</small>
+                           <input type="text" id="sys_status" class="form-control"
+                                  style="width: 160px; color: {% if sys_params.sys_status == "Running" %}#00b74a{% else %}#ff0000{% endif %};" readonly
+                                  value="{{ sys_params.sys_status }}" />
+                      </div>
+                      <div class="d-flex flex-column justify-content-around px-3 pb-2">
+                          <small class="text-muted">Upate</small>
+                          <button type="button" id="sys_update_btn" class="btn btn-success me-3"><i class="fa-solid fa-pencil"></i></button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 stretch-card">
+          <div class="card">
+              <div class="card-body dashboard-tabs p-0">
+                <!-- Tabs navs -->
+                <ul class="nav nav-tabs px-4" id="ex1" role="tablist">
+                  <li class="nav-item" role="presentation">
+                      <a class="nav-link active" id="lb-tab" data-mdb-toggle="tab" href="#lb" role="tab" aria-controls="lb" aria-selected="true"><b>Lock Box</b></a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="sc-tab" data-mdb-toggle="tab" href="#sc" role="tab" aria-controls="sc" aria-selected="false"><b>Service Center</b></a>
+                  </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="ioe-tab" data-mdb-toggle="tab" href="#ioe" role="tab" aria-controls="ioe" aria-selected="false"><b>IOE</b></a>
+                  </li>
+                </ul>
+                <!-- Tabs navs -->
+                <!-- Tabs content -->
+                <div class="tab-content" id="center-running">
+                  <div class="tab-pane fade show active" id="lb" role="tabpanel" aria-labelledby="lb-tab">
+                      <div class="d-flex flex-wrap justify-content-xl-between p-3 pb-0">
+                          <table class="table table-hover border-primary table-sm table-responsive ">
+                              <thead class="table-primary">
+                                <tr>
+                                  <th scope="col">Center</th><th scope="col">Start</th><th scope="col">Finish</th><th scope="col">Status</th><th scope="col">Run</th><th scope="col">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                              {% for x_i in sys_params.centers_as_list %}
+                              <tr id="{{ x_i }}_lb_tr">
+                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_lb_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_lb_end">08-02-2022 15:15:36</td><td id="{{ x_i }}_lb_status">Running</td>
+                                    <td>
+                                        <!-- Checked switch -->
+                                        <div class="form-check form-switch">
+                                          <input class="form-check-input run_lb_switch" type="checkbox" role="switch" id="{{ x_i }}_lb_switch" checked />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-success btn-rounded btn-sm me-3" id="{{ x_i }}_lb_run_btn" onclick="center_run(this.id)">
+                                            <i class="fa-solid fa-play text-success"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="d-flex pb-3 justify-content-center">
+                            <button type="button" class="btn btn-success" id="all_lb_run_btn" onclick="center_run(this.id)">Run all LB</button>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade" id="sc" role="tabpanel" aria-labelledby="sc-tab">
+                      <div class="d-flex flex-wrap justify-content-xl-between p-3 pb-0">
+                           <table class="table table-hover border-primary table-sm table-responsive ">
+                              <thead class="table-primary">
+                                <tr>
+                                  <th scope="col">Center</th><th scope="col">Start</th><th scope="col">Finish</th><th scope="col">Status</th><th scope="col">Run</th><th scope="col">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                               {% for x_i in sys_params.centers_as_list %}
+                              <tr id="{{ x_i }}_sc_tr">
+                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_sc_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_sc_end">08-02-2022 15:15:36</td><td id="{{ x_i }}_sc_status">Running</td>
+                                    <td>
+                                        <!-- Checked switch -->
+                                        <div class="form-check form-switch">
+                                          <input class="form-check-input run_sc_switch" type="checkbox" role="switch" id="{{ x_i }}_sc_switch" checked />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-success btn-rounded btn-sm me-3" id="{{ x_i }}_sc_run_btn" onclick="center_run(this.id)">
+                                            <i class="fa-solid fa-play text-success"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                              {% endfor %}
+
+                              </tbody>
+                          </table>
+
+                      </div>
+                      <div class="d-flex pb-3 justify-content-center">
+                            <button type="button" class="btn btn-success me-3" id="all_sc_run_btn" onclick="center_run(this.id)">Run all SC</button>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade" id="ioe" role="tabpanel" aria-labelledby="ioe-tab">
+                      <div class="d-flex flex-wrap justify-content-xl-between p-3 pb-0">
+                         <table class="table table-hover border-primary table-sm table-responsive ">
+                              <thead class="table-primary">
+                                <tr>
+                                  <th scope="col">Center</th><th scope="col">Start</th><th scope="col">Finish</th><th scope="col">Status</th><th scope="col">Run</th><th scope="col">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                              {% for x_i in sys_params.centers_as_list %}
+                              <tr id="{{ x_i }}_ioe_tr">
+                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_ioe_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_ioe_end">08-02-2022 15:15:36</td><td id="{{ x_i }}_ioe_status">Running</td>
+                                    <td>
+                                        <!-- Checked switch -->
+                                        <div class="form-check form-switch">
+                                          <input class="form-check-input run_ioe_switch" type="checkbox" role="switch" id="{{ x_i }}_ioe_switch" checked />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-success btn-rounded btn-sm me-3" id="{{ x_i }}_ioe_run_btn" onclick="center_run(this.id)">
+                                            <i class="fa-solid fa-play text-success"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                          </table>
+
+                      </div>
+                      <div class="d-flex pb-3 justify-content-center">
+                            <button type="button" class="btn btn-success me-3" id="all_ioe_run_btn" onclick="center_run(this.id)">Run all IOE</button>
+                      </div>
+                  </div>
+
+                </div>
+                <!-- Tabs content -->
+
+            </div>
+          </div>
+        </div>
+    </div>
+    <script src={% static "ctrlpanel/js/jquery-clockpicker.min.js"  %}></script>
+    <script type="text/javascript">
+        $('#crawler_time').clockpicker({
+            placement: 'bottom',
+            align: 'left',
+            {#donetext: 'Done',#}
+            autoclose:true
+        });
+
+    function sysinit() {
+         $.ajax({
+          type: "POST",
+          url: "ajax/sysinit",
+          async: true,
+          data:{'csrfmiddlewaretoken': '{{ csrf_token }}',},
+          success : function(data) {
+                alert("Init succeed! "+data)
+            },
+          error: function() {
+                  alert('Error occurs!');
+            }
+
+         });
+    }
+
+
+    $("#sys_update_btn").click(function (){
+        centers = $("#sys_centers").val()
+        fys = $("#sys_fys option").filter(':selected').val()
+        crawler_t = $("#crawler_time").val()
+        crawler_n = $("#sys_crawler_n option").filter(':selected').val()
+
+         $.ajax({
+          type: "POST",
+          url: "ajax/sysupdate",
+          async: true,
+          data:{"centers":centers,"fys":fys,"crawler_t":crawler_t,"crawler_n":crawler_n,'csrfmiddlewaretoken': '{{ csrf_token }}',},
+          success : function(data) {
+                alert("Update succeed! "+data)
+            },
+          error: function() {
+                  alert('Error occurs!');
+            }
+
+         });
+    });
+    function center_run(center_x) {
+        const center_ls = [];
+        if(center_x.includes("all_lb_")){
+            $(".run_lb_switch:checkbox:checked").each(function () {
+                center_ls.push(this.id.slice(0,6))
+            });
+        } else if(center_x.includes("all_sc_")){
+            $(".run_sc_switch:checkbox:checked").each(function () {
+                center_ls.push(this.id.slice(0,6))
+            });
+        }else if(center_x.includes("all_ioe_")){
+            $(".run_ioe_switch:checkbox:checked").each(function () {
+                center_ls.push(this.id.slice(0,7))
+            });
+        }else {
+            center_ls.push(center_x.slice(0,-8))
+        }
+        var center_ls_str = center_ls.join(",")
+        alert(center_ls_str);
+        const get_center_status_timer = setTimeout(get_center_status, 1000*60*5);
+
+         $.ajax({
+          type: "POST",
+          url: "ajax/centerrun",
+          async: true,
+          data:{"centers":center_ls_str, 'csrfmiddlewaretoken': '{{ csrf_token }}',},
+          success : function(data) {
+                alert("Run "+center_x+", "+data)
+            },
+          error: function() {
+                  alert('Error occurs!');
+            },
+         complete: function (){
+              clearTimeout(get_center_status_timer);
+              get_center_status();
+             }
+         });
+
+    }
+
+    function get_center_status(){
+        $.ajax({
+          type: "POST",
+          url: "ajax/centerstatus",
+          async: true,
+          data:{'csrfmiddlewaretoken': '{{ csrf_token }}',},
+          success : function(data) {
+              data.forEach(center => {
+                   c_fields = center["fields"];
+                   c_name = c_fields["center_lsi"].toLowerCase();
+                   $("#"+c_name+"_start").html(c_fields["start"]);
+                   $("#"+c_name+"_end").html(c_fields["end"]);
+                   $("#"+c_name+"_status").html(c_fields["status"]);
+              });
+
+              {#alert("Update center status: Success!");#}
+            },
+          error: function() {
+                  alert('Update center status: Error occurs!');
+            }
+         });
+    }
+    get_center_status();
+
+    </script>
+{% endblock %}
+
+
