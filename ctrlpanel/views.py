@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 
 from django.contrib.auth import authenticate, login
 from django.core import serializers
@@ -148,6 +149,7 @@ def centerrun(request):
         # get the data from the client side.
         centers = request.POST.get("centers", None)
         center_ls = centers.split(",")
+
         for center_i in center_ls:
             return_code = run_center(request,center_i)
 

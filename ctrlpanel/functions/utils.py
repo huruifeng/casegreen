@@ -1,6 +1,6 @@
 import csv
 import json
-import os
+import shutil
 
 import pandas as pd
 
@@ -36,11 +36,12 @@ def bkpTable(request,queryset):
     model_fields = model._meta.fields + model._meta.many_to_many
     field_names = [field.name for field in model_fields]
 
-    now = datetime.now()
-    year = str(now.year)
-    month = str(now.month)
-    day = str(now.day)
-    file_name =  "mycase/data/bkp/export_"+table_name+"_"+month+day+year+".csv"
+    # now = datetime.now()
+    # year = str(now.year)
+    # month = str(now.month)
+    # day = str(now.day)
+    # file_name =  "mycase/data/bkp/db_tables/export_"+table_name+"_"+month+day+year+".csv"
+    file_name =  "mycase/data/bkp/db_tables/export_"+table_name+".csv"
     fp = open(file_name,"w", newline='',encoding='utf-8')
     # the csv writer
     writer = csv.writer(fp, delimiter=",")
@@ -157,12 +158,12 @@ def run_center(request,center):
         file_i = "mycase/data/status_data/current/" + c_i + "_" + str(fy_i) + "_" + lsi + ".json"
         with open(file_i) as json_file:
             data = json.load(json_file)
-        os.remove(file_i)
+        shutil.move(file_i, "mycase/data/bkp/status_files/" + c_i + "_" + str(fy_i) + "_" + lsi + ".json")
 
         file_i = "mycase/data/status_data/current/" + c_i + "_" + str(fy_i) + "_" + lsi + "_case_final.json"
         with open(file_i) as json_file:
             data ={**data, **(json.load(json_file))}
-        os.remove(file_i)
+        shutil.move(file_i, "mycase/data/bkp/status_files/" + c_i + "_" + str(fy_i) + "_" + lsi + "_case_final.json")
         print(f"Reading data - Today...Done!")
 
         total_x = len(data)
