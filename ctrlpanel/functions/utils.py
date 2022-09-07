@@ -187,9 +187,9 @@ def run_center(request,center):
 
             try:
                 time_s =data[case_i][1]
-                time_x = datetime.datetime.strptime(time_s, "%B %d, %Y")
+                time_x = datetime.strptime(time_s, "%B %d, %Y")
             except Exception as e:
-                time_x = datetime.date.today()
+                time_x = date.today()
 
             case_new = center_obj(receipt_number=case_i,form=data[case_i][0],status=data[case_i][2],
                                   action_date=data[case_i][1],
