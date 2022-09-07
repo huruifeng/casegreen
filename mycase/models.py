@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+from datetime import date
 
 # Create your models here.
 class sysparam(models.Model):
@@ -116,7 +116,7 @@ class case_status_lin_lb(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -138,7 +138,7 @@ class case_status_msc_lb(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -160,7 +160,7 @@ class case_status_src_lb(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -182,7 +182,7 @@ class case_status_wac_lb(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -204,7 +204,7 @@ class case_status_eac_lb(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -226,7 +226,7 @@ class case_status_ysc_lb(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -248,7 +248,7 @@ class case_status_lin_sc(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -270,7 +270,7 @@ class case_status_msc_sc(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -292,7 +292,7 @@ class case_status_src_sc(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -314,7 +314,7 @@ class case_status_wac_sc(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -336,7 +336,7 @@ class case_status_eac_sc(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -358,7 +358,7 @@ class case_status_ysc_sc(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -381,7 +381,7 @@ class case_status_ioe(models.Model):
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=64)
     action_date = models.CharField(max_length=20)
-    action_date_x = models.DateField(default=datetime.date.today)
+    action_date_x = models.DateField(default=date.today)
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
