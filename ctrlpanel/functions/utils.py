@@ -185,8 +185,15 @@ def run_center(request,center):
                     if data_yesterday[case_i][0]!="":
                         data[case_i][0] = data_yesterday[case_i][0]
 
+            try:
+                time_s =data[case_i][1]
+                time_x = datetime.datetime.strptime(time_s, "%B %d, %Y")
+            except Exception as e:
+                time_x = datetime.date.today()
+
             case_new = center_obj(receipt_number=case_i,form=data[case_i][0],status=data[case_i][2],
                                   action_date=data[case_i][1],
+                                  action_date_x=time_x,
                                   add_date=datetime.now(),
                                   date_number=now_days)
             case_list.append(case_new)
