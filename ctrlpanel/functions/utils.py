@@ -134,9 +134,10 @@ def run_center(request,center):
         "end":datetime(2000,1,1,0,0,0),
         "update_day":now_days
     })
-
+    print("===================================")
     print(fiscal_years)
     for fy_i in fiscal_years:
+        print("---------------------------------")
         if crawler_n > 0:
             ## run crawler and save data to folder
             ## subprocess.run("main.exe center_i fy_i lsi")
@@ -185,6 +186,8 @@ def run_center(request,center):
                     if data_yesterday[case_i][0]!="":
                         data[case_i][0] = data_yesterday[case_i][0]
 
+            data_yesterday[case_i] = data[case_i]
+
             try:
                 time_s =data[case_i][1]
                 time_x = datetime.strptime(time_s, "%B %d, %Y")
@@ -198,19 +201,22 @@ def run_center(request,center):
                                   date_number=now_days)
             case_list.append(case_new)
         print(f"{center}-{fy_i}:Bulk Creating...")
-        center_obj.objects.bulk_create(case_list,batch_size=3000)
+        try:
+            center_obj.objects.bulk_create(case_list,batch_size=3000)
+        except Exception as e:
+           print(e)
         print(f"{center}-{fy_i}:Bulk Creating...Done!")
 
         print(f"Saving data...")
         file_i = "mycase/data/status_data/yesterday/" + c_i + "_" + str(fy_i) + "_" + lsi + "_bkp.json"
         with open(file_i,"w") as json_file:
-            json.dump(data,json_file)
+            json.dump(data_yesterday,json_file)
         print(f"Saving data...Done!")
 
     c_running.end = datetime.now()
     c_running.status="Updated"
     c_running.save()
-    print(f"{center}-{fy_i}:Done!")
+    print(f"{center}:Done!")
 
     return "OK"
 
