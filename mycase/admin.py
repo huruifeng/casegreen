@@ -20,14 +20,18 @@ class formAdmin(admin.ModelAdmin):
 admin.site.register(form, formAdmin)
 
 class status_dailyAdmin(admin.ModelAdmin):
-    list_display = ["received_n", "rfe_n", "approved_n","fp_schduled_n", "fp_taken_n", "iv_schduled_n",
-                    "iv_done_n", "rejected_n", "terminated_n","transferred_n", "others_n", "add_date","date_number"]
+    list_display = ["received_n", "rfe_sent_n", "approved_n","fp_schduled_n", "fp_taken_n", "iv_schduled_n",
+                    "iv_done_n", "pending_n", "rejected_n", "terminated_n","transferred_n", "others_n", "add_date","date_number"]
 admin.site.register(status_daily,status_dailyAdmin)
 
 
 class center_runningAdmin(admin.ModelAdmin):
     list_display = ["center_lsi", "status", "start","end"]
 admin.site.register(center_running,center_runningAdmin)
+
+class visabulletinAdmin(admin.ModelAdmin):
+    list_display = ["formonth","tableAB", "category", "conutry","visadate","pubdate"]
+admin.site.register(visabulletin,visabulletinAdmin)
 
 #######################
 ## LB

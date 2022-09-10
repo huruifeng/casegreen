@@ -8,6 +8,7 @@ from datetime import datetime, timezone, timedelta, date
 from django.core.exceptions import PermissionDenied
 
 from mycase.models import *
+from ctrlpanel.functions import status_dict
 
 timezone_offset = -4.0  # Boston Time (UTC−04:00)
 tzinfo = timezone(timedelta(hours=timezone_offset))
@@ -122,13 +123,10 @@ def run_center(request,center):
     else:
         return "Error"
 
-
-    c_i = center.split("_")[0].upper()
-    lsi = center.split("_")[1]
-
+    center = center.upper()
     ## set center status to running
-    c_running,_ = center_running.objects.update_or_create(center_lsi=c_i+"_"+lsi.upper(),defaults={
-        "center_lsi":c_i + "_" + lsi.upper(),
+    c_running,_ = center_running.objects.update_or_create(center_lsi=center,defaults={
+        "center_lsi":center,
         "status":"Running",
         "start":now,
         "end":datetime(2000,1,1,0,0,0),
@@ -136,6 +134,8 @@ def run_center(request,center):
     })
     print("===================================")
     print(fiscal_years)
+
+    counts_today = {}
     for fy_i in fiscal_years:
         print("---------------------------------")
         if crawler_n > 0:
@@ -147,7 +147,7 @@ def run_center(request,center):
         print(f"Reading data - Yesterday...")
         data_yesterday = {}
         try:
-            file_i = "mycase/data/status_data/yesterday/" + c_i + "_" + str(fy_i) + "_" + lsi + "_bkp.json"
+            file_i = "mycase/data/status_data/yesterday/" + center + "_" + str(fy_i) + "_bkp.json"
             with open(file_i) as json_file:
                 data_yesterday = json.load(json_file)
         except Exception as e:
@@ -156,15 +156,15 @@ def run_center(request,center):
 
         #####################
         print(f"Reading data - Today...")
-        file_i = "mycase/data/status_data/current/" + c_i + "_" + str(fy_i) + "_" + lsi + ".json"
+        file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + ".json"
         with open(file_i) as json_file:
             data = json.load(json_file)
-        shutil.move(file_i, "mycase/data/bkp/status_files/" + c_i + "_" + str(fy_i) + "_" + lsi + ".json")
+        shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + ".json")
 
-        file_i = "mycase/data/status_data/current/" + c_i + "_" + str(fy_i) + "_" + lsi + "_case_final.json"
+        file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + "_case_final.json"
         with open(file_i) as json_file:
             data ={**data, **(json.load(json_file))}
-        shutil.move(file_i, "mycase/data/bkp/status_files/" + c_i + "_" + str(fy_i) + "_" + lsi + "_case_final.json")
+        shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + "_case_final.json")
         print(f"Reading data - Today...Done!")
 
         total_x = len(data)
@@ -172,43 +172,80 @@ def run_center(request,center):
 
         case_list = []
         for case_i in data:
+            form_i = data[case_i][0]
+            act_date_i = data[case_i][1]
+            status_i = data[case_i][2]
+
             n_i += 1
             if n_i % 100000 == 0:
-                print(f"{c_i}-{lsi}-{fy_i}:{n_i}/{total_x}")
+                print(f"{center}-{fy_i}:{n_i}/{total_x}")
 
             # data : {case_num:[form,action_date,statue],...}
             if case_i in data_yesterday:
-                ## if no status changes, nest
-                if data[case_i][2] == data_yesterday[case_i][2]: continue
+                ## if no status changes, next
+                if (status_i == data_yesterday[case_i][2]) and (act_date_i == data_yesterday[case_i][1]):
+                    continue
 
                 ## when form == ""
-                if data[case_i][0] == "":
+                if form_i == "":
                     if data_yesterday[case_i][0]!="":
                         data[case_i][0] = data_yesterday[case_i][0]
 
             data_yesterday[case_i] = data[case_i]
 
+            ## form
+            if form_i != "":
+                if form_i not in counts_today:
+                    counts_today[form_i]={"received_n":0,"rfe_sent_n":0,"rfe_received_n":0,"approved_n":0,
+                                                  "fp_schduled_n":0,"fp_taken_n":0,"iv_schduled_n":0,"iv_done_n":0,
+                                                  "rejected_n":0,"terminated_n":0,"transferred_n":0,"hold_n":0,
+                                                  "notice_sent_n":0,"pending_n":0,"mailed_n":0,"produced_n":0,
+                                                  "return_hold_n":0,"withdrawal_acknowledged_n":0,"others_n":0}
+                if status_i in status_dict:
+                    l2_name = status_dict[status_i]
+                    if l2_name == "Received": counts_today[form_i]["received_n"] += 1
+                    if l2_name == "RFE_Sent": counts_today[form_i]["rfe_sent_n"] += 1
+                    if l2_name == "RFE_Received": counts_today[form_i]["rfe_received_n"] += 1
+                    if l2_name == "Approved": counts_today[form_i]["approved_n"] += 1
+                    if l2_name == "FP_Scheduled": counts_today[form_i]["fp_schduled_n"] += 1
+                    if l2_name == "FP_Taken": counts_today[form_i]["fp_taken_n"] += 1
+                    if l2_name == "InterviewScheduled": counts_today[form_i]["iv_schduled_n"] += 1
+                    if l2_name == "InterviewCompleted": counts_today[form_i]["iv_done_n"] += 1
+                    if l2_name == "Rejected": counts_today[form_i]["rejected_n"] += 1
+                    if l2_name == "Terminated": counts_today[form_i]["terminated_n"] += 1
+                    if l2_name == "Transferred": counts_today[form_i]["transferred_n"] += 1
+                    if l2_name == "Hold": counts_today[form_i]["hold_n"] += 1
+                    if l2_name == "NoticeSent": counts_today[form_i]["notice_sent_n"] += 1
+                    if l2_name == "Pending": counts_today[form_i]["pending_n"] += 1
+                    if l2_name == "Mailed": counts_today[form_i]["mailed_n"] += 1
+                    if l2_name == "Produced": counts_today[form_i]["produced_n"] += 1
+                    if l2_name == "ReturnHold": counts_today[form_i]["return_hold_n"] += 1
+                    if l2_name == "WithdrawalAcknowledged": counts_today[form_i]["withdrawal_acknowledged_n"] += 1
+                    if l2_name == "Other": counts_today[form_i]["others_n"] += 1
+                else:
+                    counts_today[form_i]["others_n"] += 1
             try:
-                time_s =data[case_i][1]
+                time_s =act_date_i
                 time_x = datetime.strptime(time_s, "%B %d, %Y")
             except Exception as e:
                 time_x = date.today()
 
-            case_new = center_obj(receipt_number=case_i,form=data[case_i][0],status=data[case_i][2],
-                                  action_date=data[case_i][1],
+            case_new = center_obj(receipt_number=case_i,form=data[case_i][0],status=status_i,
+                                  action_date=act_date_i,
                                   action_date_x=time_x,
                                   add_date=datetime.now(),
                                   date_number=now_days)
             case_list.append(case_new)
+
         print(f"{center}-{fy_i}:Bulk Creating...")
         try:
-            center_obj.objects.bulk_create(case_list,batch_size=3000)
+            center_obj.objects.bulk_create(case_list,batch_size=3000,update_conflicts=True)
         except Exception as e:
            print(e)
         print(f"{center}-{fy_i}:Bulk Creating...Done!")
 
         print(f"Saving data...")
-        file_i = "mycase/data/status_data/yesterday/" + c_i + "_" + str(fy_i) + "_" + lsi + "_bkp.json"
+        file_i = "mycase/data/status_data/yesterday/" + center + "_" + str(fy_i) + "_bkp.json"
         with open(file_i,"w") as json_file:
             json.dump(data_yesterday,json_file)
         print(f"Saving data...Done!")
@@ -216,6 +253,40 @@ def run_center(request,center):
     c_running.end = datetime.now()
     c_running.status="Updated"
     c_running.save()
+
+    print("Updating daily counts...")
+    counts_ls = []
+
+    for form_ii in counts_today:
+        counts_today_new = status_daily(
+            center=center,
+            form = form_ii,
+            received_n = counts_today[form_ii]["received_n"],
+            rfe_sent_n = counts_today[form_ii]["rfe_sent_n"],
+            rfe_received_n = counts_today[form_ii]["rfe_received_n"],
+            approved_n = counts_today[form_ii]["approved_n"],
+            fp_schduled_n = counts_today[form_ii]["fp_schduled_n"],
+            fp_taken_n = counts_today[form_ii]["fp_taken_n"],
+            iv_schduled_n = counts_today[form_ii]["iv_schduled_n"],
+            iv_done_n = counts_today[form_ii]["iv_done_n"],
+            rejected_n = counts_today[form_ii]["rejected_n"],
+            terminated_n = counts_today[form_ii]["terminated_n"],
+            transferred_n = counts_today[form_ii]["transferred_n"],
+            hold_n = counts_today[form_ii]["hold_n"],
+            notice_sent_n = counts_today[form_ii]["notice_sent_n"],
+            pending_n = counts_today[form_ii]["pending_n"],
+            mailed_n = counts_today[form_ii]["mailed_n"],
+            produced_n = counts_today[form_ii]["produced_n"],
+            return_hold_n = counts_today[form_ii]["return_hold_n"],
+            withdrawal_acknowledged_n = counts_today[form_ii]["withdrawal_acknowledged_n"],
+            others_n = counts_today[form_ii]["others_n"],
+            add_date = datetime.now(),
+            date_number = now_days
+        )
+        counts_ls.append(counts_today_new)
+    status_daily.objects.bulk_create(counts_ls, batch_size=100)
+    print("Updating daily counts...Done!")
+
     print(f"{center}:Done!")
 
     return "OK"

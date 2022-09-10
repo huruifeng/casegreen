@@ -150,16 +150,16 @@ def centerrun(request):
         centers = request.POST.get("centers", None)
         center_ls = centers.split(",")
         for center_i in center_ls:
-            c_i = center_i.split("_")[0].upper()
-            lsi = center_i.split("_")[1]
             try:
-                center_running.objects.filter(center_lsi=c_i+"_"+lsi.upper()).update(status="Pend")
+                center_running.objects.filter(center_lsi=center_i.upper()).update(status="Pend")
             except Exception as e:
                 pass
 
         for center_i in center_ls:
             return_code = run_center(request,center_i)
+        print("*******************************")
         print("All done!")
+        print("*******************************")
         return HttpResponse("OK")
 
 @login_required()

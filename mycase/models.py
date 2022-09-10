@@ -72,8 +72,10 @@ class form(models.Model):
 
 class status_daily(models.Model):
     center = models.CharField(max_length=16)
+    form = models.CharField(max_length=16)
     received_n = models.IntegerField()
-    rfe_n = models.IntegerField()
+    rfe_sent_n = models.IntegerField()
+    rfe_received_n = models.IntegerField()
     approved_n = models.IntegerField()
     fp_schduled_n = models.IntegerField()
     fp_taken_n = models.IntegerField()
@@ -82,6 +84,13 @@ class status_daily(models.Model):
     rejected_n = models.IntegerField()
     terminated_n = models.IntegerField()
     transferred_n = models.IntegerField()
+    hold_n = models.IntegerField()
+    notice_sent_n = models.IntegerField()
+    pending_n = models.IntegerField()
+    mailed_n = models.IntegerField()
+    produced_n = models.IntegerField()
+    return_hold_n = models.IntegerField()
+    withdrawal_acknowledged_n = models.IntegerField()
     others_n = models.IntegerField()
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
@@ -95,7 +104,7 @@ class visabulletin(models.Model):
         ('INDIA', 'India'),
         ('MEXICO', 'Mexico'),
         ('PHILIPPINES', 'Philippines'),
-        ('EGH', 'El Salvador\Guatemala\Honduras'),
+        ('EGH', 'El Salvador/Guatemala/Honduras'),
         ('OTHERS', 'Others'),
     ]
     tableAB = models.CharField(max_length=8)
@@ -123,7 +132,7 @@ class case_status_lin_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_lin_lb'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_lin_lb'
             )
         ]
 
@@ -145,7 +154,7 @@ class case_status_msc_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_msc_lb'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_msc_lb'
             )
         ]
 
@@ -167,7 +176,7 @@ class case_status_src_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_src_lb'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_src_lb'
             )
         ]
 
@@ -189,7 +198,7 @@ class case_status_wac_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_wac_lb'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_wac_lb'
             )
         ]
 
@@ -211,7 +220,7 @@ class case_status_eac_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_eac_lb'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_eac_lb'
             )
         ]
 
@@ -233,7 +242,7 @@ class case_status_ysc_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_ysc_lb'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ysc_lb'
             )
         ]
 
@@ -255,7 +264,7 @@ class case_status_lin_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_lin_sc'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_lin_sc'
             )
         ]
 
@@ -277,7 +286,7 @@ class case_status_msc_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_msc_sc'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_msc_sc'
             )
         ]
 
@@ -299,7 +308,7 @@ class case_status_src_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_src_sc'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_src_sc'
             )
         ]
 
@@ -321,7 +330,7 @@ class case_status_wac_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_wac_sc'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_wac_sc'
             )
         ]
 
@@ -343,7 +352,7 @@ class case_status_eac_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_eac_sc'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_eac_sc'
             )
         ]
 
@@ -365,7 +374,7 @@ class case_status_ysc_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_ysc_sc'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ysc_sc'
             )
         ]
 
@@ -388,7 +397,7 @@ class case_status_ioe(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status'], name='unique_receipt_status_ioe'
+                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ioe'
             )
         ]
 
