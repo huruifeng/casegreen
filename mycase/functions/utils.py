@@ -98,6 +98,12 @@ def get_status(recepit_number):
                 if form_x in status_p_text:
                     form = form_x
                     break
+        if date!="":
+            status_p_text = status_p_text.replace(date, "<u>"+date+"</u>")
+        if form!="":
+            status_p_text = status_p_text.replace(form, "<u>"+form+"</u>")
+
+        status_p_text = status_p_text.replace(recepit_number, "<u>"+recepit_number+"</u>")
         return [form, date,status_h_text,status_p_text]
     else:
         ## the case number is invlid

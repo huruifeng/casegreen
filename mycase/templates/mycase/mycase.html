@@ -30,13 +30,13 @@
                  <div class="row" style="max-width: 820px;">
                      <div class="col-12">
 {#                             <h3 style="color:green;">Case Was Approved</h3>#}
-                         <h3 style="color:#2d48cb;">{{ status.status}}</h3>
+                         <h4 style="color:#2d48cb;">{{ status.status}}</h4>
 
                          <span>Form: {{ status.form}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                          <span>Last update on: {{ status.date}} ({{ status.days }} days ago)</span>
                          <hr style="height: 1px;color: #666666">
                          <p>
-                            {{ status.status_text }}
+                            {{ status.status_text|safe }}
                          </p>
                      </div>
                  </div>
@@ -102,21 +102,19 @@
 
                                 {% for qs_i in status_qs %}
                                     <li class="timeline-item mb-md-5">
-                                        <span class="timeline-icon timeline-icon-blue">
                                             {% if qs_i.case_stage == "Processing" %}
-                                            <i class="fa-solid fa-check fa-sm fa-fw"></i>
+                                                <span class="timeline-icon timeline-icon-blue"><i class="fa-solid fa-check fa-sm fa-fw"></i></span>
                                             {% elif qs_i.case_stage == "RFE" %}
-                                            <i class="fa-solid fa-arrow-rotate-left fa-fw fa-sm"></i>
+                                                <span class="timeline-icon timeline-icon-yellow"><i class="fa-solid fa-arrow-rotate-left fa-fw fa-sm"></i></span>
                                             {% elif qs_i.case_stage == "Rejected" %}
-                                            <i class="fa-solid fa-xmark fa-sm fa-fw"></i>
+                                                <span class="timeline-icon timeline-icon-red"><i class="fa-solid fa-xmark fa-sm fa-fw"></i></span>
                                             {% elif qs_i.case_stage == "Approved" %}
-                                            <i class="fa-regular fa-id-card fa-sm fa-fw"></i>
+                                                <span class="timeline-icon timeline-icon-green"><i class="fa-regular fa-id-card fa-sm fa-fw"></i></span>
                                             {% else %}
-                                            <i class="fa-solid fa-check fa-sm fa-fw"></i>
+                                                <span class="timeline-icon timeline-icon-blue"> <i class="fa-solid fa-check fa-sm fa-fw"></i></span>
                                             {% endif %}
-                                        </span>
                                         <h6>{{ qs_i.status }} </h6>
-                                        <p class="text-muted mb-2">{{ qs_i.action_date }}&nbsp;&nbsp;&nbsp;&nbsp;({{ qs_i.action_days_to_now }})</p>
+                                        <p class="text-muted mb-2">{{ qs_i.action_date }}&nbsp;&nbsp;&nbsp;&nbsp;({{ qs_i.action_days_to_now }} days)</p>
 
                                     </li>
                                 {% endfor %}

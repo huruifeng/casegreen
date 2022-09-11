@@ -4,6 +4,7 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
+from ctrlpanel.functions.utils import get_status_dict
 from mycase.functions.utils import get_status
 from mycase.models import *
 
@@ -50,11 +51,20 @@ def mycase(request):
                 if status_ls[0]=="":
                     status_ls[0] = status_qs.last().form
                 if status_qs.last().status != status_ls[2]:
+                    status_dict = get_status_dict()
+                    case_stage = "Processing"
+                    if status_ls[2] in status_dict:
+                        l3_name = status_dict[status_ls[2]]["L3"]
+                        if l3_name in ["Approved"]: case_stage = "Approved"
+                        elif l3_name in ["Rejected"]: case_stage = "Rejected"
+                        elif l3_name in ["RFE"]: case_stage = "RFE"
+                        else: case_stage = "Processing"
                     new_status = center_table.objects.create(receipt_number =receipt_num,
                                                 form = status_ls[0],
                                                 status =status_ls[2],
                                                 action_date =status_ls[1],
                                                 action_date_x = time_x,
+                                                case_stage=case_stage,
                                                 add_date = datetime.now(),
                                                 date_number = (datetime.now() - datetime(2000, 1, 1)).days)
                     new_status.save()
@@ -72,11 +82,24 @@ def mycase(request):
             else:
                 time_x = datetime.strptime(status_ls[1], "%B %d, %Y")
                 days = (datetime.now() - time_x).days
+                status_dict = get_status_dict()
+                case_stage = "Processing"
+                if status_ls[2] in status_dict:
+                    l3_name = status_dict[status_ls[2]]["L3"]
+                    if l3_name in ["Approved"]:
+                        case_stage = "Approved"
+                    elif l3_name in ["Rejected"]:
+                        case_stage = "Rejected"
+                    elif l3_name in ["RFE"]:
+                        case_stage = "RFE"
+                    else:
+                        case_stage = "Processing"
                 new_status = center_table.objects.create(receipt_number=receipt_num,
                                                          form=status_ls[0],
                                                          status=status_ls[2],
                                                          action_date=status_ls[1],
                                                          action_date_x=time_x,
+                                                         case_stage=case_stage,
                                                          add_date=datetime.now(),
                                                          date_number=(datetime.now() - datetime(2000, 1, 1)).days)
                 new_status.save()
