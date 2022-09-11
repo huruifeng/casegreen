@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import date
+from datetime import date, datetime
+
 
 # Create your models here.
 class sysparam(models.Model):
@@ -123,8 +124,9 @@ class case_status_lin_lb(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -134,6 +136,9 @@ class case_status_lin_lb(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_lin_lb'
             )
         ]
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
 
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
@@ -145,8 +150,9 @@ class case_status_msc_lb(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -156,7 +162,9 @@ class case_status_msc_lb(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_msc_lb'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -167,8 +175,9 @@ class case_status_src_lb(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -178,7 +187,9 @@ class case_status_src_lb(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_src_lb'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -189,8 +200,9 @@ class case_status_wac_lb(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -200,7 +212,9 @@ class case_status_wac_lb(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_wac_lb'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -211,8 +225,9 @@ class case_status_eac_lb(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -222,7 +237,9 @@ class case_status_eac_lb(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_eac_lb'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -233,8 +250,9 @@ class case_status_ysc_lb(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -244,7 +262,9 @@ class case_status_ysc_lb(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ysc_lb'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -255,8 +275,9 @@ class case_status_lin_sc(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -266,7 +287,9 @@ class case_status_lin_sc(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_lin_sc'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -277,8 +300,9 @@ class case_status_msc_sc(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -288,7 +312,9 @@ class case_status_msc_sc(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_msc_sc'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -299,8 +325,9 @@ class case_status_src_sc(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -310,7 +337,9 @@ class case_status_src_sc(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_src_sc'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -321,8 +350,9 @@ class case_status_wac_sc(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -332,7 +362,9 @@ class case_status_wac_sc(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_wac_sc'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -343,8 +375,9 @@ class case_status_eac_sc(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -354,7 +387,9 @@ class case_status_eac_sc(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_eac_sc'
             )
         ]
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
                f"Form: {self.form}\n" \
@@ -365,8 +400,9 @@ class case_status_ysc_sc(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -376,6 +412,10 @@ class case_status_ysc_sc(models.Model):
                 fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ysc_sc'
             )
         ]
+
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
 
     def __str__(self):
         return f"Recepit Num: {self.receipt_number}\n" \
@@ -388,11 +428,14 @@ class case_status_ioe(models.Model):
     receipt_number = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
     status = models.CharField(max_length=128)
-    action_date = models.CharField(max_length=20)
+    action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
-
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
     class Meta:
         constraints = [
             models.UniqueConstraint(

@@ -14,8 +14,11 @@ from mycase.models import *
 
 # Create your views here.
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
 def index(request):
+    if not request.user.is_superuser:
+        response = redirect('ctrlpanel:login')
+        return response
+
     sys_params,created = sysparam.objects.get_or_create(pk=1,defaults={
         "centers": "LIN,MSC,SRC,EAC,WAC,YSC,IOE",
         "fiscal_year_n": 3,
@@ -27,8 +30,12 @@ def index(request):
     return render(request,'ctrlpanel/index.html',context)
 
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
+# @user_passes_test(lambda u: u.is_superuser)
 def ctrl_dashbord(request):
+    if not request.user.is_superuser:
+        response = redirect('ctrlpanel:login')
+        return response
+
     return render(request,'ctrlpanel/dashbord.html')
 
 
@@ -58,10 +65,10 @@ def login_view(request):
     return HttpResponse(state)
 
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
 def exportDB(request):
     if not request.user.is_superuser:
-        raise PermissionDenied
+        response = redirect('ctrlpanel:login')
+        return response
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="exportDB.csv"'
@@ -103,8 +110,11 @@ def exportDB(request):
 
 
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
 def sysinit(request):
+    if not request.user.is_superuser:
+        response = redirect('ctrlpanel:login')
+        return response
+
     if request.is_ajax and request.method == "POST":
         # try:
         # backup data
@@ -124,8 +134,11 @@ def sysinit(request):
         #     return HttpResponse(e)
 
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
 def sysupdate(request):
+    if not request.user.is_superuser:
+        response = redirect('ctrlpanel:login')
+        return response
+
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
         centers = request.POST.get("centers", None)
@@ -143,8 +156,11 @@ def sysupdate(request):
         return HttpResponse("OK")
 
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
 def centerrun(request):
+    if not request.user.is_superuser:
+        response = redirect('ctrlpanel:login')
+        return response
+
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
         centers = request.POST.get("centers", None)
@@ -163,8 +179,11 @@ def centerrun(request):
         return HttpResponse("OK")
 
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
 def centerstatus(request):
+    if not request.user.is_superuser:
+        response = redirect('ctrlpanel:login')
+        return response
+
     qs_json = {}
     if request.is_ajax and request.method == "POST":
         center_status = center_running.objects.all()
@@ -174,8 +193,11 @@ def centerstatus(request):
 
 
 @login_required()
-@user_passes_test(lambda u: u.is_superuser)
 def visabulletin(request):
+    if not request.user.is_superuser:
+        response = redirect('ctrlpanel:login')
+        return response
+
     if request.method == "GET":
         return render(request,'ctrlpanel/visabulletin.html')
     elif request.method == "POST":

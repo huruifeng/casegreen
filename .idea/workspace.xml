@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/mycase/migrations/0007_auto_20220910_1925.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0008_auto_20220911_1727.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/casegreen.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/casegreen.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctrlpanel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/main.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +207,7 @@
       <workItem from="1662428856713" duration="769000" />
       <workItem from="1662503307635" duration="10783000" />
       <workItem from="1662518373670" duration="2263000" />
-      <workItem from="1662591150309" duration="47125000" />
+      <workItem from="1662591150309" duration="63652000" />
     </task>
     <task id="LOCAL-00001" summary="updates">
       <created>1660538909922</created>
@@ -318,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662792620830</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="updates">
+      <created>1662871328054</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1662871328054</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

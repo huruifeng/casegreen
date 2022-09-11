@@ -4,7 +4,7 @@ import shutil
 
 import pandas as pd
 
-from datetime import datetime, timezone, timedelta, date
+from datetime import datetime, timezone, timedelta
 from django.core.exceptions import PermissionDenied
 
 from mycase.models import *
@@ -117,7 +117,7 @@ def run_center(request,center):
 
     fiscal_years = []
     now = datetime.now()
-    now_days =  (datetime.date(now) - date(2000, 1, 1)).days
+    now_days =  (now - datetime(2000, 1, 1)).days
     now_year = now.year - 2000
     now_month = now.month
 
@@ -243,9 +243,22 @@ def run_center(request,center):
             except Exception as e:
                 time_x = date.today()
 
+            case_stage = "Processing"
+            if status_i in status_dict:
+                l3_name = status_dict[status_i]["L3"]
+                if l3_name in ["Approved"]:
+                    case_stage = "Approved"
+                elif l3_name in ["Rejected"]:
+                    case_stage = "Rejected"
+                elif l3_name in ["RFE"]:
+                    case_stage = "RFE"
+                else:
+                    case_stage = "Processing"
+
             case_new = center_obj(receipt_number=case_i,form=data[case_i][0],status=status_i,
                                   action_date=act_date_i,
                                   action_date_x=time_x,
+                                  case_stage = case_stage,
                                   add_date=datetime.now(),
                                   date_number=now_days)
             case_list.append(case_new)
