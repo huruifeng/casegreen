@@ -8,7 +8,6 @@ from datetime import datetime, timezone, timedelta, date
 from django.core.exceptions import PermissionDenied
 
 from mycase.models import *
-from ctrlpanel.functions import status_dict
 
 timezone_offset = -4.0  # Boston Time (UTC−04:00)
 tzinfo = timezone(timedelta(hours=timezone_offset))
@@ -28,6 +27,16 @@ center_dict = {"lin_lb":case_status_lin_lb,
                "ioe":case_status_ioe
                }
 
+def get_status_dict():
+    case_status_df = pd.read_csv("mycase/data/case_status.csv", header=0, index_col=0, sep=",")
+    status_dict = case_status_df.to_dict(orient="index")
+    return status_dict
+
+
+def get_form_dict():
+    uscis_forms_df = pd.read_csv("mycase/data/case_forms.csv",header=0,index_col=None,sep=",")
+    form_dict = uscis_forms_df.to_dict(orient="index")
+    return form_dict
 def bkpTable(request,queryset):
     if not request.user.is_superuser:
         raise PermissionDenied
@@ -135,6 +144,7 @@ def run_center(request,center):
     print("===================================")
     print(fiscal_years)
 
+    status_dict = get_status_dict()
     counts_today = {}
     for fy_i in fiscal_years:
         print("---------------------------------")
@@ -176,6 +186,8 @@ def run_center(request,center):
             act_date_i = data[case_i][1]
             status_i = data[case_i][2]
 
+            if status_i == "try_failed": continue
+
             n_i += 1
             if n_i % 100000 == 0:
                 print(f"{center}-{fy_i}:{n_i}/{total_x}")
@@ -202,7 +214,7 @@ def run_center(request,center):
                                                   "notice_sent_n":0,"pending_n":0,"mailed_n":0,"produced_n":0,
                                                   "return_hold_n":0,"withdrawal_acknowledged_n":0,"others_n":0}
                 if status_i in status_dict:
-                    l2_name = status_dict[status_i]
+                    l2_name = status_dict[status_i]["L2"]
                     if l2_name == "Received": counts_today[form_i]["received_n"] += 1
                     if l2_name == "RFE_Sent": counts_today[form_i]["rfe_sent_n"] += 1
                     if l2_name == "RFE_Received": counts_today[form_i]["rfe_received_n"] += 1
@@ -224,6 +236,7 @@ def run_center(request,center):
                     if l2_name == "Other": counts_today[form_i]["others_n"] += 1
                 else:
                     counts_today[form_i]["others_n"] += 1
+            #################
             try:
                 time_s =act_date_i
                 time_x = datetime.strptime(time_s, "%B %d, %Y")
@@ -239,7 +252,7 @@ def run_center(request,center):
 
         print(f"{center}-{fy_i}:Bulk Creating...")
         try:
-            center_obj.objects.bulk_create(case_list,batch_size=3000,update_conflicts=True)
+            center_obj.objects.bulk_create(case_list,batch_size=3000)
         except Exception as e:
            print(e)
         print(f"{center}-{fy_i}:Bulk Creating...Done!")
@@ -254,37 +267,38 @@ def run_center(request,center):
     c_running.status="Updated"
     c_running.save()
 
+    print("---------------------------------")
     print("Updating daily counts...")
     counts_ls = []
 
     for form_ii in counts_today:
-        counts_today_new = status_daily(
-            center=center,
-            form = form_ii,
-            received_n = counts_today[form_ii]["received_n"],
-            rfe_sent_n = counts_today[form_ii]["rfe_sent_n"],
-            rfe_received_n = counts_today[form_ii]["rfe_received_n"],
-            approved_n = counts_today[form_ii]["approved_n"],
-            fp_schduled_n = counts_today[form_ii]["fp_schduled_n"],
-            fp_taken_n = counts_today[form_ii]["fp_taken_n"],
-            iv_schduled_n = counts_today[form_ii]["iv_schduled_n"],
-            iv_done_n = counts_today[form_ii]["iv_done_n"],
-            rejected_n = counts_today[form_ii]["rejected_n"],
-            terminated_n = counts_today[form_ii]["terminated_n"],
-            transferred_n = counts_today[form_ii]["transferred_n"],
-            hold_n = counts_today[form_ii]["hold_n"],
-            notice_sent_n = counts_today[form_ii]["notice_sent_n"],
-            pending_n = counts_today[form_ii]["pending_n"],
-            mailed_n = counts_today[form_ii]["mailed_n"],
-            produced_n = counts_today[form_ii]["produced_n"],
-            return_hold_n = counts_today[form_ii]["return_hold_n"],
-            withdrawal_acknowledged_n = counts_today[form_ii]["withdrawal_acknowledged_n"],
-            others_n = counts_today[form_ii]["others_n"],
-            add_date = datetime.now(),
-            date_number = now_days
+        counts_today_new = status_daily.objects.update_or_create(center=center,form=form_ii,date_number=now_days,
+            defaults={
+                "center":center,
+                "form":form_ii,
+                "received_n":counts_today[form_ii]["received_n"],
+                "rfe_sent_n":counts_today[form_ii]["rfe_sent_n"],
+                "rfe_received_n":counts_today[form_ii]["rfe_received_n"],
+                "approved_n":counts_today[form_ii]["approved_n"],
+                "fp_schduled_n":counts_today[form_ii]["fp_schduled_n"],
+                "fp_taken_n":counts_today[form_ii]["fp_taken_n"],
+                "iv_schduled_n":counts_today[form_ii]["iv_schduled_n"],
+                "iv_done_n":counts_today[form_ii]["iv_done_n"],
+                "rejected_n":counts_today[form_ii]["rejected_n"],
+                "terminated_n":counts_today[form_ii]["terminated_n"],
+                "transferred_n":counts_today[form_ii]["transferred_n"],
+                "hold_n":counts_today[form_ii]["hold_n"],
+                "notice_sent_n":counts_today[form_ii]["notice_sent_n"],
+                "pending_n":counts_today[form_ii]["pending_n"],
+                "mailed_n":counts_today[form_ii]["mailed_n"],
+                "produced_n":counts_today[form_ii]["produced_n"],
+                "return_hold_n":counts_today[form_ii]["return_hold_n"],
+                "withdrawal_acknowledged_n":counts_today[form_ii]["withdrawal_acknowledged_n"],
+                "others_n":counts_today[form_ii]["others_n"],
+                "add_date":datetime.now(),
+                "date_number":now_days
+            }
         )
-        counts_ls.append(counts_today_new)
-    status_daily.objects.bulk_create(counts_ls, batch_size=100)
     print("Updating daily counts...Done!")
 
     print(f"{center}:Done!")

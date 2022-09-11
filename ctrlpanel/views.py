@@ -46,7 +46,7 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                print(next_url)
+                # print(next_url)
                 if next_url:
                     return redirect(next_url)
                 else:

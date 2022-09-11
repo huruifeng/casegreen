@@ -1685,7 +1685,7 @@ model</ColNames>
       <UnderlyingIndexName>django_content_type_app_label_model_76bd3d3b_uniq</UnderlyingIndexName>
     </key>
     <column id="447" parent="344" name="id">
-      <AutoIncrement>23</AutoIncrement>
+      <AutoIncrement>26</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1745,7 +1745,7 @@ model</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="459" parent="346" name="id">
-      <AutoIncrement>307152</AutoIncrement>
+      <AutoIncrement>308359</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1790,9 +1790,10 @@ model</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="468" parent="346" name="unique_receipt_status_eac_lb">
+    <index id="468" parent="346" name="unique_receipt_status_date_eac_lb">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -1801,11 +1802,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="470" parent="346" name="unique_receipt_status_eac_lb">
-      <UnderlyingIndexName>unique_receipt_status_eac_lb</UnderlyingIndexName>
+    <key id="470" parent="346" name="unique_receipt_status_date_eac_lb">
+      <UnderlyingIndexName>unique_receipt_status_date_eac_lb</UnderlyingIndexName>
     </key>
     <column id="471" parent="347" name="id">
-      <AutoIncrement>1133730</AutoIncrement>
+      <AutoIncrement>1137857</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1850,9 +1851,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="480" parent="347" name="unique_receipt_status_eac_sc">
+    <index id="480" parent="347" name="unique_receipt_status_date_eac_sc">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -1861,8 +1863,8 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="482" parent="347" name="unique_receipt_status_eac_sc">
-      <UnderlyingIndexName>unique_receipt_status_eac_sc</UnderlyingIndexName>
+    <key id="482" parent="347" name="unique_receipt_status_date_eac_sc">
+      <UnderlyingIndexName>unique_receipt_status_date_eac_sc</UnderlyingIndexName>
     </key>
     <column id="483" parent="348" name="id">
       <AutoIncrement>1</AutoIncrement>
@@ -1910,9 +1912,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="492" parent="348" name="unique_receipt_status_ioe">
+    <index id="492" parent="348" name="unique_receipt_status_date_ioe">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -1921,11 +1924,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="494" parent="348" name="unique_receipt_status_ioe">
-      <UnderlyingIndexName>unique_receipt_status_ioe</UnderlyingIndexName>
+    <key id="494" parent="348" name="unique_receipt_status_date_ioe">
+      <UnderlyingIndexName>unique_receipt_status_date_ioe</UnderlyingIndexName>
     </key>
     <column id="495" parent="349" name="id">
-      <AutoIncrement>1421805</AutoIncrement>
+      <AutoIncrement>1445038</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1970,9 +1973,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="504" parent="349" name="unique_receipt_status_lin_lb">
+    <index id="504" parent="349" name="unique_receipt_status_date_lin_lb">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -1981,11 +1985,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="506" parent="349" name="unique_receipt_status_lin_lb">
-      <UnderlyingIndexName>unique_receipt_status_lin_lb</UnderlyingIndexName>
+    <key id="506" parent="349" name="unique_receipt_status_date_lin_lb">
+      <UnderlyingIndexName>unique_receipt_status_date_lin_lb</UnderlyingIndexName>
     </key>
     <column id="507" parent="350" name="id">
-      <AutoIncrement>942760</AutoIncrement>
+      <AutoIncrement>948092</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2030,9 +2034,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="516" parent="350" name="unique_receipt_status_lin_sc">
+    <index id="516" parent="350" name="unique_receipt_status_date_lin_sc">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2041,11 +2046,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="518" parent="350" name="unique_receipt_status_lin_sc">
-      <UnderlyingIndexName>unique_receipt_status_lin_sc</UnderlyingIndexName>
+    <key id="518" parent="350" name="unique_receipt_status_date_lin_sc">
+      <UnderlyingIndexName>unique_receipt_status_date_lin_sc</UnderlyingIndexName>
     </key>
     <column id="519" parent="351" name="id">
-      <AutoIncrement>4205842</AutoIncrement>
+      <AutoIncrement>4219380</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2090,9 +2095,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="528" parent="351" name="unique_receipt_status_msc_lb">
+    <index id="528" parent="351" name="unique_receipt_status_date_msc_lb">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2101,11 +2107,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="530" parent="351" name="unique_receipt_status_msc_lb">
-      <UnderlyingIndexName>unique_receipt_status_msc_lb</UnderlyingIndexName>
+    <key id="530" parent="351" name="unique_receipt_status_date_msc_lb">
+      <UnderlyingIndexName>unique_receipt_status_date_msc_lb</UnderlyingIndexName>
     </key>
     <column id="531" parent="352" name="id">
-      <AutoIncrement>281309</AutoIncrement>
+      <AutoIncrement>282591</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2150,9 +2156,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="540" parent="352" name="unique_receipt_status_msc_sc">
+    <index id="540" parent="352" name="unique_receipt_status_date_msc_sc">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2161,11 +2168,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="542" parent="352" name="unique_receipt_status_msc_sc">
-      <UnderlyingIndexName>unique_receipt_status_msc_sc</UnderlyingIndexName>
+    <key id="542" parent="352" name="unique_receipt_status_date_msc_sc">
+      <UnderlyingIndexName>unique_receipt_status_date_msc_sc</UnderlyingIndexName>
     </key>
     <column id="543" parent="353" name="id">
-      <AutoIncrement>992928</AutoIncrement>
+      <AutoIncrement>1004328</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2210,9 +2217,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="552" parent="353" name="unique_receipt_status_src_lb">
+    <index id="552" parent="353" name="unique_receipt_status_date_src_lb">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2221,11 +2229,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="554" parent="353" name="unique_receipt_status_src_lb">
-      <UnderlyingIndexName>unique_receipt_status_src_lb</UnderlyingIndexName>
+    <key id="554" parent="353" name="unique_receipt_status_date_src_lb">
+      <UnderlyingIndexName>unique_receipt_status_date_src_lb</UnderlyingIndexName>
     </key>
     <column id="555" parent="354" name="id">
-      <AutoIncrement>691822</AutoIncrement>
+      <AutoIncrement>695764</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2270,9 +2278,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="564" parent="354" name="unique_receipt_status_src_sc">
+    <index id="564" parent="354" name="unique_receipt_status_date_src_sc">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2281,11 +2290,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="566" parent="354" name="unique_receipt_status_src_sc">
-      <UnderlyingIndexName>unique_receipt_status_src_sc</UnderlyingIndexName>
+    <key id="566" parent="354" name="unique_receipt_status_date_src_sc">
+      <UnderlyingIndexName>unique_receipt_status_date_src_sc</UnderlyingIndexName>
     </key>
     <column id="567" parent="355" name="id">
-      <AutoIncrement>437704</AutoIncrement>
+      <AutoIncrement>439940</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2330,9 +2339,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="576" parent="355" name="unique_receipt_status_wac_lb">
+    <index id="576" parent="355" name="unique_receipt_status_date_wac_lb">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2341,11 +2351,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="578" parent="355" name="unique_receipt_status_wac_lb">
-      <UnderlyingIndexName>unique_receipt_status_wac_lb</UnderlyingIndexName>
+    <key id="578" parent="355" name="unique_receipt_status_date_wac_lb">
+      <UnderlyingIndexName>unique_receipt_status_date_wac_lb</UnderlyingIndexName>
     </key>
     <column id="579" parent="356" name="id">
-      <AutoIncrement>906028</AutoIncrement>
+      <AutoIncrement>909377</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2390,9 +2400,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="588" parent="356" name="unique_receipt_status_wac_sc">
+    <index id="588" parent="356" name="unique_receipt_status_date_wac_sc">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2401,11 +2412,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="590" parent="356" name="unique_receipt_status_wac_sc">
-      <UnderlyingIndexName>unique_receipt_status_wac_sc</UnderlyingIndexName>
+    <key id="590" parent="356" name="unique_receipt_status_date_wac_sc">
+      <UnderlyingIndexName>unique_receipt_status_date_wac_sc</UnderlyingIndexName>
     </key>
     <column id="591" parent="357" name="id">
-      <AutoIncrement>634340</AutoIncrement>
+      <AutoIncrement>635626</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2450,9 +2461,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="600" parent="357" name="unique_receipt_status_ysc_lb">
+    <index id="600" parent="357" name="unique_receipt_status_date_ysc_lb">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2461,11 +2473,11 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="602" parent="357" name="unique_receipt_status_ysc_lb">
-      <UnderlyingIndexName>unique_receipt_status_ysc_lb</UnderlyingIndexName>
+    <key id="602" parent="357" name="unique_receipt_status_date_ysc_lb">
+      <UnderlyingIndexName>unique_receipt_status_date_ysc_lb</UnderlyingIndexName>
     </key>
     <column id="603" parent="358" name="id">
-      <AutoIncrement>86351</AutoIncrement>
+      <AutoIncrement>86835</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -2510,9 +2522,10 @@ status</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="612" parent="358" name="unique_receipt_status_ysc_sc">
+    <index id="612" parent="358" name="unique_receipt_status_date_ysc_sc">
       <ColNames>receipt_number
-status</ColNames>
+status
+action_date</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -2521,8 +2534,8 @@ status</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="614" parent="358" name="unique_receipt_status_ysc_sc">
-      <UnderlyingIndexName>unique_receipt_status_ysc_sc</UnderlyingIndexName>
+    <key id="614" parent="358" name="unique_receipt_status_date_ysc_sc">
+      <UnderlyingIndexName>unique_receipt_status_date_ysc_sc</UnderlyingIndexName>
     </key>
     <column id="615" parent="359" name="id">
       <AutoIncrement>13</AutoIncrement>
@@ -2668,7 +2681,7 @@ status</ColNames>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="643" parent="362" name="rfe_n">
+    <column id="643" parent="362" name="hold_n">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
@@ -2728,104 +2741,149 @@ status</ColNames>
       <NotNull>1</NotNull>
       <Position>15</Position>
     </column>
-    <index id="655" parent="362" name="PRIMARY">
+    <column id="655" parent="362" name="form">
+      <DataType>varchar(16)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>16</Position>
+    </column>
+    <column id="656" parent="362" name="mailed_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>17</Position>
+    </column>
+    <column id="657" parent="362" name="notice_sent_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>18</Position>
+    </column>
+    <column id="658" parent="362" name="pending_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>19</Position>
+    </column>
+    <column id="659" parent="362" name="produced_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>20</Position>
+    </column>
+    <column id="660" parent="362" name="return_hold_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>21</Position>
+    </column>
+    <column id="661" parent="362" name="rfe_received_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>22</Position>
+    </column>
+    <column id="662" parent="362" name="rfe_sent_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>23</Position>
+    </column>
+    <column id="663" parent="362" name="withdrawal_acknowledged_n">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>24</Position>
+    </column>
+    <index id="664" parent="362" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="656" parent="362" name="PRIMARY">
+    <key id="665" parent="362" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="657" parent="363" name="id">
+    <column id="666" parent="363" name="id">
       <AutoIncrement>2</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="658" parent="363" name="centers">
+    <column id="667" parent="363" name="centers">
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="659" parent="363" name="fiscal_year_n">
+    <column id="668" parent="363" name="fiscal_year_n">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="660" parent="363" name="crawler_time">
+    <column id="669" parent="363" name="crawler_time">
       <DataType>time(6)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="661" parent="363" name="crawler_number">
+    <column id="670" parent="363" name="crawler_number">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="662" parent="363" name="sys_status">
+    <column id="671" parent="363" name="sys_status">
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <index id="663" parent="363" name="PRIMARY">
+    <index id="672" parent="363" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="664" parent="363" name="PRIMARY">
+    <key id="673" parent="363" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="665" parent="364" name="id">
+    <column id="674" parent="364" name="id">
       <AutoIncrement>1</AutoIncrement>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="666" parent="364" name="tableAB">
+    <column id="675" parent="364" name="tableAB">
       <DataType>varchar(8)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="667" parent="364" name="category">
+    <column id="676" parent="364" name="category">
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="668" parent="364" name="conutry">
+    <column id="677" parent="364" name="conutry">
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="669" parent="364" name="formonth">
+    <column id="678" parent="364" name="formonth">
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="670" parent="364" name="visadate">
+    <column id="679" parent="364" name="visadate">
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="671" parent="364" name="pubdate">
+    <column id="680" parent="364" name="pubdate">
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="672" parent="364" name="description">
+    <column id="681" parent="364" name="description">
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <index id="673" parent="364" name="PRIMARY">
+    <index id="682" parent="364" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="674" parent="364" name="PRIMARY">
+    <key id="683" parent="364" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

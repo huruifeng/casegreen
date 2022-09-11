@@ -17,7 +17,9 @@
                     <i class="fa-solid fa-rotate-right fa-lg text-muted"></i>
                 </button>
                 <a class="btn btn-primary me-3 mt-2 mt-xl-0" id="exportdb" href="{% url "ctrlpanel:exportdb" %}">Export DB</a>
-                <button class="btn btn-danger me-3 mt-2 mt-xl-0" id="initsys" onclick="sysinit()">Initialization</button>
+                <button class="btn btn-danger me-3 mt-2 mt-xl-0" id="initsys" onclick="sysinit()">Initialization&nbsp;&nbsp;
+                    <span class="spinner-border spinner-border-sm d-none" id="init_spinner" role="status" aria-hidden="true"></span>
+                </button>
             </div>
           </div>
         </div>
@@ -218,6 +220,7 @@
         });
 
     function sysinit() {
+        $("#init_spinner").removeClass("d-none")
          $.ajax({
           type: "POST",
           url: "ajax/sysinit",
@@ -228,7 +231,10 @@
             },
           error: function() {
                   alert('Error occurs!');
-            }
+            },
+             complete: function () {
+                  $("#init_spinner").addClass("d-none")
+             }
 
          });
     }
