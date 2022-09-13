@@ -6,6 +6,7 @@ import pandas as pd
 
 from datetime import datetime, timezone, timedelta
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 
 from mycase.models import *
 
@@ -38,8 +39,8 @@ def get_form_dict():
     form_dict = uscis_forms_df.to_dict(orient="index")
     return form_dict
 def bkpTable(request,queryset):
-    if not request.user.is_superuser:
-        raise PermissionDenied
+    if (not request.user.is_authenticated) or (not request.user.is_superuser):
+        return redirect('ctrlpanel:login')
 
     model = queryset.model
     table_name = model._meta.db_table
@@ -76,8 +77,8 @@ def bkpTable(request,queryset):
     return "OK"
 
 def run_initalization(request):
-    if not request.user.is_superuser:
-        raise PermissionDenied
+    if (not request.user.is_authenticated) or (not request.user.is_superuser):
+        return redirect('ctrlpanel:login')
 
     ## status
     case_status_df = pd.read_csv("mycase/data/case_status.csv",header=0,index_col=None,sep=",")
@@ -108,8 +109,8 @@ def run_initalization(request):
 
 
 def run_center(request,center):
-    if not request.user.is_superuser:
-        raise PermissionDenied
+    if (not request.user.is_authenticated) or (not request.user.is_superuser):
+        return redirect('ctrlpanel:login')
 
     sys_params = sysparam.objects.get(pk=1)
     year_n = sys_params.fiscal_year_n
