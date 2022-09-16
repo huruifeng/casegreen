@@ -5,7 +5,6 @@
 
 // ************************************************ get values ******************************************************
 var seq = document.getElementById('statu_sequence'),
-    center_name = document.getElementById('center_name').value,
     recepit_num = document.getElementById('recepit_num').value;
 
 var data_json;
@@ -72,10 +71,8 @@ var yScale = d3.scaleLinear()
 
 
 // **************************************** define colors, tip, and zoom *********************************************
-var colorDomains = d3.scaleOrdinal(["#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5"]);
-var colorStatus = d3.scaleOrdinal()
-    .domain(["Received","Figureprinted","RFE","Interviewed","Approved","Transferred","Rejected","Other"])
-    .range(["#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5"]);
+var colorStatus = {"REC":"#4e97f6","FP":"#94F829","ITV":"#04daba","RFE":"#ffe95a",
+    "TRF":"#c77cff","APV":"#1db063","RJC":"#ff001a","OTH":"#78787a"}
 
 var tip = d3.tip()
     .attr("class", "d3-tip")
@@ -83,7 +80,7 @@ var tip = d3.tip()
     .html(function(d) {
         var htmltext =  "<table style='font:12px Verdana;'>" +
             "<tr><td colspan='2'><b>" + d.ID +  "</b></td></tr>" +
-            "<tr><td>Case status class:</td><td style='color:"+ colorStatus(d.STATUS) + "'>"+d.STATUS+"</td></tr>" +
+            "<tr><td>Case status class:</td><td style='color:"+ colorStatus[d.STATUS] + "'>"+d.STATUS+"</td></tr>" +
             "<tr><td>Action date:</td><td>"+d.ACTDATE+"</td></tr>";
         htmltext = htmltext + "</table>";
         return htmltext;
@@ -161,7 +158,7 @@ var mutsites = svg2.append("g")
     .attr("r", 4)
     .attr("cx", function(d) { return xScale(d[xCat]); })
     .attr("cy", function(d) { return yScale(yCat); })
-    .style("fill", function(d) { return colorStatus(d["STATUS"]); })
+    .style("fill", function(d) { return colorStatus[d["STATUS"]]; })
     .on("mouseover", function(d){
         d3.select(this).attr("r", 8);
         tip.show(d);
@@ -186,7 +183,7 @@ var domains = svg2.append("g")
     .attr("height", 18)
     .style("fill", function(d, i ) {
             if(i==0) {return "white"}
-            return colorDomains(d["ID"]);
+            return colorStatus[d["ID"]];
         }
     )
     .style("stroke-width", "1")
@@ -494,13 +491,13 @@ function findModsInJASON(JSON){
         if(JSON[i].STATUS == "OTH") other = true;
         if(JSON[i].STATUS == "FP") figureprinted = true;
     }
-    return [received, figureprinted, rfe, interviewed, approved,transferred,rejected , other]
+    return [received,figureprinted,interviewed, transferred, rfe, approved, rejected,  other]
 }
 
 
 function saveLollipop(){
     d3.selectAll(".compassNav").attr("visibility", "hidden");
-    saveSvgAsPng(d3.select('#status_bar').node(), center_name + recepit_num + '.png', {scale: 2});
+    saveSvgAsPng(d3.select('#status_bar').node(), recepit_num + '.png', {scale: 2});
     d3.selectAll(".compassNav").transition().duration(750).attr("visibility", "visible");
 }
 
@@ -513,14 +510,14 @@ var svgLegend = d3.select("#legend")
     .append("g");
 
 var thismods = findModsInJASON(jsonobj_sites),
-    statusTotal = ["REC","RFE","ITV","APV","FP","TRF","RJC","OTH"],
-    statusTotalFancy = ["Received","RFE","Interviewed","Approved","Figureprinted","Transferred","Rejected","Other"];
+    statusTotal = ["REC","FP","ITV", "RFE","TRF","APV","RJC","OTH"],
+    statusTotalFancy = ["Received(R)", "Figureprinted(F)","Interviewed(I)","RFE(E)","Transferred(T)","Approved(A)","Rejected(J)","Other(O)"];
 
-var xlegend= 10, ylegend = 15;
+var xlegend= 5, ylegend = 15;
 for (var i = 0; i < thismods.length; ++i) {
     if(thismods[i]){
-        svgLegend.append("circle").attr("r", 6).attr("cx",xlegend).attr("cy",ylegend).style("fill",colorStatus(statusTotal[i]));
+        svgLegend.append("circle").attr("r", 6).attr("cx",xlegend).attr("cy",ylegend).style("fill",colorStatus[statusTotal[i]]);
         svgLegend.append("text").attr("x",xlegend+10).attr("y",ylegend+5).attr("text-anchor","start").text(statusTotalFancy[i]).style("font-size","12px").style("font-family", "Verdana");
-        xlegend = xlegend + 105;
+        xlegend = xlegend + statusTotalFancy[i].length * 5 + 45;
     }
 }

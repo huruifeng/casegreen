@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
@@ -106,8 +107,10 @@ def mycase(request):
             new_status.save()
             status_qs = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")
 
+    case_range_s = int(receipt_num[3:]) - int(int(receipt_num[3:])%5000)
+    case_range_e = case_range_s + 4999
     context = {"status":{'form': status_ls[0],'date': status_ls[1],'status': status_ls[2],'status_text': status_ls[3],"days":days},
-               "receipt_num":receipt_num,
+               "receipt_num":receipt_num, "case_range":str(case_range_s)+"-"+str(case_range_e),
                "status_qs":status_qs}
     return render(request,'mycase/mycase.html',context)
 
@@ -133,7 +136,88 @@ def getjson(request):
             data_dict['domains'] = domain_str
             return HttpResponse(json.dumps(data_dict), status=200)
         else:
-            return JsonResponse({}, status=200)
+            return JsonResponse({}, status=400)
 
     return JsonResponse({}, status=400)
+
+def caseinrange(request):
+    # request should be ajax and method should be GET.
+    if request.is_ajax and request.method == "GET":
+        # get the data_type from the client side.
+        receipt_num = request.GET.get("recepit_num", None)
+        form_type = request.GET.get("form_type", None)
+        case_range = request.GET.get("form_type", None)
+
+        if form_type=="":
+            return JsonResponse({}, status=400)
+
+        # check for the data_type.
+        if receipt_num != None:
+            center = receipt_num[:3]
+            year = receipt_num[3:5]
+            lb_sc = "LB" if receipt_num[5] == "9" else "SC"
+            center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+
+            case_range_s = int(receipt_num[3:]) - int(int(receipt_num[3:]) % 5000)
+
+            if case_range=="rn_range":
+                case_range_s = center + str(case_range_s)
+                case_range_e = center + str(case_range_s + 4999)
+                case_qs = center_table.objects.filter(form=form_type,receipt_number__range=(case_range_s, case_range_e))
+            elif case_range == "rn_n200":
+                case_range_s = center + str(case_range_s)
+                case_qs = center_table.objects.filter(form=form_type, receipt_number__lte=case_range_s).order_by("-receipt_num")[:201]
+            elif case_range == "rn_n500":
+                case_range_s = center + str(case_range_s)
+                case_qs = center_table.objects.filter(form=form_type, receipt_number__lte=case_range_s).order_by("-receipt_num")[:501]
+            elif case_range == "rn_p200":
+                case_range_s = center + str(case_range_s)
+                case_qs = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).order_by("receipt_num")[:201]
+            elif case_range == "rn_p500":
+                case_range_s = center + str(case_range_s)
+                case_qs = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).order_by("receipt_num")[:501]
+            elif case_range == "rn_np200":
+                case_range_s = center + str(case_range_s)
+                case_qs = (center_table.objects.filter(form=form_type, receipt_number__lte=case_range_s).order_by("receipt_num")[:201]) | \
+                          (center_table.objects.filter(form=form_type, receipt_number__gt=case_range_s).order_by("receipt_num")[:200])
+            elif case_range == "rn_np500":
+                case_range_s = center + str(case_range_s)
+                case_qs = (center_table.objects.filter(form=form_type, receipt_number__lte=case_range_s).order_by("receipt_num")[:501]) | \
+                          (center_table.objects.filter(form=form_type, receipt_number__gt=case_range_s).order_by("receipt_num")[:500])
+            elif case_range == "rn_n1m":
+                pass
+            elif case_range == "rn_n2m":
+                pass
+            elif case_range == "rn_n3m":
+                pass
+            elif case_range == "rn_p1m":
+                pass
+            elif case_range == "rn_p2m":
+                pass
+            elif case_range == "rn_p3m":
+                pass
+            elif case_range == "rn_np1m":
+                pass
+            elif case_range == "rn_np2m":
+                pass
+            elif case_range == "rn_np3m":
+                pass
+            elif case_range == "rn_fy":
+                pass
+            else:
+                pass
+
+
+
+
+
+
+
+            case_range_s = int(receipt_num[3:]) - int(int(receipt_num[3:]) % 5000)
+            case_range_e = case_range_s + 4999
+            return HttpResponse(json.dumps(data_dict), status=200)
+        else:
+            return JsonResponse({}, status=400)
+    else:
+        return JsonResponse({}, status=400)
 

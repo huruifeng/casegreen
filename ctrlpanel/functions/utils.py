@@ -3,9 +3,8 @@ import json
 import shutil
 
 import pandas as pd
+from datetime import date, datetime, timezone, timedelta
 
-from datetime import datetime, timezone, timedelta
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 
 from mycase.models import *
@@ -109,6 +108,10 @@ def run_initalization(request):
 
 
 def run_center(request,center):
+    rd_status = ["Fees Were Waived","Card Was Received By USCIS Along With My Letter","Case Accepted By The USCIS Lockbox",
+                 "Case Was Received","Case Was Received and A Receipt Notice Was Sent","Case Was Received At Another USCIS Office",
+                 "Document and Letter Was Received","Document And Letter Was Received And Under Review","Fingerprint Fee Was Received"]
+
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return redirect('ctrlpanel:login')
 
@@ -256,10 +259,12 @@ def run_center(request,center):
                 else:
                     case_stage = "Processing"
 
+            rd_date = date(2000,1,1)
+            if status_i in rd_status:
+                rd_date = time_x
             case_new = center_obj(receipt_number=case_i,form=data[case_i][0],status=status_i,
-                                  action_date=act_date_i,
-                                  action_date_x=time_x,
-                                  case_stage = case_stage,
+                                  action_date=act_date_i, action_date_x=time_x,
+                                  case_stage = case_stage,rd_date = rd_date,
                                   add_date=datetime.now(),
                                   date_number=now_days)
             case_list.append(case_new)

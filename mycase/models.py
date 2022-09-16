@@ -127,6 +127,7 @@ class case_status_lin_lb(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -153,6 +154,7 @@ class case_status_msc_lb(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -178,6 +180,7 @@ class case_status_src_lb(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -203,6 +206,7 @@ class case_status_wac_lb(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -228,6 +232,7 @@ class case_status_eac_lb(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -253,6 +258,7 @@ class case_status_ysc_lb(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -278,6 +284,7 @@ class case_status_lin_sc(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -303,6 +310,7 @@ class case_status_msc_sc(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -328,6 +336,7 @@ class case_status_src_sc(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -353,6 +362,7 @@ class case_status_wac_sc(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -378,6 +388,7 @@ class case_status_eac_sc(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -403,6 +414,7 @@ class case_status_ysc_sc(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
 
@@ -431,6 +443,7 @@ class case_status_ioe(models.Model):
     action_date = models.CharField(max_length=32)
     action_date_x = models.DateField(default=date.today)
     case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
     add_date = models.DateTimeField('date added')
     date_number = models.IntegerField()
     def action_days_to_now(self):

@@ -175,7 +175,7 @@
                          <h5 class="mb-3"><i class="fa-solid fa-location-dot text-primary"></i>&nbsp;&nbsp;<strong>My position</strong></h5>
                          <div class="mb-3">Based on cases in the range:
                              <select id="case_range" name="case_range">
-                                 <option value="rn_range">ReceiptNumber: 2290590000 - 2290594999</option>
+                                 <option value="rn_range" selected>ReceiptNumber: {{ case_range }}</option>
                                  <option value="rn_n200">You ReceiptNumber - 200</option>
                                  <option value="rn_n500">You ReceiptNumber - 500</option>
                                  <option value="rn_p200">You ReceiptNumber + 200</option>
@@ -199,10 +199,9 @@
                          <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b></h6>
                          <div class="card">
                               <div class="card-body p-0 ps-3">
-                                  <param id="statu_sequence" value="MSLLQSALDFLAGPGSLGGASGRDQSDFVGQTVELGELRLRVRRVLAEGGFAFVYEAQDVGSGREYALKRLLSNEEEKNRAIIQEVCFMKKLSGHPNIVQFCSAASIGKEESDTGQAEFLLLTELCKGQLVEFLKKMESRGPLSCDTVLKIFYQTCRAVQHMHRQKPPIIHRDLKVENLLLSNQGTIKLCDFGSATTISHYPDYSWSAQRRALVEEEITRNTTPMYRTPEIIDLYSNFPIGEKQDIWALGCILYLLCFRQHPFEDGAKLRIVNGKYSIPPHDTQYTVFHSLIRAMLQVNPEERLSIAEVVHQLQEIAAARNVNPKSPITELLEQNGGYGSATLSRGPPPPVGPAGSGYSGGLALAEYDQPYGGFLDILRGGTERLFTNLKDTSSKVIQSVANYAKGDLDISYITSRIAVMSFPAEGVESALKNNIEDVRLFLDSKHPGHYAVYNLSPRTYRPSRFHNRVSECGWAARRAPHLHTLYNICRNMHAWLRQDHKNVCVVHCMDGRAASAVAVCSFLCFCRLFSTAEAAVYMFSMKRCPPGIWPSHKRYIEYMCDMVAEEPITPHSKPILVRAVVMTPVPLFSKQRSGCRPFCEVYVGDERVASTSQEYDKMRDFKIEDGKAVIPLGVTVQGDVLIVIYHARSTLGGRLQAKMASMKMFQIQFHTGFVPRNATTVKFAKYDLDACDIQEKYPDLFQVNLEVEVEPRDRPSREAPPWENSSMRGLNPKILFSSREEQQDILSKFGKPELPRQPGSTAQYDAGAGSPEAEPTDSDSPPSSSADASRFLHTLDWQEEKEAETGAENASSKESESALMEDRDESEVSDEGGSPISSEGQEPRADPEPPGLAAGLVQQDLVFEVETPAVLPEPVPQEDGVDLLGLHSEVGAGPAVPPQACKAPSSNTDLLSCLLGPPEAASQGPPEDLLSEDPLLLASPAPPLSVQSTPRGGPPAAADPFGPLLPSSGNNSQPCSNPDLFGEFLNSDSVTVPPSFPSAHSAPPPSCSADFLHLGDLPGEPSKMTASSSNPDLLGGWAAWTETAASAVAPTPATEGPLFSPGGQPAPCGSQASWTKSQNPDPFADLGDLSSGLQGSPAGFPPGGFIPKTATTPKGSSSWQTSRPPAQGASWPPQAKPPPKACTQPRPNYASNFSVIGAREERGVRAPSFAQKPKVSENDFEDLLSNQGFSSRSDKKGPKTIAEMRKQDLAKDTDPLKLKLLDWIEGKERNIRALLSTLHTVLWDGESRWTPVGMADLVAPEQVKKHYRRAVLAVHPDKAAGQPYEQHAKMIFMELNDAWSEFENQGSRPLF" />
-                                  <param id="center_name" value="GAK" />
-                                  <param id="recepit_num" value="O14976" />
-                                  <param id="form_type" value="2580" />
+                                  <param id="statu_sequence" value="FYQTCRAVQHMHRQKPPIIHRDLKVENLLLSNQGTIKLCDFGSATTISHYPDYSWSAQRRALVEEEITRNTTPMYRTPEIIDLYSNFPIGEKQDIWALGCILYLLCFRQHPFEDGAKLRIVNGKYSIPPHDTQYTVFHSLIRAMLQVNPEERLSIAEVVHQLQEIAAARNVNPKSPITELLEQNGGYGSATLSRGPPPPVGPAGSGYSGGLALAEYDQPYGGFLDILRGGTERLFTNLKDTSSKVIQSVANYAKGDLDISYITSRIAVMSFPAEGVESALKNNIEDVRLFLDSKHPGHYAVYNLSPRTYRPSRFHNRVSECGWAARRAPHLHTLYNICRNMHAWLRQDHKNVCVVHCMDGRAASAVAVCSFLCFCRLFSTAEAAVYMFSMKRCPPGIWPSHKRYIEYMCDMVAEEPITPHSKPILVRAVVMTPVPLFSKQRSGCRPFCEVYVGDERVASTSQEYDKMRDFKIEDGKAVIPLGVTVQGDVLIVIYHARSTLGGRLQAKMASMKMFQIQFHTGFVPRNATTVKFAKYDLDACDIQEKYPDLFQVNLEVEVEPRDRPSREAPPWENSSMRGLNPKILFSSREEQQDILSKFGKPELPRQPGSTAQYDAGAGSPEAEPTDSDSPPSSSADASRFLHTLDWQEEKEAETGAENASSKESESALMEDRDESEVSDEGGSPISSEGQEPRADPEPPGLAAGLVQQDLVFEVETPAVLPEPVPQEDGVDLLGLHSEVGAGPAVPPQACKAPSSNTDLLSCLLGPPEAASQGPPEDLLSEDPLLLASPAPPLSVQSTPRGGPPAAADPFGPLLPSSGNNSQPCSNPDLFGEFLNSDSVTVPPSFPSAHSAPPPSCSADFLHLGDLPGEPSKMTASSSNPDLLGGWAAWTETAASAVAPTPATEGPLFSPGGQPAPCGSQASWTKSQNPDPFADLGDLSSGLQGSPAGFPPGGFIPKTATTPKGSSSWQTSRPPAQGASWPPQAKPPPKACTQPRPNYASNFSVIGAREERGVRAPSFAQKPKVSENDFEDLLSNQGFSSRSDKKGPKTIAEMRKQDLAKDTDPLKLKLLDWIEGKERNIRALLSTLHTVLWDGESRWTPVGMADLVAPEQVKKHYRRAVLAVHPDKAAGQPYEQHAKMIFMELNDAWSEFENQGSRPLF" />
+                                  <param id="recepit_num" value="{{ receipt_num }}" />
+                                  <param id="form_type" value="{{ status.form }}" />
                                   <div class="row">
                                       <div class="col-md-12">
                                           <div id="controlpanel" class="col-md-4" style="width:100%;">
@@ -292,10 +291,33 @@
                  </div>
                  <!-- End of Recent changes -->
 
-
-
-
             </div> <!--col-6-->
         </div><!--row-->
     </div>
+    <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src={% static "mycase/js/saveSVG.js" %}></script>
+    <script type="text/javascript" src={% static "mycase/js/lollipop.js" %}></script>
+    <script type="text/javascript">
+        function get_data() {
+            recepit_num = $("recepit_num").value;
+            form_type = $("form_type").value;
+            form_type = $("action_date").value;
+            range_val = $("#case_range").val();
+            alert(range_val);
+            $.ajax({
+              type: "GET",
+              url: "ajax/caseinrange",
+              async: true,
+              data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val},
+              success : function(data) {
+                    data_json = JSON.parse(data);
+                },
+              error: function() {
+                      {#alert('Error occurs!');#}
+                }
+            });
+        }
+        get_data();
+    </script>
  {% endblock %}
