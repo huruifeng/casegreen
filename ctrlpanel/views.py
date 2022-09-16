@@ -16,7 +16,7 @@ from mycase.models import *
 @login_required()
 def index(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     sys_params,created = sysparam.objects.get_or_create(pk=1,defaults={
         "centers": "LIN,MSC,SRC,EAC,WAC,YSC,IOE",
@@ -32,7 +32,7 @@ def index(request):
 # @user_passes_test(lambda u: u.is_superuser)
 def ctrl_dashbord(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     return render(request,'ctrlpanel/dashbord.html')
 
@@ -65,7 +65,7 @@ def login_view(request):
 @login_required()
 def exportDB(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="exportDB.csv"'
@@ -109,7 +109,7 @@ def exportDB(request):
 @login_required()
 def sysinit(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # try:
@@ -132,7 +132,7 @@ def sysinit(request):
 @login_required()
 def sysupdate(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
@@ -153,7 +153,7 @@ def sysupdate(request):
 @login_required()
 def centerrun(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
@@ -175,7 +175,7 @@ def centerrun(request):
 @login_required()
 def centerstatus(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     qs_json = {}
     if request.is_ajax and request.method == "POST":
@@ -188,7 +188,7 @@ def centerstatus(request):
 @login_required()
 def visabulletin(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return HttpResponse("ERROR: Please Login!")
 
     if request.method == "GET":
         return render(request,'ctrlpanel/visabulletin.html')

@@ -227,7 +227,11 @@
           async: true,
           data:{'csrfmiddlewaretoken': '{{ csrf_token }}',},
           success : function(data) {
-                alert("Init succeed! "+data)
+              if(data.includes("Login")){
+                  location.reload();
+              }else{
+                  alert("Init succeed! "+data)
+              }
             },
           error: function() {
                   alert('Error occurs!');
@@ -252,7 +256,11 @@
           async: true,
           data:{"centers":centers,"fys":fys,"crawler_t":crawler_t,"crawler_n":crawler_n,'csrfmiddlewaretoken': '{{ csrf_token }}',},
           success : function(data) {
-                alert("Update succeed! "+data)
+              if(data.includes("Login")){
+                  location.reload();
+              }else{
+                  alert("Update succeed! "+data)
+              }
             },
           error: function() {
                   alert('Error occurs!');
@@ -287,7 +295,11 @@
           async: true,
           data:{"centers":center_ls_str, 'csrfmiddlewaretoken': '{{ csrf_token }}',},
           success : function(data) {
-                alert("Run "+center_x+", "+data)
+              if(data.includes("Login")){
+                  location.reload();
+              }else{
+                  alert("Run "+center_x+", "+data)
+              }
             },
           error: function() {
                   alert('Error occurs!');

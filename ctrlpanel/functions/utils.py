@@ -39,7 +39,7 @@ def get_form_dict():
     return form_dict
 def bkpTable(request,queryset):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return "ERROR: Please Login!"
 
     model = queryset.model
     table_name = model._meta.db_table
@@ -77,7 +77,7 @@ def bkpTable(request,queryset):
 
 def run_initalization(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return "ERROR: Please Login!"
 
     ## status
     case_status_df = pd.read_csv("mycase/data/case_status.csv",header=0,index_col=None,sep=",")
@@ -108,12 +108,13 @@ def run_initalization(request):
 
 
 def run_center(request,center):
-    rd_status = ["Fees Were Waived","Card Was Received By USCIS Along With My Letter","Case Accepted By The USCIS Lockbox",
-                 "Case Was Received","Case Was Received and A Receipt Notice Was Sent","Case Was Received At Another USCIS Office",
-                 "Document and Letter Was Received","Document And Letter Was Received And Under Review","Fingerprint Fee Was Received"]
-
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return redirect('ctrlpanel:login')
+        return "ERROR: Please Login!"
+
+    rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter", "Case Accepted By The USCIS Lockbox",
+                 "Case Was Received", "Case Was Received and A Receipt Notice Was Sent","Case Was Received At Another USCIS Office",
+                 "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
+                 "Fingerprint Fee Was Received"]
 
     sys_params = sysparam.objects.get(pk=1)
     year_n = sys_params.fiscal_year_n
