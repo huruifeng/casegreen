@@ -7,7 +7,7 @@ urlpatterns = [
     path('mycase/', views.mycase, name='mycase'),
     path('visabulletin/', views.visabulletin, name='visabulletin'),
     path('ajax/getjson', views.getjson, name = "getjson"),
-    path('ajax/caseinrange', views.getjson, name = "caseinrange"),
+    path('ajax/caseinrange', views.caseinrange, name = "caseinrange"),
 
 ]
 

@@ -86,7 +86,7 @@ var tip = d3.tip()
         return htmltext;
     })
     .direction("n")
-    .style("background-color", "#deebf7") //function(d){return getbkgColor(d)})  //"#c6dbef")
+    .style("background-color", "#deebf7")
     .style("color", "#666666")
     .style("leftmargin","0")
     .style("topmargin","0");
@@ -199,7 +199,8 @@ var domainannotation = svg2.append("g")
     .append("text")
     .attr("y", chart_height - 10)
     .text(function(d) {
-        return d["ID"].substring(0, Math.floor(xScale(d["END"]) - xScale(d["START"]))/9);
+        // return d["ID"].substring(0, Math.floor(xScale(d["END"]) - xScale(d["START"]))/9);
+        return "";
     })
     .attr("x", function(d,i) { return (xScale(d["END"]) + xScale(d["START"]))/2; })
     .attr("text-anchor", "middle")
@@ -453,7 +454,8 @@ function zoomed() {
     domainannotation
         .attr("x", function(d,i) { return (new_xScale(d["END"]) + new_xScale(d["START"]))/2; })
         .text(function(d) {
-            return d["ID"].substring(0, Math.floor(new_xScale(d["END"]) - new_xScale(d["START"]))/9);
+            //return d["ID"].substring(0, Math.floor(new_xScale(d["END"]) - new_xScale(d["START"]))/9);
+            return ""
         });
     statusseq
         .attr("x", function(d, i) { return new_xScale(i+1); });
@@ -511,7 +513,7 @@ var svgLegend = d3.select("#legend")
 
 var thismods = findModsInJASON(jsonobj_sites),
     statusTotal = ["REC","FP","ITV", "RFE","TRF","APV","RJC","OTH"],
-    statusTotalFancy = ["Received(R)", "Figureprinted(F)","Interviewed(I)","RFE(E)","Transferred(T)","Approved(A)","Rejected(J)","Other(O)"];
+    statusTotalFancy = ["Received(R)", "FP_Taken(F)","Interviewed(I)","RFE(E)","Transferred(T)","Approved(A)","Rejected(J)","Other(O)"];
 
 var xlegend= 5, ylegend = 15;
 for (var i = 0; i < thismods.length; ++i) {

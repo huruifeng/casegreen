@@ -74,6 +74,7 @@ class form(models.Model):
 class status_daily(models.Model):
     center = models.CharField(max_length=16)
     form = models.CharField(max_length=16)
+    new_n = models.IntegerField(default=0)
     received_n = models.IntegerField()
     rfe_sent_n = models.IntegerField()
     rfe_received_n = models.IntegerField()

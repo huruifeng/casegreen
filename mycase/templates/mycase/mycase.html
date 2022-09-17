@@ -126,44 +126,6 @@
                           <h5 class="mb-3"><i class="fa-solid fa-chart-pie text-primary"></i>&nbsp;&nbsp;<b>Cases in the range</b></h5>
                           <div id="donut_chart">
                               <canvas id="donut_case_percent_in_range" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
-                              <script>
-                                  const labels=[
-                                        'Red',
-                                        'Blue',
-                                        'Yellow'
-                                      ];
-
-                                  const data = {
-                                      labels: labels,
-                                      datasets: [{
-                                        label: 'Cases statu count in the range',
-                                        data: [300, 50, 100],
-                                        backgroundColor: [
-                                          'rgb(255, 99, 132)',
-                                          'rgb(54, 162, 235)',
-                                          'rgb(255, 205, 86)'
-                                        ],
-                                        hoverOffset: 4
-                                      }]
-                                    };
-
-                                  const config = {
-                                      type: 'doughnut',
-                                      data: data,
-                                      options: {
-                                          cutout: "50%",
-                                          radius:"80%",
-                                      },
-                                      animation:{
-                                          animateScale:true
-                                      },
-                                  };
-
-                                  const donutChart = new Chart(
-                                    document.getElementById('donut_case_percent_in_range'),
-                                    config
-                                  )
-                              </script>
                           </div>
                       </div>
                  </div>
@@ -199,7 +161,7 @@
                          <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b></h6>
                          <div class="card">
                               <div class="card-body p-0 ps-3">
-                                  <param id="statu_sequence" value="FYQTCRAVQHMHRQKPPIIHRDLKVENLLLSNQGTIKLCDFGSATTISHYPDYSWSAQRRALVEEEITRNTTPMYRTPEIIDLYSNFPIGEKQDIWALGCILYLLCFRQHPFEDGAKLRIVNGKYSIPPHDTQYTVFHSLIRAMLQVNPEERLSIAEVVHQLQEIAAARNVNPKSPITELLEQNGGYGSATLSRGPPPPVGPAGSGYSGGLALAEYDQPYGGFLDILRGGTERLFTNLKDTSSKVIQSVANYAKGDLDISYITSRIAVMSFPAEGVESALKNNIEDVRLFLDSKHPGHYAVYNLSPRTYRPSRFHNRVSECGWAARRAPHLHTLYNICRNMHAWLRQDHKNVCVVHCMDGRAASAVAVCSFLCFCRLFSTAEAAVYMFSMKRCPPGIWPSHKRYIEYMCDMVAEEPITPHSKPILVRAVVMTPVPLFSKQRSGCRPFCEVYVGDERVASTSQEYDKMRDFKIEDGKAVIPLGVTVQGDVLIVIYHARSTLGGRLQAKMASMKMFQIQFHTGFVPRNATTVKFAKYDLDACDIQEKYPDLFQVNLEVEVEPRDRPSREAPPWENSSMRGLNPKILFSSREEQQDILSKFGKPELPRQPGSTAQYDAGAGSPEAEPTDSDSPPSSSADASRFLHTLDWQEEKEAETGAENASSKESESALMEDRDESEVSDEGGSPISSEGQEPRADPEPPGLAAGLVQQDLVFEVETPAVLPEPVPQEDGVDLLGLHSEVGAGPAVPPQACKAPSSNTDLLSCLLGPPEAASQGPPEDLLSEDPLLLASPAPPLSVQSTPRGGPPAAADPFGPLLPSSGNNSQPCSNPDLFGEFLNSDSVTVPPSFPSAHSAPPPSCSADFLHLGDLPGEPSKMTASSSNPDLLGGWAAWTETAASAVAPTPATEGPLFSPGGQPAPCGSQASWTKSQNPDPFADLGDLSSGLQGSPAGFPPGGFIPKTATTPKGSSSWQTSRPPAQGASWPPQAKPPPKACTQPRPNYASNFSVIGAREERGVRAPSFAQKPKVSENDFEDLLSNQGFSSRSDKKGPKTIAEMRKQDLAKDTDPLKLKLLDWIEGKERNIRALLSTLHTVLWDGESRWTPVGMADLVAPEQVKKHYRRAVLAVHPDKAAGQPYEQHAKMIFMELNDAWSEFENQGSRPLF" />
+                                  <param id="statu_sequence" value="AARFRFTTFFFRFFFFFFJEFFFFRFFFFRFRRRFFJEFFARAFFFEEFFFFREERRFRFFEEEFAEEFRFFFFARRFFRFFFFFFFFFRRREFFAFRFJJJFFFFFEEFEFFAFEAAFFFAAFFFFFFFFFFTTTTFEFFFFFRFRFFEEFFRJJJJJFFFRFFRFFFFFFFOFREAAAAFFEOJFRRFFFRRFRFFFRFFFFAAAARFFAATTTTFFEEFRARRFFFFFRFRFEERERAFFFTFFFRRFRERFJEEEEFFFEEJJJJJFRRJJJJJJJFEFFAAAAFJFFFFFFFFFEFFFFFFFFJJRAAAAJFFFFFFFFFFRJJJJJJJJJJJJJJAAFFFFFFRFFFFFEEEEEEEJJFEEOJJJEEJEFFFFJJJJJJEJJJJJJJJEFJFFRFERJFFFFFFFFRFJRFFRJJJJFFRFFRRFFJEAFRAEFJJRFFJFFFFFFFAERFEFEFEFRAFEFFFEEFRFRFFFFFFFFFFRFJFFFFRFAEEFFEFFFFFETTFFFFEFFFFFFFFRFRRRROEAFFFEEFEEJJFFFFFFFFFAFFFRJFFFRRFFFFFFFFRFFFFFJRRFFRRFEEFFFFFJEFFRFFFFFTTFAAERRAAJRFFFRRRFFFFFFFFRFFFFFFFFERRFFFJJJFJJJJJJFFFFAEEEIFFAAFRJJFRJFFEFFFFFFFREFFFFJEEFFRFFFFFFAFAFFJJFJRRRREEEAAJEFJFFEEEFRRFFFFFFRFAFFFFFAAJJJJJFFRFAAFFRFJEEFFRFFFFFARFFFAFRFAFFRFFRFFEEFFFERRAFFFIFFFFRFFFAEFFFRFFFFRFJFFFFFFFRRFFFEEAEFFEEFEAFFFFFFFFFEFFEEEEEFFEJJFFRRFFFFFFFEFFRFFRRFFFFRFEFFRFREOFJFRRFEEFEFJJJJEAFJFJJJJFERFEFFFFJJFFFFFFFFFEFFJFFFJFFJJFFFFFFFFFFRFJFFFFFEEFFRFFFJJJEFJFRRRRFFJJFFFJFFFFFJFFFFJRFFFFAFJORRFFFFEFFFFFFFFFRRFFF" />
                                   <param id="recepit_num" value="{{ receipt_num }}" />
                                   <param id="form_type" value="{{ status.form }}" />
                                   <div class="row">
@@ -300,11 +262,9 @@
     <script type="text/javascript" src={% static "mycase/js/lollipop.js" %}></script>
     <script type="text/javascript">
         function get_data() {
-            recepit_num = $("recepit_num").value;
-            form_type = $("form_type").value;
-            form_type = $("action_date").value;
+            recepit_num = $("#recepit_num").val();
+            form_type = $("#form_type").val();
             range_val = $("#case_range").val();
-            alert(range_val);
             $.ajax({
               type: "GET",
               url: "ajax/caseinrange",
@@ -314,10 +274,41 @@
                     data_json = JSON.parse(data);
                 },
               error: function() {
-                      {#alert('Error occurs!');#}
+                      alert('Error occurs!');
                 }
             });
         }
         get_data();
+        function plot_donut() {
+              const labels=["REC","FPR","ITV","RFE","TRF","APV","RJC","OTH"];
+
+              const data = {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Cases statu count in the range',
+                    data: [300, 50, 100,300, 50, 100,300, 50],
+                    backgroundColor: ["#4e97f6","#94F829","#04daba","#ffe95a","#c77cff","#1db063","#ff001a","#78787a"],
+                    hoverOffset: 4
+                  }]
+                };
+
+              const config = {
+                  type: 'doughnut',
+                  data: data,
+                  options: {
+                      cutout: "50%",
+                      radius:"80%",
+                  },
+                  animation:{
+                      animateScale:true
+                  },
+              };
+              const donutChart = new Chart(
+                document.getElementById('donut_case_percent_in_range'),
+                config
+              )
+
+        }
+        plot_donut();
     </script>
  {% endblock %}

@@ -213,11 +213,14 @@ def run_center(request,center):
             ## form
             if form_i != "":
                 if form_i not in counts_today:
-                    counts_today[form_i]={"received_n":0,"rfe_sent_n":0,"rfe_received_n":0,"approved_n":0,
+                    counts_today[form_i]={"new_n":0,"received_n":0,"rfe_sent_n":0,"rfe_received_n":0,"approved_n":0,
                                                   "fp_schduled_n":0,"fp_taken_n":0,"iv_schduled_n":0,"iv_done_n":0,
                                                   "rejected_n":0,"terminated_n":0,"transferred_n":0,"hold_n":0,
                                                   "notice_sent_n":0,"pending_n":0,"mailed_n":0,"produced_n":0,
                                                   "return_hold_n":0,"withdrawal_acknowledged_n":0,"others_n":0}
+                if status_i in rd_status:
+                    counts_today[form_i]["new_n"] += 1
+
                 if status_i in status_dict:
                     l2_name = status_dict[status_i]["L2"]
                     if l2_name == "Received": counts_today[form_i]["received_n"] += 1
