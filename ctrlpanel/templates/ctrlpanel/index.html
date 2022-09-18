@@ -256,7 +256,7 @@
           async: true,
           data:{"centers":centers,"fys":fys,"crawler_t":crawler_t,"crawler_n":crawler_n,'csrfmiddlewaretoken': '{{ csrf_token }}',},
           success : function(data) {
-              if(data.includes("Login")){
+              if(data.includes("ERROR")){
                   location.reload();
               }else{
                   alert("Update succeed! "+data)

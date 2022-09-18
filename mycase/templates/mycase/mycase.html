@@ -30,8 +30,19 @@
                      <div class="col-12">
 {#                             <h3 style="color:green;">Case Was Approved</h3>#}
                          <h4 style="color:#2d48cb;">{{ status.status}}</h4>
+                         {% if status.form != "" %}
+                            <span>Form: {{ status.form}}</span>
+                         {% else %}
+                             <span>Form:
+                                 <select>
+                                     <option value="" selected></option>
+                                     {% for form_i in form_ls %}
+                                     <option value="{{ form_i }}">{{ form_i }}</option>
+                                     {% endfor %}
 
-                         <span>Form: {{ status.form}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                 </select>
+                             </span>
+                         {% endif %}&nbsp;&nbsp;&nbsp;&nbsp;
                          <span>Last update on: {{ status.date}} ({{ status.days }} days ago)</span>
                          <hr style="height: 1px;color: #666666">
                          <p>
@@ -123,10 +134,17 @@
                          <!-- Section: Timeline -->
                      </div>
                       <div class="col-md-6" style="border-left: #eee 0.2px solid;">
-                          <h5 class="mb-3"><i class="fa-solid fa-chart-pie text-primary"></i>&nbsp;&nbsp;<b>Cases in the range</b></h5>
+                          <h5 class="mb-3"><i class="fa-solid fa-chart-pie text-primary"></i>&nbsp;&nbsp;<b>Cases in the range</b>(<span class="n_cases">#</span> Cases)</h5>
+                          {% if status.form != ""%}
                           <div id="donut_chart">
                               <canvas id="donut_case_percent_in_range" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
                           </div>
+                          {% else %}
+                              <div class="formtype_na">
+                                <h5>Form type is not available.</h5>
+                                <p>Please pick a Form Type.</p>
+                              </div>
+                          {% endif %}
                       </div>
                  </div>
                  <!-- End of Case history & Case range pie -->
@@ -135,15 +153,19 @@
                  <div class="row" style="max-width: 840px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-location-dot text-primary"></i>&nbsp;&nbsp;<strong>My position</strong></h5>
+
                          <div class="mb-3">Based on cases in the range:
-                             <select id="case_range" name="case_range">
+                             <select id="case_range" name="case_range" onchange="get_data()">
                                  <option value="rn_range" selected>ReceiptNumber: {{ case_range }}</option>
                                  <option value="rn_n200">You ReceiptNumber - 200</option>
                                  <option value="rn_n500">You ReceiptNumber - 500</option>
+                                 <option value="rn_n1000">You ReceiptNumber - 1000</option>
                                  <option value="rn_p200">You ReceiptNumber + 200</option>
                                  <option value="rn_p500">You ReceiptNumber + 500</option>
+                                 <option value="rn_p1000">You ReceiptNumber + 1000</option>
                                  <option value="rn_np200">You ReceiptNumber &plusmn; 200</option>
                                  <option value="rn_np500">You ReceiptNumber &plusmn; 500</option>
+                                 <option value="rn_np1000">You ReceiptNumber &plusmn; 1000</option>
                                  <option value="rd_n1m">Your RD and Your RD - 1 month</option>
                                  <option value="rd_n2m">Your RD and Your RD - 2 month</option>
                                  <option value="rd_n3m">Your RD and Your RD - 3 month</option>
@@ -153,15 +175,15 @@
                                  <option value="rd_np1m">Your case RD &plusmn; 1 month</option>
                                  <option value="rd_np2m">Your case RD &plusmn; 2 month</option>
                                  <option value="rd_np3m">Your case RD &plusmn; 3 month</option>
-                                 <option value="rn_fy">All cases received in YOUR Fiscal Year</option>
+{#                                 <option value="rn_fy">All cases received in YOUR Fiscal Year</option>#}
                              </select>
                             <span>(Same case type/Same form type)</span>
                          </div>
 
-                         <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b></h6>
+                         <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b>(<span class="n_cases">#</span> Cases)</h6>
                          <div class="card">
                               <div class="card-body p-0 ps-3">
-                                  <param id="statu_sequence" value="AARFRFTTFFFRFFFFFFJEFFFFRFFFFRFRRRFFJEFFARAFFFEEFFFFREERRFRFFEEEFAEEFRFFFFARRFFRFFFFFFFFFRRREFFAFRFJJJFFFFFEEFEFFAFEAAFFFAAFFFFFFFFFFTTTTFEFFFFFRFRFFEEFFRJJJJJFFFRFFRFFFFFFFOFREAAAAFFEOJFRRFFFRRFRFFFRFFFFAAAARFFAATTTTFFEEFRARRFFFFFRFRFEERERAFFFTFFFRRFRERFJEEEEFFFEEJJJJJFRRJJJJJJJFEFFAAAAFJFFFFFFFFFEFFFFFFFFJJRAAAAJFFFFFFFFFFRJJJJJJJJJJJJJJAAFFFFFFRFFFFFEEEEEEEJJFEEOJJJEEJEFFFFJJJJJJEJJJJJJJJEFJFFRFERJFFFFFFFFRFJRFFRJJJJFFRFFRRFFJEAFRAEFJJRFFJFFFFFFFAERFEFEFEFRAFEFFFEEFRFRFFFFFFFFFFRFJFFFFRFAEEFFEFFFFFETTFFFFEFFFFFFFFRFRRRROEAFFFEEFEEJJFFFFFFFFFAFFFRJFFFRRFFFFFFFFRFFFFFJRRFFRRFEEFFFFFJEFFRFFFFFTTFAAERRAAJRFFFRRRFFFFFFFFRFFFFFFFFERRFFFJJJFJJJJJJFFFFAEEEIFFAAFRJJFRJFFEFFFFFFFREFFFFJEEFFRFFFFFFAFAFFJJFJRRRREEEAAJEFJFFEEEFRRFFFFFFRFAFFFFFAAJJJJJFFRFAAFFRFJEEFFRFFFFFARFFFAFRFAFFRFFRFFEEFFFERRAFFFIFFFFRFFFAEFFFRFFFFRFJFFFFFFFRRFFFEEAEFFEEFEAFFFFFFFFFEFFEEEEEFFEJJFFRRFFFFFFFEFFRFFRRFFFFRFEFFRFREOFJFRRFEEFEFJJJJEAFJFJJJJFERFEFFFFJJFFFFFFFFFEFFJFFFJFFJJFFFFFFFFFFRFJFFFFFEEFFRFFFJJJEFJFRRRRFFJJFFFJFFFFFJFFFFJRFFFFAFJORRFFFFEFFFFFFFFFRRFFF" />
+                                  <param id="statu_sequence" value="AAAAAAAAAAAAORRFFFFEFFFFFFFFFRRFFF" />
                                   <param id="recepit_num" value="{{ receipt_num }}" />
                                   <param id="form_type" value="{{ status.form }}" />
                                   <div class="row">
@@ -170,41 +192,45 @@
                                               <div style="font:12px Verdana;font-weight:bold;">Show cases: </div>
                                               <div style="font:14px Verdana;">
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="REC_box" value="REC" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="REC_box" value="REC" />
                                                       <label class="form-check-label" for="REC_box">Received</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="RFE_box" value="RFE" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="RFE_box" value="RFE" />
                                                       <label class="form-check-label" for="RFE_box">RFE</label>
                                                   </div>
 
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="FP_box" value="FP" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="FP_box" value="FP" />
                                                       <label class="form-check-label" for="FP_box">Figureprinted</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="TRF_box" value="TRF" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="TRF_box" value="TRF" />
                                                       <label class="form-check-label" for="TRF_box">Transferred</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="ITV_box" value="ITV" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="ITV_box" value="ITV" />
                                                       <label class="form-check-label" for="ITV_box">Interviewed</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="APV_box" value="APV" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="APV_box" value="APV" />
                                                       <label class="form-check-label" for="APV_box">Approved</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="RJC_box" value="RJC" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="RJC_box" value="RJC" />
                                                       <label class="form-check-label" for="RJC_box">Rejected</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type" id="OTH_box" value="OTH" />
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="OTH_box" value="OTH" />
                                                       <label class="form-check-label" for="OTH_box">Other</label>
+                                                  </div>
+                                                   <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="ME_box" value="ME" checked />
+                                                      <label class="form-check-label" for="ME_box">Me</label>
                                                   </div>
                                               </div>
                                               <div style="">
-                                                <div id="legend"></div>
+                                                <div id="lollipop_legend"></div>
                                               </div>
                                         </div>
                                         <!-- #control pannel -->
@@ -218,7 +244,7 @@
                                   </div>
                               </div>
                          </div>
-                         <h6><b><i class="fa-solid fa-diamond"></i> Case grouped by status and ordered in the group</b></h6>
+                         <h6><b><i class="fa-solid fa-diamond"></i> Case grouped by status and ordered in the group</b>(<span class="n_cases">#</span> Cases)</h6>
                          <div class="card mb-3">
                               <div class="card-body p-0 ps-3">
                                   <div class="progress" style="height: 20px;">
@@ -265,13 +291,18 @@
             recepit_num = $("#recepit_num").val();
             form_type = $("#form_type").val();
             range_val = $("#case_range").val();
+            $("#case_in_receipt_order").empty();
+            $("#lollipop_legend").empty();
+
             $.ajax({
               type: "GET",
               url: "ajax/caseinrange",
               async: true,
               data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val},
               success : function(data) {
-                    data_json = JSON.parse(data);
+                  $(".n_cases").html(data["n_cases"]);
+                    draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
+                    plot_donut(data["status_counts"]);
                 },
               error: function() {
                       alert('Error occurs!');
@@ -279,15 +310,15 @@
             });
         }
         get_data();
-        function plot_donut() {
+        function plot_donut(status_count=[100,100,100,100,100,100,100,100]) {
               const labels=["REC","FPR","ITV","RFE","TRF","APV","RJC","OTH"];
 
               const data = {
                   labels: labels,
                   datasets: [{
                     label: 'Cases statu count in the range',
-                    data: [300, 50, 100,300, 50, 100,300, 50],
-                    backgroundColor: ["#4e97f6","#94F829","#04daba","#ffe95a","#c77cff","#1db063","#ff001a","#78787a"],
+                    data: status_count,
+                    backgroundColor: ["#4e97f6","#11a9fa","#2b04da","#ffe95a","#c77cff","#1db063","#ff001a","#78787a"],
                     hoverOffset: 4
                   }]
                 };
@@ -297,7 +328,7 @@
                   data: data,
                   options: {
                       cutout: "50%",
-                      radius:"80%",
+                      radius:"90%",
                   },
                   animation:{
                       animateScale:true
@@ -307,8 +338,6 @@
                 document.getElementById('donut_case_percent_in_range'),
                 config
               )
-
         }
-        plot_donut();
     </script>
  {% endblock %}

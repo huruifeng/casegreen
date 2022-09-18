@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/mycase/migrations/0010_status_daily_new_n.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/lollipop.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/lollipop.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
@@ -76,11 +73,11 @@
       <recent name="F:\PyCharm_project\casegreen\ctrlpanel\static\ctrlpanel\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\mycase\data\bkp" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data\current" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data" />
       <recent name="F:\PyCharm_project\casegreen\ctrlpanel\functions" />
       <recent name="F:\PyCharm_project\casegreen\ctrlpanel\static\ctrlpanel\js" />
-      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\templates" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.casegreen">
@@ -206,7 +203,7 @@
       <workItem from="1662503307635" duration="10783000" />
       <workItem from="1662518373670" duration="2263000" />
       <workItem from="1662591150309" duration="81096000" />
-      <workItem from="1663263579676" duration="49490000" />
+      <workItem from="1663263579676" duration="73321000" />
     </task>
     <task id="LOCAL-00001" summary="updates">
       <created>1660538909922</created>
@@ -376,7 +373,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663351075075</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="updates">
+      <created>1663397926898</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1663397926898</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
