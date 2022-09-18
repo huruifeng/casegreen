@@ -213,43 +213,70 @@ def caseinrange(request):
                 del case_qs2
             elif case_range == "rd_n1m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_s = case_rd.rd_date + timedelta(days=-30)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd.rd_date)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000,1,1):
+                    case_rd_s = case_rd.rd_date + timedelta(days=-30)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd.rd_date)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_n2m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_s = case_rd.rd_date + timedelta(days=-60)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd.rd_date)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_s = case_rd.rd_date + timedelta(days=-60)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd.rd_date)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_n3m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_s = case_rd.rd_date + timedelta(days=-90)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd.rd_date)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_s = case_rd.rd_date + timedelta(days=-90)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd.rd_date)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_p1m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_e = case_rd.rd_date + timedelta(days=+30)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date,case_rd_e)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_e = case_rd.rd_date + timedelta(days=+30)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date,case_rd_e)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_p2m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_e = case_rd.rd_date + timedelta(days=+60)
-                case_qs = center_table.objects.filter(form=form_type,rd_date__range=(case_rd.rd_date,case_rd_e)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_e = case_rd.rd_date + timedelta(days=+60)
+                    case_qs = center_table.objects.filter(form=form_type,rd_date__range=(case_rd.rd_date,case_rd_e)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_p3m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_e = case_rd.rd_date + timedelta(days=+90)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date,case_rd_e)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_e = case_rd.rd_date + timedelta(days=+90)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date,case_rd_e)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_np1m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_s = case_rd.rd_date + timedelta(days=-30)
-                case_rd_e = case_rd.rd_date + timedelta(days=+30)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd_e)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_s = case_rd.rd_date + timedelta(days=-30)
+                    case_rd_e = case_rd.rd_date + timedelta(days=+30)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd_e)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_np2m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_s = case_rd.rd_date + timedelta(days=-60)
-                case_rd_e = case_rd.rd_date + timedelta(days=+60)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd_e)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_s = case_rd.rd_date + timedelta(days=-60)
+                    case_rd_e = case_rd.rd_date + timedelta(days=+60)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd_e)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rd_np3m":
                 case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
-                case_rd_s = case_rd.rd_date + timedelta(days=-90)
-                case_rd_e = case_rd.rd_date + timedelta(days=+90)
-                case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd_e)).order_by("receipt_number","-add_date")
+                if case_rd.rd_date != date(2000, 1, 1):
+                    case_rd_s = case_rd.rd_date + timedelta(days=-90)
+                    case_rd_e = case_rd.rd_date + timedelta(days=+90)
+                    case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s,case_rd_e)).order_by("receipt_number","-add_date")
+                else:
+                    case_qs = []
             elif case_range == "rn_fy":
                 center_year = center + year
                 case_qs = center_table.objects.filter(form=form_type, receipt_number__startswith=center_year).order_by("receipt_number","-add_date")
@@ -258,7 +285,8 @@ def caseinrange(request):
                 case_range_e = center + str(case_range_base + 4999)
                 case_qs = center_table.objects.filter(form=form_type, receipt_number__range=(case_range_s, case_range_e)).order_by("receipt_number","-add_date")
 
-            # print(len(case_qs))
+            ##########
+            print(len(case_qs))
             if len(case_qs) > 0:
                 status_letter = {"Received":"R", "FP_Taken":"F","Interviewed":"I","RFE":"E","Transferred":"T","Approved":"A","Rejected":"J","Other":"O"}
                 status_abbr = {"Received": "REC", "FP_Taken": "FP", "Interviewed": "ITV", "RFE": "RFE", "Transferred": "TRF", "Approved": "APV", "Rejected": "RJC", "Other": "OTH"}
@@ -283,6 +311,10 @@ def caseinrange(request):
                         l3_name = status_dict[case_i.status]["L3"]
                     else:
                         l3_name = "Other"
+
+                    if case_i.receipt_number == receipt_num:
+                        mystatus_l3 = l3_name
+
                     status_counts[l3_name] += 1
                     status_seq += status_letter[l3_name]
                     if case_i.receipt_number==receipt_num:
@@ -291,7 +323,6 @@ def caseinrange(request):
                         status_mut.append({"ID":case_i.receipt_number,"Num":1,"POS":i,"STATUS":status_abbr[l3_name],"ACTDATE":case_i.action_date})
                     status_dom.append({"ID":status_abbr[l3_name],"START":i-0.5,"END":i+0.5})
                 n_cases = len(used_case)
-                del used_case[:]
 
                 ## merge doamin:
                 status_dom_merged = [{"ID":"","START":0,"END":len(case_qs)+1}]
@@ -304,16 +335,24 @@ def caseinrange(request):
                         start_i = status_dom[i]["START"]
                 status_dom_merged.append({"ID": ID_prev, "START": start_i, "END": status_dom[i]["END"]})
 
-                data_dict = {"n_cases":n_cases,"status_counts": list(status_counts.values()),"status_seq": status_seq,"status_mut":status_mut,"status_dom":status_dom_merged}
+                mypos = used_case.index(receipt_num)
+                for status_i in list(status_abbr.keys())[::-1]:
+                    if status_i == mystatus_l3: break
+                    else: mypos -= status_counts[status_i]
+                mypos = round(mypos / n_cases * 100.0)
+                print(mypos)
+                del used_case[:]
+                data_dict = {"n_cases":n_cases,"status_counts": list(status_counts.values()),"mypos":mypos,
+                             "status_seq": status_seq,"status_mut":status_mut,"status_dom":status_dom_merged}
                 return JsonResponse(data_dict, status=200)
             else:
                 ## queryset is empty
-                data_dict = {"n_cases": 0, "status_counts": 0,"status_seq": "", "status_mut": [], "status_dom": []}
+                data_dict = {"n_cases": 0, "status_counts": [0,0,0,0,0,0,0,0],"mypos":0,"status_seq": "", "status_mut": [], "status_dom": []}
                 return JsonResponse(data_dict, status=200)
         else:  ## receipt_num == None
-            data_dict = {"n_cases": 0, "status_counts": 0, "status_seq": "", "status_mut": [], "status_dom": []}
+            data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0], "mypos":0,"status_seq": "", "status_mut": [],"status_dom": []}
             return JsonResponse(data_dict, status=200)
     else: ## ajax, GET
-        data_dict = {"n_cases": 0, "status_counts": 0, "status_seq": "", "status_mut": [], "status_dom": []}
+        data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0],"mypos":0,"status_seq": "", "status_mut": [],"status_dom": []}
         return JsonResponse(data_dict, status=200)
 

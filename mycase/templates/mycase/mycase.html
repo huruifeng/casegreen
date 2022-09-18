@@ -30,6 +30,7 @@
                      <div class="col-12">
 {#                             <h3 style="color:green;">Case Was Approved</h3>#}
                          <h4 style="color:#2d48cb;">{{ status.status}}</h4>
+                        <input type="hidden" name="temp_form" id="temp_form" value="{{ status.form }}">
                          {% if status.form != "" %}
                             <span>Form: {{ status.form}}</span>
                          {% else %}
@@ -135,25 +136,19 @@
                      </div>
                       <div class="col-md-6" style="border-left: #eee 0.2px solid;">
                           <h5 class="mb-3"><i class="fa-solid fa-chart-pie text-primary"></i>&nbsp;&nbsp;<b>Cases in the range</b>(<span class="n_cases">#</span> Cases)</h5>
-                          {% if status.form != ""%}
+                          <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
                           <div id="donut_chart">
-                              <canvas id="donut_case_percent_in_range" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
+                                <canvas id="donut_case_percent_in_range" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
                           </div>
-                          {% else %}
-                              <div class="formtype_na">
-                                <h5>Form type is not available.</h5>
-                                <p>Please pick a Form Type.</p>
-                              </div>
-                          {% endif %}
                       </div>
                  </div>
                  <!-- End of Case history & Case range pie -->
                  <hr style="height: 0.2px;color: #ccc;max-width: 820px;">
                   <!-- my position -->
-                 <div class="row" style="max-width: 840px;">
+                 <div class="row"  style="max-width: 840px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-location-dot text-primary"></i>&nbsp;&nbsp;<strong>My position</strong></h5>
-
+                         <div id="myposition_wrapper">
                          <div class="mb-3">Based on cases in the range:
                              <select id="case_range" name="case_range" onchange="get_data()">
                                  <option value="rn_range" selected>ReceiptNumber: {{ case_range }}</option>
@@ -175,13 +170,14 @@
                                  <option value="rd_np1m">Your case RD &plusmn; 1 month</option>
                                  <option value="rd_np2m">Your case RD &plusmn; 2 month</option>
                                  <option value="rd_np3m">Your case RD &plusmn; 3 month</option>
-{#                                 <option value="rn_fy">All cases received in YOUR Fiscal Year</option>#}
+                            {#   <option value="rn_fy">All cases received in YOUR Fiscal Year</option>#}
                              </select>
                             <span>(Same case type/Same form type)</span>
                          </div>
 
                          <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b>(<span class="n_cases">#</span> Cases)</h6>
-                         <div class="card">
+                             <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
+                         <div class="card" id="myposition_RN_order">
                               <div class="card-body p-0 ps-3">
                                   <param id="statu_sequence" value="AAAAAAAAAAAAORRFFFFEFFFFFFFFFRRFFF" />
                                   <param id="recepit_num" value="{{ receipt_num }}" />
@@ -196,21 +192,20 @@
                                                       <label class="form-check-label" for="REC_box">Received</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="RFE_box" value="RFE" />
-                                                      <label class="form-check-label" for="RFE_box">RFE</label>
-                                                  </div>
-
-                                                  <div class="form-check form-check-inline">
                                                       <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="FP_box" value="FP" />
                                                       <label class="form-check-label" for="FP_box">Figureprinted</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="TRF_box" value="TRF" />
-                                                      <label class="form-check-label" for="TRF_box">Transferred</label>
-                                                  </div>
-                                                  <div class="form-check form-check-inline">
                                                       <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="ITV_box" value="ITV" />
                                                       <label class="form-check-label" for="ITV_box">Interviewed</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="RFE_box" value="RFE" />
+                                                      <label class="form-check-label" for="RFE_box">RFE</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="TRF_box" value="TRF" />
+                                                      <label class="form-check-label" for="TRF_box">Transferred</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
                                                       <input class="form-check-input" type="checkbox" name="status_type_lollipop" id="APV_box" value="APV" />
@@ -233,7 +228,7 @@
                                                 <div id="lollipop_legend"></div>
                                               </div>
                                         </div>
-                                        <!-- #control pannel -->
+                                        <!-- control pannel -->
                                       </div>
                                       <!-- col-md-4 -->
                                   </div>
@@ -245,19 +240,26 @@
                               </div>
                          </div>
                          <h6><b><i class="fa-solid fa-diamond"></i> Case grouped by status and ordered in the group</b>(<span class="n_cases">#</span> Cases)</h6>
-                         <div class="card mb-3">
+                             <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
+                         <div class="card mb-3" id="myposition_status_order">
                               <div class="card-body p-0 ps-3">
                                   <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 15%;background-color: #0a47a9;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                    <div class="progress-bar" role="progressbar" style="width: 30%;background-color: #00b74a;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                    <div class="progress-bar" role="progressbar" style="width: 20%;background-color: #be0626;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" id="rec_bar" style="background-color: #1072f1;"></div>
+                                    <div class="progress-bar" role="progressbar" id="fp_bar" style="background-color: #11a9fa;"></div>
+                                    <div class="progress-bar" role="progressbar" id="itv_bar" style="background-color: #2b04da;"></div>
+                                    <div class="progress-bar" role="progressbar" id="rfe_bar" style="background-color: #ffe95a;"></div>
+                                    <div class="progress-bar" role="progressbar" id="trf_bar" style="background-color: #c77cff;"></div>
+                                    <div class="progress-bar" role="progressbar" id="apv_bar" style="background-color: #1db063;"></div>
+                                    <div class="progress-bar" role="progressbar" id="rjc_bar" style="background-color: #ff001a;"></div>
+                                    <div class="progress-bar" role="progressbar" id="oth_bar" style="background-color: #78787a;"></div>
                                   </div>
                                   <div class="progress bg-light"style="height: 20px;">
-                                    <div class="progress-bar bg-light" role="progressbar" style="width: 46%"></div>
-                                    <div><i class="fa-solid fa-up-long"></i>  YOU</div>
+                                    <div class="progress-bar bg-light" role="progressbar" id="mypos_pointer" ></div>
+                                      <div><i class="fa-solid fa-up-long"></i>  YOU <span id="mypos_text"></span></div>
                                   </div>
                               </div>
                          </div>
+                         </div> <!-- End of my position wrapper-->
                      </div>
                  </div>
                  <!-- End of my position -->
@@ -300,9 +302,34 @@
               async: true,
               data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val},
               success : function(data) {
-                  $(".n_cases").html(data["n_cases"]);
-                    draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
-                    plot_donut(data["status_counts"]);
+                  n_case = data["n_cases"];
+                  $(".n_cases").html(n_case);
+                  if(n_case == 0){
+                      $("#myposition_RN_order").addClass("d-none");
+                      $("#myposition_status_order").addClass("d-none");
+                      $("#donut_chart").addClass("d-none");
+                      $(".na_h4").removeClass("d-none");
+                  }else{
+                      $(".na_h4").addClass("d-none");
+                      $("#myposition_RN_order").removeClass("d-none");
+                      $("#myposition_status_order").removeClass("d-none");
+                      $("#donut_chart").removeClass("d-none");
+
+                      plot_donut(data["status_counts"]);
+                      draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
+
+                      $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
+                      $("#fp_bar").css('width', data["status_counts"][1] /n_case *100 + "%");
+                      $("#itv_bar").css('width', data["status_counts"][2] /n_case *100 + "%");
+                      $("#rfe_bar").css('width', data["status_counts"][3] /n_case *100 + "%");
+                      $("#trf_bar").css('width', data["status_counts"][4] /n_case *100 + "%");
+                      $("#apv_bar").css('width', data["status_counts"][5] /n_case *100 + "%");
+                      $("#rjc_bar").css('width' ,data["status_counts"][6] /n_case *100 + "%");
+                      $("#oth_bar").css('width', data["status_counts"][7] /n_case *100 + "%");
+                      $("#mypos_pointer").css('width', data["mypos"] + "%");
+
+                  }
+
                 },
               error: function() {
                       alert('Error occurs!');
@@ -311,9 +338,13 @@
         }
         get_data();
         function plot_donut(status_count=[100,100,100,100,100,100,100,100]) {
-              const labels=["REC","FPR","ITV","RFE","TRF","APV","RJC","OTH"];
+              let chartStatus = Chart.getChart("donut_case_percent_in_range"); // <canvas> id
+               if (chartStatus != undefined) {
+                  chartStatus.destroy();
+               }
+              var labels=["REC","FPR","ITV","RFE","TRF","APV","RJC","OTH"];
 
-              const data = {
+              var data = {
                   labels: labels,
                   datasets: [{
                     label: 'Cases statu count in the range',
@@ -323,7 +354,7 @@
                   }]
                 };
 
-              const config = {
+              var config = {
                   type: 'doughnut',
                   data: data,
                   options: {
@@ -334,9 +365,7 @@
                       animateScale:true
                   },
               };
-              const donutChart = new Chart(
-                document.getElementById('donut_case_percent_in_range'),
-                config
+              var donutChart = new Chart($('#donut_case_percent_in_range'), config
               )
         }
     </script>
