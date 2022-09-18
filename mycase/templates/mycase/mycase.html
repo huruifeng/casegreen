@@ -255,7 +255,7 @@
                                   </div>
                                   <div class="progress bg-light"style="height: 20px;">
                                     <div class="progress-bar bg-light" role="progressbar" id="mypos_pointer" ></div>
-                                      <div><i class="fa-solid fa-up-long"></i>  YOU <span id="mypos_text"></span></div>
+                                      <div><i class="fa-solid fa-up-long"></i>&nbsp;<span id="mypos_text">YOU</span></div>
                                   </div>
                               </div>
                          </div>
@@ -319,14 +319,23 @@
                       draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
 
                       $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
+                      $("#rec_bar").html(data["status_counts"][0]);
                       $("#fp_bar").css('width', data["status_counts"][1] /n_case *100 + "%");
+                      $("#fp_bar").html(data["status_counts"][1]);
                       $("#itv_bar").css('width', data["status_counts"][2] /n_case *100 + "%");
+                      $("#itv_bar").html(data["status_counts"][2]);
                       $("#rfe_bar").css('width', data["status_counts"][3] /n_case *100 + "%");
+                      $("#rfe_bar").html(data["status_counts"][3]);
                       $("#trf_bar").css('width', data["status_counts"][4] /n_case *100 + "%");
+                      $("#trf_bar").html(data["status_counts"][4]);
                       $("#apv_bar").css('width', data["status_counts"][5] /n_case *100 + "%");
+                      $("#apv_bar").html(data["status_counts"][5]);
                       $("#rjc_bar").css('width' ,data["status_counts"][6] /n_case *100 + "%");
+                      $("#rjc_bar").html(data["status_counts"][6]);
                       $("#oth_bar").css('width', data["status_counts"][7] /n_case *100 + "%");
+                      $("#oth_bar").html(data["status_counts"][7]);
                       $("#mypos_pointer").css('width', data["mypos"] + "%");
+                      $("#mypos_text").html(data["mypos_text"]);
 
                   }
 

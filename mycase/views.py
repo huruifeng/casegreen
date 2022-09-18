@@ -312,13 +312,14 @@ def caseinrange(request):
                     else:
                         l3_name = "Other"
 
-                    if case_i.receipt_number == receipt_num:
-                        mystatus_l3 = l3_name
+
 
                     status_counts[l3_name] += 1
                     status_seq += status_letter[l3_name]
                     if case_i.receipt_number==receipt_num:
                         status_mut.append({"ID":case_i.receipt_number,"Num":1.5,"POS":i,"STATUS":status_abbr[l3_name],"ACTDATE":case_i.action_date})
+                        mystatus_l3 = l3_name
+                        mypos = status_counts[l3_name]
                     else:
                         status_mut.append({"ID":case_i.receipt_number,"Num":1,"POS":i,"STATUS":status_abbr[l3_name],"ACTDATE":case_i.action_date})
                     status_dom.append({"ID":status_abbr[l3_name],"START":i-0.5,"END":i+0.5})
@@ -335,24 +336,28 @@ def caseinrange(request):
                         start_i = status_dom[i]["START"]
                 status_dom_merged.append({"ID": ID_prev, "START": start_i, "END": status_dom[i]["END"]})
 
-                mypos = used_case.index(receipt_num)
-                for status_i in list(status_abbr.keys())[::-1]:
+                for status_i in list(status_abbr.keys()):
                     if status_i == mystatus_l3: break
-                    else: mypos -= status_counts[status_i]
-                mypos = round(mypos / n_cases * 100.0)
-                print(mypos)
+                    else: mypos += status_counts[status_i]
+                pre_apv_poll = n_cases - status_counts["Other"] - status_counts["Rejected"] - status_counts["Approved"]
+
+                if mystatus_l3 in ["Received","FP_Taken","Interviewed","RFE","Transferred"]: mypos_text = "YOU are approaching...("+str(mypos)+"/"+str(pre_apv_poll)+")"
+                elif mystatus_l3 in ["Approved"] :mypos_text = "Congrat!"
+                else:mypos_text = "YOU"
+
                 del used_case[:]
-                data_dict = {"n_cases":n_cases,"status_counts": list(status_counts.values()),"mypos":mypos,
+                mypos = round(mypos / n_cases * 100.0)
+                data_dict = {"n_cases":n_cases,"status_counts": list(status_counts.values()),"mypos":mypos,"mypos_text":mypos_text,
                              "status_seq": status_seq,"status_mut":status_mut,"status_dom":status_dom_merged}
                 return JsonResponse(data_dict, status=200)
             else:
                 ## queryset is empty
-                data_dict = {"n_cases": 0, "status_counts": [0,0,0,0,0,0,0,0],"mypos":0,"status_seq": "", "status_mut": [], "status_dom": []}
+                data_dict = {"n_cases": 0, "status_counts": [0,0,0,0,0,0,0,0],"mypos":0,"mypos_text":"","status_seq": "", "status_mut": [], "status_dom": []}
                 return JsonResponse(data_dict, status=200)
         else:  ## receipt_num == None
-            data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0], "mypos":0,"status_seq": "", "status_mut": [],"status_dom": []}
+            data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0], "mypos":0,"mypos_text":"","status_seq": "", "status_mut": [],"status_dom": []}
             return JsonResponse(data_dict, status=200)
     else: ## ajax, GET
-        data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0],"mypos":0,"status_seq": "", "status_mut": [],"status_dom": []}
+        data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0],"mypos":0,"mypos_text":"","status_seq": "", "status_mut": [],"status_dom": []}
         return JsonResponse(data_dict, status=200)
 
