@@ -286,7 +286,7 @@ def caseinrange(request):
                 case_qs = center_table.objects.filter(form=form_type, receipt_number__range=(case_range_s, case_range_e)).order_by("receipt_number","-add_date")
 
             ##########
-            print(len(case_qs))
+            # print(len(case_qs))
             if len(case_qs) > 0:
                 status_letter = {"Received":"R", "FP_Taken":"F","Interviewed":"I","RFE":"E","Transferred":"T","Approved":"A","Rejected":"J","Other":"O"}
                 status_abbr = {"Received": "REC", "FP_Taken": "FP", "Interviewed": "ITV", "RFE": "RFE", "Transferred": "TRF", "Approved": "APV", "Rejected": "RJC", "Other": "OTH"}
@@ -312,8 +312,6 @@ def caseinrange(request):
                     else:
                         l3_name = "Other"
 
-
-
                     status_counts[l3_name] += 1
                     status_seq += status_letter[l3_name]
                     if case_i.receipt_number==receipt_num:
@@ -336,9 +334,11 @@ def caseinrange(request):
                         start_i = status_dom[i]["START"]
                 status_dom_merged.append({"ID": ID_prev, "START": start_i, "END": status_dom[i]["END"]})
 
-                for status_i in list(status_abbr.keys()):
-                    if status_i == mystatus_l3: break
-                    else: mypos += status_counts[status_i]
+                for status_i in ["Received","FP_Taken","Interviewed","RFE","Transferred","Approved","Rejected", "Other"]:
+                    if status_i == mystatus_l3:
+                        break
+                    else:
+                        mypos += status_counts[status_i]
                 pre_apv_poll = n_cases - status_counts["Other"] - status_counts["Rejected"] - status_counts["Approved"]
 
                 if mystatus_l3 in ["Received","FP_Taken","Interviewed","RFE","Transferred"]: mypos_text = "YOU are approaching...("+str(mypos)+"/"+str(pre_apv_poll)+")"

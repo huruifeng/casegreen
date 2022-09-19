@@ -1,32 +1,77 @@
 {% extends "mycase_basic.html" %}
 {% load static %}
 {% block content %}
-    <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
-        <div class="row">
-            <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
-                <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
-            </div>
-            <div class="col-md-6" style="min-width:800px;max-width: 820px;">
-              <form action="/mycase" method="get">
-                <div class="input-group">
-                  <div class="form-outline flex-fill">
-                    <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control-lg" style="color: black;" value="{{ receipt_num }}" />
-                    <label class="form-label" for="form1">Enter you receipt number</label>
-                  </div>
-                  <button type="submit" class="btn btn-primary" style="box-shadow: none;">
-                    <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
-                  </button>
-                </div>
-              </form>
 
-            </div>
-        </div>
-        <br>
-         <div class="row">
-             <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;"> </div>
+     <style>
+      .timeline-with-icons {
+        border-left: 1px solid hsl(0, 0%, 90%);
+        position: relative;
+        list-style: none;
+      }
+
+      .timeline-with-icons .timeline-item {
+        position: relative;
+      }
+
+      .timeline-with-icons .timeline-item:after {
+        position: absolute;
+        display: block;
+        top: 0;
+      }
+
+      .timeline-with-icons .timeline-icon {
+        position: absolute;
+        left: -43px;
+        border-radius: 50%;
+        height: 21px;
+        width: 21px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .timeline-icon-blue {
+        background-color: hsl(217, 88.2%, 90%);
+        color: hsl(217, 88.8%, 35.1%);
+      }
+
+      .timeline-icon-yellow {
+        background-color: hsl(63, 92%, 67%);
+        color: hsl(62, 98%, 36%);
+      }
+
+      .timeline-icon-red {
+        background-color: hsla(0, 92%, 85%, 0.45);
+        color: hsl(1, 96%, 44%);
+      }
+
+      .timeline-icon-green {
+        background-color: hsl(97, 88%, 90%);
+        color: hsl(110, 92%, 33%);
+      }
+
+    </style>
+
+    <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
+         <div class="row justify-content-center">
+             <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
+                <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
+             </div>
              <div class="col-md-6" style="min-width: min-content;">
+                 <form action="/mycase" method="get">
+                    <div class="input-group" style="max-width: 960px;">
+                      <div class="form-outline flex-fill">
+                        <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control-lg" style="color: black;" value="{{ receipt_num }}" />
+                        <label class="form-label" for="form1">Enter you receipt number</label>
+                      </div>
+                      <button type="submit" class="btn btn-primary" style="box-shadow: none;">
+                        <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
+                      </button>
+                    </div>
+                  </form>
+                  <br>
                  <!-- Case status -->
-                 <div class="row" style="max-width: 820px;">
+                 <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
 {#                             <h3 style="color:green;">Case Was Approved</h3>#}
                          <h4 style="color:#2d48cb;">{{ status.status}}</h4>
@@ -44,7 +89,7 @@
                                  </select>
                              </span>
                          {% endif %}&nbsp;&nbsp;&nbsp;&nbsp;
-                         <span>Last update on: {{ status.date}} ({{ status.days }} days ago)</span>
+                         <span>Last action on: {{ status.date}} ({{ status.days }} days ago)</span>
                          <hr style="height: 1px;color: #666666">
                          <p>
                             {{ status.status_text|safe }}
@@ -52,64 +97,14 @@
                      </div>
                  </div>
                  <!-- End of Case status -->
-                 <hr style="height: 0.2px;color: #ccc;max-width: 820px;">
+                 <hr style="height: 0.2px;color: #ccc;max-width: 1000px;">
                  <!-- Case history & Case range pie-->
-                  <div class="row row-cols-2" style="max-width: 820px;">
+                  <div class="row row-cols-2" style="max-width: 1000px;">
                      <div class="col-md-6">
                          <h5 class="mb-3"><i class="fa-solid fa-list-check text-primary"></i>&nbsp;&nbsp;<strong>Case history</strong></h5>
                          <!-- Section: Timeline -->
                          <section style="padding-left: 30px;">
-                            <style>
-                              .timeline-with-icons {
-                                border-left: 1px solid hsl(0, 0%, 90%);
-                                position: relative;
-                                list-style: none;
-                              }
-
-                              .timeline-with-icons .timeline-item {
-                                position: relative;
-                              }
-
-                              .timeline-with-icons .timeline-item:after {
-                                position: absolute;
-                                display: block;
-                                top: 0;
-                              }
-
-                              .timeline-with-icons .timeline-icon {
-                                position: absolute;
-                                left: -43px;
-                                border-radius: 50%;
-                                height: 21px;
-                                width: 21px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                              }
-
-                              .timeline-icon-blue {
-                                background-color: hsl(217, 88.2%, 90%);
-                                color: hsl(217, 88.8%, 35.1%);
-                              }
-
-                              .timeline-icon-yellow {
-                                background-color: hsl(63, 92%, 67%);
-                                color: hsl(62, 98%, 36%);
-                              }
-
-                              .timeline-icon-red {
-                                background-color: hsla(0, 92%, 85%, 0.45);
-                                color: hsl(1, 96%, 44%);
-                              }
-
-                              .timeline-icon-green {
-                                background-color: hsl(97, 88%, 90%);
-                                color: hsl(110, 92%, 33%);
-                              }
-
-                            </style>
-
-                            <ul class="timeline-with-icons">
+                           <ul class="timeline-with-icons">
 
                                 {% for qs_i in status_qs %}
                                     <li class="timeline-item mb-md-5">
@@ -143,9 +138,9 @@
                       </div>
                  </div>
                  <!-- End of Case history & Case range pie -->
-                 <hr style="height: 0.2px;color: #ccc;max-width: 820px;">
+                 <hr style="height: 0.2px;color: #ccc;max-width: 1000px;">
                   <!-- my position -->
-                 <div class="row"  style="max-width: 840px;">
+                 <div class="row"  style="max-width: 1000px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-location-dot text-primary"></i>&nbsp;&nbsp;<strong>My position</strong></h5>
                          <div id="myposition_wrapper">
@@ -174,9 +169,9 @@
                              </select>
                             <span>(Same case type/Same form type)</span>
                          </div>
-
                          <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b>(<span class="n_cases">#</span> Cases)</h6>
                              <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
+
                          <div class="card" id="myposition_RN_order">
                               <div class="card-body p-0 ps-3">
                                   <param id="statu_sequence" value="AAAAAAAAAAAAORRFFFFEFFFFFFFFFRRFFF" />
@@ -232,26 +227,27 @@
                                       </div>
                                       <!-- col-md-4 -->
                                   </div>
-                                  <div class="row" style="max-width:820px;">
+                                  <div class="row" style="max-width:1000px;">
                                       <div class="col-md-12" >
                                           <div id="case_in_receipt_order"  style="height:125px;"></div>
                                       </div>
                                   </div>
                               </div>
                          </div>
+                             <hr style="height: 0.2px;color: #999999;max-width: 1000px;">
                          <h6><b><i class="fa-solid fa-diamond"></i> Case grouped by status and ordered in the group</b>(<span class="n_cases">#</span> Cases)</h6>
                              <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
                          <div class="card mb-3" id="myposition_status_order">
                               <div class="card-body p-0 ps-3">
                                   <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar" role="progressbar" id="rec_bar" style="background-color: #1072f1;"></div>
-                                    <div class="progress-bar" role="progressbar" id="fp_bar" style="background-color: #11a9fa;"></div>
-                                    <div class="progress-bar" role="progressbar" id="itv_bar" style="background-color: #2b04da;"></div>
-                                    <div class="progress-bar" role="progressbar" id="rfe_bar" style="background-color: #ffe95a;"></div>
-                                    <div class="progress-bar" role="progressbar" id="trf_bar" style="background-color: #c77cff;"></div>
-                                    <div class="progress-bar" role="progressbar" id="apv_bar" style="background-color: #1db063;"></div>
-                                    <div class="progress-bar" role="progressbar" id="rjc_bar" style="background-color: #ff001a;"></div>
-                                    <div class="progress-bar" role="progressbar" id="oth_bar" style="background-color: #78787a;"></div>
+                                    <div class="progress-bar REC_bg" role="progressbar" id="rec_bar"></div>
+                                    <div class="progress-bar FP_bg" role="progressbar" id="fp_bar"></div>
+                                    <div class="progress-bar ITV_bg" role="progressbar" id="itv_bar"></div>
+                                    <div class="progress-bar RFE_bg" role="progressbar" id="rfe_bar"></div>
+                                    <div class="progress-bar TRF_bg" role="progressbar" id="trf_bar"></div>
+                                    <div class="progress-bar APV_bg" role="progressbar" id="apv_bar"></div>
+                                    <div class="progress-bar RJC_bg" role="progressbar" id="rjc_bar"></div>
+                                    <div class="progress-bar OTH_bg" role="progressbar" id="oth_bar"></div>
                                   </div>
                                   <div class="progress bg-light"style="height: 20px;">
                                     <div class="progress-bar bg-light" role="progressbar" id="mypos_pointer" ></div>
@@ -259,24 +255,92 @@
                                   </div>
                               </div>
                          </div>
+
+{#                             <h6><b><i class="fa-solid fa-diamond"></i> Case counts in status categories</b>(<span class="n_cases">#</span> Cases)</h6>#}
+{#                             <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>#}
+{#                           <div class="row" id="status_count_list">#}
+{#                              <div class="col-4">#}
+{#                                <div class="list-group list-group-light " id="list-tab" role="tablist">#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center active" id="list-rec-list" data-mdb-toggle="list" href="#list-rec" role="tab" aria-controls="list-rec">Received<span class="badge rounded-pill REC_bg">0</span></a>#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-fp-list" data-mdb-toggle="list" href="#list-fp" role="tab" aria-controls="list-fp">FP_Taken<span class="badge rounded-pill FP_bg">0</span></a>#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-itv-list" data-mdb-toggle="list" href="#list-itv" role="tab" aria-controls="list-itv">Interviewws<span class="badge rounded-pill ITV_bg">0</span></a>#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rfe-list" data-mdb-toggle="list" href="#list-rfe" role="tab" aria-controls="list-rfe">RFE<span class="badge rounded-pill RFE_bg">0</span></a>#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-trf-list" data-mdb-toggle="list" href="#list-trf" role="tab" aria-controls="list-rfe">Transferred<span class="badge rounded-pill TRF_bg">0</span></a>#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-apv-list" data-mdb-toggle="list" href="#list-apv" role="tab" aria-controls="list-apv">Approved<span class="badge rounded-pill APV_bg">0</span></a>#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rjc-list" data-mdb-toggle="list" href="#list-rjc" role="tab" aria-controls="list-rfe">Rejected<span class="badge rounded-pill RJC_bg">0</span></a>#}
+{#                                  <a class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-oth-list" data-mdb-toggle="list" href="#list-oth" role="tab" aria-controls="list-rfe">Others<span class="badge rounded-pill OTH_bg">0</span></a>#}
+{#                                </div>#}
+{#                              </div>#}
+{#                              <div class="col-8">#}
+{#                                <div class="tab-content" id="nav-tabContent">#}
+{#                                  <div class="tab-pane fade show active" id="list-rec" role="tabpanel" aria-labelledby="list-rec-list">#}
+{#                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore impedit quibusdam exercitationem eligendi voluptate doloribus non pariatur#}
+{#                                      libero quod nobis mollitia odio dolore eos debitis iure, autem quisquam ullam beatae.#}
+{#                                  </div>#}
+{#                                  <div class="tab-pane fade" id="list-fp" role="tabpanel" aria-labelledby="list-fp-list">#}
+{#                                    Ea eos asperiores deserunt reprehenderit voluptatem deleniti dolor iure eum consectetur commodi.#}
+{#                                  </div>#}
+{#                                  <div class="tab-pane fade" id="list-itv" role="tabpanel" aria-labelledby="list-itv-list">#}
+{#                                    Et perspiciatis facilis labore natus at necessitatibus. Sequi earum qui illum reiciendis? Excepturi, dicta consequuntur,#}
+{#                                    voluptas aspernatur, quis laboriosam exercitationem quasi officia tempore iste assumenda aliquam.#}
+{#                                  </div>#}
+{#                                  <div class="tab-pane fade" id="list-rfe" role="tabpanel" aria-labelledby="list-rfe-list">#}
+{#                                    Praesentium asperiores nemo ratione quas atque excepturi odio aliquid libero, architecto aspernatur expedita, corrupti, rem#}
+{#                                    odit quos exercitationem maxime at. Ex, eveniet rerum laborum  accusamus delectus magnam maxime!#}
+{#                                  </div>#}
+{#                                    <div class="tab-pane fade" id="list-trf" role="tabpanel" aria-labelledby="list-trf-list">#}
+{#                                     Ex, eveniet rerum laborum  accusamus delectus magnam maxime!#}
+{#                                  </div>#}
+{#                                     <div class="tab-pane fade" id="list-apv" role="tabpanel" aria-labelledby="list-apv-list">#}
+{#                                    Praesentium asperiores nemo ratione quas atque excepturi odio aliquid libero, architecto aspernatur expedita, corrupti, rem#}
+{#                                    odit quos exercitationem maxime at. Ex, eveniet rerum laborum  accusamus delectus magnam maxime!#}
+{#                                  </div>#}
+{#                                     <div class="tab-pane fade" id="list-rjc" role="tabpanel" aria-labelledby="list-rjc-list">#}
+{#                                    Praesentium asperiores nemo ratione quas atque excepturi odio aliquid libero, architecto aspernatur expedita, corrupti, rem#}
+{#                                    odit quos exercitationem maxime at. Ex, eveniet rerum laborum  accusamus delectus magnam maxime!#}
+{#                                  </div>#}
+{#                                    <div class="tab-pane fade" id="list-oth" role="tabpanel" aria-labelledby="list-oth-list">#}
+{#                                    Praesentium asperiores nemo ratione quas atque excepturi odio aliquid libero, architecto aspernatur expedita, corrupti, rem#}
+{#                                    odit quos exercitationem maxime at. Ex, eveniet rerum laborum  accusamus delectus magnam maxime!#}
+{#                                  </div>#}
+{#                                </div>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                             <hr style="height: 0.2px;color: #999999;max-width: 1000px;">#}
+
                          </div> <!-- End of my position wrapper-->
                      </div>
                  </div>
                  <!-- End of my position -->
-                 <hr style="height: 0.2px;color: #ccc;max-width: 820px;">
+                 <hr style="height: 0.2px;color: #ccc;max-width: 1000px;">
                   <!-- Next step -->
-                 <div class="row" style="max-width: 820px;">
+                 <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-circle-arrow-right text-primary"></i>&nbsp;<strong>Next step</strong></h5>
                      </div>
                  </div>
                  <!-- End of next step -->
 
-                 <hr style="height: 0.2px;color: #ccc;max-width: 820px;">
+                 <hr style="height: 0.2px;color: #ccc;max-width: 1000px;">
                   <!-- Recent changes -->
-                 <div class="row" style="max-width: 820px;">
+                 <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-flag text-primary"></i>&nbsp;&nbsp;<strong>Recent changes</strong></h5>
+                         <div class="row" id="recent_changes">
+                            <div class="col-4">
+                                <ul class="list-group list-group-light " id="list-tab" role="tablist">
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rec-list">Received<span>0</span></li>
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-fp-list">FP_Taken<span>0</span></li>
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-itv-list">Interviewws<span>0</span></li>
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rfe-list">RFE<span>0</span></li>
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-trf-list">Transferred<span>0</span></li>
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-apv-list">Approved<span class="badge rounded-pill APV_bg">0</span></li>
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rjc-list">Rejected<span class="badge rounded-pill RJC_bg">0</span></li>
+                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-oth-list">Others<span class="badge rounded-pill OTH_bg">0</span></li>
+                                </ul>
+                            </div>
+                         </div>
+
                      </div>
                  </div>
                  <!-- End of Recent changes -->
@@ -305,12 +369,14 @@
                   n_case = data["n_cases"];
                   $(".n_cases").html(n_case);
                   if(n_case == 0){
+                      $("#status_count_list").addClass("d-none");
                       $("#myposition_RN_order").addClass("d-none");
                       $("#myposition_status_order").addClass("d-none");
                       $("#donut_chart").addClass("d-none");
                       $(".na_h4").removeClass("d-none");
                   }else{
                       $(".na_h4").addClass("d-none");
+                      $("#status_count_list").removeClass("d-none");
                       $("#myposition_RN_order").removeClass("d-none");
                       $("#myposition_status_order").removeClass("d-none");
                       $("#donut_chart").removeClass("d-none");
@@ -320,20 +386,28 @@
 
                       $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
                       $("#rec_bar").html(data["status_counts"][0]);
+                      $(".badge.REC_bg").html(data["status_counts"][0]);
                       $("#fp_bar").css('width', data["status_counts"][1] /n_case *100 + "%");
                       $("#fp_bar").html(data["status_counts"][1]);
+                      $(".badge.FP_bg").html(data["status_counts"][1]);
                       $("#itv_bar").css('width', data["status_counts"][2] /n_case *100 + "%");
                       $("#itv_bar").html(data["status_counts"][2]);
+                      $(".badge.ITV_bg").html(data["status_counts"][2]);
                       $("#rfe_bar").css('width', data["status_counts"][3] /n_case *100 + "%");
                       $("#rfe_bar").html(data["status_counts"][3]);
+                      $(".badge.RFE_bg").html(data["status_counts"][3]);
                       $("#trf_bar").css('width', data["status_counts"][4] /n_case *100 + "%");
                       $("#trf_bar").html(data["status_counts"][4]);
+                      $(".badge.TRF_bg").html(data["status_counts"][4]);
                       $("#apv_bar").css('width', data["status_counts"][5] /n_case *100 + "%");
                       $("#apv_bar").html(data["status_counts"][5]);
+                      $(".badge.APV_bg").html(data["status_counts"][5]);
                       $("#rjc_bar").css('width' ,data["status_counts"][6] /n_case *100 + "%");
                       $("#rjc_bar").html(data["status_counts"][6]);
+                      $(".badge.RJC_bg").html(data["status_counts"][6]);
                       $("#oth_bar").css('width', data["status_counts"][7] /n_case *100 + "%");
                       $("#oth_bar").html(data["status_counts"][7]);
+                      $(".badge.OTH_bg").html(data["status_counts"][7]);
                       $("#mypos_pointer").css('width', data["mypos"] + "%");
                       $("#mypos_text").html(data["mypos_text"]);
 
@@ -358,7 +432,7 @@
                   datasets: [{
                     label: 'Cases statu count in the range',
                     data: status_count,
-                    backgroundColor: ["#4e97f6","#11a9fa","#2b04da","#ffe95a","#c77cff","#1db063","#ff001a","#78787a"],
+                    backgroundColor: ["#4e97f6","#11a9fa","#2b04da","#f4b824","#c77cff","#1db063","#ff001a","#78787a"],
                     hoverOffset: 4
                   }]
                 };

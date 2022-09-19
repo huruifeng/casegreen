@@ -29,7 +29,7 @@ function draw_lollipop(recepit_num,seq,mut_sites,mut_domain) {
 
     // **************************************** define size and categories *************************************************
     var margin = {top: 0, right: 0, bottom: 30, left: 0},
-        svg_width = 800,
+        svg_width = 960,
         svg_height = 120,
         chart_width = svg_width - margin.left - margin.right,
         chart_height = svg_height - margin.top - margin.bottom,
@@ -59,7 +59,7 @@ function draw_lollipop(recepit_num,seq,mut_sites,mut_domain) {
 
     // **************************************** define colors, tip, and zoom *********************************************
     var colorStatus = {
-        "REC": "#1072f1", "FP": "#11a9fa", "ITV": "#2b04da", "RFE": "#ffe95a",
+        "REC": "#1072f1", "FP": "#11a9fa", "ITV": "#2b04da", "RFE": "#f4b824",
         "TRF": "#c77cff", "APV": "#1db063", "RJC": "#ff001a", "OTH": "#78787a"
     }
     statusMap = {
