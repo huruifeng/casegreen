@@ -69,7 +69,7 @@
                       </button>
                     </div>
                   </form>
-                  <br>
+                <br>
                  <!-- Case status -->
                  <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
@@ -328,15 +328,75 @@
                          <h5 class="mb-3"><i class="fa-solid fa-flag text-primary"></i>&nbsp;&nbsp;<strong>Recent changes</strong></h5>
                          <div class="row" id="recent_changes">
                             <div class="col-4">
-                                <ul class="list-group list-group-light " id="list-tab" role="tablist">
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rec-list">Received<span>0</span></li>
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-fp-list">FP_Taken<span>0</span></li>
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-itv-list">Interviewws<span>0</span></li>
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rfe-list">RFE<span>0</span></li>
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-trf-list">Transferred<span>0</span></li>
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-apv-list">Approved<span class="badge rounded-pill APV_bg">0</span></li>
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-rjc-list">Rejected<span class="badge rounded-pill RJC_bg">0</span></li>
-                                  <li class="list-group-item px-3 py-1 d-flex justify-content-between align-items-center" id="list-oth-list">Others<span class="badge rounded-pill OTH_bg">0</span></li>
+                                <h6>Updates in last 1 Day</h6>
+                                <ul class="list-group list-group-light" id="list-1d" role="tablist" style="background-color: #eeeeee;">
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rec_1d">Received<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="fp_1d">FP_Taken<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="itv_1d">Interviewws<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rfe_1d">RFE<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="trf_1d">Transferred<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="apv_1d">Approved<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rjc_1d">Rejected<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="oth_1d">Others<span>0</span></li>
+                                </ul>
+                            </div>
+                              <div class="col-4">
+                                  <h6>Updates in last 1 Week</h6>
+                                <ul class="list-group list-group-light " id="list-1w" role="tablist">
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rec_1w">Received<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="fp_1w">FP_Taken<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="itv_1w">Interviewws<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rfe_1w">RFE<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="trf_1w">Transferred<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="apv_1w">Approved<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rjc_1w">Rejected<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="oth_1w">Others<span>0</span></li>
+                                </ul>
+                            </div>
+                              <div class="col-4">
+                                  <h6>Updates in last 2 Weeks</h6>
+                                <ul class="list-group list-group-light " id="list-2w" role="tablist">
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rec_2w">Received<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="fp_2w">FP_Taken<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="itv_2w">Interviewws<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rfe_2w">RFE<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="trf_2w">Transferred<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="apv_2w">Approved<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="rjc_2w">Rejected<span>0</span></li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center" id="oth_2w">Others<span>0</span></li>
+                                </ul>
+                            </div>
+                         </div>
+                        <hr style="height: 1px;color: #666666">
+                         <div class="row" id="recent_cases">
+                            <div class="col-4">
+                                <h6>Last 5 most recent Approved cases</h6>
+                                <ul class="list-group list-group-light" id="list-apv" role="tablist" style="background-color: #eeeeee;">
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Received</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">FP_Taken</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Interviewws</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">RFE</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Transferred</li>
+                                </ul>
+                            </div>
+                              <div class="col-4">
+                                   <h6>Last 5 most recent Transferred cases</h6>
+                                <ul class="list-group list-group-light " id="list-trf" role="tablist">
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Received</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">FP_Taken</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Interviewws</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">RFE</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Transferred</li>
+                                </ul>
+                            </div>
+                              <div class="col-4">
+                                  <h6>Last 5 most recent RFE cases</h6>
+                                <ul class="list-group list-group-light " id="list-rfe" role="tablist">
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Received</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">FP_Taken</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Interviewws</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">RFE</li>
+                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Transferred</li>
                                 </ul>
                             </div>
                          </div>
@@ -386,28 +446,28 @@
 
                       $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
                       $("#rec_bar").html(data["status_counts"][0]);
-                      $(".badge.REC_bg").html(data["status_counts"][0]);
+
                       $("#fp_bar").css('width', data["status_counts"][1] /n_case *100 + "%");
                       $("#fp_bar").html(data["status_counts"][1]);
-                      $(".badge.FP_bg").html(data["status_counts"][1]);
+
                       $("#itv_bar").css('width', data["status_counts"][2] /n_case *100 + "%");
                       $("#itv_bar").html(data["status_counts"][2]);
-                      $(".badge.ITV_bg").html(data["status_counts"][2]);
+
                       $("#rfe_bar").css('width', data["status_counts"][3] /n_case *100 + "%");
                       $("#rfe_bar").html(data["status_counts"][3]);
-                      $(".badge.RFE_bg").html(data["status_counts"][3]);
+
                       $("#trf_bar").css('width', data["status_counts"][4] /n_case *100 + "%");
                       $("#trf_bar").html(data["status_counts"][4]);
-                      $(".badge.TRF_bg").html(data["status_counts"][4]);
+
                       $("#apv_bar").css('width', data["status_counts"][5] /n_case *100 + "%");
                       $("#apv_bar").html(data["status_counts"][5]);
-                      $(".badge.APV_bg").html(data["status_counts"][5]);
+
                       $("#rjc_bar").css('width' ,data["status_counts"][6] /n_case *100 + "%");
                       $("#rjc_bar").html(data["status_counts"][6]);
-                      $(".badge.RJC_bg").html(data["status_counts"][6]);
+
                       $("#oth_bar").css('width', data["status_counts"][7] /n_case *100 + "%");
                       $("#oth_bar").html(data["status_counts"][7]);
-                      $(".badge.OTH_bg").html(data["status_counts"][7]);
+
                       $("#mypos_pointer").css('width', data["mypos"] + "%");
                       $("#mypos_text").html(data["mypos_text"]);
 
