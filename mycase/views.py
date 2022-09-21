@@ -135,6 +135,10 @@ def caseinrange(request):
         form_type = request.GET.get("form_type", None)
         case_range = request.GET.get("case_range", None)
 
+        delta_1d = datetime.today().date() + timedelta(days=-2)
+        delta_1w = datetime.today().date() + timedelta(days=-8)
+        delta_2w = datetime.today().date() + timedelta(days=-15)
+
         if form_type=="":
             return JsonResponse({}, status=400)
 
@@ -157,11 +161,14 @@ def caseinrange(request):
                 status_dict = get_status_dict()
 
                 status_counts = {"Received":0, "FP_Taken":0,"Interviewed":0,"RFE":0,"Transferred":0,"Approved":0,"Rejected":0,"Other":0}
+                status_1d = {"Received":0, "FP_Taken":0,"Interviewed":0,"RFE":0,"Transferred":0,"Approved":0,"Rejected":0,"Other":0}
+                status_1w = {"Received":0, "FP_Taken":0,"Interviewed":0,"RFE":0,"Transferred":0,"Approved":0,"Rejected":0,"Other":0}
+                status_2w = {"Received":0, "FP_Taken":0,"Interviewed":0,"RFE":0,"Transferred":0,"Approved":0,"Rejected":0,"Other":0}
+
                 status_seq = ""
                 status_mut = []
                 status_dom = []
                 i = 0
-
                 used_case = []
                 for case_i in case_qs:
                     if case_i.receipt_number in used_case:
@@ -177,6 +184,15 @@ def caseinrange(request):
                         l3_name = "Other"
 
                     status_counts[l3_name] += 1
+                    if case_i.receipt_number=="MSC2290593094":
+                        print(case_i.action_date_x,case_i.action_date_x>=delta_1d,case_i.action_date_x>=delta_1w,case_i.action_date_x>=delta_2w,l3_name)
+                    if case_i.action_date_x >= delta_1d:
+                        status_1d[l3_name] += 1
+                    if case_i.action_date_x >= delta_1w:
+                        status_1w[l3_name] += 1
+                    if case_i.action_date_x >= delta_2w:
+                        status_2w[l3_name] += 1
+
                     status_seq += status_letter[l3_name]
                     if case_i.receipt_number==receipt_num:
                         status_mut.append({"ID":case_i.receipt_number,"Num":1.5,"POS":i,"STATUS":status_abbr[l3_name],"ACTDATE":case_i.action_date})
@@ -211,17 +227,22 @@ def caseinrange(request):
 
                 del used_case[:]
                 mypos = round(mypos / n_cases * 100.0)
-                data_dict = {"n_cases":n_cases,"status_counts": list(status_counts.values()),"mypos":mypos,"mypos_text":mypos_text,
+                data_dict = {"n_cases":n_cases,"status_counts": list(status_counts.values()),
+                             "status_1d":status_1d,"status_1w":status_1w,"status_2w":status_2w,
+                             "mypos":mypos,"mypos_text":mypos_text,
                              "status_seq": status_seq,"status_mut":status_mut,"status_dom":status_dom_merged}
                 return JsonResponse(data_dict, status=200)
             else:
                 ## queryset is empty
-                data_dict = {"n_cases": 0, "status_counts": [0,0,0,0,0,0,0,0],"mypos":0,"mypos_text":"","status_seq": "", "status_mut": [], "status_dom": []}
+                data_dict = {"n_cases": 0, "status_counts": [0,0,0,0,0,0,0,0],
+                             "mypos":0,"mypos_text":"","status_seq": "", "status_mut": [], "status_dom": []}
                 return JsonResponse(data_dict, status=200)
         else:  ## receipt_num == None
-            data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0], "mypos":0,"mypos_text":"","status_seq": "", "status_mut": [],"status_dom": []}
+            data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0],
+                         "mypos":0,"mypos_text":"","status_seq": "", "status_mut": [],"status_dom": []}
             return JsonResponse(data_dict, status=200)
     else: ## ajax, GET
-        data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0],"mypos":0,"mypos_text":"","status_seq": "", "status_mut": [],"status_dom": []}
+        data_dict = {"n_cases": 0, "status_counts":[0,0,0,0,0,0,0,0],
+                     "mypos":0,"mypos_text":"","status_seq": "", "status_mut": [],"status_dom": []}
         return JsonResponse(data_dict, status=200)
 

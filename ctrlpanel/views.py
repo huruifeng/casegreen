@@ -62,7 +62,6 @@ def login_view(request):
             state = "Your username and/or password were incorrect."
     return HttpResponse(state)
 
-@login_required()
 def exportDB(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return HttpResponse("ERROR: Please Login!")
@@ -105,8 +104,6 @@ def exportDB(request):
             writer.writerow(values)
     return response
 
-
-@login_required()
 def sysinit(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return HttpResponse("ERROR: Please Login!")
@@ -129,7 +126,6 @@ def sysinit(request):
         # except Exception as e:
         #     return HttpResponse(e)
 
-@login_required()
 def sysupdate(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return HttpResponse("ERROR: Please Login!")
@@ -150,7 +146,6 @@ def sysupdate(request):
 
         return HttpResponse("OK")
 
-@login_required()
 def centerrun(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return HttpResponse("ERROR: Please Login!")
@@ -172,7 +167,6 @@ def centerrun(request):
         print("*******************************")
         return HttpResponse("OK")
 
-@login_required()
 def centerstatus(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return HttpResponse("ERROR: Please Login!")
@@ -185,7 +179,6 @@ def centerstatus(request):
     return HttpResponse(qs_json, content_type='application/json')
 
 
-@login_required()
 def visabulletin(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return HttpResponse("ERROR: Please Login!")
