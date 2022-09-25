@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>myCASE</title>
+    <title>{{page_title}}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href={% static "css/all.min.css" %} />
     <!-- MDB -->
@@ -29,12 +29,12 @@
                 <!-- Collapsible wrapper -->
                 <div class="row">
                   <ul class="navbar-nav mb-2 mb-lg-0">
-                      <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Bulletin</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Dashbord</a></li>
+                      <li class="nav-item"><a class="nav-link" href="{% url "casegreen:about" %}">About</a></li>
+                      <li class="nav-item"><a class="nav-link" href="{% url "casegreen:visabulletin" %}">Bulletin</a></li>
+                      <li class="nav-item"><a class="nav-link" href={% url "casegreen:dashbord" %}>Dashbord</a></li>
                       <li class="nav-item"><a class="nav-link" href="#">Process</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Today!</a></li>
-                      <li class="nav-item"><a class="nav-link" href="/">myCase</a></li>
+                      <li class="nav-item"><a class="nav-link" href={% url "casegreen:today" %}>Today!</a></li>
+                      <li class="nav-item"><a class="nav-link" href={% url "casegreen:home" %}>myCase</a></li>
                   </ul>
                   <!-- Left links -->
                 </div>
@@ -45,11 +45,11 @@
                     <iframe id="datetime-iframe" src="https://free.timeanddate.com/clock/i8fs8off/n43/fs16/tct/pct/ahl/pd3/tt0/tw1/tm1/ta1" frameborder="0" width="326" height="21" allowtransparency="true"></iframe>
 
                   <!-- Icon -->
-                  <a class="text-reset me-3" href="#"><i class="fa-solid fa-users header-right-icon"></i></a>
+                  <a class="text-reset me-5" href="#"><i class="fa-solid fa-comments header-right-icon"></i></a>
 
                   <!-- Notifications -->
                   <div class="dropdown">
-                    <a class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                    <a class="text-reset me-5 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                       <i class="fas fa-bell header-right-icon"></i>
                       <span class="badge rounded-pill badge-notification bg-danger">1</span>
                     </a>

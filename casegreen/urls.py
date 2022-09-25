@@ -19,9 +19,9 @@ from django.urls import path, include
 urlpatterns = [
     path('huadmin/', admin.site.urls,name="huadmin"),
     path("accounts/", include("django.contrib.auth.urls"),name="login"),  # new
-    path('', include('mycase.urls',namespace="mycase"),name="home"),
-    path('mycase/', include('mycase.urls',namespace="mycase"),name="mycase"),
-    path('ctrlpanel/', include('ctrlpanel.urls',namespace="ctrlpanel"),name="ctrlpanel"),
+    path('', include('mycase.urls',namespace="casegreen"),name="home"),
+    path('mycase/', include('mycase.urls',namespace="mycase"),name="home"),
+    path('ctrlpanel/', include('ctrlpanel.urls',namespace="ctrlpanel"),name="home"),
 
 ]
 app_name = 'casegreen'

@@ -80,7 +80,7 @@
                             <span>Form: {{ status.form}}</span>
                          {% else %}
                              <span>Form:
-                                 <select>
+                                 <select id="formselect" onchange="get_data()">
                                      <option value="" selected></option>
                                      {% for form_i in form_ls %}
                                      <option value="{{ form_i }}">{{ form_i }}</option>
@@ -107,7 +107,7 @@
                            <ul class="timeline-with-icons">
 
                                 {% for qs_i in status_qs %}
-                                    <li class="timeline-item mb-md-5">
+                                    <li class="timeline-item mb-md-4" style="border-bottom: 1px solid #eeeeee;">
                                             {% if qs_i.case_stage == "Processing" %}
                                                 <span class="timeline-icon timeline-icon-blue"><i class="fa-solid fa-check fa-sm fa-fw"></i></span>
                                             {% elif qs_i.case_stage == "RFE" %}
@@ -120,8 +120,7 @@
                                                 <span class="timeline-icon timeline-icon-blue"> <i class="fa-solid fa-check fa-sm fa-fw"></i></span>
                                             {% endif %}
                                         <h6>{{ qs_i.status }} </h6>
-                                        <p class="text-muted mb-2">{{ qs_i.action_date }}&nbsp;&nbsp;&nbsp;&nbsp;({{ qs_i.action_days_to_now }} days)</p>
-
+                                        <p class="text-muted mb-2">{{ qs_i.action_date_x }}&nbsp;&nbsp;&nbsp;&nbsp;({{ qs_i.action_days_to_now }} days)</p>
                                     </li>
                                 {% endfor %}
 
@@ -131,7 +130,7 @@
                      </div>
                       <div class="col-md-6" style="border-left: #eee 0.2px solid;">
                           <h5 class="mb-3"><i class="fa-solid fa-chart-pie text-primary"></i>&nbsp;&nbsp;<b>Cases in the range</b>(<span class="n_cases">#</span> Cases)</h5>
-                          <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
+                          <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
                           <div id="donut_chart">
                                 <canvas id="donut_case_percent_in_range" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
                           </div>
@@ -170,13 +169,14 @@
                             <span>(Same case type/Same form type)</span>
                          </div>
                          <h6><b><i class="fa-solid fa-diamond"></i> Cases in order of Receipt Number</b>(<span class="n_cases">#</span> Cases)</h6>
-                             <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
+                             <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
 
                          <div class="card" id="myposition_RN_order">
                               <div class="card-body p-0 ps-3">
                                   <param id="statu_sequence" value="AAAAAAAAAAAAORRFFFFEFFFFFFFFFRRFFF" />
                                   <param id="recepit_num" value="{{ receipt_num }}" />
                                   <param id="form_type" value="{{ status.form }}" />
+                                  <param id="mycase_status" value="{{ status.status }}" />
                                   <div class="row">
                                       <div class="col-md-12">
                                           <div id="controlpanel" class="col-md-4" style="width:100%;">
@@ -236,7 +236,7 @@
                          </div>
                              <hr style="height: 0.2px;color: #999999;max-width: 1000px;">
                          <h6><b><i class="fa-solid fa-diamond"></i> Case grouped by status and ordered in the group</b>(<span class="n_cases">#</span> Cases)</h6>
-                             <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>
+                             <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
                          <div class="card mb-3" id="myposition_status_order">
                               <div class="card-body p-0 ps-3">
                                   <div class="progress" style="height: 20px;">
@@ -257,7 +257,7 @@
                          </div>
 
 {#                             <h6><b><i class="fa-solid fa-diamond"></i> Case counts in status categories</b>(<span class="n_cases">#</span> Cases)</h6>#}
-{#                             <h4 class="na_h4 d-none ms-5">No data is available currently!</h4>#}
+{#                             <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>#}
 {#                           <div class="row" id="status_count_list">#}
 {#                              <div class="col-4">#}
 {#                                <div class="list-group list-group-light " id="list-tab" role="tablist">#}
@@ -317,6 +317,10 @@
                  <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-circle-arrow-right text-primary"></i>&nbsp;<strong>Next step</strong></h5>
+                         <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
+                         <div id="bar_chart">
+                                <canvas id="bar_next_status" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
+                          </div>
                      </div>
                  </div>
                  <!-- End of next step -->
@@ -326,6 +330,7 @@
                  <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-flag text-primary"></i>&nbsp;&nbsp;<strong>Recent changes</strong></h5>
+                         <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
                          <div class="row" id="recent_changes">
                             <div class="col-4">
                                 <h6>Updates in last 1 Day</h6>
@@ -368,32 +373,20 @@
                          <div class="row" id="recent_cases">
                             <div class="col-4">
                                 <h6>Last 5 most recent <b>Approved</b> cases</h6>
-                                <ul class="list-group list-group-light" id="list-apv" role="tablist" style="background-color: #eeeeee;">
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Received</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">FP_Taken</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Interviewed</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">RFE</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Transferred</li>
+                                <ul class="list-group list-group-light" id="list-recent-apv" role="tablist" style="background-color: #eeeeee;">
+
                                 </ul>
                             </div>
                               <div class="col-4">
                                   <h6>Last 5 most recent <b>Transferred</b> cases</h6>
-                                <ul class="list-group list-group-light " id="list-trf" role="tablist">
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Received</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">FP_Taken</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Interviewed</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">RFE</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Transferred</li>
+                                <ul class="list-group list-group-light " id="list-recent-trf" role="tablist">
+
                                 </ul>
                             </div>
                               <div class="col-4">
                                   <h6>Last 5 most recent <b>RFE</b> cases</h6>
-                                <ul class="list-group list-group-light " id="list-rfe" role="tablist">
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Received</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">FP_Taken</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Interviewws</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">RFE</li>
-                                  <li class="list-group-item list-group-item-info px-3 py-1 d-flex justify-content-between align-items-center">Transferred</li>
+                                <ul class="list-group list-group-light " id="list-recent-rfe" role="tablist">
+
                                 </ul>
                             </div>
                          </div>
@@ -405,15 +398,46 @@
             </div> <!--col-6-->
         </div><!--row-->
     </div>
-    <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v5.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js" charset="utf-8"></script>
     <script type="text/javascript" src={% static "mycase/js/saveSVG.js" %}></script>
     <script type="text/javascript" src={% static "mycase/js/lollipop.js" %}></script>
     <script type="text/javascript">
+    function getAvg(data_arr) {
+      const total = data_arr.reduce((acc, c) => acc + c, 0);
+      return total / data_arr.length;
+    }
+    function median(numbers) {
+        const sorted = Array.from(numbers).sort((a, b) => a - b);
+        const middle = Math.floor(sorted.length / 2);
+
+        if (sorted.length % 2 === 0) {
+            return (sorted[middle - 1] + sorted[middle]) / 2;
+        }
+
+        return sorted[middle];
+    }
+    var backgroundColor = ['rgba(255, 99, 132, 0.3)','rgba(255, 159, 64, 0.3)', 'rgba(255, 205, 86, 0.3)','rgba(75, 192, 192, 0.3)',
+        'rgba(54, 162, 235, 0.3)', 'rgba(153, 102, 255, 0.3)', 'rgba(201, 203, 207, 0.3)' ];
+    var borderColor = ['rgb(255, 99, 132)', 'rgb(255, 159, 64)','rgb(255, 205, 86)','rgb(75, 192, 192)',
+            'rgb(54, 162, 235)','rgb(153, 102, 255)','rgb(201, 203, 207)' ];
+
         function get_data() {
-            recepit_num = $("#recepit_num").val();
-            form_type = $("#form_type").val();
-            range_val = $("#case_range").val();
+            var formselect = $("#formselect").val();
+            if(formselect==undefined){
+                var form_type = $("#form_type").val();
+                var selectform="no"
+            }else{
+                var form_type = formselect;
+                var selectform="yes"
+            }
+
+
+            var recepit_num = $("#recepit_num").val();
+
+            var range_val = $("#case_range").val();
+            var mycase_status = $("#mycase_status").val();
+
             $("#case_in_receipt_order").empty();
             $("#lollipop_legend").empty();
 
@@ -421,25 +445,62 @@
               type: "GET",
               url: "ajax/caseinrange",
               async: true,
-              data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val},
+              data:{"recepit_num":recepit_num,"form_type":form_type,"mystatus":mycase_status,"case_range":range_val,"selectform":selectform},
               success : function(data) {
-                  n_case = data["n_cases"];
+                  var n_case = data["n_cases"];
                   $(".n_cases").html(n_case);
-                  if(n_case == 0){
+                  if(n_case == -1){
+                      alert(data["message"]);
+                  } else if(n_case == 0){
                       $("#status_count_list").addClass("d-none");
                       $("#myposition_RN_order").addClass("d-none");
                       $("#myposition_status_order").addClass("d-none");
                       $("#donut_chart").addClass("d-none");
-                      $(".na_h4").removeClass("d-none");
+                      $("#bar_chart").addClass("d-none");
+                      $("#recent_changes").addClass("d-none");
+                      $("#recent_cases").addClass("d-none");
+                      $(".na_h5").removeClass("d-none");
+                      alert(data["message"]);
                   }else{
-                      $(".na_h4").addClass("d-none");
+                      $(".na_h5").addClass("d-none");
                       $("#status_count_list").removeClass("d-none");
                       $("#myposition_RN_order").removeClass("d-none");
                       $("#myposition_status_order").removeClass("d-none");
                       $("#donut_chart").removeClass("d-none");
+                      $("#bar_chart").removeClass("d-none");
+                      $("#recent_changes").removeClass("d-none");
+                      $("#recent_cases").removeClass("d-none");
 
                       plot_donut(data["status_counts"]);
                       draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
+
+                      var next_status = data["next_status"];
+                      console.log(next_status);
+                      if(next_status["Final"]===undefined){
+                          if(next_status.length > 0) {
+                              var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
+                              var col_i = 0;
+                              for (const status_i in next_status) {
+                                  data_ls.push(next_status[status_i].length);
+                                  day_max = Math.max(...next_status[status_i]);
+                                  day_min = Math.min(...next_status[status_i]);
+                                  day_mid = median(...next_status[status_i]);
+                                  day_avg = getAvg(...next_status[status_i]);
+                                  label_ls.push(status_i + "- Min:" + day_min + ", Max:" + day_max + ", Avg:" + day_max + ", Median:" + day_max);
+                                  bg_ls.push(backgroundColor[col_i % 7]);
+                                  bd_ls.push(borderColor[col_i % 7]);
+                              }
+                              plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+                          }else{
+                             $("#bar_chart").empty();
+                             $("#bar_chart").html("<h4 class='ms-5'>Data is not availabe !</h4>");
+                          }
+                      }else{
+                          $("#bar_chart").empty();
+                          $("#bar_chart").html("<h4 class='ms-5'>You are already in the FINAL status !</h4>");
+                      }
+
+                      {#plot_bar(label_ls,data_ls,bg_ls, bd_ls);#}
 
                       $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
                       $("#rec_bar").html(data["status_counts"][0]);
@@ -475,6 +536,24 @@
                        $("#apv_1d>span").html(data["status_1d"]["Approved"]);$("#apv_1w>span").html(data["status_1w"]["Approved"]);$("#apv_2w>span").html(data["status_2w"]["Approved"]);
                        $("#rjc_1d>span").html(data["status_1d"]["Rejected"]);$("#rjc_1w>span").html(data["status_1w"]["Rejected"]);$("#rjc_2w>span").html(data["status_2w"]["Rejected"]);
                        $("#oth_1d>span").html(data["status_1d"]["Other"]);$("#oth_1w>span").html(data["status_1w"]["OTH"]);$("#oth_2w>span").html(data["status_2w"]["Other"]);
+
+                       var  html_str = "";
+                       for(const case_i in data["recent_apv"]){
+                           html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_apv"][case_i]+'</li>';
+                       }
+                       $("#list-recent-apv").html(html_str);
+
+                       var  html_str = "";
+                       for(const case_i in data["recent_trf"]){
+                           html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_trf"][case_i]+'</li>';
+                       }
+                       $("#list-recent-trf").html(html_str);
+
+                       var  html_str = "";
+                       for(const case_i in data["recent_rfe"]){
+                           html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_rfe"][case_i]+'</li>';
+                       }
+                       $("#list-recent-rfe").html(html_str);
                   }
 
                 },
@@ -484,6 +563,41 @@
             });
         }
         get_data();
+        function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
+            let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
+               if (chartStatus != undefined) {
+                  chartStatus.destroy();
+               }
+            const data = {
+              labels: labels,
+              datasets: [{
+                axis: 'y',
+                label: labels,
+                data: data_ls,
+                fill: false,
+                backgroundColor: bg_ls,
+                borderColor: bd_ls,
+                borderWidth: 1
+              }]
+            };
+
+             const config = {
+              type: 'bar',
+              data: data,
+              options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend:{display: false,},
+                    title: { display: true,text: 'The next status and taking days based on the data in the selected case range'}
+                },
+                scales: { y: { ticks: { mirror: true,}}}
+              },
+            };
+            var barChart = new Chart($('#bar_next_status'), config)
+
+        }
+
         function plot_donut(status_count=[100,100,100,100,100,100,100,100]) {
               let chartStatus = Chart.getChart("donut_case_percent_in_range"); // <canvas> id
                if (chartStatus != undefined) {
@@ -512,8 +626,7 @@
                       animateScale:true
                   },
               };
-              var donutChart = new Chart($('#donut_case_percent_in_range'), config
-              )
+              var donutChart = new Chart($('#donut_case_percent_in_range'), config)
         }
     </script>
  {% endblock %}

@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='ctrlhome'),
     path('dashbord/', views.ctrl_dashbord, name='ctrldashbord'),
-    path('login/', views.login_view, name='login'),
-    path('exportdb/', views.exportDB, name='exportdb'),
+    path('login/', views.login_view, name='ctrllogin'),
+    path('exportdb/', views.exportDB, name='ctrlexportdb'),
     path('visabulletin/', views.visabulletin, name='ctrlvisabulletin'),
 
     path('ajax/sysupdate', views.sysupdate, name='sysupdate'),

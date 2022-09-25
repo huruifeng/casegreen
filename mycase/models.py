@@ -135,7 +135,7 @@ class case_status_lin_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_lin_lb'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_lin_lb'
             )
         ]
     def action_days_to_now(self):
@@ -162,7 +162,7 @@ class case_status_msc_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_msc_lb'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_msc_lb'
             )
         ]
     def action_days_to_now(self):
@@ -188,7 +188,7 @@ class case_status_src_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_src_lb'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_src_lb'
             )
         ]
     def action_days_to_now(self):
@@ -214,7 +214,7 @@ class case_status_wac_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_wac_lb'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_wac_lb'
             )
         ]
     def action_days_to_now(self):
@@ -240,7 +240,7 @@ class case_status_eac_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_eac_lb'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_eac_lb'
             )
         ]
     def action_days_to_now(self):
@@ -266,7 +266,7 @@ class case_status_ysc_lb(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ysc_lb'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_ysc_lb'
             )
         ]
     def action_days_to_now(self):
@@ -292,7 +292,7 @@ class case_status_lin_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_lin_sc'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_lin_sc'
             )
         ]
     def action_days_to_now(self):
@@ -318,7 +318,7 @@ class case_status_msc_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_msc_sc'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_msc_sc'
             )
         ]
     def action_days_to_now(self):
@@ -344,7 +344,7 @@ class case_status_src_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_src_sc'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_src_sc'
             )
         ]
     def action_days_to_now(self):
@@ -370,7 +370,7 @@ class case_status_wac_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_wac_sc'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_wac_sc'
             )
         ]
     def action_days_to_now(self):
@@ -396,7 +396,7 @@ class case_status_eac_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_eac_sc'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_eac_sc'
             )
         ]
     def action_days_to_now(self):
@@ -422,7 +422,7 @@ class case_status_ysc_sc(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ysc_sc'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_ysc_sc'
             )
         ]
 
@@ -453,7 +453,7 @@ class case_status_ioe(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['receipt_number', 'status','action_date'], name='unique_receipt_status_date_ioe'
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_date_ioe'
             )
         ]
 

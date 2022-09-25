@@ -1,0 +1,47 @@
+{% extends "mycase_basic.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
+     <div class="row justify-content-center">
+         <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
+            <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
+         </div>
+         <div class="col-md-6" style="min-width: min-content;">
+             <form action="/mycase" method="get">
+                <div class="input-group" style="max-width: 960px;">
+                  <div class="form-outline flex-fill">
+                    <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control-lg" style="color: black;" value="{{ receipt_num }}" />
+                    <label class="form-label" for="form1">Enter you receipt number</label>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="box-shadow: none;">
+                    <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
+                  </button>
+                </div>
+              </form>
+            <br>
+             <!--Main content-->
+            <div class="row" style="max-width: 1000px;">
+                 <div class="col-12">
+                     <h1 style="color:#2d48cb;">Case status counts </h1>
+                     <div class="chart" id="line_char_div">
+                         <canvas id="line_chart"></canvas>
+                     </div>
+                 </div>
+             </div>
+
+             <!--Main content end-->
+        </div> <!--col-6-->
+    </div><!--row-->
+</div>
+    <script src="{% static "mycase/js/hammer.min.js" %}"></script>
+    <script src="{% static "mycase/js/chartjs-plugin-zoom.min.js" %}"></script>
+    <script src="{% static "mycase/js/chartjs-plugin-crosshair.min.js" %}"></script>
+    <script src="{% static "mycase/js/utils.js" %}" charset="utf-8"></script>
+    <script src="{% static "mycase/js/script.js" %}" charset="utf-8"></script>
+    <script type="text/javascript">
+       {#plotlines();#}
+       linechart();
+    </script>
+
+ {% endblock %}
