@@ -5,31 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/chartjs-plugin-crosshair.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/chartjs-plugin-zoom.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/d3.v5.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/d3.v6.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/hammer.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/hammer.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/utils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/about.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/today.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0011_auto_20220925_1529.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0012_auto_20220925_1532.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0013_auto_20220925_1537.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/casegreen/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/mdb.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/mdb.min.js.map" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +208,7 @@
       <workItem from="1663263579676" duration="91255000" />
       <workItem from="1663542671379" duration="38261000" />
       <workItem from="1663820698464" duration="6997000" />
-      <workItem from="1663894738980" duration="46121000" />
+      <workItem from="1663894738980" duration="54410000" />
     </task>
     <task id="LOCAL-00001" summary="updates">
       <created>1660538909922</created>
@@ -451,7 +434,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663765781750</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="updates">
+      <created>1664117787038</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1664117787038</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -252,3 +252,6 @@ def getcase_in_range(case_range,center,case_range_base,center_table,form_type,re
         case_qs = center_table.objects.filter(form=form_type, receipt_number__range=(case_range_s, case_range_e))
 
     return case_qs
+
+def get_daily_counts(center_table,form_type):
+    counts_qs = center_table.objects.filter()

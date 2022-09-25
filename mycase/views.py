@@ -242,7 +242,8 @@ def caseinrange(request):
                 recent_trf = {}
                 recent_rfe = {}
                 all_status = {}
-                for case_i in case_qs.order_by("-add_date"):
+                for case_i in case_qs.order_by("-action_date_x"):  ## here also can use "-add_date"
+                    ## open the comments, only count the final status of a receipt number(one case can have several status changes within a few days)
                     # if case_i.receipt_number in used_case: continue
                     # else: used_case.append(case_i.receipt_number)
 
