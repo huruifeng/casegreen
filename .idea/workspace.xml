@@ -5,13 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/mycase/migrations/0011_auto_20220925_1529.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/migrations/0012_auto_20220925_1532.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/migrations/0013_auto_20220925_1537.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0002_auto_20220905_1733.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0003_auto_20220906_2052.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0004_auto_20220908_2207.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0005_auto_20220910_0042.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0006_auto_20220910_0108.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0007_auto_20220910_1925.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0008_auto_20220911_1727.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0009_auto_20220916_1109.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0010_status_daily_new_n.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0011_auto_20220925_1529.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/migrations/0002_auto_20220925_1713.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0012_auto_20220925_1532.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/migrations/0003_auto_20220925_1724.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/migrations/0013_auto_20220925_1537.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,28 +62,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/static/mycase/js",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "database.data.views"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/PyCharm_project/casegreen/mycase/static/mycase/js&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;database.data.views&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "azure",
-      "mysql",
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;azure&quot;,
+      &quot;mysql&quot;,
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
@@ -208,7 +226,8 @@
       <workItem from="1663263579676" duration="91255000" />
       <workItem from="1663542671379" duration="38261000" />
       <workItem from="1663820698464" duration="6997000" />
-      <workItem from="1663894738980" duration="54410000" />
+      <workItem from="1663894738980" duration="75301000" />
+      <workItem from="1664293239522" duration="12599000" />
     </task>
     <task id="LOCAL-00001" summary="updates">
       <created>1660538909922</created>
@@ -441,7 +460,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664117787038</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="updates">
+      <created>1664134920808</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1664134920808</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

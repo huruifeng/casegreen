@@ -5,6 +5,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+from ctrlpanel.functions.utils import get_status_dict
+
 months = ['January', 'February', 'March', 'April', 'May', 'June',
           'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -54,6 +56,8 @@ form_types = [
 	"I-924",
 	"I-929"
     ]
+
+status_dict = get_status_dict()
 
 def get_status(recepit_number):
     ## Test
@@ -110,7 +114,12 @@ def get_status(recepit_number):
         ## the case number is invlid
         return ["error","invlid_num"]
 
-
+def get_l_status(status_str, l="L3"):
+    if status_str in status_dict:
+        l_name = status_dict[status_str][l]
+    else:
+        l_name = "Other"
+    return  l_name
 
 def getcase_in_range(case_range,center,case_range_base,center_table,form_type,receipt_num):
     if case_range == "rn_range":
@@ -252,6 +261,10 @@ def getcase_in_range(case_range,center,case_range_base,center_table,form_type,re
         case_qs = center_table.objects.filter(form=form_type, receipt_number__range=(case_range_s, case_range_e))
 
     return case_qs
+
+def casestatus(date_range,center_table,form_type,receipt_num):
+    all_status = {}
+    pass
 
 def get_daily_counts(center_table,form_type):
     counts_qs = center_table.objects.filter()

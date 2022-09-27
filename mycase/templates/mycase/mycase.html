@@ -317,6 +317,15 @@
                  <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-circle-arrow-right text-primary"></i>&nbsp;<strong>Next step</strong></h5>
+                        <div class="mb-3">Based on status changs in the:
+                             <select id="date_range" name="date_range" onchange="get_nextstatus()">
+                                 <option value="past3m" selected>Past 3 month</option>
+                                 <option value="past6m">Past 6 month</option>
+                                 <option value="past9m">Past 9 month</option>
+                                 <option value="past12m">Past 12 month</option>
+                             </select>
+                            <span>(Same case type/Same form type)</span>
+                         </div>
                          <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
                          <div id="bar_chart">
                                 <canvas id="bar_next_status" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
@@ -398,8 +407,10 @@
             </div> <!--col-6-->
         </div><!--row-->
     </div>
-    <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js" charset="utf-8"></script>
+{#    <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js" charset="utf-8"></script>#}
+    <script type="text/javascript" src={% static "mycase/js/d3.v5.js" %} charset="utf-8"></script>
+    <script type="text/javascript" src={% static "mycase/js/d3-tip.min.js" %} charset="utf-8"></script>
     <script type="text/javascript" src={% static "mycase/js/saveSVG.js" %}></script>
     <script type="text/javascript" src={% static "mycase/js/lollipop.js" %}></script>
     <script type="text/javascript">
@@ -432,11 +443,8 @@
                 var selectform="yes"
             }
 
-
             var recepit_num = $("#recepit_num").val();
-
             var range_val = $("#case_range").val();
-            var mycase_status = $("#mycase_status").val();
 
             $("#case_in_receipt_order").empty();
             $("#lollipop_legend").empty();
@@ -444,8 +452,8 @@
             $.ajax({
               type: "GET",
               url: "ajax/caseinrange",
-              async: true,
-              data:{"recepit_num":recepit_num,"form_type":form_type,"mystatus":mycase_status,"case_range":range_val,"selectform":selectform},
+              async: false,
+              data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val,"selectform":selectform},
               success : function(data) {
                   var n_case = data["n_cases"];
                   $(".n_cases").html(n_case);
@@ -473,34 +481,6 @@
 
                       plot_donut(data["status_counts"]);
                       draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
-
-                      var next_status = data["next_status"];
-                      console.log(next_status);
-                      if(next_status["Final"]===undefined){
-                          if(next_status.length > 0) {
-                              var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
-                              var col_i = 0;
-                              for (const status_i in next_status) {
-                                  data_ls.push(next_status[status_i].length);
-                                  day_max = Math.max(...next_status[status_i]);
-                                  day_min = Math.min(...next_status[status_i]);
-                                  day_mid = median(...next_status[status_i]);
-                                  day_avg = getAvg(...next_status[status_i]);
-                                  label_ls.push(status_i + "- Min:" + day_min + ", Max:" + day_max + ", Avg:" + day_max + ", Median:" + day_max);
-                                  bg_ls.push(backgroundColor[col_i % 7]);
-                                  bd_ls.push(borderColor[col_i % 7]);
-                              }
-                              plot_bar(label_ls, data_ls, bg_ls, bd_ls);
-                          }else{
-                             $("#bar_chart").empty();
-                             $("#bar_chart").html("<h4 class='ms-5'>Data is not availabe !</h4>");
-                          }
-                      }else{
-                          $("#bar_chart").empty();
-                          $("#bar_chart").html("<h4 class='ms-5'>You are already in the FINAL status !</h4>");
-                      }
-
-                      {#plot_bar(label_ls,data_ls,bg_ls, bd_ls);#}
 
                       $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
                       $("#rec_bar").html(data["status_counts"][0]);
@@ -563,6 +543,62 @@
             });
         }
         get_data();
+
+        function get_nextstatus() {
+            var formselect = $("#formselect").val();
+            if(formselect==undefined){
+                var form_type = $("#form_type").val();
+                var selectform="no"
+            }else{
+                var form_type = formselect;
+                var selectform="yes"
+            }
+
+            var date_range = $("#date_range").val();
+            var mycase_status = $("#mycase_status").val();
+            var recepit_num = $("#recepit_num").val();
+
+            $.ajax({
+              type: "GET",
+              url: "ajax/nextstatus",
+              async: false,
+              data:{"recepit_num":recepit_num,"daterange":date_range,"mystatus":mycase_status,"form_type":form_type},
+              success : function(data) {
+                  var next_status = data["next_status"];
+                  console.log(next_status);
+                  if(next_status["Final"]===undefined){
+                    if(next_status.length > 0) {
+                        var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
+                      var col_i = 0;
+                      for (const status_i in next_status) {
+                          data_ls.push(next_status[status_i].length);
+                          day_max = Math.max(...next_status[status_i]);
+                          day_min = Math.min(...next_status[status_i]);
+                          day_mid = median(...next_status[status_i]);
+                          day_avg = getAvg(...next_status[status_i]);
+                          label_ls.push(status_i + "- Min:" + day_min + ", Max:" + day_max + ", Avg:" + day_max + ", Median:" + day_max);
+                          bg_ls.push(backgroundColor[col_i % 7]);
+                          bd_ls.push(borderColor[col_i % 7]);
+                      }
+                      plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+                    }else{
+                        $("#bar_chart").empty();
+                        $("#bar_chart").html("<h4 class='ms-5'>Data is not availabe !</h4>");
+                    }
+                  }else{
+                    $("#bar_chart").empty();
+                    $("#bar_chart").html("<h4 class='ms-5'>You are already in the FINAL status !</h4>");
+                  }
+
+                },
+              error: function() {
+                    alert("Error occurs!")
+                }
+            });
+        }
+        get_nextstatus();
+
+    ///////////////////////////////////////////////////////////////
         function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
             let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
                if (chartStatus != undefined) {

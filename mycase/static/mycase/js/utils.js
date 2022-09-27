@@ -136,19 +136,3 @@ const NAMED_COLORS = [
   CHART_COLORS.purple,
   CHART_COLORS.grey,
 ];
-
-function namedColor(index) {
-  return NAMED_COLORS[index % NAMED_COLORS.length];
-}
-
-function newDate(days) {
-  return DateTime.now().plus({days}).toJSDate();
-}
-
-function newDateString(days) {
-  return DateTime.now().plus({days}).toISO();
-}
-
-function parseISODate(str) {
-  return DateTime.fromISO(str);
-}

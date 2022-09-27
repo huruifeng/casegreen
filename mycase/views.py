@@ -2,15 +2,13 @@ import json
 from datetime import datetime, timedelta
 
 from django.db.models import Max, F
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
-from ctrlpanel.functions.utils import get_status_dict
-from mycase.functions.utils import get_status, getcase_in_range
+from mycase.functions.utils import get_status, getcase_in_range, get_l_status
 from mycase.models import *
 
 # Create your views here.
-
 center_dict = {"lin_lb":case_status_lin_lb,
                "msc_lb":case_status_msc_lb,
                "src_lb":case_status_src_lb,
@@ -44,8 +42,8 @@ def mycase(request):
         status_ls = get_status(receipt_num)
     except Exception as e:
         status_ls = []
-
-    ## read data from database
+    print(status_ls)
+    ## read exist data from database
     center_table = center_dict[center.lower()+"_"+ lb_sc.lower()]
     status_qs = center_table.objects.filter(receipt_number=receipt_num)
     if status_qs.exists():
@@ -54,22 +52,19 @@ def mycase(request):
             try:
                 time_x = datetime.strptime(status_ls[1], "%B %d, %Y").date()
             except Exception as e:
-                time_x = status_qs.last().action_date_x
-            if time_x=="": time_x = datetime.now().date()
-            status_ls[1] = time_x  ## if the date is "", using saved date or today
+                time_x = datetime.now().date()
 
             days = (datetime.now().date() - time_x).days
             if status_ls[0]=="":
                 status_ls[0] = status_qs.last().form
             if status_qs.last().status != status_ls[2]:
-                status_dict = get_status_dict()
-                case_stage = "Processing"
-                if status_ls[2] in status_dict:
-                    l3_name = status_dict[status_ls[2]]["L3"]
-                    if l3_name in ["Approved"]: case_stage = "Approved"
-                    elif l3_name in ["Rejected"]: case_stage = "Rejected"
-                    elif l3_name in ["RFE"]: case_stage = "RFE"
-                    else: case_stage = "Processing"
+                l3_name = get_l_status(status_ls[2],"L3")
+
+                if l3_name in ["Approved"]: case_stage = "Approved"
+                elif l3_name in ["Rejected"]: case_stage = "Rejected"
+                elif l3_name in ["RFE"]: case_stage = "RFE"
+                else: case_stage = "Processing"
+
                 new_status = center_table.objects.create(receipt_number =receipt_num,
                                             form = status_ls[0],
                                             status =status_ls[2],
@@ -93,18 +88,13 @@ def mycase(request):
         else:
             time_x = datetime.strptime(status_ls[1], "%B %d, %Y")
             days = (datetime.now() - time_x).days
-            status_dict = get_status_dict()
-            case_stage = "Processing"
-            if status_ls[2] in status_dict:
-                l3_name = status_dict[status_ls[2]]["L3"]
-                if l3_name in ["Approved"]:
-                    case_stage = "Approved"
-                elif l3_name in ["Rejected"]:
-                    case_stage = "Rejected"
-                elif l3_name in ["RFE"]:
-                    case_stage = "RFE"
-                else:
-                    case_stage = "Processing"
+            l3_name = get_l_status(status_ls[2],"L3")
+
+            if l3_name in ["Approved"]: case_stage = "Approved"
+            elif l3_name in ["Rejected"]:case_stage = "Rejected"
+            elif l3_name in ["RFE"]:case_stage = "RFE"
+            else:case_stage = "Processing"
+
             new_status = center_table.objects.create(receipt_number=receipt_num,
                                                      form=status_ls[0],
                                                      status=status_ls[2],
@@ -137,7 +127,6 @@ def caseinrange(request):
         receipt_num = request.GET.get("recepit_num", None)
         form_type = request.GET.get("form_type", None)
         case_range = request.GET.get("case_range", None)
-        mycase_status = request.GET.get("mystatus", None)
         selectform = request.GET.get("selectform", None)
 
         delta_1d = datetime.today().date() + timedelta(days=-2)
@@ -162,7 +151,6 @@ def caseinrange(request):
 
 
             case_range_base = int(receipt_num[3:]) - int(int(receipt_num[3:]) % 5000)
-
             case_qs = getcase_in_range(case_range,center,case_range_base,center_table,form_type,receipt_num)
 
             ##########
@@ -170,7 +158,6 @@ def caseinrange(request):
             if len(case_qs) > 0:
                 status_letter = {"Received":"R", "FP_Taken":"F","Interviewed":"I","RFE":"E","Transferred":"T","Approved":"A","Rejected":"J","Other":"O"}
                 status_abbr = {"Received": "REC", "FP_Taken": "FP", "Interviewed": "ITV", "RFE": "RFE", "Transferred": "TRF", "Approved": "APV", "Rejected": "RJC", "Other": "OTH"}
-                status_dict = get_status_dict()
 
                 status_counts = {"Received":0, "FP_Taken":0,"Interviewed":0,"RFE":0,"Transferred":0,"Approved":0,"Rejected":0,"Other":0}
                 status_1d = {"Received":0, "FP_Taken":0,"Interviewed":0,"RFE":0,"Transferred":0,"Approved":0,"Rejected":0,"Other":0}
@@ -190,10 +177,7 @@ def caseinrange(request):
 
                     ####
                     i += 1
-                    if case_i.status in status_dict:
-                        l3_name = status_dict[case_i.status]["L3"]
-                    else:
-                        l3_name = "Other"
+                    l3_name = get_l_status(case_i.status, "L4")
 
                     status_counts[l3_name] += 1
                     if case_i.action_date_x >= delta_1d:
@@ -241,68 +225,91 @@ def caseinrange(request):
                 recent_apv = {}
                 recent_trf = {}
                 recent_rfe = {}
-                all_status = {}
-                for case_i in case_qs.order_by("-action_date_x"):  ## here also can use "-add_date"
+                for case_i in case_qs.order_by("-add_date"):  ## here also can use "-action_date_x"
                     ## open the comments, only count the final status of a receipt number(one case can have several status changes within a few days)
                     # if case_i.receipt_number in used_case: continue
                     # else: used_case.append(case_i.receipt_number)
 
-                    if case_i.status in status_dict:
-                        l3_name = status_dict[case_i.status]["L3"]
-                        l2_name = status_dict[case_i.status]["L2"]
-                        l1_name = status_dict[case_i.status]["L1"]
-                    else:
-                        l3_name = "Other"
-                        l2_name = "Other"
-                        l1_name = "Other"
-
+                    l3_name = get_l_status(case_i.status,"L3")
                     if l3_name == "Approved" and len(recent_apv)<5: recent_apv[case_i.receipt_number] = case_i.action_date_x
                     if l3_name == "Transferred" and len(recent_trf)<5: recent_trf[case_i.receipt_number] = case_i.action_date_x
                     if l3_name == "RFE" and len(recent_rfe)<5: recent_rfe[case_i.receipt_number] = case_i.action_date_x
-
-                    if case_i.receipt_number not in all_status:
-                        all_status[case_i.receipt_number] = [case_i]
-                    else:
-                        all_status[case_i.receipt_number].append(case_i)
-
-                next_status = {}
-                if mycase_status in status_dict:
-                    l4_name = status_dict[mycase_status]["L4"]
-                else:
-                    l4_name = "Other"
-
-                if l4_name == "Final":
-                    next_status["Final"] = [0]
-                else:
-                    for rn_i in all_status:
-                        rn_i_n = len(all_status[rn_i])
-                        for status_i in range(rn_i_n):
-                            if ((status_i+1) < rn_i_n) and (all_status[rn_i][status_i+1].status) == mycase_status:
-                                next_s = all_status[rn_i][status_i].status
-                                next_s_days = all_status[rn_i][status_i].action_date_x - all_status[rn_i][status_i+1].action_date_x
-                                if next_s not in next_status:
-                                    next_status[next_s] = [next_s_days]
-                                else:
-                                    next_status[next_s].append(next_s_days)
-                                break
+                    if  len(recent_apv)+len(recent_trf) +  len(recent_rfe) >=15: break
 
                 del used_case[:]
                 data_dict = {"n_cases":n_cases,"status_counts": list(status_counts.values()),
                              "status_1d":status_1d,"status_1w":status_1w,"status_2w":status_2w,
                              "recent_apv":recent_apv,"recent_trf":recent_trf,"recent_rfe":recent_rfe,
-                             "mypos":mypos,"mypos_text":mypos_text,"next_status":next_status,
+                             "mypos":mypos,"mypos_text":mypos_text,
                              "status_seq": status_seq,"status_mut":status_mut,"status_dom":status_dom_merged}
                 return JsonResponse(data_dict, status=200)
-            else:
-                ## queryset is empty
+            else:   ## queryset is empty
                 data_dict = {"n_cases": 0, "message":"Error in reading data!"}
                 return JsonResponse(data_dict, status=200)
         else:  ## receipt_num == None
             data_dict = {"n_cases": 0, "message":"Bad request of Recepit/Case number!"}
             return JsonResponse(data_dict, status=200)
-    else: ## ajax, GET
+    else: ## ajax, GET error
         data_dict = {"n_cases": 0, "message":"Request error!"}
         return JsonResponse(data_dict, status=200)
+
+def nextstatus(request):
+    mycase_status = request.GET.get("mystatus", None)
+    date_range = request.GET.get("daterange", None)
+    form_type = request.GET.get("formtype", None)
+    receipt_num = request.GET.get("recepit_num", None)
+    center = request.GET.get("center", None)
+
+    today = datetime.today()
+    if date_range=="past3m":
+        date_s = today + timedelta(days=-90)
+    elif date_range=="past6m":
+        date_s = today + timedelta(days=-180)
+    elif date_range=="past9m":
+        date_s = today + timedelta(days=-270)
+    elif date_range=="past12m":
+        date_s = today + timedelta(days=-365)
+    else:
+        date_s = today + timedelta(days=-365)
+
+    if receipt_num != None or center==None:
+        center = receipt_num[:3]
+        lb_sc = "LB" if receipt_num[5] == "9" else "SC"
+        center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+    else:
+        center_table = center_dict[center.lower()]
+
+    case_qs = center_table.objects.filter(form=form_type,action_date_x__gte=date_s)
+    all_status = {}
+    for case_i in case_qs.order_by("add_date"):
+        if case_i.receipt_number not in all_status:
+            all_status[case_i.receipt_number] = [case_i]
+        else:
+            all_status[case_i.receipt_number].append(case_i)
+
+    next_status = {}
+    to_endstatus = {}
+    l4_name = get_l_status(mycase_status,"L4")
+
+    if l4_name == "Final":
+        next_status["Final"] = [0]
+    else:
+        for rn_i in all_status:
+            rn_i_n = len(all_status[rn_i])
+            for sn_i in range(rn_i_n):
+                status_i = all_status[rn_i][sn_i].status
+                if status_i == mycase_status and (sn_i+1) < rn_i_n:
+                    next_s = all_status[rn_i][sn_i+1].status
+                    next_s_days = all_status[rn_i][sn_i+1].action_date_x - all_status[rn_i][sn_i].action_date_x
+                    if next_s not in next_status:
+                        next_status[next_s] = [next_s_days]
+                    else:
+                        next_status[next_s].append(next_s_days)
+                    break
+
+
+    data_dict ={"next_status":next_status}
+    return JsonResponse(data_dict, status=200)
 
 
 def visabulletin(request):
@@ -313,12 +320,19 @@ def visabulletin(request):
 
 def dashbord(request):
     if request.method == "GET":
-        pass
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("form", None)
     elif request.method == "POST":
-        pass
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("form", None)
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
 
-    context = {"page_title":"Dashbord"}
-    return render(request, 'mycase/dashbord.html', context)
+    context = {"page_title": "Dashbord", "form_ls": form_ls,"selectform":selectform,"center":center}
+    if selectform == None or center == None:
+        return redirect('/dashbord?form=I-485&center=LIN-LB')
+    else:
+        return render(request, 'mycase/dashbord.html', context)
 
 
 def today(request):

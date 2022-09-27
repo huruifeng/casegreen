@@ -21,34 +21,35 @@
               </form>
             <br>
              <!--Main content-->
-            <div class="row" style="max-width: 1200px;">
+            <div class="row">
                  <div class="col-12">
                      <h1 style="color:#2d48cb;">Case status counts </h1>
-
                      <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Form type: </h5>
-                         <select>
-
-                         </select>
+                          <select id="formselect" onchange="get_data()">
+                             {% for form_i in form_ls %}
+                             <option value="{{ form_i }}" {% if form_i == selectform %}selected{% endif %}>{{ form_i }}</option>
+                             {% endfor %}
+                          </select>
 
                      </div>
                      <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Centers: </h5>
-                         <button type="button" class="btn btn-outline-primary me-1">LIN-LB</button>
-                         <button type="button" class="btn btn-outline-primary me-1">LIN-SC</button>
-                         <button type="button" class="btn btn-outline-primary me-1">MSC-LB</button>
-                         <button type="button" class="btn btn-outline-primary me-1">MSC-SC</button>
-                         <button type="button" class="btn btn-outline-primary me-1">SRC-LB</button>
-                         <button type="button" class="btn btn-outline-primary me-1">SRC-SC</button>
-                         <button type="button" class="btn btn-outline-primary me-1">EAC-LB</button>
-                         <button type="button" class="btn btn-outline-primary me-1">EAC-SC</button>
-                         <button type="button" class="btn btn-outline-primary me-1">WAC-LB</button>
-                         <button type="button" class="btn btn-outline-primary me-1">WAC-SC</button>
-                         <button type="button" class="btn btn-outline-primary me-1">YSC-LB</button>
-                         <button type="button" class="btn btn-outline-primary me-1">YSC-SC</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "LIN-LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN-LB</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "LIN-SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN-SC</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "MSC-LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC-LB</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "MSC-SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC-SC</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "SRC-LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC-LB</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "SRC-SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC-SC</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "EAC-LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC-LB</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "EAC-SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC-SC</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "WAC-LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC-LB</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "WAC-SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC-SC</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "YSC-LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC-LB</button>
+                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "YSC-SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC-SC</button>
                      </div>
                      <div class="chart" id="line_char_div">
-                         <canvas id="line_chart"></canvas>
+                         <canvas id="line_chart" style="max-height: 500px;"></canvas>
                      </div>
                  </div>
              </div>
@@ -63,6 +64,18 @@
     <script src="{% static "mycase/js/utils.js" %}" charset="utf-8"></script>
     <script src="{% static "mycase/js/script.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
+    $(".cnt_btn").click(function () {
+        $(".cnt_btn").removeClass("btn-primary");
+        $(".cnt_btn").addClass("btn-outline-primary");
+        $(this).removeClass("btn-outline-primary");
+        $(this).addClass("btn-primary");
+        var canter = $(this).text();
+        var formselect = $("#formselect").val();
+
+
+    });
+
+
        {#plotlines();#}
        linechart();
     </script>

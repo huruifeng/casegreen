@@ -2,21 +2,25 @@
 
 function linechart() {
 
-	const labels = months({count: 7});
+	const labels = months({count: 20});
 	const data = {
 	  labels: labels,
 	  datasets: [
 		{
 		  label: 'Dataset 1',
-		  data: [1,3,4,8,9,3,4],
+		  data: [1,3,4,8,9,3,4,2,3,1,2,3,1,5,6,2,3,2,6,4,2,7],
 		  borderColor: CHART_COLORS.red,
 		  backgroundColor: "#FF0000",
+			borderWidth: 1,
+			pointRadius: 1,
 		},
 		{
 		  label: 'Dataset 2',
-		  data: [6,2,3,0,8,4,7],
+		  data: [6,2,3,0,8,4,7,1,3,4,8,9,3,4,5,3,4,6,7],
 		  borderColor: CHART_COLORS.blue,
 		  backgroundColor: "#0000FF",
+			borderWidth: 1,
+			pointRadius: 1,
 		}
 	  ]
 	};
@@ -55,9 +59,9 @@ function linechart() {
 
 	const ctx = document.getElementById('line_chart').getContext('2d');
 	var myChart = new Chart(ctx, config);
-
 }
 
+/////////////////////////////////////////////////////
  function generateDataset(shift, label, color) {
       var data = [];
       var x = 0;

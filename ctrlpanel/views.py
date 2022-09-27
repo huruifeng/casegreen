@@ -19,7 +19,7 @@ def index(request):
         return HttpResponse("ERROR: Please Login!")
 
     sys_params,created = sysparam.objects.get_or_create(pk=1,defaults={
-        "centers": "LIN,MSC,SRC,EAC,WAC,YSC,IOE",
+        "centers": "LIN,MSC,SRC,EAC,WAC,YSC",
         "fiscal_year_n": 3,
         "crawler_time": "21:05:00",
         "crawler_number": 1,
