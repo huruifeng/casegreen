@@ -5,31 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0002_auto_20220905_1733.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0003_auto_20220906_2052.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0004_auto_20220908_2207.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0005_auto_20220910_0042.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0006_auto_20220910_0108.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0007_auto_20220910_1925.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0008_auto_20220911_1727.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0009_auto_20220916_1109.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0010_status_daily_new_n.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0011_auto_20220925_1529.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/migrations/0002_auto_20220925_1713.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0012_auto_20220925_1532.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/migrations/0003_auto_20220925_1724.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/migrations/0013_auto_20220925_1537.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -227,7 +205,7 @@
       <workItem from="1663542671379" duration="38261000" />
       <workItem from="1663820698464" duration="6997000" />
       <workItem from="1663894738980" duration="75301000" />
-      <workItem from="1664293239522" duration="12599000" />
+      <workItem from="1664293239522" duration="41022000" />
     </task>
     <task id="LOCAL-00001" summary="updates">
       <created>1660538909922</created>
@@ -467,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664134920808</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="updates">
+      <created>1664310703202</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1664310703202</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -487,6 +472,22 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updates" />
     <option name="LAST_COMMIT_MESSAGE" value="updates" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mycase/views.py</url>
+          <line>262</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mycase/views.py</url>
+          <line>289</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CaseGreen$manage.coverage" NAME="manage Coverage Results" MODIFIED="1659312925732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

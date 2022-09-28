@@ -80,7 +80,7 @@
                             <span>Form: {{ status.form}}</span>
                          {% else %}
                              <span>Form:
-                                 <select id="formselect" onchange="get_data()">
+                                 <select id="formselect" onchange="select_form()">
                                      <option value="" selected></option>
                                      {% for form_i in form_ls %}
                                      <option value="{{ form_i }}">{{ form_i }}</option>
@@ -317,7 +317,14 @@
                  <div class="row" style="max-width: 1000px;">
                      <div class="col-12">
                          <h5 class="mb-3"><i class="fa-solid fa-circle-arrow-right text-primary"></i>&nbsp;<strong>Next step</strong></h5>
-                        <div class="mb-3">Based on status changs in the:
+                        <div class="mb-3">Based on
+                             <select id="status_level" name="status_level" onchange="get_nextstatus()">
+                                 <option value="L3" selected>L3</option>
+                                 <option value="L2">L2</option>
+                                 <option value="L1">L1</option>
+                                 <option value="L0">Original</option>
+                             </select>
+                            status changs in the:
                              <select id="date_range" name="date_range" onchange="get_nextstatus()">
                                  <option value="past3m" selected>Past 3 month</option>
                                  <option value="past6m">Past 6 month</option>
@@ -325,11 +332,14 @@
                                  <option value="past12m">Past 12 month</option>
                              </select>
                             <span>(Same case type/Same form type)</span>
-                         </div>
-                         <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
-                         <div id="bar_chart">
-                                <canvas id="bar_next_status" style="max-height: 400px;min-height: 300px;min-width: 300px;"></canvas>
-                          </div>
+                        </div>
+                        <h5 class="na_h5 d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>
+                        <div id="bar_chart">
+                            <div class="d-none" id="nextstatus_loading">
+                                <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                            </div>
+                            <canvas id="bar_next_status"></canvas>
+                        </div>
                      </div>
                  </div>
                  <!-- End of next step -->
@@ -414,26 +424,16 @@
     <script type="text/javascript" src={% static "mycase/js/saveSVG.js" %}></script>
     <script type="text/javascript" src={% static "mycase/js/lollipop.js" %}></script>
     <script type="text/javascript">
-    function getAvg(data_arr) {
-      const total = data_arr.reduce((acc, c) => acc + c, 0);
-      return total / data_arr.length;
-    }
-    function median(numbers) {
-        const sorted = Array.from(numbers).sort((a, b) => a - b);
-        const middle = Math.floor(sorted.length / 2);
-
-        if (sorted.length % 2 === 0) {
-            return (sorted[middle - 1] + sorted[middle]) / 2;
-        }
-
-        return sorted[middle];
-    }
-    var backgroundColor = ['rgba(255, 99, 132, 0.3)','rgba(255, 159, 64, 0.3)', 'rgba(255, 205, 86, 0.3)','rgba(75, 192, 192, 0.3)',
-        'rgba(54, 162, 235, 0.3)', 'rgba(153, 102, 255, 0.3)', 'rgba(201, 203, 207, 0.3)' ];
-    var borderColor = ['rgb(255, 99, 132)', 'rgb(255, 159, 64)','rgb(255, 205, 86)','rgb(75, 192, 192)',
+    var backgroundColor = ['rgba(75, 192, 192, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 159, 64, 0.5)', 'rgba(255, 205, 86, 0.5)',
+        'rgba(54, 162, 235, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(201, 203, 207, 0.5)' ];
+    var borderColor = ['rgb(75, 192, 192)','rgb(255, 99, 132)', 'rgb(255, 159, 64)','rgb(255, 205, 86)',
             'rgb(54, 162, 235)','rgb(153, 102, 255)','rgb(201, 203, 207)' ];
 
-        function get_data() {
+    function select_form() {
+        get_data();
+        get_nextstatus();
+    }
+    function get_data() {
             var formselect = $("#formselect").val();
             if(formselect==undefined){
                 var form_type = $("#form_type").val();
@@ -452,7 +452,7 @@
             $.ajax({
               type: "GET",
               url: "ajax/caseinrange",
-              async: false,
+              async: true,
               data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val,"selectform":selectform},
               success : function(data) {
                   var n_case = data["n_cases"];
@@ -553,34 +553,44 @@
                 var form_type = formselect;
                 var selectform="yes"
             }
-
+            var status_level = $("#status_level").val();
             var date_range = $("#date_range").val();
             var mycase_status = $("#mycase_status").val();
             var recepit_num = $("#recepit_num").val();
 
+            $("#nextstatus_loading").removeClass("d-none");
+            $("#bar_next_status").addClass("d-none");
+
             $.ajax({
               type: "GET",
               url: "ajax/nextstatus",
-              async: false,
-              data:{"recepit_num":recepit_num,"daterange":date_range,"mystatus":mycase_status,"form_type":form_type},
+              async: true,
+              data:{"recepit_num":recepit_num,"daterange":date_range,"mystatus":mycase_status,"form_type":form_type,"status_level":status_level,"selectform":selectform},
               success : function(data) {
+                  $("#nextstatus_loading").addClass("d-none");
+                  $("#bar_next_status").removeClass("d-none");
+
                   var next_status = data["next_status"];
-                  console.log(next_status);
+                  var tofinal_status = data["to_endstatus"]
                   if(next_status["Final"]===undefined){
-                    if(next_status.length > 0) {
-                        var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
-                      var col_i = 0;
-                      for (const status_i in next_status) {
-                          data_ls.push(next_status[status_i].length);
-                          day_max = Math.max(...next_status[status_i]);
-                          day_min = Math.min(...next_status[status_i]);
-                          day_mid = median(...next_status[status_i]);
-                          day_avg = getAvg(...next_status[status_i]);
-                          label_ls.push(status_i + "- Min:" + day_min + ", Max:" + day_max + ", Avg:" + day_max + ", Median:" + day_max);
-                          bg_ls.push(backgroundColor[col_i % 7]);
-                          bd_ls.push(borderColor[col_i % 7]);
-                      }
-                      plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+                      next_status_n = Object.keys(next_status).length;
+                      if( next_status_n> 0) {
+                          var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
+                          var col_i = 0;
+                          for (const status_i in next_status) {
+                              case_n = next_status[status_i][0];
+                              day_avg = next_status[status_i][1];
+                              day_mid = next_status[status_i][2];
+                              day_min = next_status[status_i][3];
+                              day_max = next_status[status_i][4];
+                              data_ls.push(case_n);
+                              label_ls.push(status_i + " - Num: "+case_n+", Avg: " + day_avg + ", Median: " + day_mid+", Min: " + day_min + ", Max: " + day_max);
+                              bg_ls.push(backgroundColor[col_i % 7]);
+                              bd_ls.push(borderColor[col_i % 7]);
+                              col_i = col_i + 1;
+                          }
+                          {#$("#bar_next_status").height = (10*next_status_n)+"px";#}
+                          plot_bar(label_ls, data_ls, bg_ls, bd_ls);
                     }else{
                         $("#bar_chart").empty();
                         $("#bar_chart").html("<h4 class='ms-5'>Data is not availabe !</h4>");
@@ -605,16 +615,16 @@
                   chartStatus.destroy();
                }
             const data = {
-              labels: labels,
-              datasets: [{
-                axis: 'y',
-                label: labels,
-                data: data_ls,
-                fill: false,
-                backgroundColor: bg_ls,
-                borderColor: bd_ls,
-                borderWidth: 1
-              }]
+                labels: label_ls,
+                datasets: [{
+                    axis: 'y',
+                    label: "Next status",
+                    data: data_ls,
+                    fill: false,
+                    backgroundColor: bg_ls,
+                    borderColor: bd_ls,
+                    borderWidth: 1
+                }]
             };
 
              const config = {

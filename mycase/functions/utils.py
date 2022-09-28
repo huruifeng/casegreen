@@ -115,8 +115,9 @@ def get_status(recepit_number):
         return ["error","invlid_num"]
 
 def get_l_status(status_str, l="L3"):
+    if l== "L0": return status_str
     if status_str in status_dict:
-        l_name = status_dict[status_str][l]
+        l_name = status_dict[status_str][l.upper()]
     else:
         l_name = "Other"
     return  l_name

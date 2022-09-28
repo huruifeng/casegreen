@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timedelta
 
+from bottleneck import median
 from django.db.models import Max, F
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
@@ -42,7 +43,7 @@ def mycase(request):
         status_ls = get_status(receipt_num)
     except Exception as e:
         status_ls = []
-    print(status_ls)
+
     ## read exist data from database
     center_table = center_dict[center.lower()+"_"+ lb_sc.lower()]
     status_qs = center_table.objects.filter(receipt_number=receipt_num)
@@ -144,7 +145,7 @@ def caseinrange(request):
             lb_sc = "LB" if receipt_num[5] == "9" else "SC"
             center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
 
-            if selectform == "yes" and form!="":
+            if selectform == "yes" and form_type!="":
                 case_x =  center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date").first()
                 case_x.form=form_type
                 case_x.save()
@@ -177,7 +178,7 @@ def caseinrange(request):
 
                     ####
                     i += 1
-                    l3_name = get_l_status(case_i.status, "L4")
+                    l3_name = get_l_status(case_i.status, "L3")
 
                     status_counts[l3_name] += 1
                     if case_i.action_date_x >= delta_1d:
@@ -256,9 +257,12 @@ def caseinrange(request):
 def nextstatus(request):
     mycase_status = request.GET.get("mystatus", None)
     date_range = request.GET.get("daterange", None)
-    form_type = request.GET.get("formtype", None)
+    form_type = request.GET.get("form_type", None)
+    status_level = request.GET.get("status_level", None)
     receipt_num = request.GET.get("recepit_num", None)
     center = request.GET.get("center", None)
+
+    selectform = request.GET.get("selectform", None)
 
     today = datetime.today()
     if date_range=="past3m":
@@ -276,19 +280,24 @@ def nextstatus(request):
         center = receipt_num[:3]
         lb_sc = "LB" if receipt_num[5] == "9" else "SC"
         center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+        if selectform == "yes" and form_type != "":
+            case_x = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date").first()
+            case_x.form = form_type
+            case_x.save()
     else:
         center_table = center_dict[center.lower()]
-
-    case_qs = center_table.objects.filter(form=form_type,action_date_x__gte=date_s)
+    fp = open("mycase/data/temp_test.txt","w")
+    case_qs = center_table.objects.filter(form=form_type,action_date_x__gte=date_s).order_by("add_date")
     all_status = {}
-    for case_i in case_qs.order_by("add_date"):
+    for case_i in case_qs:
         if case_i.receipt_number not in all_status:
             all_status[case_i.receipt_number] = [case_i]
         else:
             all_status[case_i.receipt_number].append(case_i)
 
+
     next_status = {}
-    to_endstatus = {}
+    to_endstatus = []
     l4_name = get_l_status(mycase_status,"L4")
 
     if l4_name == "Final":
@@ -296,19 +305,41 @@ def nextstatus(request):
     else:
         for rn_i in all_status:
             rn_i_n = len(all_status[rn_i])
+            if rn_i_n <= 1: continue
+            rn_i_status_date = ""
             for sn_i in range(rn_i_n):
                 status_i = all_status[rn_i][sn_i].status
-                if status_i == mycase_status and (sn_i+1) < rn_i_n:
-                    next_s = all_status[rn_i][sn_i+1].status
-                    next_s_days = all_status[rn_i][sn_i+1].action_date_x - all_status[rn_i][sn_i].action_date_x
+                if status_level != "L0":
+                    status_i_l = get_l_status(status_i, status_level)
+                    mycase_status_l = get_l_status(mycase_status,status_level)
+                else:
+                    status_i_l = status_i
+                    mycase_status_l = status_i
+                if status_i_l == mycase_status_l and (sn_i+1) < rn_i_n and rn_i_status_date=="":
+                    ## rn_i_status_date=="": only save the first pair of status change.
+                    rn_i_status_date = all_status[rn_i][sn_i].action_date_x
+                    next_s = get_l_status(all_status[rn_i][sn_i+1].status,status_level)
+                    next_s_days = (all_status[rn_i][sn_i+1].action_date_x - all_status[rn_i][sn_i].action_date_x).days
+                    if next_s_days <= 0: continue
                     if next_s not in next_status:
                         next_status[next_s] = [next_s_days]
                     else:
                         next_status[next_s].append(next_s_days)
+                if rn_i_status_date !="" and get_l_status(status_i, "L4") == "Final":
+                    to_endstatus.append((all_status[rn_i][sn_i].action_date_x-rn_i_status_date).days)
                     break
+    fp.close()
+    for status_i in next_status:
+        x_len = len(next_status[status_i])
+        x_avg = int(sum(next_status[status_i])/x_len)
+        x_mid = median(next_status[status_i])
+        x_min = min(next_status[status_i])
+        x_max = max(next_status[status_i])
 
-
-    data_dict ={"next_status":next_status}
+        next_status[status_i] = [x_len,x_avg,x_mid,x_min,x_max]
+    to_endstatus = [sum(to_endstatus)/len(to_endstatus),median(to_endstatus),min(to_endstatus),max(to_endstatus)]
+    # print(next_status,to_endstatus)
+    data_dict ={"next_status":next_status, "to_endstatus":to_endstatus}
     return JsonResponse(data_dict, status=200)
 
 
