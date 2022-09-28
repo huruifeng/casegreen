@@ -326,7 +326,9 @@ def nextstatus(request):
                     else:
                         next_status[next_s].append(next_s_days)
                 if rn_i_status_date !="" and get_l_status(status_i, "L4") == "Final":
-                    to_endstatus.append((all_status[rn_i][sn_i].action_date_x-rn_i_status_date).days)
+                    tofinal_days = (all_status[rn_i][sn_i].action_date_x-rn_i_status_date).days
+                    if tofinal_days > 0:
+                        to_endstatus.append(tofinal_days)
                     break
     fp.close()
     for status_i in next_status:
@@ -337,7 +339,7 @@ def nextstatus(request):
         x_max = max(next_status[status_i])
 
         next_status[status_i] = [x_len,x_avg,x_mid,x_min,x_max]
-    to_endstatus = [sum(to_endstatus)/len(to_endstatus),median(to_endstatus),min(to_endstatus),max(to_endstatus)]
+    to_endstatus = [int(sum(to_endstatus)/len(to_endstatus)),median(to_endstatus),min(to_endstatus),max(to_endstatus)]
     # print(next_status,to_endstatus)
     data_dict ={"next_status":next_status, "to_endstatus":to_endstatus}
     return JsonResponse(data_dict, status=200)

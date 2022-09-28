@@ -339,6 +339,7 @@
                                 <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
                             </div>
                             <canvas id="bar_next_status"></canvas>
+                            <h5 id="daystofinal_h">Based on the data, it will take <span id="daystofinal"></span> days from your current status action date to FINAL action.</h5>
                         </div>
                      </div>
                  </div>
@@ -560,6 +561,7 @@
 
             $("#nextstatus_loading").removeClass("d-none");
             $("#bar_next_status").addClass("d-none");
+            $("#daystofinal_h").addClass("d-none");
 
             $.ajax({
               type: "GET",
@@ -569,6 +571,7 @@
               success : function(data) {
                   $("#nextstatus_loading").addClass("d-none");
                   $("#bar_next_status").removeClass("d-none");
+                  $("#daystofinal_h").removeClass("d-none");
 
                   var next_status = data["next_status"];
                   var tofinal_status = data["to_endstatus"]
@@ -591,6 +594,7 @@
                           }
                           {#$("#bar_next_status").height = (10*next_status_n)+"px";#}
                           plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+                          $("#daystofinal").html("<u>Avg: "+tofinal_status[0]+",Midian: "+tofinal_status[1]+",Min: "+tofinal_status[2]+", Max: "+tofinal_status[3]+"</u>");
                     }else{
                         $("#bar_chart").empty();
                         $("#bar_chart").html("<h4 class='ms-5'>Data is not availabe !</h4>");
