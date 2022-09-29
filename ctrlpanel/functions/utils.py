@@ -292,13 +292,13 @@ def run_center(request,center):
 
     print("---------------------------------")
     print("Updating daily counts...")
-    counts_ls = []
 
     for form_ii in counts_today:
         counts_today_new = status_daily.objects.update_or_create(center=center,form=form_ii,date_number=now_days,
             defaults={
                 "center":center,
                 "form":form_ii,
+                "new_n": counts_today[form_ii]["new_n"],
                 "received_n":counts_today[form_ii]["received_n"],
                 "rfe_sent_n":counts_today[form_ii]["rfe_sent_n"],
                 "rfe_received_n":counts_today[form_ii]["rfe_received_n"],
