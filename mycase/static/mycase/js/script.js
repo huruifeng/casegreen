@@ -1,24 +1,66 @@
+function linechart(data_ls,label_ls) {
+	 let chartStatus = Chart.getChart("line_chart"); // <canvas> id
+	   if (chartStatus != undefined) {
+		  chartStatus.destroy();
+	   }
 
-
-function linechart() {
-
-	const labels = months({count: 20});
 	const data = {
-	  labels: labels,
+	  labels: label_ls,
 	  datasets: [
 		{
-		  label: 'Dataset 1',
-		  data: [1,3,4,8,9,3,4,2,3,1,2,3,1,5,6,2,3,2,6,4,2,7],
-		  borderColor: CHART_COLORS.red,
-		  backgroundColor: "#FF0000",
+		  label: 'New',
+		  data: data_ls[0],
+		  borderColor: "rgba(16,114,241,0.7)",
+		  backgroundColor: "#1072f1",
 			borderWidth: 1,
 			pointRadius: 1,
-		},
-		{
-		  label: 'Dataset 2',
-		  data: [6,2,3,0,8,4,7,1,3,4,8,9,3,4,5,3,4,6,7],
-		  borderColor: CHART_COLORS.blue,
-		  backgroundColor: "#0000FF",
+		},{
+		  label: 'FP_Taken',
+		  data: data_ls[1],
+		  borderColor: "rgba(17,169,250,0.7)",
+		  backgroundColor: "#11a9fa",
+			borderWidth: 1,
+			pointRadius: 1,
+		},{
+		  label: 'Interviewed',
+		  data: data_ls[2],
+		  borderColor: "rgba(43,4,218,0.7)",
+		  backgroundColor: "#2b04da",
+			borderWidth: 1,
+			pointRadius: 1,
+		},{
+		  label: 'RFE',
+		  data: data_ls[3],
+		  borderColor: "rgba(244,184,36,0.7)",
+		  backgroundColor: "#f4b824",
+			borderWidth: 1,
+			pointRadius: 1,
+		},{
+		  label: 'Transferred',
+		  data: data_ls[4],
+		  borderColor:  "rgba(199,124,255,0.7)",
+		  backgroundColor: "#c77cff",
+			borderWidth: 1,
+			pointRadius: 1,
+		},{
+		  label: 'Approved',
+		  data: data_ls[5],
+		  borderColor:  "rgba(29,176,99,0.7)",
+		  backgroundColor: "#1db063",
+			borderWidth: 1,
+			pointRadius: 1,
+		},{
+		  label: 'Rejected',
+		  data: data_ls[6],
+		  borderColor:  "rgba(255,0,26,0.7)",
+		  backgroundColor: "#ff001a",
+			borderWidth: 1,
+			pointRadius: 1,
+		},{
+		  label: 'Other',
+		  data: data_ls[7],
+		  borderColor: "rgba(120,120,122,0.7)",
+		  backgroundColor: "#78787a",
 			borderWidth: 1,
 			pointRadius: 1,
 		}

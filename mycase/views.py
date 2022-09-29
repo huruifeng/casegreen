@@ -286,7 +286,6 @@ def nextstatus(request):
             case_x.save()
     else:
         center_table = center_dict[center.lower()]
-    fp = open("mycase/data/temp_test.txt","w")
     case_qs = center_table.objects.filter(form=form_type,action_date_x__gte=date_s).order_by("add_date")
     all_status = {}
     for case_i in case_qs:
@@ -330,7 +329,7 @@ def nextstatus(request):
                     if tofinal_days > 0:
                         to_endstatus.append(tofinal_days)
                     break
-    fp.close()
+
     for status_i in next_status:
         x_len = len(next_status[status_i])
         x_avg = int(sum(next_status[status_i])/x_len)
@@ -351,21 +350,50 @@ def visabulletin(request):
     elif request.method == "POST":
         return render(request,'mycase/visabulletin.html')
 
-def dashbord(request):
+def dailyrecords(request):
     if request.method == "GET":
         center = request.GET.get("center", None)
-        selectform = request.GET.get("form", None)
+        selectform = request.GET.get("formselect", None)
     elif request.method == "POST":
         center = request.GET.get("center", None)
-        selectform = request.GET.get("form", None)
+        selectform = request.GET.get("formselect", None)
+
+    if selectform == None or center == None:
+        data_dict = {"label_ls":[], "count_ls":[]}
+        return JsonResponse(data_dict, status=200)
+
+    date_s = datetime.today() + timedelta(days=-365)
+    count_qs = status_daily.objects.filter(form=selectform,center=center,add_date__gte= date_s).order_by("add_date")
+    date_ls = []
+    rec = []
+    fp = []
+    itv = []
+    rfe = []
+    trf = []
+    apv = []
+    rej = []
+    oth = []
+    for count_i in count_qs:
+        date_ls.append(count_i.add_date.date()+ timedelta(days=-1))
+        rec.append(count_i.new_n)
+        fp.append(count_i.fp_taken_n + count_i.fp_schduled_n)
+        itv.append(count_i.iv_schduled_n + count_i.iv_done_n)
+        rfe.append(count_i.rfe_sent_n + count_i.rfe_received_n)
+        trf.append(count_i.transferred_n)
+        apv.append(count_i.approved_n+count_i.mailed_n + count_i.produced_n)
+        rej.append(count_i.rejected_n+count_i.terminated_n)
+        oth.append(count_i.others_n + count_i.hold_n + count_i.pending_n + count_i.notice_sent_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
+
+    count_ls = [rec,fp,itv, rfe, trf, apv, rej, oth]
+    data_dict = {"label_ls": date_ls,"count_ls":count_ls}
+    return JsonResponse(data_dict, status=200)
+
+def dashbord(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
 
-    context = {"page_title": "Dashbord", "form_ls": form_ls,"selectform":selectform,"center":center}
-    if selectform == None or center == None:
-        return redirect('/dashbord?form=I-485&center=LIN-LB')
-    else:
-        return render(request, 'mycase/dashbord.html', context)
+    context = {"page_title": "Dashbord", "form_ls": form_ls}
+    return render(request, 'mycase/dashbord.html', context)
 
 
 def today(request):

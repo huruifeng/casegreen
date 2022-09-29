@@ -11,6 +11,7 @@ urlpatterns = [
     path('visabulletin/', views.visabulletin, name='visabulletin'),
     path('ajax/caseinrange', views.caseinrange, name = "caseinrange"),
     path('ajax/nextstatus', views.nextstatus, name = "nextstatus"),
+    path('ajax/dailyrecords', views.dailyrecords, name = "dailyrecords"),
 
 ]
 
