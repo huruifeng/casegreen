@@ -12,7 +12,7 @@ function linechart(data_ls,label_ls) {
 		  data: data_ls[0],
 		  borderColor: "rgba(16,114,241,0.7)",
 		  backgroundColor: "#1072f1",
-			borderWidth: 1,
+			borderWidth: 2,
 			pointRadius: 1,
 		},{
 		  label: 'FP_Taken',
@@ -47,7 +47,7 @@ function linechart(data_ls,label_ls) {
 		  data: data_ls[5],
 		  borderColor:  "rgba(29,176,99,0.7)",
 		  backgroundColor: "#1db063",
-			borderWidth: 1,
+			borderWidth: 2,
 			pointRadius: 1,
 		},{
 		  label: 'Rejected',
@@ -62,6 +62,13 @@ function linechart(data_ls,label_ls) {
 		  borderColor: "rgba(120,120,122,0.7)",
 		  backgroundColor: "#78787a",
 			borderWidth: 1,
+			pointRadius: 1,
+		},{
+		  label: 'Pending',
+		  data: data_ls[8],
+		  borderColor: "rgba(161,241,16,0.7)",
+		  backgroundColor: "#a6f110",
+			borderWidth: 2,
 			pointRadius: 1,
 		}
 	  ]

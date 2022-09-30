@@ -338,7 +338,9 @@
                             <div class="d-none" id="nextstatus_loading">
                                 <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
                             </div>
-                            <canvas id="bar_next_status"></canvas>
+                            <div id="bar_container" style="position: relative; height:20px;">
+                                <canvas id="bar_next_status"></canvas>
+                            </div>
                             <h5 id="daystofinal_h">Based on the data, it will take <span id="daystofinal"></span> days from your current status action date to FINAL action.</h5>
                         </div>
                      </div>
@@ -562,6 +564,7 @@
             $("#nextstatus_loading").removeClass("d-none");
             $("#bar_next_status").addClass("d-none");
             $("#daystofinal_h").addClass("d-none");
+             $("#bar_container").css("height","20px");
 
             $.ajax({
               type: "GET",
@@ -592,8 +595,17 @@
                               bd_ls.push(borderColor[col_i % 7]);
                               col_i = col_i + 1;
                           }
-                          {#$("#bar_next_status").height = (10*next_status_n)+"px";#}
+                          alert(next_status_n);
+                          if(next_status_n < 10){
+                              $("#bar_container").css("height",(45*next_status_n)+"px")
+                          }else if(next_status_n < 30){
+                              $("#bar_container").css("height",(35*next_status_n)+"px")
+                          }else{
+                              $("#bar_container").css("height",(25*next_status_n)+"px")
+                          }
+
                           plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+
                           $("#daystofinal").html("<u>Avg: "+tofinal_status[0]+",Midian: "+tofinal_status[1]+",Min: "+tofinal_status[2]+", Max: "+tofinal_status[3]+"</u>");
                     }else{
                         $("#bar_chart").empty();
@@ -637,6 +649,7 @@
               options: {
                 indexAxis: 'y',
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend:{display: false,},
                     title: { display: true,text: 'The next status and taking days based on the data in the selected case range'}

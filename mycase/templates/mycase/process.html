@@ -23,16 +23,17 @@
              <!--Main content-->
             <div class="row">
                  <div class="col-12">
-                     <h2 class="mb-4" style="color:#2d48cb;">Case status daily </h2>
+                     <h2 class="mb-4" style="color:#2d48cb;">Case processes in Receipt Number ranges </h2>
                      <div class="btn-group-sm mb-3">
-                         <h5 class="d-inline">Form type: </h5>
-                          <select id="formselect" onchange="load_data()">
-                             {% for form_i in form_ls %}
-                             <option value="{{ form_i }}" {% if form_i == "I-485" %}selected{% endif %}>{{ form_i }}</option>
-                             {% endfor %}
-                          </select>
-
+                         <div class="btn-group-sm mb-3">
+                             <h5 class="d-inline">Fiscal year: </h5>
+                             <button type="button" class="btn me-1 mb-1 fy_btn btn-outline-primary">2020</button>
+                             <button type="button" class="btn me-1 mb-1 fy_btn btn-outline-primary">2021</button>
+                             <button type="button" class="btn me-1 mb-1 fy_btn btn-primary">2022</button>
+                             <button type="button" class="btn me-1 mb-1 fy_btn btn-outline-primary">2023</button>
+                         </div>
                      </div>
+
                      <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Centers: </h5>
                          <button type="button" class="btn me-1 mb-1 cnt_btn btn-primary">LIN_LB</button>
@@ -48,8 +49,23 @@
                          <button type="button" class="btn me-1 mb-1 cnt_btn btn-outline-primary">YSC_LB</button>
                          <button type="button" class="btn me-1 mb-1 cnt_btn btn-outline-primary">YSC_SC</button>
                      </div>
-                     <div class="chart" id="line_char_div">
-                         <canvas id="line_chart" style="max-height: 500px;"></canvas>
+                     <div>
+                          <h5 class="me-1 d-inline">Form type: </h5>
+                          <select id="formselect" onchange="load_data()">
+                             {% for form_i in form_ls %}
+                             <option value="{{ form_i }}" {% if form_i == "I-485" %}selected{% endif %}>{{ form_i }}</option>
+                             {% endfor %}
+                          </select>
+                         <h5 class="ms-5 me-1 d-inline">Show status in level:</h5>
+                        <select id="status_level" name="status_level" onchange="load_data()">
+                             <option value="L3" selected>L3&nbsp;&nbsp;</option>
+                             <option value="L2">L2&nbsp;&nbsp;</option>
+                             <option value="L1">L1&nbsp;&nbsp;</option>
+                         </select>
+                     </div>
+                     <hr style="height: 1px;color: #666666">
+                     <div class="chart" id="range_bar_div">
+                         <canvas id="range_bar_chart" style="max-height: 500px;"></canvas>
                      </div>
                  </div>
              </div>
@@ -69,13 +85,20 @@
         $(".cnt_btn").addClass("btn-outline-primary");
         $(this).removeClass("btn-outline-primary");
         $(this).addClass("btn-primary");
-
         load_data();
+    });
 
+     $(".fy_btn").click(function () {
+        $(".fy_btn").removeClass("btn-primary");
+        $(".fy_btn").addClass("btn-outline-primary");
+        $(this).removeClass("btn-outline-primary");
+        $(this).addClass("btn-primary");
+        load_data();
     });
 
     function load_data(){
         var center = "LIN_LB";
+        var fy = "2022";
         $('.cnt_btn').each(function(){
             if($(this).hasClass("btn-primary")){
                 center = $(this).text();
@@ -83,25 +106,29 @@
             }
         });
 
+         $('.fy_btn').each(function(){
+            if($(this).hasClass("btn-primary")){
+                fy = $(this).text();
+                return false;
+            }
+        });
+        var statuslevel = $("#status_level").val();
         var formselect = $("#formselect").val();
 
         $.ajax({
               type: "GET",
-              url: "/ajax/dailyrecords",
+              url: "/ajax/rnrangecount",
               async: true,
-              data:{"center":center,"formselect":formselect},
+              data:{"center":center,"formselect":formselect,"fy":fy,"statuslevel":statuslevel},
               success : function(data) {
-                    linechart(data["count_ls"],data["label_ls"]);
-
+                    alert(data["test"])
                 },
               error: function() {
                     alert("Error occurs!")
                 }
         });
     }
-    load_data("LIN_LB","I-485");
-
-    {#plotlines();#}
+    load_data("LIN_LB","I-485","2022");
 
     </script>
 

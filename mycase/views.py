@@ -355,8 +355,8 @@ def dailyrecords(request):
         center = request.GET.get("center", None)
         selectform = request.GET.get("formselect", None)
     elif request.method == "POST":
-        center = request.GET.get("center", None)
-        selectform = request.GET.get("formselect", None)
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("formselect", None)
 
     if selectform == None or center == None:
         data_dict = {"label_ls":[], "count_ls":[]}
@@ -373,6 +373,7 @@ def dailyrecords(request):
     apv = []
     rej = []
     oth = []
+    pending = []
     for count_i in count_qs:
         date_ls.append(count_i.add_date.date()+ timedelta(days=-1))
         rec.append(count_i.new_n)
@@ -382,9 +383,10 @@ def dailyrecords(request):
         trf.append(count_i.transferred_n)
         apv.append(count_i.approved_n+count_i.mailed_n + count_i.produced_n)
         rej.append(count_i.rejected_n+count_i.terminated_n)
-        oth.append(count_i.others_n + count_i.hold_n + count_i.pending_n + count_i.notice_sent_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
+        pending.append(count_i.pending_n)
+        oth.append(count_i.others_n  + count_i.notice_sent_n + count_i.hold_n+count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
 
-    count_ls = [rec,fp,itv, rfe, trf, apv, rej, oth]
+    count_ls = [rec,fp,itv, rfe, trf, apv, rej, oth,pending]
     data_dict = {"label_ls": date_ls,"count_ls":count_ls}
     return JsonResponse(data_dict, status=200)
 
@@ -394,6 +396,50 @@ def dashbord(request):
 
     context = {"page_title": "Dashbord", "form_ls": form_ls}
     return render(request, 'mycase/dashbord.html', context)
+
+def rnrangecount(request):
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("formselect", None)
+        fy = request.GET.get("fy", None)
+        statuslevel = request.GET.get("statuslevel", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("formselect", None)
+        fy = request.POST.get("fy", None)
+        statuslevel = request.POST.get("statuslevel", None)
+
+    if selectform == None or center == None or fy==None:
+        data_dict = {"label_ls":[], "count_ls":[]}
+        return JsonResponse(data_dict, status=200)
+
+    center_table = center_dict[center.lower()]
+    fy = fy[-2:]
+    c_code = center.split("_")[0]
+    lsi = center.split("_")[1]
+    rn_range = 5000
+
+    rn_pattern = c_code+fy
+    case_qs = center_table.objects.filter(form=selectform,receipt_number__startswith=rn_pattern).order_by("add_date")
+    used_case = []
+    status_count = {}
+    for case_i in case_qs:
+        if case_i.receipt_number in used_case:continue
+        status_l = get_l_status(case_i.status, statuslevel)
+        if status_l in status_count:
+            status_count[status_l] += 1
+        else:
+            status_count[status_l] =1
+
+    data_dict = {"test":fy}
+    return JsonResponse(data_dict, status=200)
+
+def process(request):
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+
+    context = {"page_title": "Cneter-Form process", "form_ls": form_ls}
+    return render(request, 'mycase/process.html', context)
 
 
 def today(request):
