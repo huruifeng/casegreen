@@ -64,6 +64,7 @@
                      </div>
                      <hr style="height: 1px;color: #666666">
                      <div class="chart" id="range_bar_div">
+                         <h4 class='ms-5 na-h4 d-none'>Data is not availabe !</h4>
                          <div class="d-none" id="bar_loading">
                             <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
                         </div>
@@ -124,17 +125,25 @@
               async: true,
               data:{"center":center,"formselect":formselect,"fy":fy,"statuslevel":statuslevel},
               success : function(data) {
+                  console.log()
                   $("#bar_loading").addClass("d-none");
                   $("#range_bar_chart").removeClass("d-none");
+                  $(".na-h4").addClass("d-none");
                   var dataset = data["dataset"];
-                    if(dataset !=0){
-                         var rnrange_n = data["label"].length;
-                         $("#bar_container").css("height",(20*rnrange_n)+"px")
-                          plot_bar(data["label"], data["dataset"], data["color"], center + " " + formselect);
+                  var rnrange_n = data["label"].length;
+                    if(dataset !=0 && rnrange_n!=0){
+                        if(rnrange_n <= 30){
+                         $("#bar_container").css("height",(30*rnrange_n)+"px")
+                        }else if(rnrange_n <= 50) {
+                            $("#bar_container").css("height", (25 * rnrange_n) + "px")
+                        }else{
+                            $("#bar_container").css("height",(20*rnrange_n)+"px")
+                        }
 
+                          plot_bar(data["label"], data["dataset"], data["color"], center + " " + formselect);
                     }else{
-                        $("#range_bar_div").empty();
-                        $("#range_bar_div").html("<h4 class='ms-5'>Data is not availabe !</h4>");
+                        $(".na-h4").removeClass("d-none");
+                        $("#range_bar_chart").addClass("d-none");
                     }
 
                 },
@@ -164,7 +173,9 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            title: { display: true, text: title},
+            title: { display: true, text: title,
+                font: {size: 18}
+            },
           },
           scales: {
             x: {stacked: true,},

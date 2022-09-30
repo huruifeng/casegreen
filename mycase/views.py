@@ -439,7 +439,6 @@ def rnrangecount(request):
     rn_pattern = c_code+fy
     case_qs = center_table.objects.filter(form=selectform,receipt_number__startswith=rn_pattern).order_by("receipt_number","-add_date")
 
-    print("1",datetime.now())
     status_count = {}
     rn_status = {}
     for case_i in case_qs:
