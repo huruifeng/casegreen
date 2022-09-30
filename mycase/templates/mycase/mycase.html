@@ -564,7 +564,7 @@
             $("#nextstatus_loading").removeClass("d-none");
             $("#bar_next_status").addClass("d-none");
             $("#daystofinal_h").addClass("d-none");
-             $("#bar_container").css("height","20px");
+            $("#bar_container").css("height","20px");
 
             $.ajax({
               type: "GET",
@@ -595,7 +595,7 @@
                               bd_ls.push(borderColor[col_i % 7]);
                               col_i = col_i + 1;
                           }
-                          alert(next_status_n);
+                          {#alert(next_status_n);#}
                           if(next_status_n < 10){
                               $("#bar_container").css("height",(45*next_status_n)+"px")
                           }else if(next_status_n < 30){

@@ -60,12 +60,16 @@
                         <select id="status_level" name="status_level" onchange="load_data()">
                              <option value="L3" selected>L3&nbsp;&nbsp;</option>
                              <option value="L2">L2&nbsp;&nbsp;</option>
-                             <option value="L1">L1&nbsp;&nbsp;</option>
                          </select>
                      </div>
                      <hr style="height: 1px;color: #666666">
                      <div class="chart" id="range_bar_div">
-                         <canvas id="range_bar_chart" style="max-height: 500px;"></canvas>
+                         <div class="d-none" id="bar_loading">
+                            <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                        </div>
+                        <div id="bar_container" style="position: relative; height:20px;">
+                            <canvas id="range_bar_chart"></canvas>
+                        </div>
                      </div>
                  </div>
              </div>
@@ -74,11 +78,6 @@
         </div> <!--col-6-->
     </div><!--row-->
 </div>
-    <script src="{% static "mycase/js/hammer.min.js" %}"></script>
-    <script src="{% static "mycase/js/chartjs-plugin-zoom.min.js" %}"></script>
-    <script src="{% static "mycase/js/chartjs-plugin-crosshair.min.js" %}"></script>
-    <script src="{% static "mycase/js/utils.js" %}" charset="utf-8"></script>
-    <script src="{% static "mycase/js/script.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
     $(".cnt_btn").click(function () {
         $(".cnt_btn").removeClass("btn-primary");
@@ -115,20 +114,83 @@
         var statuslevel = $("#status_level").val();
         var formselect = $("#formselect").val();
 
+        $("#range_bar_chart").addClass("d-none");
+        $("#bar_loading").removeClass("d-none");
+        $("#bar_container").css("height","400px");
+
         $.ajax({
               type: "GET",
               url: "/ajax/rnrangecount",
               async: true,
               data:{"center":center,"formselect":formselect,"fy":fy,"statuslevel":statuslevel},
               success : function(data) {
-                    alert(data["test"])
+                  $("#bar_loading").addClass("d-none");
+                  $("#range_bar_chart").removeClass("d-none");
+                  var dataset = data["dataset"];
+                    if(dataset !=0){
+                         var rnrange_n = data["label"].length;
+                         $("#bar_container").css("height",(20*rnrange_n)+"px")
+                          plot_bar(data["label"], data["dataset"], data["color"], center + " " + formselect);
+
+                    }else{
+                        $("#range_bar_div").empty();
+                        $("#range_bar_div").html("<h4 class='ms-5'>Data is not availabe !</h4>");
+                    }
+
                 },
               error: function() {
                     alert("Error occurs!")
                 }
         });
     }
-    load_data("LIN_LB","I-485","2022");
+    load_data();
+
+    function plot_bar(labels,datasets,colors,title) {
+
+        let chartStatus = Chart.getChart("range_bar_chart"); // <canvas> id
+               if (chartStatus != undefined) {
+                  chartStatus.destroy();
+               }
+        var data = {
+            labels: labels,
+            datasets: []
+        };
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { display: true, text: title},
+          },
+          scales: {
+            x: {stacked: true,},
+            y: {stacked: true}
+          }
+      }
+    };
+    var barChart = new Chart($('#range_bar_chart'), config)
+
+    // For every year in your data ...
+    for (status_i in datasets) {
+        // You create a new dataset with empty values and the year as the label
+        var newDataset = {
+            label: status_i,
+            backgroundColor: colors[status_i],
+            data: datasets[status_i]
+        };
+
+       // Then you add the dataset to the charts' ones
+        barChart.config.data.datasets.push(newDataset);
+    }
+
+    // Finally, make sure you update your chart, to get the result on your screen
+    barChart.update();
+
+   }
 
     </script>
 

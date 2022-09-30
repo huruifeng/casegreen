@@ -25,6 +25,14 @@ center_dict = {"lin_lb":case_status_lin_lb,
                "ioe":case_status_ioe
                }
 
+color20 = {'Received':'#1266f1','Transferred':'#17becf','Pending':'#ff7f0e',
+           'FP_Scheduled':'#1f77b4','FP_Taken':'#aec7e8','InterviewScheduled':'#9467bd','InterviewCompleted':'#c5b0d5',
+           'RFE_Sent':'#bcbd22','RFE_Received':'#dbdb8d',  'Approved':'#2ca02c', 'Produced':'#98df8a','Mailed':'#a1d99b',
+           'Hold':'#ffbb78','ReturnHold':'#8c564b','NoticeSent':'#c49c94','Reopened':'#e377c2','Other':'#f7b6d2',
+           'Rejected':'#d62728', 'Terminated':'#ff9896','bk1':'#7f7f7f','bk2':'#c7c7c7','bk3':'#9edae5'}
+
+color8 = {'Received':"#1072f1",'FP_Taken':"#11a9fa",'Interviewed': "#2b04da",'RFE':"#f4b824",
+          'Transferred':"#c77cff",'Approved': "#1db063",'Rejected': "#ff001a",'Other':"#78787a"}
 def index(request):
     return render(request,'mycase/index.html')
 
@@ -410,7 +418,7 @@ def rnrangecount(request):
         statuslevel = request.POST.get("statuslevel", None)
 
     if selectform == None or center == None or fy==None:
-        data_dict = {"label_ls":[], "count_ls":[]}
+        data_dict = {"dataset":0}
         return JsonResponse(data_dict, status=200)
 
     center_table = center_dict[center.lower()]
@@ -419,26 +427,59 @@ def rnrangecount(request):
     lsi = center.split("_")[1]
     rn_range = 5000
 
+    if statuslevel == "L3":
+        color = color8
+        dataset_labels = ['Received', 'FP_Taken', 'Interviewed', 'RFE', 'Transferred', 'Approved', 'Rejected', 'Other']
+    if statuslevel == "L2":
+        color = color20
+        dataset_labels = ['Received', 'FP_Scheduled', 'FP_Taken', 'InterviewScheduled', 'InterviewCompleted',
+                          'RFE_Sent', 'RFE_Received', 'Transferred', 'Approved', 'Produced', 'Mailed', 'Pending',
+                          'Hold', 'ReturnHold', 'NoticeSent', 'Reopened', 'Other', 'Rejected', 'Terminated',
+                          'WithdrawalAcknowledged']
     rn_pattern = c_code+fy
-    case_qs = center_table.objects.filter(form=selectform,receipt_number__startswith=rn_pattern).order_by("add_date")
-    used_case = []
-    status_count = {}
-    for case_i in case_qs:
-        if case_i.receipt_number in used_case:continue
-        status_l = get_l_status(case_i.status, statuslevel)
-        if status_l in status_count:
-            status_count[status_l] += 1
-        else:
-            status_count[status_l] =1
+    case_qs = center_table.objects.filter(form=selectform,receipt_number__startswith=rn_pattern).order_by("receipt_number","-add_date")
 
-    data_dict = {"test":fy}
+    print("1",datetime.now())
+    status_count = {}
+    rn_status = {}
+    for case_i in case_qs:
+        if case_i.receipt_number in rn_status: continue
+        status_l = get_l_status(case_i.status, statuslevel)
+        rn_status[case_i.receipt_number] = 1
+
+        rn = int(case_i.receipt_number[3:])
+        range_key = rn - (rn % rn_range)
+        range_key = c_code + str(range_key) + "-" + str(range_key + rn_range - 1)[-4:]
+
+        if range_key not in status_count:
+            if statuslevel=="L2":
+                status_count[range_key] = {
+                'Received':0,'FP_Scheduled':0,'FP_Taken':0,'InterviewScheduled':0,'InterviewCompleted':0,
+                'RFE_Sent':0,'RFE_Received':0,'Transferred':0,'Approved':0,'Produced':0,'Mailed':0,'Pending':0,
+                'Hold':0,'ReturnHold':0,'NoticeSent':0,'Reopened':0,'Other':0,'Rejected':0,'Terminated':0,'WithdrawalAcknowledged':0
+                }
+
+            if statuslevel=="L3":
+                status_count[range_key] = {
+                    'Received':0,'FP_Taken':0,'Interviewed':0,'RFE':0,'Transferred':0,'Approved':0,'Rejected':0, 'Other':0
+                }
+        status_count[range_key][status_l] += 1
+
+    labels = list(status_count.keys())
+    dataset = {}
+    for dataset_i in dataset_labels:
+        dataset[dataset_i] = []
+        for rnrange_i in status_count:
+            dataset[dataset_i].append(status_count[rnrange_i][dataset_i])
+
+    data_dict = {"dataset":dataset,"label":labels,"color":color}
     return JsonResponse(data_dict, status=200)
 
 def process(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
 
-    context = {"page_title": "Cneter-Form process", "form_ls": form_ls}
+    context = {"page_title": "Case range process", "form_ls": form_ls}
     return render(request, 'mycase/process.html', context)
 
 
