@@ -162,6 +162,17 @@ def centerrun(request):
 
         for center_i in center_ls:
             return_code = run_center(request,center_i)
+
+        ## delete the static files
+        file_ls = os.listdir("mycase/data/statics")
+        for f_i in file_ls:
+            while True:
+                try:
+                    os.remove("mycase/data/statics/"+f_i)
+                    break
+                except OSError:
+                    pass
+
         print("*******************************")
         print("All done!")
         print("*******************************")

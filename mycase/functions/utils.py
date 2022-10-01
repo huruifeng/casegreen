@@ -1,11 +1,12 @@
 ## Function library
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 import requests
 from bs4 import BeautifulSoup
 import re
 
 from ctrlpanel.functions.utils import get_status_dict
+from mycase.models import status_daily
 
 months = ['January', 'February', 'March', 'April', 'May', 'June',
           'July', 'August', 'September', 'October', 'November', 'December']
@@ -274,7 +275,7 @@ def getcase_in_range(case_range,center,case_range_base,center_table,form_type,re
     return case_qs
 
 
-def get_rnrangecount(center_table,center,formselect,fy,statuslevel,rangesize):
+def get_rnrangecount(center_table,center,selectform,fy,statuslevel,rangesize):
     fy = fy[-2:]
     c_code = center.split("_")[0]
     rn_range = int(rangesize)
@@ -289,7 +290,7 @@ def get_rnrangecount(center_table,center,formselect,fy,statuslevel,rangesize):
                           'Hold', 'ReturnHold', 'NoticeSent', 'Reopened', 'Other', 'Rejected', 'Terminated',
                           'WithdrawalAcknowledged']
     rn_pattern = c_code + fy
-    case_qs = center_table.objects.filter(form=formselect, receipt_number__startswith=rn_pattern).order_by(
+    case_qs = center_table.objects.filter(form=selectform, receipt_number__startswith=rn_pattern).order_by(
         "receipt_number", "-add_date")
 
     status_count = {}
@@ -329,9 +330,32 @@ def get_rnrangecount(center_table,center,formselect,fy,statuslevel,rangesize):
     data_dict = {"dataset": dataset, "label": labels, "color": color}
     return data_dict
 
-def casestatus(date_range,center_table,form_type,receipt_num):
-    all_status = {}
-    pass
+def get_dailyrecords(center,selectform):
+    date_s = datetime.today() + timedelta(days=-365)
+    count_qs = status_daily.objects.filter(form=selectform, center=center, add_date__gte=date_s).order_by("add_date")
+    date_ls = []
+    rec = []
+    fp = []
+    itv = []
+    rfe = []
+    trf = []
+    apv = []
+    rej = []
+    oth = []
+    pending = []
+    for count_i in count_qs:
+        date_ls.append(count_i.add_date.date() + timedelta(days=-1))
+        rec.append(count_i.new_n)
+        fp.append(count_i.fp_taken_n + count_i.fp_schduled_n)
+        itv.append(count_i.iv_schduled_n + count_i.iv_done_n)
+        rfe.append(count_i.rfe_sent_n + count_i.rfe_received_n)
+        trf.append(count_i.transferred_n)
+        apv.append(count_i.approved_n + count_i.mailed_n + count_i.produced_n)
+        rej.append(count_i.rejected_n + count_i.terminated_n)
+        pending.append(count_i.pending_n)
+        oth.append(
+            count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
 
-def get_daily_counts(center_table,form_type):
-    counts_qs = center_table.objects.filter()
+    count_ls = [rec, fp, itv, rfe, trf, apv, rej, oth, pending]
+    data_dict = {"label_ls": date_ls, "count_ls": count_ls}
+    return data_dict

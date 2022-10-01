@@ -6,7 +6,7 @@ from django.db.models import Max, F
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
-from mycase.functions.utils import get_status, getcase_in_range, get_l_status, get_rnrangecount
+from mycase.functions.utils import get_status, getcase_in_range, get_l_status, get_rnrangecount, get_dailyrecords
 from mycase.models import *
 
 # Create your views here.
@@ -354,41 +354,16 @@ def visabulletin(request):
 def dailyrecords(request):
     if request.method == "GET":
         center = request.GET.get("center", None)
-        selectform = request.GET.get("formselect", None)
+        selectform = request.GET.get("selectform", None)
     elif request.method == "POST":
         center = request.POST.get("center", None)
-        selectform = request.POST.get("formselect", None)
+        selectform = request.POST.get("selectform", None)
 
     if selectform == None or center == None:
         data_dict = {"label_ls":[], "count_ls":[]}
         return JsonResponse(data_dict, status=200)
 
-    date_s = datetime.today() + timedelta(days=-365)
-    count_qs = status_daily.objects.filter(form=selectform,center=center,add_date__gte= date_s).order_by("add_date")
-    date_ls = []
-    rec = []
-    fp = []
-    itv = []
-    rfe = []
-    trf = []
-    apv = []
-    rej = []
-    oth = []
-    pending = []
-    for count_i in count_qs:
-        date_ls.append(count_i.add_date.date()+ timedelta(days=-1))
-        rec.append(count_i.new_n)
-        fp.append(count_i.fp_taken_n + count_i.fp_schduled_n)
-        itv.append(count_i.iv_schduled_n + count_i.iv_done_n)
-        rfe.append(count_i.rfe_sent_n + count_i.rfe_received_n)
-        trf.append(count_i.transferred_n)
-        apv.append(count_i.approved_n+count_i.mailed_n + count_i.produced_n)
-        rej.append(count_i.rejected_n+count_i.terminated_n)
-        pending.append(count_i.pending_n)
-        oth.append(count_i.others_n  + count_i.notice_sent_n + count_i.hold_n+count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
-
-    count_ls = [rec,fp,itv, rfe, trf, apv, rej, oth,pending]
-    data_dict = {"label_ls": date_ls,"count_ls":count_ls}
+    data_dict = get_dailyrecords(center,selectform)
     return JsonResponse(data_dict, status=200)
 
 def dashbordajax(request):
@@ -402,29 +377,43 @@ def dashbord(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
 
-    context = {"page_title": "Dashbord", "form_ls": form_ls}
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("selectform", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("selectform", None)
+
+
+    if selectform == None or center == None:
+        return redirect("/dashbord?center=LIN_LB&selectform=I-485", status=200)
+
+    data_dict = get_dailyrecords(center, selectform)
+
+    context = {"page_title": "Dashbord", "form_ls": form_ls, "chart_data": json.dumps(data_dict),
+               "center": center, "selectform": selectform,}
     return render(request, 'mycase/dashbord.html', context)
 
 def rnrangecount(request):
     if request.method == "GET":
         center = request.GET.get("center", None)
-        formselect = request.GET.get("formselect", None)
+        selectform = request.GET.get("selectform", None)
         fy = request.GET.get("fy", None)
         statuslevel = request.GET.get("statuslevel", None)
         rangesize = request.GET.get("rangesize", None)
     elif request.method == "POST":
         center = request.POST.get("center", None)
-        formselect = request.POST.get("formselect", None)
+        selectform = request.POST.get("selectform", None)
         fy = request.POST.get("fy", None)
         statuslevel = request.POST.get("statuslevel", None)
         rangesize = request.GET.get("rangesize", None)
 
-    if formselect == None or center == None or fy==None:
+    if selectform == None or center == None or fy==None:
         data_dict = {"dataset":0,"label":[]}
         return JsonResponse(data_dict, status=200)
 
     center_table = center_dict[center.lower()]
-    data_dict = get_rnrangecount(center_table,center,formselect,fy,statuslevel,rangesize)
+    data_dict = get_rnrangecount(center_table,center,selectform,fy,statuslevel,rangesize)
 
     return JsonResponse(data_dict, status=200)
 
@@ -434,25 +423,25 @@ def process(request):
 
     if request.method == "GET":
         center = request.GET.get("center", None)
-        formselect = request.GET.get("formselect", None)
+        selectform = request.GET.get("selectform", None)
         fy = request.GET.get("fy", None)
         statuslevel = request.GET.get("statuslevel", None)
         rangesize = request.GET.get("rangesize", None)
     elif request.method == "POST":
         center = request.POST.get("center", None)
-        formselect = request.POST.get("formselect", None)
+        selectform = request.POST.get("selectform", None)
         fy = request.POST.get("fy", None)
         statuslevel = request.POST.get("statuslevel", None)
         rangesize = request.GET.get("rangesize", None)
 
-    if formselect == None or center == None or fy == None or statuslevel==None or rangesize==None:
-        return redirect("/process?center=LIN_LB&formselect=I-485&fy=2022&statuslevel=L3&rangesize=5000", status=200)
+    if selectform == None or center == None or fy == None or statuslevel==None or rangesize==None:
+        return redirect("/process?center=LIN_LB&selectform=I-485&fy=2022&statuslevel=L3&rangesize=5000", status=200)
 
     center_table = center_dict[center.lower()]
-    data_dict = get_rnrangecount(center_table, center, formselect, fy, statuslevel, rangesize)
+    data_dict = get_rnrangecount(center_table, center, selectform, fy, statuslevel, rangesize)
 
     context = {"page_title": "Case range process", "form_ls": form_ls,"chart_data":json.dumps(data_dict),
-               "center":center,"fy":fy, "formselect":formselect, "statuslevel":statuslevel, "rangesize":rangesize}
+               "center":center,"fy":fy, "selectform":selectform, "statuslevel":statuslevel, "rangesize":rangesize}
     return render(request, 'mycase/process.html', context)
 
 def processajax(request):

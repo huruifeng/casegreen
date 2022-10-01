@@ -49,9 +49,9 @@
                      </div>
                      <div>
                           <h5 class="me-1 d-inline">Form type: </h5>
-                          <select id="formselect" onchange="load_page()">
+                          <select id="selectform" onchange="load_page()">
                              {% for form_i in form_ls %}
-                             <option value="{{ form_i }}" {% if form_i == formselect %}selected{% endif %}>{{ form_i }}</option>
+                             <option value="{{ form_i }}" {% if form_i == selectform %}selected{% endif %}>{{ form_i }}</option>
                              {% endfor %}
                           </select>
                          <h5 class="ms-5 me-1 d-inline">Show status in level:</h5>
@@ -122,9 +122,9 @@
         $(".na-h4").addClass("d-none");
 
         var statuslevel = $("#status_level").val();
-        var formselect = $("#formselect").val();
+        var selectform = $("#selectform").val();
         var rangesize = $("#range_size").val();
-        location.href = '{% url "mycase:process" %}?center='+center+'&formselect='+formselect+'&fy='+fy+'&statuslevel='+statuslevel+'&rangesize='+rangesize;
+        location.href = '{% url "mycase:process" %}?center='+center+'&selectform='+selectform+'&fy='+fy+'&statuslevel='+statuslevel+'&rangesize='+rangesize;
     }
 
     function load_data() {
@@ -145,7 +145,7 @@
             }else{
                 $("#bar_container").css("height",(20*rnrange_n)+"px")
             }
-              plot_bar(data["label"], data["dataset"], data["color"], '{{center}}'+"  "+'{{formselect}}');
+              plot_bar(data["label"], data["dataset"], data["color"], '{{center}}'+"  "+'{{selectform}}');
         }else{
             $(".na-h4").removeClass("d-none");
             $("#range_bar_chart").addClass("d-none");

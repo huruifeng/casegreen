@@ -80,7 +80,7 @@
                             <span>Form: {{ status.form}}</span>
                          {% else %}
                              <span>Form:
-                                 <select id="formselect" onchange="select_form()">
+                                 <select id="selectform" onchange="select_form()">
                                      <option value="" selected></option>
                                      {% for form_i in form_ls %}
                                      <option value="{{ form_i }}">{{ form_i }}</option>
@@ -437,12 +437,12 @@
         get_nextstatus();
     }
     function get_data() {
-            var formselect = $("#formselect").val();
-            if(formselect==undefined){
+            var selectform = $("#selectform").val();
+            if(selectform==undefined){
                 var form_type = $("#form_type").val();
                 var selectform="no"
             }else{
-                var form_type = formselect;
+                var form_type = selectform;
                 var selectform="yes"
             }
 
@@ -548,12 +548,12 @@
         get_data();
 
         function get_nextstatus() {
-            var formselect = $("#formselect").val();
-            if(formselect==undefined){
+            var selectform = $("#selectform").val();
+            if(selectform==undefined){
                 var form_type = $("#form_type").val();
                 var selectform="no"
             }else{
-                var form_type = formselect;
+                var form_type = selectform;
                 var selectform="yes"
             }
             var status_level = $("#status_level").val();

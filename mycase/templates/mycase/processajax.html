@@ -49,7 +49,7 @@
                      </div>
                      <div>
                           <h5 class="me-1 d-inline">Form type: </h5>
-                          <select id="formselect" onchange="load_data()">
+                          <select id="selectform" onchange="load_data()">
                              {% for form_i in form_ls %}
                              <option value="{{ form_i }}" {% if form_i == "I-485" %}selected{% endif %}>{{ form_i }}</option>
                              {% endfor %}
@@ -117,7 +117,7 @@
             }
         });
         var statuslevel = $("#status_level").val();
-        var formselect = $("#formselect").val();
+        var selectform = $("#selectform").val();
         var rangesize = $("#range_size").val();
 
         $("#range_bar_chart").addClass("d-none");
@@ -128,7 +128,7 @@
               type: "GET",
               url: "/ajax/rnrangecount",
               async: true,
-              data:{"center":center,"formselect":formselect,"fy":fy,"statuslevel":statuslevel,"rangesize":rangesize},
+              data:{"center":center,"selectform":selectform,"fy":fy,"statuslevel":statuslevel,"rangesize":rangesize},
               success : function(data) {
                   $("#bar_loading").addClass("d-none");
                   $("#range_bar_chart").removeClass("d-none");
@@ -144,7 +144,7 @@
                             $("#bar_container").css("height",(20*rnrange_n)+"px")
                         }
 
-                          plot_bar(data["label"], data["dataset"], data["color"], center + " " + formselect);
+                          plot_bar(data["label"], data["dataset"], data["color"], center + " " + selectform);
                     }else{
                         $(".na-h4").removeClass("d-none");
                         $("#range_bar_chart").addClass("d-none");

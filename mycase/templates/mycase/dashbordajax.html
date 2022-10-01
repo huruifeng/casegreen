@@ -26,7 +26,7 @@
                      <h2 class="mb-4" style="color:#2d48cb;">Case status daily </h2>
                      <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Form type: </h5>
-                          <select id="formselect" onchange="load_data()">
+                          <select id="selectform" onchange="load_data()">
                              {% for form_i in form_ls %}
                              <option value="{{ form_i }}" {% if form_i == "I-485" %}selected{% endif %}>{{ form_i }}</option>
                              {% endfor %}
@@ -83,13 +83,13 @@
             }
         });
 
-        var formselect = $("#formselect").val();
+        var selectform = $("#selectform").val();
 
         $.ajax({
               type: "GET",
               url: "/ajax/dailyrecords",
               async: true,
-              data:{"center":center,"formselect":formselect},
+              data:{"center":center,"selectform":selectform},
               success : function(data) {
                     linechart(data["count_ls"],data["label_ls"]);
 
