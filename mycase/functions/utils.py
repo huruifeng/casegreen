@@ -1,4 +1,6 @@
 ## Function library
+import json
+import os.path
 from datetime import date, timedelta, datetime
 
 import requests
@@ -289,6 +291,21 @@ def get_rnrangecount(center_table,center,selectform,fy,statuslevel,rangesize):
                           'RFE_Sent', 'RFE_Received', 'Transferred', 'Approved', 'Produced', 'Mailed', 'Pending',
                           'Hold', 'ReturnHold', 'NoticeSent', 'Reopened', 'Other', 'Rejected', 'Terminated',
                           'WithdrawalAcknowledged']
+
+    ## Check if there is the statistics file for the selected options
+    ## first time visiting will save the results to json file
+    file_name = "_".join([center,selectform,fy,statuslevel,rangesize])+".json"
+    folder = "mycase/data/statistics/center_range_count"
+    file_name = folder + "/" +file_name
+    if os.path.exists(file_name):
+        try:
+            with open(file_name) as json_file:
+                data_dict = json.load(json_file)
+            return  data_dict
+        except Exception as e:
+            print(e)
+
+    #####################
     rn_pattern = c_code + fy
     case_qs = center_table.objects.filter(form=selectform, receipt_number__startswith=rn_pattern).order_by(
         "receipt_number", "-add_date")
@@ -328,6 +345,9 @@ def get_rnrangecount(center_table,center,selectform,fy,statuslevel,rangesize):
             dataset[dataset_i].append(status_count[rnrange_i][dataset_i])
 
     data_dict = {"dataset": dataset, "label": labels, "color": color}
+    with open(file_name, "w") as json_file:
+        json.dump(data_dict, json_file)
+
     return data_dict
 
 def get_dailyrecords(center,selectform):

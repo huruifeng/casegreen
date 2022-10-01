@@ -164,11 +164,11 @@ def centerrun(request):
             return_code = run_center(request,center_i)
 
         ## delete the static files
-        file_ls = os.listdir("mycase/data/statics")
+        file_ls = os.listdir("mycase/data/statistics/center_range_count")
         for f_i in file_ls:
             while True:
                 try:
-                    os.remove("mycase/data/statics/"+f_i)
+                    os.remove("mycase/data/statistics/center_range_count/"+f_i)
                     break
                 except OSError:
                     pass
