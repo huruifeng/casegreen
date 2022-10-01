@@ -112,7 +112,7 @@
 
                               {% for x_i in sys_params.centers_as_list %}
                               <tr id="{{ x_i }}_lb_tr">
-                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_lb_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_lb_end">08-02-2022 15:15:36</td><td id="{{ x_i }}_lb_status">Empty</td>
+                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_lb_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_lb_end">08-02-2022 15:15:36</td><td class="run_status_td" id="{{ x_i }}_lb_status">Empty</td>
                                     <td>
                                         <!-- Checked switch -->
                                         <div class="form-check form-switch">
@@ -145,7 +145,7 @@
 
                                {% for x_i in sys_params.centers_as_list %}
                               <tr id="{{ x_i }}_sc_tr">
-                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_sc_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_sc_end">08-02-2022 15:15:36</td><td id="{{ x_i }}_sc_status">Empty</td>
+                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_sc_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_sc_end">08-02-2022 15:15:36</td><td class="run_status_td" id="{{ x_i }}_sc_status">Empty</td>
                                     <td>
                                         <!-- Checked switch -->
                                         <div class="form-check form-switch">
@@ -180,7 +180,7 @@
 
                               {% for x_i in sys_params.centers_as_list %}
                               <tr id="{{ x_i }}_ioe_tr">
-                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_ioe_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_ioe_end">08-02-2022 15:15:36</td><td id="{{ x_i }}_ioe_status">Empty</td>
+                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_ioe_start">08-02-2022 15:15:36</td><td id="{{ x_i }}_ioe_end">08-02-2022 15:15:36</td><td class="run_status_td" id="{{ x_i }}_ioe_status">Empty</td>
                                     <td>
                                         <!-- Checked switch -->
                                         <div class="form-check form-switch">
@@ -297,14 +297,17 @@
           success : function(data) {
               if(data.includes("Login")){
                   location.reload();
+              }else if(data.includes("Error")){
+                  alert(data);
+                  get_center_status(data);
               }else{
                   alert("Run "+center_x+", "+data)
               }
             },
-          error: function() {
+          error: function(data) {
                   alert('Error occurs!');
             },
-         complete: function (){
+         complete: function (data){
               clearTimeout(get_center_status_timer);
               get_center_status();
              }
@@ -312,27 +315,32 @@
          get_center_status();
     }
 
-    function get_center_status(){
-        $.ajax({
-          type: "POST",
-          url: "ajax/centerstatus",
-          async: true,
-          data:{'csrfmiddlewaretoken': '{{ csrf_token }}',},
-          success : function(data) {
-              data.forEach(center => {
-                   c_fields = center["fields"];
-                   c_name = c_fields["center_lsi"].toLowerCase();
-                   $("#"+c_name+"_start").html(c_fields["start"]);
-                   $("#"+c_name+"_end").html(c_fields["end"]);
-                   $("#"+c_name+"_status").html(c_fields["status"]);
-              });
+    function get_center_status(status_str="OK"){
+        if(status_str!="OK"){
+            $(".run_status_td").html(status_str);
+        }else{
+            $.ajax({
+              type: "POST",
+              url: "ajax/centerstatus",
+              async: true,
+              data:{'csrfmiddlewaretoken': '{{ csrf_token }}',},
+              success : function(data) {
+                  data.forEach(center => {
+                       c_fields = center["fields"];
+                       c_name = c_fields["center_lsi"].toLowerCase();
+                       $("#"+c_name+"_start").html(c_fields["start"]);
+                       $("#"+c_name+"_end").html(c_fields["end"]);
+                       $("#"+c_name+"_status").html(c_fields["status"]);
+                  });
 
-              {#alert("Update center status: Success!");#}
-            },
-          error: function() {
-                  alert('Update center status: Error occurs!');
-            }
-         });
+                  {#alert("Update center status: Success!");#}
+                },
+              error: function() {
+                      alert('Update center status: Error occurs!');
+                }
+             });
+        }
+
     }
     get_center_status();
 

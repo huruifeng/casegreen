@@ -9,14 +9,14 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from ctrlpanel.functions.utils import bkpTable, run_initalization, run_center
+from ctrlpanel.functions.utils import bkp_table, run_initalization, run_center
 from mycase.models import *
 
 # Create your views here.
 @login_required()
 def index(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     sys_params,created = sysparam.objects.get_or_create(pk=1,defaults={
         "centers": "LIN,MSC,SRC,EAC,WAC,YSC",
@@ -32,7 +32,7 @@ def index(request):
 # @user_passes_test(lambda u: u.is_superuser)
 def ctrl_dashbord(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     return render(request,'ctrlpanel/dashbord.html')
 
@@ -64,7 +64,7 @@ def login_view(request):
 
 def exportDB(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="exportDB.csv"'
@@ -106,7 +106,7 @@ def exportDB(request):
 
 def sysinit(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # try:
@@ -118,7 +118,7 @@ def sysinit(request):
                               case_status_ioe]
         model_ls = [sysparam, status, status_daily, form, center_running] + case_status_tables
         for m_i in model_ls:
-            data = bkpTable(request, m_i.objects.all())
+            data = bkp_table(request, m_i.objects.all())
 
         # Init
         run_initalization(request)
@@ -128,7 +128,7 @@ def sysinit(request):
 
 def sysupdate(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
@@ -148,7 +148,7 @@ def sysupdate(request):
 
 def centerrun(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
@@ -162,6 +162,8 @@ def centerrun(request):
 
         for center_i in center_ls:
             return_code = run_center(request,center_i)
+            if "error" in return_code.lower():
+                return HttpResponse(return_code)
 
         ## delete the static files
         file_ls = os.listdir("mycase/data/statistics/center_range_count")
@@ -180,7 +182,7 @@ def centerrun(request):
 
 def centerstatus(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     qs_json = {}
     if request.is_ajax and request.method == "POST":
@@ -192,7 +194,7 @@ def centerstatus(request):
 
 def visabulletin(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("ERROR: Please Login!")
+        return HttpResponse("Login: Please Login!")
 
     if request.method == "GET":
         return render(request,'ctrlpanel/visabulletin.html')

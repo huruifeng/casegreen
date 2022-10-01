@@ -37,9 +37,9 @@ def get_form_dict():
     uscis_forms_df = pd.read_csv("mycase/data/case_forms.csv",header=0,index_col=None,sep=",")
     form_dict = uscis_forms_df.to_dict(orient="index")
     return form_dict
-def bkpTable(request,queryset):
+def bkp_table(request,queryset):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return "ERROR: Please Login!"
+        return "Login: Please Login!"
 
     model = queryset.model
     table_name = model._meta.db_table
@@ -77,7 +77,7 @@ def bkpTable(request,queryset):
 
 def run_initalization(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return "ERROR: Please Login!"
+        return "Login: Please Login!"
 
     ## status
     case_status_df = pd.read_csv("mycase/data/case_status.csv",header=0,index_col=None,sep=",")
@@ -109,7 +109,7 @@ def run_initalization(request):
 
 def run_center(request,center):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return "ERROR: Please Login!"
+        return "Login: Please Login!"
 
     rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter", "Case Accepted By The USCIS Lockbox",
                  "Case Was Received", "Case Was Received and A Receipt Notice Was Sent","Case Was Received At Another USCIS Office",
@@ -129,7 +129,7 @@ def run_center(request,center):
     for i in range(year_n):
         fiscal_years.append(now_year-i)
     if now_month > 9:
-        fiscal_years.append(now_year + 1)
+        fiscal_years = [now_year + 1] + fiscal_years
 
     ## run crawler and read data from saved files
     if center.strip() != "":
@@ -170,17 +170,21 @@ def run_center(request,center):
         print(f"Reading data - Yesterday...Done!")
 
         #####################
-        print(f"Reading data - Today...")
-        file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + ".json"
-        with open(file_i) as json_file:
-            data = json.load(json_file)
-        shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + ".json")
+        try:
+            print(f"Reading data - Today...")
+            file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + ".json"
+            with open(file_i) as json_file:
+                data = json.load(json_file)
+            shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + ".json")
 
-        file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + "_case_final.json"
-        with open(file_i) as json_file:
-            data ={**data, **(json.load(json_file))}
-        shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + "_case_final.json")
-        print(f"Reading data - Today...Done!")
+            file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + "_case_final.json"
+            with open(file_i) as json_file:
+                data ={**data, **(json.load(json_file))}
+            shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + "_case_final.json")
+            print(f"Reading data - Today...Done!")
+        except Exception as e:
+            print(e)
+            return "Error: reading "+file_i
 
         total_x = len(data)
         n_i = 0
@@ -325,7 +329,6 @@ def run_center(request,center):
     print("Updating daily counts...Done!")
 
     print(f"{center}:Done!")
-
     return "OK"
 
 
