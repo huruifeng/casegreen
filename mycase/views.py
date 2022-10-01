@@ -428,10 +428,9 @@ def process(request):
     now = datetime.now()
     for i in range(year_n):
         year_ls.append(str(now.year - i))
-    if now.month > 9:
-        if not(now.month == 10 and now.day == 1):
-            ## today is 10-1, skip
-            year_ls = [str(now.year + 1)] + year_ls
+    if now.month >=10 and now.day > 1:
+        ## start fr0m 10-2-xxxx
+        year_ls = [str(now.year + 1)] + year_ls
 
     ######
     if request.method == "GET":
