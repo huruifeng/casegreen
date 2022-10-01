@@ -344,7 +344,7 @@ def get_dailyrecords(center,selectform):
     oth = []
     pending = []
     for count_i in count_qs:
-        date_ls.append(count_i.add_date.date() + timedelta(days=-1))
+        date_ls.append((count_i.add_date.date() + timedelta(days=-1)).strftime("%m-%d-%Y"))
         rec.append(count_i.new_n)
         fp.append(count_i.fp_taken_n + count_i.fp_schduled_n)
         itv.append(count_i.iv_schduled_n + count_i.iv_done_n)
@@ -353,8 +353,7 @@ def get_dailyrecords(center,selectform):
         apv.append(count_i.approved_n + count_i.mailed_n + count_i.produced_n)
         rej.append(count_i.rejected_n + count_i.terminated_n)
         pending.append(count_i.pending_n)
-        oth.append(
-            count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
+        oth.append(count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
 
     count_ls = [rec, fp, itv, rfe, trf, apv, rej, oth, pending]
     data_dict = {"label_ls": date_ls, "count_ls": count_ls}

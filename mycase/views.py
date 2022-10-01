@@ -390,8 +390,7 @@ def dashbord(request):
 
     data_dict = get_dailyrecords(center, selectform)
 
-    context = {"page_title": "Dashbord", "form_ls": form_ls, "chart_data": json.dumps(data_dict),
-               "center": center, "selectform": selectform,}
+    context = {"page_title": "Dashbord", "form_ls": form_ls, "chart_data": data_dict,"center": center, "selectform": selectform}
     return render(request, 'mycase/dashbord.html', context)
 
 def rnrangecount(request):
