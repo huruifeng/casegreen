@@ -129,7 +129,9 @@ def run_center(request,center):
     for i in range(year_n):
         fiscal_years.append(now_year-i)
     if now_month > 9:
-        fiscal_years = [now_year + 1] + fiscal_years
+        if not(now_month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            fiscal_years = [now_year + 1] + fiscal_years
 
     ## run crawler and read data from saved files
     if center.strip() != "":

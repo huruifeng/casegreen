@@ -429,7 +429,9 @@ def process(request):
     for i in range(year_n):
         year_ls.append(str(now.year - i))
     if now.month > 9:
-        year_ls = [str(now.year + 1)] + year_ls
+        if not(now.month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            year_ls = [str(now.year + 1)] + year_ls
 
     ######
     if request.method == "GET":
@@ -468,7 +470,9 @@ def processajax(request):
     for i in range(year_n):
         year_ls.append(str(now.year - i))
     if now.month > 9:
-        year_ls = [str(now.year + 1)] + year_ls
+        if not(now.month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            year_ls = [str(now.year + 1)] + year_ls
 
     context = {"page_title": "Case range process", "form_ls": form_ls,"year_ls":year_ls[::-1],}
     return render(request, 'mycase/processajax.html', context)
