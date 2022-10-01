@@ -1,0 +1,216 @@
+{% extends "mycase_basic.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
+     <div class="row justify-content-center">
+         <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
+            <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
+         </div>
+         <div class="col-md-6" style="min-width: min-content;">
+             <form action="/mycase" method="get">
+                <div class="input-group" style="max-width: 960px;">
+                  <div class="form-outline flex-fill">
+                    <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control-lg" style="color: black;" value="{{ receipt_num }}" />
+                    <label class="form-label" for="form1">Enter you receipt number</label>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="box-shadow: none;">
+                    <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
+                  </button>
+                </div>
+              </form>
+            <br>
+             <!--Main content-->
+            <div class="row">
+                 <div class="col-12">
+                     <h2 class="mb-4" style="color:#2d48cb;">Case processes in Receipt Number ranges </h2>
+
+                     <div class="mb-3">
+                         <h5 class="d-inline">Fiscal year: </h5>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary fy_btn">2020</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary fy_btn">2021</button>
+                         <button type="button" class="btn me-1 mb-1 btn-primary fy_btn">2022</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary fy_btn">2023</button>
+                     </div>
+                     <div class="mb-3">
+                         <h5 class="d-inline">Centers: </h5>
+                         <button type="button" class="btn me-1 mb-1 btn-primary cnt_btn">LIN_LB</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">LIN_SC</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">MSC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">MSC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">SRC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">SRC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">EAC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">EAC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">WAC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">WAC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">YSC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 btn-outline-primary cnt_btn">YSC_SC</button>
+                     </div>
+                     <div>
+                          <h5 class="me-1 d-inline">Form type: </h5>
+                          <select id="formselect" onchange="load_data()">
+                             {% for form_i in form_ls %}
+                             <option value="{{ form_i }}" {% if form_i == "I-485" %}selected{% endif %}>{{ form_i }}</option>
+                             {% endfor %}
+                          </select>
+                         <h5 class="ms-5 me-1 d-inline">Show status in level:</h5>
+                        <select id="status_level" name="status_level" onchange="load_data()">
+                             <option value="L3" selected>L3&nbsp;&nbsp;</option>
+                             <option value="L2">L2&nbsp;&nbsp;</option>
+                         </select>
+                         <h5 class="ms-5 me-1 d-inline">Range size:</h5>
+                        <select id="range_size" name="range_size" onchange="load_data()">
+                             <option value="2000">2000&nbsp;&nbsp;</option>
+                             <option value="5000" selected>5000&nbsp;&nbsp;</option>
+                             <option value="10000">10000&nbsp;&nbsp;</option>
+                         </select>
+                     </div>
+                     <hr style="height: 1px;color: #666666">
+                     <div class="chart" id="range_bar_div">
+                         <h4 class='ms-5 na-h4 d-none'>Data is not availabe !</h4>
+                         <div class="d-none" id="bar_loading">
+                            <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                        </div>
+                        <div id="bar_container" style="position: relative; height:20px;">
+                            <canvas id="range_bar_chart"></canvas>
+                        </div>
+                     </div>
+                 </div>
+             </div>
+
+             <!--Main content end-->
+        </div> <!--col-6-->
+    </div><!--row-->
+</div>
+    <script type="text/javascript">
+    $(".cnt_btn").click(function () {
+        $(".cnt_btn").removeClass("btn-primary");
+        $(".cnt_btn").addClass("btn-outline-primary");
+        $(this).removeClass("btn-outline-primary");
+        $(this).addClass("btn-primary");
+        load_data();
+    });
+
+     $(".fy_btn").click(function () {
+        $(".fy_btn").removeClass("btn-primary");
+        $(".fy_btn").addClass("btn-outline-primary");
+        $(this).removeClass("btn-outline-primary");
+        $(this).addClass("btn-primary");
+        load_data();
+    });
+
+    function load_data(){
+        var center = "LIN_LB";
+        var fy = "2022";
+        $('.cnt_btn').each(function(){
+            if($(this).hasClass("btn-primary")){
+                center = $(this).text();
+                return false;
+            }
+        });
+
+         $('.fy_btn').each(function(){
+            if($(this).hasClass("btn-primary")){
+                fy = $(this).text();
+                return false;
+            }
+        });
+        var statuslevel = $("#status_level").val();
+        var formselect = $("#formselect").val();
+        var rangesize = $("#range_size").val();
+
+        $("#range_bar_chart").addClass("d-none");
+        $("#bar_loading").removeClass("d-none");
+        $("#bar_container").css("height","400px");
+
+        $.ajax({
+              type: "GET",
+              url: "/ajax/rnrangecount",
+              async: true,
+              data:{"center":center,"formselect":formselect,"fy":fy,"statuslevel":statuslevel,"rangesize":rangesize},
+              success : function(data) {
+                  $("#bar_loading").addClass("d-none");
+                  $("#range_bar_chart").removeClass("d-none");
+                  $(".na-h4").addClass("d-none");
+                  var dataset = data["dataset"];
+                  var rnrange_n = data["label"].length;
+                    if(dataset !=0 && rnrange_n!=0){
+                        if(rnrange_n <= 30){
+                         $("#bar_container").css("height",(30*rnrange_n)+"px")
+                        }else if(rnrange_n <= 50) {
+                            $("#bar_container").css("height", (25 * rnrange_n) + "px")
+                        }else{
+                            $("#bar_container").css("height",(20*rnrange_n)+"px")
+                        }
+
+                          plot_bar(data["label"], data["dataset"], data["color"], center + " " + formselect);
+                    }else{
+                        $(".na-h4").removeClass("d-none");
+                        $("#range_bar_chart").addClass("d-none");
+                    }
+
+                },
+              error: function() {
+                    alert("Error occurs!")
+                }
+        });
+    }
+    load_data();
+
+    function plot_bar(labels,datasets,colors,title) {
+
+        let chartStatus = Chart.getChart("range_bar_chart"); // <canvas> id
+               if (chartStatus != undefined) {
+                  chartStatus.destroy();
+               }
+        var data = {
+            labels: labels,
+            datasets: []
+        };
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+          indexAxis: 'y',
+          interaction: {
+              intersect: false,
+              mode: 'index',
+            },
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { display: true, text: title,
+                font: {size: 18}
+            },
+          },
+          scales: {
+            x: {stacked: true,},
+            y: {stacked: true}
+          }
+      }
+    };
+    var barChart = new Chart($('#range_bar_chart'), config)
+
+    // For every year in your data ...
+    for (status_i in datasets) {
+        // You create a new dataset with empty values and the year as the label
+        var newDataset = {
+            label: status_i,
+            backgroundColor: colors[status_i],
+            data: datasets[status_i]
+        };
+
+       // Then you add the dataset to the charts' ones
+        barChart.config.data.datasets.push(newDataset);
+    }
+
+    // Finally, make sure you update your chart, to get the result on your screen
+    barChart.update();
+
+   }
+
+    </script>
+
+ {% endblock %}
