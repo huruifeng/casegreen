@@ -420,6 +420,18 @@ def process(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
 
+    ####
+    sys_params = sysparam.objects.get(pk=1)
+    year_n = sys_params.fiscal_year_n
+
+    year_ls = []
+    now = datetime.now()
+    for i in range(year_n):
+        year_ls.append(str(now.year - i))
+    if now.month > 9:
+        year_ls = [str(now.year + 1)] + year_ls
+
+    ######
     if request.method == "GET":
         center = request.GET.get("center", None)
         selectform = request.GET.get("selectform", None)
@@ -439,7 +451,7 @@ def process(request):
     center_table = center_dict[center.lower()]
     data_dict = get_rnrangecount(center_table, center, selectform, fy, statuslevel, rangesize)
 
-    context = {"page_title": "Case range process", "form_ls": form_ls,"chart_data":json.dumps(data_dict),
+    context = {"page_title": "Case range process", "form_ls": form_ls,"year_ls":year_ls[::-1],"chart_data":json.dumps(data_dict),
                "center":center,"fy":fy, "selectform":selectform, "statuslevel":statuslevel, "rangesize":rangesize}
     return render(request, 'mycase/process.html', context)
 
@@ -447,7 +459,18 @@ def processajax(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
 
-    context = {"page_title": "Case range process", "form_ls": form_ls}
+    ####
+    sys_params = sysparam.objects.get(pk=1)
+    year_n = sys_params.fiscal_year_n
+
+    year_ls = []
+    now = datetime.now()
+    for i in range(year_n):
+        year_ls.append(str(now.year - i))
+    if now.month > 9:
+        year_ls = [str(now.year + 1)] + year_ls
+
+    context = {"page_title": "Case range process", "form_ls": form_ls,"year_ls":year_ls[::-1],}
     return render(request, 'mycase/processajax.html', context)
 
 

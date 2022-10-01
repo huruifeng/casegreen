@@ -27,10 +27,9 @@
 
                      <div class="mb-3">
                          <h5 class="d-inline">Fiscal year: </h5>
-                         <button type="button" class="btn me-1 mb-1 btn-outline-primary fy_btn">2020</button>
-                         <button type="button" class="btn me-1 mb-1 btn-outline-primary fy_btn">2021</button>
-                         <button type="button" class="btn me-1 mb-1 btn-primary fy_btn">2022</button>
-                         <button type="button" class="btn me-1 mb-1 btn-outline-primary fy_btn">2023</button>
+                         {% for y_i in year_ls %}
+                             <button type="button" class="btn me-1 mb-1 fy_btn {% if fy == y_i %}btn-primary{% else %}btn-outline-primary{% endif %}">{{ y_i }}</button>
+                         {% endfor %}
                      </div>
                      <div class="mb-3">
                          <h5 class="d-inline">Centers: </h5>

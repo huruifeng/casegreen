@@ -16,5 +16,5 @@
 .RJC_color{color: #ff001a}
 .OTH_color{color: #78787a}
 
-.cnt_btn{padding-left: 10px;padding-right: 10px;}
-.fy_btn{padding-left: 10px;padding-right: 10px;}
+.cnt_btn{padding-left: 10px;padding-right: 10px; vertical-align:middle;}
+.fy_btn{padding-left: 10px;padding-right: 10px;vertical-align:middle;}

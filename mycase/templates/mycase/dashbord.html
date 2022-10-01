@@ -105,12 +105,13 @@
         var selectform = $("#selectform").val();
         location.href = '{% url "mycase:dashbord" %}?center='+center+'&selectform='+selectform;
     }
-
     function load_data() {
         var data ={{ chart_data|safe }};
         linechart(data["count_ls"],data["label_ls"]);
     }
     load_data();
+
+
 
     </script>
 
