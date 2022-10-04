@@ -1,29 +1,6 @@
 {% extends "ctrl_basic.html" %}
 {% load static %}
 {% block content %}
-    <div class="row pb-3">
-        <div class="col-md-12 grid-margin">
-          <div class="d-flex justify-content-between flex-wrap">
-            <div class="d-flex align-items-end flex-wrap">
-              <div class="me-md-3 me-xl-5">
-                <h2>Good
-                    {% now "H" as current_time %}
-                    {% if current_time|add:"0" >= 18 %} evening {% elif current_time|add:"0" >= 12 %} afternoon {% else %}morning {% endif %} ...</h2>
-                <p class="mb-md-0">This is the control center for updating the data.</p>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between align-items-end flex-wrap">
-                <button type="button" class="btn btn-light bg-white btn-icon me-3" onclick="location.reload()">
-                    <i class="fa-solid fa-rotate-right fa-lg text-muted"></i>
-                </button>
-                <a class="btn btn-primary me-3 mt-2 mt-xl-0" id="exportdb" href="{% url "ctrlpanel:ctrlexportdb" %}">Export DB</a>
-                <button class="btn btn-danger me-3 mt-2 mt-xl-0" id="initsys" onclick="sysinit()">Initialization&nbsp;&nbsp;
-                    <span class="spinner-border spinner-border-sm d-none" id="init_spinner" role="status" aria-hidden="true"></span>
-                </button>
-            </div>
-          </div>
-        </div>
-    </div>
 
     <div class="row pb-3">
         <div class="col-md-12 stretch-card">
@@ -256,7 +233,7 @@
           async: true,
           data:{"centers":centers,"fys":fys,"crawler_t":crawler_t,"crawler_n":crawler_n,'csrfmiddlewaretoken': '{{ csrf_token }}',},
           success : function(data) {
-              if(data.includes("ERROR")){
+              if(data.includes("Login")){
                   location.reload();
               }else{
                   alert("Update succeed! "+data)

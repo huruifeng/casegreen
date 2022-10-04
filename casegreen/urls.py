@@ -20,6 +20,7 @@ urlpatterns = [
     path('huadmin/', admin.site.urls,name="huadmin"),
     path("accounts/", include("django.contrib.auth.urls"),name="login"),  # new
     path('', include('mycase.urls',namespace="casegreen"),name="home"),
+
     path('mycase/', include('mycase.urls',namespace="mycase"),name="home"),
     path('ioe/', include('ioe.urls',namespace="ioe"),name="home"),
     path('ctrlpanel/', include('ctrlpanel.urls',namespace="ctrlpanel"),name="home"),

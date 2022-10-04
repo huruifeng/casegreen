@@ -109,12 +109,14 @@ class visabulletin(models.Model):
         ('EGH', 'El Salvador/Guatemala/Honduras'),
         ('OTHERS', 'Others'),
     ]
-    tableAB = models.CharField(max_length=8)
+    EBFB = models.CharField(max_length=8, default="")
     category = models.CharField(max_length=64, default="")
     conutry = models.CharField(max_length=32,choices=country_choices, default="")
-    formonth=models.DateField()
+    tableA = models.CharField(max_length=8)
+    tableB = models.CharField(max_length=8)
+    formonth = models.CharField(max_length=32,default="") ##
     visadate = models.CharField(max_length=128)
-    pubdate = models.DateField()
+    adddate = models.DateField(auto_now=True)
     description = models.TextField()
 
     def __str__(self):

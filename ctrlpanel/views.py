@@ -16,7 +16,8 @@ from mycase.models import *
 @login_required()
 def index(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     sys_params,created = sysparam.objects.get_or_create(pk=1,defaults={
         "centers": "LIN,MSC,SRC,EAC,WAC,YSC",
@@ -32,14 +33,14 @@ def index(request):
 # @user_passes_test(lambda u: u.is_superuser)
 def ctrl_dashbord(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     return render(request,'ctrlpanel/dashbord.html')
 
 
 def login_view(request):
     username = password = ''
-
     next_url=""
     if request.GET:
         next_url = request.GET.get("next")
@@ -55,16 +56,22 @@ def login_view(request):
                 if next_url:
                     return redirect(next_url)
                 else:
-                    return redirect("mycase:home")
+                    return redirect("casegreen:home")
             else:
                 state = "Your account is not active, please contact the site admin."
+                return HttpResponse(state)
         else:
             state = "Your username and/or password were incorrect."
-    return HttpResponse(state)
+            return HttpResponse(state)
+    else:
+        return redirect("login")
+
+
 
 def exportDB(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="exportDB.csv"'
@@ -106,7 +113,8 @@ def exportDB(request):
 
 def sysinit(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # try:
@@ -128,7 +136,8 @@ def sysinit(request):
 
 def sysupdate(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
@@ -148,7 +157,8 @@ def sysupdate(request):
 
 def centerrun(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
@@ -182,7 +192,8 @@ def centerrun(request):
 
 def centerstatus(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     qs_json = {}
     if request.is_ajax and request.method == "POST":
@@ -194,7 +205,8 @@ def centerstatus(request):
 
 def visabulletin(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
-        return HttpResponse("Login: Please Login!")
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
 
     if request.method == "GET":
         return render(request,'ctrlpanel/visabulletin.html')

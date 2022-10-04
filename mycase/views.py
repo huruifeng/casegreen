@@ -30,9 +30,12 @@ def index(request):
 
 def mycase(request):
     if request.method == "GET":
-        receipt_num = request.GET['receipt_number']
+        receipt_num = request.GET.get("receipt_number", None)
     elif request.method == "POST":
-        receipt_num = request.POST['receipt_number']
+        receipt_num = request.POST.get("receipt_number", None)
+
+    if receipt_num == None:
+        return redirect("casegreen:home")
 
     center = receipt_num[:3]
     year = receipt_num[3:5]

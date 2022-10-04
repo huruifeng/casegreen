@@ -5,19 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/ioe/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0004_auto_20221004_2256.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0005_auto_20221004_2258.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0006_alter_visabulletin_adddate.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/datepicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/bootstrap-datepicker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/casegreen/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/calendarHM.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/calendarHM.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/visabulletin.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/visabulletin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrl_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrl_basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/visabulletin.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/visabulletin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ioe/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ioe/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +61,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/static/mycase",
+    "last_opened_file_path": "F:/PyCharm_project/casegreen/static/css",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "database.data.views"
+    "settings.editor.selected.configurable": "vcs.Subversion"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -74,11 +78,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\static\css" />
+      <recent name="F:\PyCharm_project\casegreen\static\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
-      <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
-      <recent name="F:\PyCharm_project\casegreen\static\js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
@@ -165,6 +169,9 @@
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\hurui\AppData\Roaming\Subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="" />
@@ -216,14 +223,7 @@
       <workItem from="1663820698464" duration="6997000" />
       <workItem from="1663894738980" duration="75301000" />
       <workItem from="1664293239522" duration="130324000" />
-      <workItem from="1664677918847" duration="34060000" />
-    </task>
-    <task id="LOCAL-00007" summary="updates">
-      <created>1661835919968</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1661835919968</updated>
+      <workItem from="1664677918847" duration="55908000" />
     </task>
     <task id="LOCAL-00008" summary="updates">
       <created>1661912471290</created>
@@ -561,7 +561,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664858695691</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="updates">
+      <created>1664909853741</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1664909853741</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -571,6 +578,19 @@
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="138" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="182" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="119" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="d7095c12-36ca-48a1-ae84-db5f12daa0b7">
           <value>
             <State />
           </value>

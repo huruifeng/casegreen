@@ -30,7 +30,7 @@ class center_runningAdmin(admin.ModelAdmin):
 admin.site.register(center_running,center_runningAdmin)
 
 class visabulletinAdmin(admin.ModelAdmin):
-    list_display = ["formonth","tableAB", "category", "conutry","visadate","pubdate"]
+    list_display = ["category", "conutry", "formonth","tableA","tableB", "visadate","adddate"]
 admin.site.register(visabulletin,visabulletinAdmin)
 
 #######################
