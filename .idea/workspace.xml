@@ -5,12 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/css/calendarHM.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/calendarHM.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioe/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/manul_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/manul_correction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/casegreen/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/calendarHM.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/calendarHM.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/visabulletin.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/visabulletin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -208,14 +216,7 @@
       <workItem from="1663820698464" duration="6997000" />
       <workItem from="1663894738980" duration="75301000" />
       <workItem from="1664293239522" duration="130324000" />
-      <workItem from="1664677918847" duration="27984000" />
-    </task>
-    <task id="LOCAL-00006" summary="updates">
-      <created>1661835070422</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1661835070422</updated>
+      <workItem from="1664677918847" duration="34060000" />
     </task>
     <task id="LOCAL-00007" summary="updates">
       <created>1661835919968</created>
@@ -553,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664654454098</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="updates">
+      <created>1664858695691</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1664858695691</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -571,6 +579,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="updates" />
     <option name="LAST_COMMIT_MESSAGE" value="updates" />
   </component>

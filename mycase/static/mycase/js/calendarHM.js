@@ -84,7 +84,7 @@ if (!String.prototype.formatString) {
 
         var getColor = function(count) {
           if (typeof(settings.colors[0]) == "string"){
-              var alpha = count/max_count + 0.1;
+              var alpha = count/max_count + 0.3;
               alpha = alpha > 1 ? 1 : alpha;
               return count==0 ? settings.colors[0] : hexToRGB(settings.colors[1],alpha);
           }
