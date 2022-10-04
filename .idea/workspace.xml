@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/css/calendarHM.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/calendarHM.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/manul_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/manul_correction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/data",
+    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/static/mycase",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,18 +66,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
       <recent name="F:\PyCharm_project\casegreen\static\js" />
-      <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
+      <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data\bkp" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data\current" />
-      <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.casegreen">
@@ -204,14 +207,8 @@
       <workItem from="1663542671379" duration="38261000" />
       <workItem from="1663820698464" duration="6997000" />
       <workItem from="1663894738980" duration="75301000" />
-      <workItem from="1664293239522" duration="129612000" />
-    </task>
-    <task id="LOCAL-00005" summary="updates">
-      <created>1661485015366</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1661485015366</updated>
+      <workItem from="1664293239522" duration="130324000" />
+      <workItem from="1664677918847" duration="27984000" />
     </task>
     <task id="LOCAL-00006" summary="updates">
       <created>1661835070422</created>
@@ -549,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664652888305</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="updates">
+      <created>1664654454098</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1664654454098</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

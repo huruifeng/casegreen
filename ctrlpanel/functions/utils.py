@@ -132,7 +132,7 @@ def run_center(request,center):
         if not(now.month == 10 and now.day == 1):
             ## today is 10-1, skip
             ## start from 10-2-xxxx
-            fiscal_years = [str(now.year + 1)] + fiscal_years
+            fiscal_years = [str(now_year + 1)] + fiscal_years
 
     ## run crawler and read data from saved files
     if center.strip() != "":
