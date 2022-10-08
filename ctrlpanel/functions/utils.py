@@ -132,7 +132,7 @@ def run_center(request,center):
         if not(now.month == 10 and now.day == 1):
             ## today is 10-1, skip
             ## start from 10-2-xxxx
-            fiscal_years = [str(now_year + 1)] + fiscal_years
+            fiscal_years = [now_year + 1] + fiscal_years
 
     ## run crawler and read data from saved files
     if center.strip() != "":
@@ -154,6 +154,7 @@ def run_center(request,center):
 
     status_dict = get_status_dict()
     counts_today = {}
+    status_trans_dict = {}
     for fy_i in fiscal_years:
         print("---------------------------------")
         if crawler_n > 0:
@@ -206,14 +207,36 @@ def run_center(request,center):
 
             # data : {case_num:[form,action_date,statue],...}
             if case_i in data_yesterday:
-                ## if no status changes, next
-                if (status_i == data_yesterday[case_i][2]) and (act_date_i == data_yesterday[case_i][1]):
-                    continue
-
-                ## when form == ""
+                ## when form == "", check saved data
                 if form_i == "":
-                    if data_yesterday[case_i][0]!="":
+                    if data_yesterday[case_i][0] != "":
                         data[case_i][0] = data_yesterday[case_i][0]
+                        form_i = data_yesterday[case_i][0]
+
+                yesterday_status =  data_yesterday[case_i][2]
+                if form_i != "":
+                    if form_i not in status_trans_dict:
+                        status_trans_dict[form_i] = {"no_yesterday":{} }
+                    if yesterday_status not in status_trans_dict[form_i]:
+                        status_trans_dict[form_i][yesterday_status]={}
+                    if status_i in status_trans_dict[form_i][yesterday_status]:
+                        status_trans_dict[form_i][yesterday_status][status_i] += 1
+                    else:
+                        status_trans_dict[form_i][yesterday_status][status_i] = 1
+
+                ## if no status changes, next
+                if (status_i == yesterday_status) and (act_date_i == data_yesterday[case_i][1]):
+                    continue
+            else:
+                ## if case not in yesterday data
+                if form_i != "":
+                    if form_i not in status_trans_dict:
+                        status_trans_dict[form_i] = {"no_yesterday": {}}
+
+                    if status_i in status_trans_dict[form_i]["no_yesterday"]:
+                        status_trans_dict[form_i]["no_yesterday"][status_i] += 1
+                    else:
+                        status_trans_dict[form_i]["no_yesterday"][status_i] = 1
 
             data_yesterday[case_i] = data[case_i]
 
@@ -251,6 +274,7 @@ def run_center(request,center):
                     if l2_name == "Other": counts_today[form_i]["others_n"] += 1
                 else:
                     counts_today[form_i]["others_n"] += 1
+
             #################
             try:
                 time_s =act_date_i
@@ -273,7 +297,7 @@ def run_center(request,center):
             rd_date = date(2000,1,1)
             if status_i in rd_status:
                 rd_date = time_x
-            case_new = center_obj(receipt_number=case_i,form=data[case_i][0],status=status_i,
+            case_new = center_obj(receipt_number=case_i,form=form_i,status=status_i,
                                   action_date=act_date_i, action_date_x=time_x,
                                   case_stage = case_stage,rd_date = rd_date,
                                   add_date=datetime.now(),
@@ -299,7 +323,6 @@ def run_center(request,center):
 
     print("---------------------------------")
     print("Updating daily counts...")
-
     for form_ii in counts_today:
         counts_today_new = status_daily.objects.update_or_create(center=center,form=form_ii,date_number=now_days,
             defaults={
@@ -330,6 +353,26 @@ def run_center(request,center):
             }
         )
     print("Updating daily counts...Done!")
+
+    print("---------------------------------")
+    print("Updating status trans counts...")
+    status_trans_ls = []
+    for form_ii in status_trans_dict:
+        for source_status in status_trans_dict[form_ii]:
+            for dest_status in status_trans_dict[form_ii][source_status]:
+                status_trans_new = status_trans(
+                    center=center,form_type = form_ii,
+                    source_status = source_status,dest_status = dest_status,
+                    count = status_trans_dict[form_ii][source_status][dest_status],
+                    action_date = datetime.now().date(),add_date = datetime.now(),
+                    date_number = now_days,
+                    fiscal_year="0", note = "" )
+                status_trans_ls.append(status_trans_new)
+    try:
+        status_trans.objects.bulk_create(status_trans_ls, batch_size=1000)
+    except Exception as e:
+        print(e)
+    print("Updating  status trans count...Done!")
 
     print(f"{center}:Done!")
     return "OK"

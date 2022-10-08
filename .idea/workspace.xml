@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0007_status_trans.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0008_status_trans_center.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/migrations/0009_auto_20221007_1538.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/googleloader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/visabulletin.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/visabulletin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbord.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,29 +45,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharm_project/casegreen/static/css",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "vcs.Subversion"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/PyCharm_project/casegreen/static/css&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Subversion&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "azure",
-      "mysql",
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;azure&quot;,
+      &quot;mysql&quot;,
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\PyCharm_project\casegreen\static\css" />
@@ -70,11 +77,11 @@
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\static\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data\bkp" />
-      <recent name="F:\PyCharm_project\casegreen\mycase\data\status_data\current" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.casegreen">
@@ -208,14 +215,8 @@
       <workItem from="1663820698464" duration="6997000" />
       <workItem from="1663894738980" duration="75301000" />
       <workItem from="1664293239522" duration="130324000" />
-      <workItem from="1664677918847" duration="60050000" />
-    </task>
-    <task id="LOCAL-00009" summary="updates">
-      <created>1661950539458</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1661950539458</updated>
+      <workItem from="1664677918847" duration="78406000" />
+      <workItem from="1665270945542" duration="1193000" />
     </task>
     <task id="LOCAL-00010" summary="updates">
       <created>1661952673810</created>
@@ -553,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665032472685</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="updates">
+      <created>1665161644887</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1665161644887</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

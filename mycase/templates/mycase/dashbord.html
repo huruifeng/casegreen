@@ -24,7 +24,7 @@
              <!--Main content-->
             <div class="row">
                  <div class="col-12">
-                     <h2 class="mb-4" style="color:#2d48cb;">Case status daily </h2>
+                     <h2 class="mb-4" style="color:#2d48cb;">Case status counts </h2>
                      <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Form type: </h5>
                           <select id="selectform" onchange="load_page()">
@@ -82,11 +82,22 @@
                  </div>
              </div>
 
+            <hr style="height: 1px;color: #666666">
+            <div class="row">
+                 <div class="col-12">
+                     <h3 class="mb-4" style="color:#2d48cb;">Case status transitions </h3>
+                     <div class="chart" id="sankey_div">
+                         <div id="status_sankey"></div>
+                     </div>
+                 </div>
+             </div>
+
              <!--Main content end-->
         </div> <!--col-6-->
     </div><!--row-->
 </div>
     <script type="text/javascript" src="{% static "mycase/js/calendarHM.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/googleloader.js" %}"></script>
     <script src="{% static "mycase/js/hammer.min.js" %}"></script>
     <script src="{% static "mycase/js/chartjs-plugin-zoom.min.js" %}"></script>
     <script src="{% static "mycase/js/chartjs-plugin-crosshair.min.js" %}"></script>
@@ -154,6 +165,37 @@
     }
     plot_calendarHM();
 
+//////////////////////////////////////////
+    google.charts.load('current', {'packages':['sankey']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'From');
+        data.addColumn('string', 'To');
+        data.addColumn('number', 'Count');
+        data.addRows([
+          [ 'A', 'X', 5 ],
+          [ 'A', 'Y', 7 ],
+          [ 'A', 'Z', 6 ],
+          [ 'B', 'X', 2 ],
+          [ 'B', 'Y', 9 ],
+          [ 'B', 'Z', 4 ]
+        ]);
+
+        // Sets chart options.
+        var options = {
+            width: 1200,
+            tooltip: {
+                textStyle:{fontSize: 10, bold:false, italic: false },
+                showColorCode: true
+            }
+        };
+
+        // Instantiates and draws our chart, passing in some options.
+        var chart = new google.visualization.Sankey(document.getElementById('status_sankey'));
+        chart.draw(data, options);
+    }
+    /////////////////////////////////////
 
 
     </script>

@@ -56,7 +56,7 @@ def login_view(request):
                 if next_url:
                     return redirect(next_url)
                 else:
-                    return redirect("casegreen:home")
+                    return redirect("ctrlpanel:ctrlhome")
             else:
                 state = "Your account is not active, please contact the site admin."
                 return HttpResponse(state)

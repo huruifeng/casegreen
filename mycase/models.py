@@ -122,6 +122,20 @@ class visabulletin(models.Model):
     def __str__(self):
         return "Viss Bulletin."
 
+class status_trans(models.Model):
+    center = models.CharField(max_length=32)
+    form_type = models.CharField(max_length=32)
+    source_status = models.CharField(max_length=128)
+    dest_status = models.CharField(max_length=128)
+    count = models.IntegerField()
+    fiscal_year = models.CharField(max_length=8)
+    action_date = models.DateField(auto_now=True)
+    add_date = models.DateTimeField(auto_now=True)
+    date_number = models.IntegerField()
+    note = models.CharField(max_length=64)
+    def __str__(self):
+        return "Status changs on last day."
+
 ##################################################
 class case_status_lin_lb(models.Model):
     receipt_number = models.CharField(max_length=16)
