@@ -86,6 +86,15 @@
             <div class="row">
                  <div class="col-12">
                      <h3 class="mb-4" style="color:#2d48cb;">Case status transitions </h3>
+                     <div class="btn-group-sm mb-3">
+                         <h5 class="d-inline">Show status level: </h5>
+                          <select id="status_level" onchange="plot_sankey()">
+                             <option value="L0">Original</option>
+                             <option value="L1">L1</option>
+                             <option value="L2">L2</option>
+                             <option value="L3">L3</option>
+                          </select>
+                     </div>
                      <div class="chart" id="sankey_div">
                          <div id="status_sankey"></div>
                      </div>
@@ -138,7 +147,7 @@
         var status_x = parseInt($("#status_select").val());
         var text_ls = [["new case","new cases"],["FP_Taken","FP_Takens"],["Interview","Interviews"],["RFE","RFEs"],
             ["case transferred","cases transferred"],["case approved","cases approved"],["case rejected","cases rejected"],
-            ["other case","other cases"]["pending case","pending cases"]]
+            ["other case","other cases"],["pending case","pending cases"]]
 
         var date_ls = date_count["label_ls"];
         var count_ls = date_count["count_ls"];
@@ -166,35 +175,40 @@
     plot_calendarHM();
 
 //////////////////////////////////////////
-    google.charts.load('current', {'packages':['sankey']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'From');
-        data.addColumn('string', 'To');
-        data.addColumn('number', 'Count');
-        data.addRows([
-          [ 'A', 'X', 5 ],
-          [ 'A', 'Y', 7 ],
-          [ 'A', 'Z', 6 ],
-          [ 'B', 'X', 2 ],
-          [ 'B', 'Y', 9 ],
-          [ 'B', 'Z', 4 ]
-        ]);
+    function plot_sankey(){
+        var status_level = $("#status_level").val();
 
-        // Sets chart options.
-        var options = {
-            width: 1200,
-            tooltip: {
-                textStyle:{fontSize: 10, bold:false, italic: false },
-                showColorCode: true
-            }
-        };
+        google.charts.load('current', {'packages':['sankey']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'From');
+            data.addColumn('string', 'To');
+            data.addColumn('number', 'Count');
+            data.addRows([
+              [ 'A', 'B', 5 ],
+              [ 'A', 'C', 7 ],
+              [ 'A', 'Z', 6 ],
+              [ 'B', 'X', 2 ],
+              [ 'B', 'Y', 9 ],
+              [ 'B', 'Z', 4 ]
+            ]);
 
-        // Instantiates and draws our chart, passing in some options.
-        var chart = new google.visualization.Sankey(document.getElementById('status_sankey'));
-        chart.draw(data, options);
+            // Sets chart options.
+            var options = {
+                width: 1200,
+                tooltip: {
+                    textStyle:{fontSize: 10, bold:false, italic: false },
+                    showColorCode: true
+                }
+            };
+
+            // Instantiates and draws our chart, passing in some options.
+            var chart = new google.visualization.Sankey(document.getElementById('status_sankey'));
+            chart.draw(data, options);
+        }
     }
+    plot_sankey();
     /////////////////////////////////////
 
 

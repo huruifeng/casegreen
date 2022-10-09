@@ -110,7 +110,7 @@ if (!String.prototype.formatString) {
               // if set null, will get from 365 days from now
               start_date= new Date();
               start_date.setMonth( start_date.getMonth() - 12  );
-              start_date.setDate(start_date.getDate() + 1)
+              start_date.setDate(start_date.getDate())
            } else {
               // formats:
               // - YYYY-MM-DD
