@@ -33,6 +33,10 @@ class visabulletinAdmin(admin.ModelAdmin):
     list_display = ["category", "conutry", "formonth","tableA","tableB", "visadate","adddate"]
 admin.site.register(visabulletin,visabulletinAdmin)
 
+class statustransAdmin(admin.ModelAdmin):
+    list_display = ["action_date", "source_status", "dest_status","count","center", "form_type"]
+admin.site.register(status_trans,statustransAdmin)
+
 #######################
 ## LB
 class case_status_lin_lbAdmin(admin.ModelAdmin):

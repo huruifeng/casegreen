@@ -29,14 +29,15 @@
               <a href="{{ url }}" class="list-group-item list-group-item-action py-2 ripple {% if request.path == url %}active{% endif %}">
                 <i class="fa-solid fa-calendar-day fa-fw me-3"></i><span>Visa Bulletin</span>
               </a>
-              {% url 'ctrlpanel:ctrldashbord' as url %}
-              <a href="{{ url }}" class="list-group-item list-group-item-action py-2 ripple {% if request.path == url %}active{% endif %}">
-                <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
-              </a>
 
               {% url 'admin:index' as url %}
               <a href="{{ url }}" class="list-group-item list-group-item-action py-2 ripple {% if request.path == url %}active{% endif %}" target="_blank">
                 <i class="fa-solid fa-database fa-fw me-3"></i><span>Database admin</span>
+              </a>
+
+              {% url 'casegreen:home' as url %}
+              <a href="{{ url }}" class="list-group-item list-group-item-action py-2 ripple {% if request.path == url %}active{% endif %}" target="_blank">
+                <i class="fa-solid fa-house fa-fw me-3"></i></i><span>Go to website</span>
               </a>
 {#              <a href="#" class="list-group-item list-group-item-action py-2 ripple">#}
 {#                <i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>#}
