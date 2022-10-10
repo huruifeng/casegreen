@@ -480,6 +480,52 @@ def processajax(request):
     context = {"page_title": "Case range process", "form_ls": form_ls,"year_ls":year_ls[::-1],}
     return render(request, 'mycase/processajax.html', context)
 
+def getsankey(request):
+    center = request.GET.get("center", None)
+    selectform = request.GET.get("selectform", None)
+    statuslevel = request.GET.get("statuslevel", None)
+
+    days = 7
+    date_ls = status_trans.objects.order_by('-action_date').values('action_date').distinct()[:days][::-1]
+
+    status_trans_dict = {}
+    for date_i in date_ls:
+        date_i = date_i["action_date"]
+        trans_qs = status_trans.objects.filter(center=center, form_type=selectform, action_date=date_i)
+
+        source_date = (date_i + timedelta(days=-2)).strftime("%m-%d-%Y")
+        dest_date = (date_i + timedelta(days=-1)).strftime("%m-%d-%Y")
+        date_i = date_i.strftime("%m-%d-%Y")
+
+        status_trans_dict[date_i] = {}
+        for trans_i in trans_qs:
+            source_s = trans_i.source_status
+            dest_s = trans_i.dest_status
+
+            ## Only show the changed records
+            if source_s == dest_s: continue
+            if source_s == "no_yesterday": continue
+
+            source_s_l = source_date + ":" + get_l_status(source_s, statuslevel)
+            dest_s_l = dest_date + ":" + get_l_status(dest_s, statuslevel)
+
+            if source_s_l in status_trans_dict[date_i]:
+                if dest_s_l in status_trans_dict[date_i][source_s_l]:
+                    status_trans_dict[date_i][source_s_l][dest_s_l] += trans_i.count
+                else:
+                    status_trans_dict[date_i][source_s_l][dest_s_l] = trans_i.count
+            else:
+                status_trans_dict[date_i][source_s_l]={dest_s_l:trans_i.count}
+
+    data_ls = []
+    for date_i in status_trans_dict:
+        for source_s_l_i in status_trans_dict[date_i]:
+            for dest_s_l_i in status_trans_dict[date_i][source_s_l_i]:
+                data_ls.append([source_s_l_i,dest_s_l_i,status_trans_dict[date_i][source_s_l_i][dest_s_l_i]])
+
+    data_dict = {"sankey":data_ls}
+    return JsonResponse(data_dict, status=200)
+
 
 def today(request):
     if request.method == "GET":

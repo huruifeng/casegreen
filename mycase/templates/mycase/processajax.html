@@ -134,13 +134,20 @@
                   $(".na-h4").addClass("d-none");
                   var dataset = data["dataset"];
                   var rnrange_n = data["label"].length;
-                    if(dataset !=0 && rnrange_n!=0){
+
+                  if(dataset !=0 && rnrange_n!=0){
+
+                        var legend_height = 60;
+                        if(Object.keys(data["color"]).length > 10){
+                            legend_height = 120;
+                        }
+
                         if(rnrange_n <= 30){
-                         $("#bar_container").css("height",(30*rnrange_n)+"px")
+                         $("#bar_container").css("height",(30*rnrange_n + legend_height)+"px")
                         }else if(rnrange_n <= 50) {
-                            $("#bar_container").css("height", (25 * rnrange_n) + "px")
+                            $("#bar_container").css("height", (25 * rnrange_n + legend_height) + "px")
                         }else{
-                            $("#bar_container").css("height",(20*rnrange_n)+"px")
+                            $("#bar_container").css("height",(20*rnrange_n + legend_height)+"px")
                         }
 
                           plot_bar(data["label"], data["dataset"], data["color"], center + " " + selectform);

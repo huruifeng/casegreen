@@ -24,7 +24,7 @@
              <!--Main content-->
             <div class="row">
                  <div class="col-12">
-                     <h2 class="mb-4" style="color:#2d48cb;">Case status counts </h2>
+                     <h3 class="mb-4" style="color:#2d48cb;">Case status daily counts </h3>
                      <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Form type: </h5>
                           <select id="selectform" onchange="load_page()">
@@ -88,11 +88,11 @@
                      <h3 class="mb-4" style="color:#2d48cb;">Case status transitions </h3>
                      <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Show status level: </h5>
-                          <select id="status_level" onchange="plot_sankey()">
-                             <option value="L0">Original</option>
-                             <option value="L1">L1</option>
+                          <select id="status_level" onchange="do_sankey()">
+                             <option value="L3" selected>L3</option>
                              <option value="L2">L2</option>
-                             <option value="L3">L3</option>
+                             <option value="L1">L1</option>
+                             <option value="L0">Original</option>
                           </select>
                      </div>
                      <div class="chart" id="sankey_div">
@@ -112,6 +112,7 @@
     <script src="{% static "mycase/js/chartjs-plugin-crosshair.min.js" %}"></script>
     <script src="{% static "mycase/js/script.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
+    var color_ls= ["#1072f1","#11a9fa","#2b04da","#f4b824","#c77cff","#1db063", "#ff001a","#78787a","#a6f110"];
 
     date_count ={{ chart_data|safe }};
 
@@ -143,7 +144,6 @@
 
     //////////////////////
     function plot_calendarHM(){
-        var color_ls= ["#1072f1","#11a9fa","#2b04da","#f4b824","#c77cff","#1db063", "#ff001a","#78787a","#a6f110"];
         var status_x = parseInt($("#status_select").val());
         var text_ls = [["new case","new cases"],["FP_Taken","FP_Takens"],["Interview","Interviews"],["RFE","RFEs"],
             ["case transferred","cases transferred"],["case approved","cases approved"],["case rejected","cases rejected"],
@@ -175,9 +175,36 @@
     plot_calendarHM();
 
 //////////////////////////////////////////
-    function plot_sankey(){
-        var status_level = $("#status_level").val();
+    function do_sankey() {
+        var sankey_data = [];
+        var statuslevel = $("#status_level").val();
+        var selectform = $("#selectform").val();
+        var center = "LIN_LB";
+        $('.cnt_btn').each(function () {
+            if ($(this).hasClass("btn-primary")) {
+                center = $(this).text();
+                return false;
+            }
+        });
 
+        $.ajax({
+            type: "GET",
+            url: "/ajax/getsankey",
+            async: true,
+            data: {"center": center, "selectform": selectform, "statuslevel": statuslevel},
+            success: function (data) {
+                sankey_data = data["sankey"];
+                plot_sankey(sankey_data);
+
+            },
+            error: function () {
+                alert("Error occurs!")
+            }
+        });
+    }
+    do_sankey();
+
+     function plot_sankey(sankey_data){
         google.charts.load('current', {'packages':['sankey']});
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
@@ -185,22 +212,25 @@
             data.addColumn('string', 'From');
             data.addColumn('string', 'To');
             data.addColumn('number', 'Count');
-            data.addRows([
-              [ 'A', 'B', 5 ],
-              [ 'A', 'C', 7 ],
-              [ 'A', 'Z', 6 ],
-              [ 'B', 'X', 2 ],
-              [ 'B', 'Y', 9 ],
-              [ 'B', 'Z', 4 ]
-            ]);
+            data.addRows(sankey_data);
 
             // Sets chart options.
             var options = {
                 width: 1200,
+                height:10*sankey_data.length,
                 tooltip: {
                     textStyle:{fontSize: 10, bold:false, italic: false },
                     showColorCode: true
-                }
+                },
+                sankey: {
+                    node: {
+                      colors: color_ls
+                    },
+                    link: {
+                      colorMode: 'gradient',
+                      colors: color_ls
+                    }
+                  }
             };
 
             // Instantiates and draws our chart, passing in some options.
@@ -208,7 +238,7 @@
             chart.draw(data, options);
         }
     }
-    plot_sankey();
+
     /////////////////////////////////////
 
 

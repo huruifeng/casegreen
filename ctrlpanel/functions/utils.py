@@ -360,6 +360,7 @@ def run_center(request,center):
     for form_ii in status_trans_dict:
         for source_status in status_trans_dict[form_ii]:
             for dest_status in status_trans_dict[form_ii][source_status]:
+                if dest_status==source_status: continue
                 status_trans_new = status_trans(
                     center=center,form_type = form_ii,
                     source_status = source_status,dest_status = dest_status,
