@@ -30,8 +30,23 @@
                       <ul class="navbar-nav mb-2 mb-lg-0">
                            <li class="nav-item"><a class="nav-link" href="{% url "casegreen:about" %}">About</a></li>
                           <li class="nav-item"><a class="nav-link" href="{% url "casegreen:visabulletin" %}">Bulletin</a></li>
-                          <li class="nav-item"><a class="nav-link" href={% url "casegreen:dashbord" %}>Dashbord</a></li>
-                          <li class="nav-item"><a class="nav-link" href="#">Process</a></li>
+                          {# <li class="nav-item"><a class="nav-link"href={% url "mycase:dashborddaily" %}>Dashbord</a></li>#}
+                           <!-- Dropdown -->
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Dashbords</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <li><a class="dropdown-item" href={% url "mycase:dashborddaily" %}>Status daily</a></li>
+                              <li><a class="dropdown-item" href="#">Center forms</a></li>
+                            </ul>
+                          </li>
+                          {# <li class="nav-item"><a class="nav-link" href="#">Process</a></li>#}
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Process</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <li><a class="dropdown-item" href={% url "mycase:processrn" %}>By receipt number(RN)</a></li>
+                              <li><a class="dropdown-item" href="#">By received date(RD)</a></li>
+                            </ul>
+                          </li>
                           <li class="nav-item"><a class="nav-link" href={% url "casegreen:today" %}>Today!</a></li>
                           <li class="nav-item"><a class="nav-link" href={% url "casegreen:home" %}>myCase</a></li>
                       </ul>
@@ -123,7 +138,7 @@
             </div>
             <div class="row justify-content-center  pt-4">
                 <div class="col-md-6 d-flex flex-row justify-content-evenly" style="max-width: 820px;">
-                    <a type="button" id="dashbord-btn" class="btn btn-primary btn-lg btn-light btn-rounded" href="{% url "casegreen:dashbord" %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Dashbord</a>
+                    <a type="button" id="dashbord-btn" class="btn btn-primary btn-lg btn-light btn-rounded" href="{% url "mycase:dashborddaily" %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Dashbord</a>
                     <a type="button" id="today-btn" class="btn btn-primary btn-lg btn-light btn-rounded" href="{% url "casegreen:today" %}"><i class="fa-solid fa-calendar-day"></i>&nbsp;&nbsp;Today !</a>
                 </div>
             </div>

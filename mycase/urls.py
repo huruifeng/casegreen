@@ -5,9 +5,9 @@ from . import views
 urlpatterns = [
     path('', views.index, name='home'),
     path('mycase/', views.mycase, name='mycase'),
-    path('dashbord/', views.dashbord, name='dashbord'),
+    path('dashborddaily/', views.dashborddaily, name='dashborddaily'),
     path('dashbordajax/', views.dashbordajax, name='dashbordajax'),
-    path('process/', views.process, name='process'),
+    path('processrn/', views.processrn, name='processrn'),
     path('processajax/', views.processajax, name='processajax'),
     path('today/', views.today, name='today'),
     path('about/', views.about, name='about'),

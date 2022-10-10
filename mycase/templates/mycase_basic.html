@@ -31,8 +31,24 @@
                   <ul class="navbar-nav mb-2 mb-lg-0">
                       <li class="nav-item"><a class="nav-link" href="{% url "casegreen:about" %}">About</a></li>
                       <li class="nav-item"><a class="nav-link" href="{% url "casegreen:visabulletin" %}">Bulletin</a></li>
-                      <li class="nav-item"><a class="nav-link" href={% url "casegreen:dashbord" %}>Dashbord</a></li>
-                      <li class="nav-item"><a class="nav-link" href={% url "casegreen:process" %}>Process</a></li>
+                      {# <li class="nav-item"><a class="nav-link"href={% url "mycase:dashborddaily" %}>Dashbord</a></li>#}
+                      <!-- Dropdown -->
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Dashbords</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li><a class="dropdown-item" href={% url "mycase:dashborddaily" %}>Status daily</a></li>
+                          <li><a class="dropdown-item" href="#">Center forms</a></li>
+                        </ul>
+                      </li>
+                      {# <li class="nav-item"><a class="nav-link" href={% url "casegreen:process" %}>Process</a></li>#}
+                      <!-- Dropdown -->
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Process</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li><a class="dropdown-item" href={% url "mycase:processrn" %}>By receipt number(RN)</a></li>
+                          <li><a class="dropdown-item" href="#">By received date(RD)</a></li>
+                        </ul>
+                      </li>
                       <li class="nav-item"><a class="nav-link" href={% url "casegreen:today" %}>Today!</a></li>
                       <li class="nav-item"><a class="nav-link" href={% url "casegreen:home" %}>myCase</a></li>
                   </ul>

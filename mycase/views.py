@@ -376,7 +376,7 @@ def dashbordajax(request):
     context = {"page_title": "Dashbord", "form_ls": form_ls}
     return render(request, 'mycase/dashbordajax.html', context)
 
-def dashbord(request):
+def dashborddaily(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
 
@@ -389,12 +389,12 @@ def dashbord(request):
 
 
     if selectform == None or center == None:
-        return redirect("/dashbord?center=LIN_LB&selectform=I-485", status=200)
+        return redirect("/dashborddaily?center=LIN_LB&selectform=I-485", status=200)
 
     data_dict = get_dailyrecords(center, selectform)
 
-    context = {"page_title": "Dashbord", "form_ls": form_ls, "chart_data": data_dict,"center": center, "selectform": selectform}
-    return render(request, 'mycase/dashbord.html', context)
+    context = {"page_title": "Dashbord daily", "form_ls": form_ls, "chart_data": data_dict,"center": center, "selectform": selectform}
+    return render(request, 'mycase/dashborddaily.html', context)
 
 def rnrangecount(request):
     if request.method == "GET":
@@ -419,7 +419,7 @@ def rnrangecount(request):
 
     return JsonResponse(data_dict, status=200)
 
-def process(request):
+def processrn(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
 
@@ -451,14 +451,14 @@ def process(request):
         rangesize = request.GET.get("rangesize", None)
 
     if selectform == None or center == None or fy == None or statuslevel==None or rangesize==None:
-        return redirect("/process?center=LIN_LB&selectform=I-485&fy=2022&statuslevel=L3&rangesize=5000", status=200)
+        return redirect("/processrn?center=LIN_LB&selectform=I-485&fy=2022&statuslevel=L3&rangesize=5000", status=200)
 
     center_table = center_dict[center.lower()]
     data_dict = get_rnrangecount(center_table, center, selectform, fy, statuslevel, rangesize)
 
     context = {"page_title": "Case range process", "form_ls": form_ls,"year_ls":year_ls[::-1],"chart_data":json.dumps(data_dict),
                "center":center,"fy":fy, "selectform":selectform, "statuslevel":statuslevel, "rangesize":rangesize}
-    return render(request, 'mycase/process.html', context)
+    return render(request, 'mycase/processrn.html', context)
 
 def processajax(request):
     form_qs = form.objects.all()

@@ -7,7 +7,7 @@
          <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
             <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
          </div>
-         <div class="col-md-6" style="min-width: min-content;">
+         <div class="col-md-6" style="min-width: 1200px;">
              <form action="/mycase" method="get">
                 <div class="input-group" style="max-width: 960px;">
                   <div class="form-outline flex-fill">
@@ -123,7 +123,7 @@
         var statuslevel = $("#status_level").val();
         var selectform = $("#selectform").val();
         var rangesize = $("#range_size").val();
-        location.href = '{% url "mycase:process" %}?center='+center+'&selectform='+selectform+'&fy='+fy+'&statuslevel='+statuslevel+'&rangesize='+rangesize;
+        location.href = '{% url "mycase:processrn" %}?center='+center+'&selectform='+selectform+'&fy='+fy+'&statuslevel='+statuslevel+'&rangesize='+rangesize;
     }
 
     function load_data() {
@@ -137,9 +137,9 @@
             $("#range_bar_chart").removeClass("d-none");
             $(".na-h4").addClass("d-none");
 
-            var legend_height = 60;
+            var legend_height = 90;
             if(Object.keys(data["color"]).length > 10){
-                legend_height = 120;
+                legend_height = 150;
             }
 
             if(rnrange_n <= 30){

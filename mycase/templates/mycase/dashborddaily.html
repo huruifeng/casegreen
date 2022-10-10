@@ -145,7 +145,7 @@
         });
 
         var selectform = $("#selectform").val();
-        location.href = '{% url "mycase:dashbord" %}?center='+center+'&selectform='+selectform;
+        location.href = '{% url "mycase:dashborddaily" %}?center='+center+'&selectform='+selectform;
     }
     function load_data() {
         linechart(date_count["count_ls"],date_count["label_ls"]);
