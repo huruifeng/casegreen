@@ -188,7 +188,8 @@ def run_center(request,center):
             print(f"Reading data - Today...Done!")
         except Exception as e:
             print(e)
-            return "Error: reading "+file_i
+            return "Warning: reading "+file_i +"[Skip]"
+            # return "Error: reading "+file_i
 
         total_x = len(data)
         n_i = 0

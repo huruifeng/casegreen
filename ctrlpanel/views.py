@@ -172,6 +172,9 @@ def centerrun(request):
 
         for center_i in center_ls:
             return_code = run_center(request,center_i)
+            if "skip" in return_code.lower():
+                continue
+
             if "error" in return_code.lower():
                 return HttpResponse(return_code)
 
