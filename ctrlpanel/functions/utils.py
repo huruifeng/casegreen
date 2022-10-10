@@ -365,7 +365,7 @@ def run_center(request,center):
                     center=center,form_type = form_ii,
                     source_status = source_status,dest_status = dest_status,
                     count = status_trans_dict[form_ii][source_status][dest_status],
-                    action_date = datetime.now().date(),add_date = datetime.now(),
+                    action_date = datetime.now().date()+timedelta(days=-1),add_date = datetime.now(),
                     date_number = now_days,
                     fiscal_year="0", note = "" )
                 status_trans_ls.append(status_trans_new)

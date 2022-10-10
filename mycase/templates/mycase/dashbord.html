@@ -3,6 +3,7 @@
 {% block content %}
 
     <link href="{% static "mycase/css/calendarHM.css" %}" media="all" rel="stylesheet" />
+    <link href="{% static "css/datatables.min.css" %}" media="all" rel="stylesheet" />
 <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
      <div class="row justify-content-center">
          <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
@@ -94,9 +95,17 @@
                              <option value="L1">L1</option>
                              <option value="L0">Original</option>
                           </select>
+                         <p class="d-inline">(This shows the number of case status transitions in last 7 days, not the continuous changes of the cases)</p>
                      </div>
                      <div class="chart" id="sankey_div">
                          <div id="status_sankey"></div>
+                         <hr style="height: 1px;color: #666666">
+                         <table class="table table-sm table-responsive table-hover cell-border" id="sankey_table">
+                             <thead class="table-info"><th>Action date</th><th>Source status</th><th>Destination status</th><th>Case counts</th></thead>
+                             <tbody id="sankey_table_tbody">
+
+                             </tbody>
+                          </table>
                      </div>
                  </div>
              </div>
@@ -111,6 +120,7 @@
     <script src="{% static "mycase/js/chartjs-plugin-zoom.min.js" %}"></script>
     <script src="{% static "mycase/js/chartjs-plugin-crosshair.min.js" %}"></script>
     <script src="{% static "mycase/js/script.js" %}" charset="utf-8"></script>
+    <script src="{% static "js/datatables.min.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
     var color_ls= ["#1072f1","#11a9fa","#2b04da","#f4b824","#c77cff","#1db063", "#ff001a","#78787a","#a6f110"];
 
@@ -176,7 +186,6 @@
 
 //////////////////////////////////////////
     function do_sankey() {
-        var sankey_data = [];
         var statuslevel = $("#status_level").val();
         var selectform = $("#selectform").val();
         var center = "LIN_LB";
@@ -193,9 +202,14 @@
             async: true,
             data: {"center": center, "selectform": selectform, "statuslevel": statuslevel},
             success: function (data) {
-                sankey_data = data["sankey"];
-                plot_sankey(sankey_data);
-
+                var sankey_data = data["sankey"];
+                var data_ls = []
+                for(let date_i in sankey_data)
+                    for(let source_i in sankey_data[date_i])
+                        for(let dest_i in sankey_data[date_i][source_i])
+                            data_ls.push([source_i,dest_i,sankey_data[date_i][source_i][dest_i]])
+                plot_sankey(data_ls);
+                table_sankey(sankey_data);
             },
             error: function () {
                 alert("Error occurs!")
@@ -214,10 +228,13 @@
             data.addColumn('number', 'Count');
             data.addRows(sankey_data);
 
+            var height = 200;
+            if(sankey_data.length *10 > height) height = sankey_data.length*10;
+
             // Sets chart options.
             var options = {
                 width: 1200,
-                height:10*sankey_data.length,
+                height: height,
                 tooltip: {
                     textStyle:{fontSize: 10, bold:false, italic: false },
                     showColorCode: true
@@ -238,7 +255,23 @@
             chart.draw(data, options);
         }
     }
+    function table_sankey(sankey_data) {
+         var html_str = "";
+         for(let date_i in sankey_data)
+            for(let source_i in sankey_data[date_i])
+                for(let dest_i in sankey_data[date_i][source_i]) {
+                    html_str += "<tr><td>" + date_i + "</td><td>" + source_i + "</td><td>" + dest_i + "</td><td>" + sankey_data[date_i][source_i][dest_i] + "</td></tr>"
+                }
+        if ( $.fn.DataTable.isDataTable('#sankey_table') ) {
+          $('#sankey_table').DataTable().destroy();
+        }
 
+        $("#sankey_table_tbody").empty();
+        $("#sankey_table_tbody").html(html_str);
+
+        $('#sankey_table').DataTable();
+
+    }
     /////////////////////////////////////
 
 

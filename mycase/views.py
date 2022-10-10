@@ -493,9 +493,9 @@ def getsankey(request):
         date_i = date_i["action_date"]
         trans_qs = status_trans.objects.filter(center=center, form_type=selectform, action_date=date_i)
 
-        source_date = (date_i + timedelta(days=-2)).strftime("%m-%d-%Y")
-        dest_date = (date_i + timedelta(days=-1)).strftime("%m-%d-%Y")
-        date_i = date_i.strftime("%m-%d-%Y")
+        source_date = (date_i + timedelta(days=-1)).strftime("%m-%d-%Y")
+        dest_date = date_i.strftime("%m-%d-%Y")
+        date_i = dest_date
 
         status_trans_dict[date_i] = {}
         for trans_i in trans_qs:
@@ -517,13 +517,7 @@ def getsankey(request):
             else:
                 status_trans_dict[date_i][source_s_l]={dest_s_l:trans_i.count}
 
-    data_ls = []
-    for date_i in status_trans_dict:
-        for source_s_l_i in status_trans_dict[date_i]:
-            for dest_s_l_i in status_trans_dict[date_i][source_s_l_i]:
-                data_ls.append([source_s_l_i,dest_s_l_i,status_trans_dict[date_i][source_s_l_i][dest_s_l_i]])
-
-    data_dict = {"sankey":data_ls}
+    data_dict = {"sankey":status_trans_dict}
     return JsonResponse(data_dict, status=200)
 
 
