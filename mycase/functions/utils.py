@@ -144,32 +144,32 @@ def getcase_in_range(case_range,center,case_range_base,center_table,form_type,re
         case_range_s = receipt_num
         case_qs = center_table.objects.filter(form=form_type, receipt_number__lte=case_range_s).values("receipt_number").distinct()
         case_qs = [x["receipt_number"] for x in case_qs.order_by("-receipt_number")[:201]]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
     elif case_range == "rn_n500":
         case_range_s = receipt_num
         case_qs = center_table.objects.filter(form=form_type, receipt_number__lte=case_range_s).values("receipt_number").distinct()
         case_qs = [x["receipt_number"] for x in case_qs.order_by("-receipt_number")[:501]]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
     elif case_range == "rn_n1000":
         case_range_s = receipt_num
         case_qs = center_table.objects.filter(form=form_type, receipt_number__lte=case_range_s).values("receipt_number").distinct()
         case_qs = [x["receipt_number"] for x in case_qs.order_by("-receipt_number")[:1001]]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
     elif case_range == "rn_p200":
         case_range_s = receipt_num
         case_qs = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).values("receipt_number").distinct()
         case_qs = [x["receipt_number"] for x in case_qs.order_by("receipt_number")[:201]]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
     elif case_range == "rn_p500":
         case_range_s = receipt_num
         case_qs = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).values("receipt_number").distinct()
         case_qs = [x["receipt_number"] for x in case_qs.order_by("receipt_number")[:501]]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
     elif case_range == "rn_p1000":
         case_range_s = receipt_num
         case_qs = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).values("receipt_number").distinct()
         case_qs = [x["receipt_number"] for x in case_qs.order_by("receipt_number")[:1001]]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
     elif case_range == "rn_np200":
         case_range_s = receipt_num
         case_qs1 = center_table.objects.filter(form=form_type, receipt_number__lt=case_range_s).values("receipt_number").distinct()
@@ -177,7 +177,7 @@ def getcase_in_range(case_range,center,case_range_base,center_table,form_type,re
         case_qs2 = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).values("receipt_number").distinct()
         case_qs2 = case_qs2.order_by("receipt_number")[:201]
         case_qs = [x["receipt_number"] for x in case_qs1] + [x["receipt_number"] for x in case_qs2]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
         del case_qs1
         del case_qs2
     elif case_range == "rn_np500":
@@ -187,7 +187,7 @@ def getcase_in_range(case_range,center,case_range_base,center_table,form_type,re
         case_qs2 = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).values("receipt_number").distinct()
         case_qs2 = case_qs2.order_by("receipt_number")[:501]
         case_qs = [x["receipt_number"] for x in case_qs1] + [x["receipt_number"] for x in case_qs2]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
         del case_qs1
         del case_qs2
     elif case_range == "rn_np1000":
@@ -197,73 +197,127 @@ def getcase_in_range(case_range,center,case_range_base,center_table,form_type,re
         case_qs2 = center_table.objects.filter(form=form_type, receipt_number__gte=case_range_s).values("receipt_number").distinct()
         case_qs2 = case_qs2.order_by("receipt_number")[:1001]
         case_qs = [x["receipt_number"] for x in case_qs1] + [x["receipt_number"] for x in case_qs2]
-        case_qs = center_table.objects.filter(form=form_type, receipt_number__in=case_qs)
+        case_qs = center_table.objects.filter(receipt_number__in=case_qs)
         del case_qs1
         del case_qs2
     elif case_range == "rd_n1m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-30)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_n2m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-60)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_n3m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-90)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_p1m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_e = case_rd.rd_date + timedelta(days=+30)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_p2m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_e = case_rd.rd_date + timedelta(days=+60)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_p3m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_e = case_rd.rd_date + timedelta(days=+90)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_np1m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-30)
             case_rd_e = case_rd.rd_date + timedelta(days=+30)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd_e))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd_e))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_np2m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-60)
             case_rd_e = case_rd.rd_date + timedelta(days=+60)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd_e))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd_e))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     elif case_range == "rd_np3m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-90)
             case_rd_e = case_rd.rd_date + timedelta(days=+90)
-            case_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd_e))
+            case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd_e))
+            case_rd_qs = case_rd_qs.values("receipt_number", "rd_date").distinct()
+            case_rn_rd = {}
+            for case_rd_i in case_rd_qs:
+                case_rn_rd[case_rd_i["receipt_number"]] = case_rd_i["rd_date"]
+            case_rn_ls = list(case_rn_rd.keys())
+            case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls)
         else:
             case_qs = []
     # elif case_range == "rn_fy":
