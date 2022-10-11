@@ -6,7 +6,8 @@ from django.db.models import Max, F
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
-from mycase.functions.utils import get_status, getcase_in_range, get_l_status, get_rnrangecount, get_dailyrecords
+from mycase.functions.utils import get_status, getcase_in_range, get_l_status, get_rnrangecount, get_dailyrecords, \
+    get_rdcount
 from mycase.models import *
 
 # Create your views here.
@@ -459,6 +460,47 @@ def processrn(request):
     context = {"page_title": "Case range process", "form_ls": form_ls,"year_ls":year_ls[::-1],"chart_data":json.dumps(data_dict),
                "center":center,"fy":fy, "selectform":selectform, "statuslevel":statuslevel, "rangesize":rangesize}
     return render(request, 'mycase/processrn.html', context)
+
+def processrd(request):
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+
+    ####
+    sys_params = sysparam.objects.get(pk=1)
+    year_n = sys_params.fiscal_year_n
+
+    year_ls = []
+    now = datetime.now()
+    for i in range(year_n):
+        year_ls.append(str(now.year - i))
+    if now.month > 9:
+        if not(now.month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            year_ls = [str(now.year + 1)] + year_ls
+
+    ######
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("selectform", None)
+        fy = request.GET.get("fy", None)
+        statuslevel = request.GET.get("statuslevel", None)
+        rangesize = request.GET.get("rangesize", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("selectform", None)
+        fy = request.POST.get("fy", None)
+        statuslevel = request.POST.get("statuslevel", None)
+        rangesize = request.GET.get("rangesize", None)
+
+    if selectform == None or center == None or fy == None or statuslevel==None or rangesize==None:
+        return redirect("/processrd?center=LIN_LB&selectform=I-485&fy=2022&statuslevel=L3&rangesize=weekly", status=200)
+
+    center_table = center_dict[center.lower()]
+    data_dict = get_rdcount(center_table, center, selectform, fy, statuslevel, rangesize)
+
+    context = {"page_title": "Case range process", "form_ls": form_ls,"year_ls":year_ls[::-1],"chart_data":json.dumps(data_dict),
+               "center":center,"fy":fy, "selectform":selectform, "statuslevel":statuslevel, "rangesize":rangesize}
+    return render(request, 'mycase/processrd.html', context)
 
 def processajax(request):
     form_qs = form.objects.all()

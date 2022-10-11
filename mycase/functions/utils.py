@@ -350,6 +350,106 @@ def get_rnrangecount(center_table,center,selectform,fy,statuslevel,rangesize):
 
     return data_dict
 
+
+def get_rdcount(center_table,center,selectform,fy,statuslevel,rangesize):
+    fy = int(fy)
+    rd_range_min = date(fy-1,10,1)
+    rd_range_max = date(fy, 9, 30)
+    fy = str(fy)[-2:]
+
+    if statuslevel == "L3":
+        color = color8
+        dataset_labels = ['Received', 'FP_Taken', 'Interviewed', 'RFE', 'Transferred', 'Approved', 'Rejected', 'Other']
+    if statuslevel == "L2":
+        color = color20
+        dataset_labels = ['Received', 'FP_Scheduled', 'FP_Taken', 'InterviewScheduled', 'InterviewCompleted',
+                          'RFE_Sent', 'RFE_Received', 'Transferred', 'Approved', 'Produced', 'Mailed', 'Pending',
+                          'Hold', 'ReturnHold', 'NoticeSent', 'Reopened', 'Other', 'Rejected', 'Terminated',
+                          'WithdrawalAcknowledged']
+
+    ## Check if there is the statistics file for the selected options
+    ## first time visiting will save the results to json file
+    file_name = "_".join([center,selectform,fy,statuslevel,rangesize])+".json"
+    folder = "mycase/data/statistics/center_rd_count"
+    file_name = folder + "/" +file_name
+    if os.path.exists(file_name):
+        try:
+            with open(file_name) as json_file:
+                data_dict = json.load(json_file)
+            return  data_dict
+        except Exception as e:
+            print(e)
+
+    ####################
+    ## build range keys
+    if rangesize not in ["weekly","monthly"]:
+        rangesize="weekly"
+    rd_x = rd_range_min
+    range_keys = {}
+    if rangesize == "weekly":
+        while rd_x < rd_range_max:
+            rd_wkn = rd_x.isocalendar()[1]
+            range_keys[rd_wkn] = rd_x.strftime("%m-%d-%Y:w%U")
+            rd_x += timedelta(weeks=+1)
+    else:
+        while rd_x < rd_range_max:
+            rd_mhn = rd_x.month
+            range_keys[rd_mhn] = rd_x.strftime("%b-%Y")
+            rd_x += timedelta(days=+31)
+
+    #####################
+    case_rn_rd = {}
+    case_rd_qs = center_table.objects.filter(form=selectform,rd_date__range=(rd_range_min, rd_range_max)).order_by("rd_date")
+    case_rd_qs = case_rd_qs.values("receipt_number","rd_date").distinct()
+    for case_rd_i in case_rd_qs:
+        case_rn_rd[case_rd_i["receipt_number"]]=[case_rd_i["rd_date"]]
+    case_rn_ls = list(case_rn_rd.keys())
+
+    case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls).order_by("-add_date").values("receipt_number","status")
+
+    rn_status = {}
+    for case_i in case_qs:
+        if case_i["receipt_number"] in rn_status: continue
+        status_l = get_l_status(case_i["status"], statuslevel)
+        rn_status[case_i["receipt_number"]] = 1
+        case_rn_rd[case_i["receipt_number"]].append(status_l)
+
+    status_count = {}
+    for case_rn in case_rn_rd:
+        rd_i = case_rn_rd[case_rn][0]
+        if rangesize == "weekly":
+            rd_i_no = rd_i.isocalendar()[1]
+        else:
+            rd_i_no = rd_i.month
+        range_key = range_keys[rd_i_no]
+
+        if range_key not in status_count:
+            if statuslevel == "L2":
+                status_count[range_key] = {
+                    'Received': 0, 'FP_Scheduled': 0, 'FP_Taken': 0, 'InterviewScheduled': 0, 'InterviewCompleted': 0,
+                    'RFE_Sent': 0, 'RFE_Received': 0, 'Transferred': 0, 'Approved': 0, 'Produced': 0, 'Mailed': 0,
+                    'Pending': 0,'Hold': 0, 'ReturnHold': 0, 'NoticeSent': 0, 'Reopened': 0, 'Other': 0, 'Rejected': 0,
+                    'Terminated': 0, 'WithdrawalAcknowledged': 0
+                }
+            elif statuslevel == "L3":
+                status_count[range_key] = {
+                    'Received': 0, 'FP_Taken': 0, 'Interviewed': 0, 'RFE': 0, 'Transferred': 0, 'Approved': 0,
+                    'Rejected': 0, 'Other': 0
+                }
+        status_count[range_key][case_rn_rd[case_rn][1]] += 1
+
+    dataset = {}
+    for dataset_i in dataset_labels:
+        dataset[dataset_i] = []
+        for rdrange_i in status_count:
+            dataset[dataset_i].append(status_count[rdrange_i][dataset_i])
+
+    data_dict = {"dataset": dataset, "label": list(status_count.keys()), "color": color}
+    with open(file_name, "w") as json_file:
+        json.dump(data_dict, json_file)
+    return data_dict
+
+
 def get_dailyrecords(center,selectform):
     date_s = datetime.today() + timedelta(days=-365)
     count_qs = status_daily.objects.filter(form=selectform, center=center, add_date__gte=date_s).order_by("add_date")

@@ -8,6 +8,7 @@ urlpatterns = [
     path('dashborddaily/', views.dashborddaily, name='dashborddaily'),
     path('dashbordajax/', views.dashbordajax, name='dashbordajax'),
     path('processrn/', views.processrn, name='processrn'),
+    path('processrd/', views.processrd, name='processrd'),
     path('processajax/', views.processajax, name='processajax'),
     path('today/', views.today, name='today'),
     path('about/', views.about, name='about'),
