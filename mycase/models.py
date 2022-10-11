@@ -129,8 +129,8 @@ class status_trans(models.Model):
     dest_status = models.CharField(max_length=128)
     count = models.IntegerField()
     fiscal_year = models.CharField(max_length=8)
-    action_date = models.DateField(auto_now=True)
-    add_date = models.DateTimeField(auto_now=True)
+    action_date = models.DateField(default=datetime.now)
+    add_date = models.DateTimeField(default=datetime.now)
     date_number = models.IntegerField()
     note = models.CharField(max_length=64)
     def __str__(self):
