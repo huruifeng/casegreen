@@ -269,7 +269,9 @@
         $("#sankey_table_tbody").empty();
         $("#sankey_table_tbody").html(html_str);
 
-        $('#sankey_table').DataTable();
+        $('#sankey_table').DataTable({
+            order: [[0, 'desc']],
+        });
 
     }
     /////////////////////////////////////

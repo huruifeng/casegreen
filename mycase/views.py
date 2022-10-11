@@ -84,8 +84,8 @@ def mycase(request):
                 pass
         else:
             status_ls = [status_qs.last().form,status_qs.last().action_date_x, status_qs.last().status, ""]
-            time_x = datetime.strptime(status_qs.last().action_date, "%B %d, %Y")
-            days = (datetime.now()-time_x).days
+            time_x = status_qs.last().action_date_x
+            days = (datetime.now().date()-time_x).days
     else:
         if len(status_ls) < 3:
             status_ls = ["NA","NA", "Cannot get the data!", ""]
@@ -299,6 +299,11 @@ def nextstatus(request):
             case_x.save()
     else:
         center_table = center_dict[center.lower()]
+
+    if form_type=="":
+        data_dict = {"formempty":[]}
+        return JsonResponse(data_dict, status=200)
+
     case_qs = center_table.objects.filter(form=form_type,action_date_x__gte=date_s).order_by("add_date")
     all_status = {}
     for case_i in case_qs:
