@@ -374,9 +374,9 @@ def run_center(request,center):
         status_trans.objects.bulk_create(status_trans_ls, batch_size=1000)
     except Exception as e:
         print(e)
-    print("Updating  status trans count...Done!")
+    print("Updating status trans counts...Done!")
 
-    print(f"{center}:Done!")
+    print(f"{center}: Done!")
     return "OK"
 
 

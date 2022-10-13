@@ -228,8 +228,8 @@
             data.addColumn('number', 'Count');
             data.addRows(sankey_data);
 
-            var height = 200;
-            if(sankey_data.length *10 > height) height = sankey_data.length*10;
+            var height = 100;
+            if(sankey_data.length *20 > height) height = sankey_data.length*5;
 
             // Sets chart options.
             var options = {
@@ -260,7 +260,11 @@
          for(let date_i in sankey_data)
             for(let source_i in sankey_data[date_i])
                 for(let dest_i in sankey_data[date_i][source_i]) {
-                    html_str += "<tr><td>" + date_i + "</td><td>" + source_i + "</td><td>" + dest_i + "</td><td>" + sankey_data[date_i][source_i][dest_i] + "</td></tr>"
+                    if(dest_i.includes("Approved")){
+                        html_str += "<tr style='background-color: #1db063;'><td>" + date_i + "</td><td>" + source_i + "</td><td>" + dest_i + "</td><td>" + sankey_data[date_i][source_i][dest_i] + "</td></tr>"
+                    }else{
+                        html_str += "<tr><td>" + date_i + "</td><td>" + source_i + "</td><td>" + dest_i + "</td><td>" + sankey_data[date_i][source_i][dest_i] + "</td></tr>"
+                    }
                 }
         if ( $.fn.DataTable.isDataTable('#sankey_table') ) {
           $('#sankey_table').DataTable().destroy();
