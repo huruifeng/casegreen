@@ -110,3 +110,164 @@ function linechart(data_ls,label_ls) {
 	var myChart = new Chart(ctx, config);
 }
 
+function dailylinechart(data_ls,label_ls) {
+	var chartDom = document.getElementById('line_chart');
+	var myChart = echarts.init(chartDom);
+	var option;
+	option = {
+	  tooltip: {
+		trigger: 'axis'
+	  },
+	  legend: {
+		data: ["New",'FP_Taken','Interviewed','RFE','Transferred','Approved','Rejected','Other','Pending'],
+	  },
+	  toolbox: {
+		feature: {
+		  dataZoom: {
+			yAxisIndex: 'none'
+		  },
+		  restore: {},
+		}
+	  },
+	  grid: {
+		left: 20,
+		right: '1%',
+		bottom: 50,
+		containLabel: true
+	  },
+	  dataZoom: [
+		{
+		  show: true,
+		  realtime: true,
+		  start: 0,
+		  end: 100,
+		  xAxisIndex: [0, 1]
+		},
+		{
+		  type: 'inside',
+		  realtime: true,
+		  start: 0,
+		  end: 100,
+		  xAxisIndex: [0, 1]
+		}
+	  ],
+	  xAxis: {
+		type: 'category',
+		boundaryGap: false,
+		axisLine: { lineStyle: { color: '#8392A5' } },
+		data: label_ls,
+	  },
+	  yAxis: {
+		type: 'value',
+		name:'Counts',
+		nameLocation:'center',
+		nameGap:45,
+		axisLine: { lineStyle: { color: '#a10603' } },
+	  },
+	  series: [
+		{
+		  name: 'New',
+		  type: 'line',
+		  data: data_ls[0],
+		  lineStyle: {
+			color: color_ls[0],
+		  },
+		  itemStyle: {
+			color: color_ls[0],
+		  }
+		},
+		{
+		  name: 'FP_Taken',
+		  type: 'line',
+		  data: data_ls[1],
+		  lineStyle: {
+			color: color_ls[1],
+		  },
+		  itemStyle: {
+			color: color_ls[1],
+		  }
+		},
+		{
+		  name: 'Interviewed',
+		  type: 'line',
+		  data: data_ls[2],
+		  lineStyle: {
+			color: color_ls[2],
+		  },
+		  itemStyle: {
+			color: color_ls[2],
+		  }
+		},
+		{
+		  name: 'RFE',
+		  type: 'line',
+		  data: data_ls[3],
+		  lineStyle: {
+			color: color_ls[3],
+		  },
+		  itemStyle: {
+			color: color_ls[3],
+		  }
+		},
+		{
+		  name: 'Transferred',
+		  type: 'line',
+		  data: data_ls[4],
+		  lineStyle: {
+			color: color_ls[4],
+		  },
+		  itemStyle: {
+			color: color_ls[4],
+		  }
+		},
+		  {
+		  name: 'Approved',
+		  type: 'line',
+		  data: data_ls[5],
+		  lineStyle: {
+			color: color_ls[5],
+		  },
+		  itemStyle: {
+			color: color_ls[5],
+		  }
+		},
+		  {
+		  name: 'Rejected',
+		  type: 'line',
+		  data:data_ls[6],
+		  lineStyle: {
+			color: color_ls[6],
+		  },
+		  itemStyle: {
+			color: color_ls[6],
+		  }
+		},
+		  {
+		  name: 'Other',
+		  type: 'line',
+		  data: data_ls[7],
+		  lineStyle: {
+			color: color_ls[7],
+		  },
+		  itemStyle: {
+			color: color_ls[7],
+		  }
+		},
+		 {
+		  name: 'Pending',
+		  type: 'line',
+		  data: data_ls[8],
+		  lineStyle: {
+			color: color_ls[8],
+		  },
+		  itemStyle: {
+			color: color_ls[8],
+		  }
+		}
+	  ]
+	};
+
+	option && myChart.setOption(option);
+
+}
+

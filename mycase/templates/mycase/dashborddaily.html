@@ -53,7 +53,8 @@
                      </div>
                  <hr style="height: 1px;color: #666666">
                      <div class="chart" id="line_char_div">
-                         <canvas id="line_chart" style="max-height: 500px; max-width: 1200px;"></canvas>
+                         {#<canvas id="line_chart" style="max-height: 500px; max-width: 1200px;"></canvas>#}
+                         <div id="line_chart" style="height: 500px; width: 1200px;"></div>
                      </div>
                  </div>
              </div>
@@ -116,15 +117,15 @@
 </div>
     <script type="text/javascript" src="{% static "mycase/js/calendarHM.js" %}"></script>
     <script type="text/javascript" src="{% static "js/googleloader.js" %}"></script>
-    <script src="{% static "mycase/js/hammer.min.js" %}"></script>
-    <script src="{% static "mycase/js/chartjs-plugin-zoom.min.js" %}"></script>
-    <script src="{% static "mycase/js/chartjs-plugin-crosshair.min.js" %}"></script>
+{#    <script src="{% static "mycase/js/hammer.min.js" %}"></script>#}
+{#    <script src="{% static "mycase/js/chartjs-plugin-zoom.min.js" %}"></script>#}
+{#    <script src="{% static "mycase/js/chartjs-plugin-crosshair.min.js" %}"></script>#}
     <script src="{% static "mycase/js/script.js" %}" charset="utf-8"></script>
     <script src="{% static "js/datatables.min.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
     var color_ls= ["#1072f1","#11a9fa","#2b04da","#f4b824","#c77cff","#1db063", "#ff001a","#78787a","#a6f110"];
 
-    date_count ={{ chart_data|safe }};
+    var date_count ={{ chart_data|safe }};
 
     $(".cnt_btn").click(function () {
         $(".cnt_btn").removeClass("btn-primary");
@@ -147,10 +148,10 @@
         var selectform = $("#selectform").val();
         location.href = '{% url "mycase:dashborddaily" %}?center='+center+'&selectform='+selectform;
     }
-    function load_data() {
-        linechart(date_count["count_ls"],date_count["label_ls"]);
-    }
-    load_data();
+
+    {#linechart(date_count["count_ls"],date_count["label_ls"]);#}
+    dailylinechart(date_count["count_ls"],date_count["label_ls"]);
+
 
     //////////////////////
     function plot_calendarHM(){
