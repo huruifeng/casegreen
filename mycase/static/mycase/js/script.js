@@ -110,6 +110,26 @@ function linechart(data_ls,label_ls) {
 	var myChart = new Chart(ctx, config);
 }
 
+const getDaysInMonth = (year, month) => new Date(year, month, 0).getDate()
+const addMonths = (input, months) => {
+  const date = new Date(input)
+  date.setDate(1)
+  date.setMonth(date.getMonth() + months)
+  date.setDate(Math.min(input.getDate(), getDaysInMonth(date.getFullYear(), date.getMonth()+1)))
+  return date
+}
+// console.log(addMonths(new Date('2020-01-31T00:00:00'), -6))
+// // "2019-07-31T06:00:00.000Z"
+//
+// console.log(addMonths(new Date('2020-01-31T00:00:00'), 1))
+// // "2020-02-29T06:00:00.000Z"
+//
+// console.log(addMonths(new Date('2020-05-31T00:00:00'), -6))
+// // "2019-11-30T06:00:00.000Z"
+//
+// console.log(addMonths(new Date('2020-02-29T00:00:00'), -12))
+// // "2019-02-28T06:00:00.000Z"
+
 function dailylinechart(data_ls,label_ls) {
 	var chartDom = document.getElementById('line_chart');
 	var myChart = echarts.init(chartDom);
@@ -139,15 +159,13 @@ function dailylinechart(data_ls,label_ls) {
 		{
 		  show: true,
 		  realtime: true,
-		  start: 0,
-		  end: 100,
+		  startValue:addMonths(new Date(),-6),
 		  xAxisIndex: [0, 1]
 		},
 		{
 		  type: 'inside',
 		  realtime: true,
-		  start: 0,
-		  end: 100,
+		  startValue: addMonths(new Date(),-6),
 		  xAxisIndex: [0, 1]
 		}
 	  ],
@@ -162,7 +180,7 @@ function dailylinechart(data_ls,label_ls) {
 		name:'Counts',
 		nameLocation:'center',
 		nameGap:45,
-		axisLine: { lineStyle: { color: '#a10603' } },
+		axisLine: { lineStyle: { color: '#1c8007' } },
 	  },
 	  series: [
 		{
@@ -271,3 +289,95 @@ function dailylinechart(data_ls,label_ls) {
 
 }
 
+
+ function plot_sankey(sankey_data){
+	google.charts.load('current', {'packages':['sankey']});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'From');
+		data.addColumn('string', 'To');
+		data.addColumn('number', 'Count');
+		data.addRows(sankey_data);
+
+		var height = 100;
+		if(sankey_data.length *20 > height) height = sankey_data.length*5;
+
+		// Sets chart options.
+		var options = {
+			width: 1200,
+			height: height,
+			tooltip: {
+				textStyle:{fontSize: 10, bold:false, italic: false },
+				showColorCode: true
+			},
+			sankey: {
+				node: {
+				  colors: color_ls
+				},
+				link: {
+				  colorMode: 'gradient',
+				  colors: color_ls
+				}
+			  }
+		};
+
+		// Instantiates and draws our chart, passing in some options.
+		var chart = new google.visualization.Sankey(document.getElementById('status_sankey'));
+		chart.draw(data, options);
+	}
+}
+
+function status_sankey(sankey_data) {
+	var chartDom = document.getElementById('status_sankey_div');
+	var myChart = echarts.init(chartDom);
+
+	var height = 400;
+	if(sankey_data.nodes.length > 20) height = sankey_data.nodes.length*10
+	$("#status_sankey_div").css({'height': height+'px'});
+	myChart.resize({
+	  width: 1200,
+	  height: height
+	});
+
+	var option;
+	myChart.setOption(
+	   (option = {
+		  tooltip: {
+			trigger: 'item',
+			triggerOn: 'mousemove',
+			textStyle: {fontSize:12}
+		  },
+		  grid:{
+			left: 0,
+			right: 0,
+		    bottom: 0,
+		    top:0,
+			containLabel: true
+		  },
+		  series: [
+			{
+			  type: 'sankey',
+			  emphasis: {
+				focus: 'adjacency'
+			  },
+			  nodeAlign: 'left',
+			  data: sankey_data.nodes,
+			  links: sankey_data.links,
+			  lineStyle: {
+				  color: 'gradient',
+				curveness: 0.5
+			  },
+			  label: {
+				color: 'rgba(0,0,0,0.7)',
+				fontFamily: 'Arial',
+				fontSize: 10
+			  }
+			}
+		  ]
+	   })
+	);
+
+	option && myChart.setOption(option);
+
+}

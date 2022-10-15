@@ -84,7 +84,7 @@ if (!String.prototype.formatString) {
 
         var getColor = function(count) {
           if (typeof(settings.colors[0]) == "string"){
-              var alpha = count/max_count + 0.3;
+              var alpha = count/max_count + 0.1;
               alpha = alpha > 1 ? 1 : alpha;
               return count==0 ? settings.colors[0] : hexToRGB(settings.colors[1],alpha);
           }
@@ -123,7 +123,7 @@ if (!String.prototype.formatString) {
           end_date.setDate(end_date.getDate() - 1);
 
           var loop_html = "";
-          var step = 13;
+          var step = 22;
 
           var month_position = [];
           month_position.push({month_index: start_date.getMonth(), x: 0 });
@@ -151,7 +151,7 @@ if (!String.prototype.formatString) {
               var color = getColor( count );
 
               var y = start_date.getDay() * step;
-              item_html += '<rect class="day" width="11" height="11" y="'+ y +'" fill="'+ color + '" data-count="'+ count +'" data-date="'+ data_date +'" rx="'+radius+'" ry="'+radius+'"/>';  
+              item_html += '<rect class="day" width="20" height="20" y="'+ y +'" fill="'+ color + '" data-count="'+ count +'" data-date="'+ data_date +'" rx="'+radius+'" ry="'+radius+'"/>';
 
               if(start_date.getDay() == 6) {
                   item_html += "</g>";
@@ -183,15 +183,15 @@ if (!String.prototype.formatString) {
           }
 
           //Add Monday, Wenesday, Friday label
-          loop_html +=  '<text text-anchor="middle" class="wday" dx="-15" dy="22">{0}</text>'.formatString( settings.h_days[0] )+
-                        '<text text-anchor="middle" class="wday" dx="-15" dy="35">{0}</text>'.formatString( settings.h_days[1] )+
-                        '<text text-anchor="middle" class="wday" dx="-15" dy="48">{0}</text>'.formatString( settings.h_days[2] )+
-                        '<text text-anchor="middle" class="wday" dx="-15" dy="61">{0}</text>'.formatString( settings.h_days[3] )+
-                        '<text text-anchor="middle" class="wday" dx="-15" dy="74">{0}</text>'.formatString( settings.h_days[4] );
+          loop_html +=  '<text text-anchor="middle" class="wday" dx="-15" dy="36">{0}</text>'.formatString( settings.h_days[0] )+
+                        '<text text-anchor="middle" class="wday" dx="-15" dy="58">{0}</text>'.formatString( settings.h_days[1] )+
+                        '<text text-anchor="middle" class="wday" dx="-15" dy="80">{0}</text>'.formatString( settings.h_days[2] )+
+                        '<text text-anchor="middle" class="wday" dx="-15" dy="102">{0}</text>'.formatString( settings.h_days[3] )+
+                        '<text text-anchor="middle" class="wday" dx="-15" dy="124">{0}</text>'.formatString( settings.h_days[4] );
           
           //Fixed size for now with width= 721 and height = 110
           var wire_html = 
-            '<svg width="1250" height="160" viewBox="0 0 721 110"  class="js-calendar-graph-svg">'+
+            '<svg width="1200" height="180" viewBox="0 0 1200 190" class="js-calendar-graph-svg">'+
               '<g transform="translate(0, 20)">'+
                 loop_html +
               '</g>'+
