@@ -175,7 +175,8 @@ function river_chart(value_ls,date_ls,start,end) {
 		trigger: 'axis',
 		axisPointer: { type: 'line', lineStyle: {color: 'rgba(0,0,0,0.2)', width: 1, type: 'solid'}}
 	  },
-	  legend: {data: legend_ls},
+	  color:color_ls,
+	  legend: {data: legend_ls,show:false},
 	  singleAxis: {
 		top: 5,	bottom: 20, left:60, right:"1%",
 		type: 'time',
@@ -184,6 +185,9 @@ function river_chart(value_ls,date_ls,start,end) {
 	  series: [
 		{
 		  type: 'themeRiver',
+		  emphasis: {
+			itemStyle: {shadowBlur: 5, shadowColor: 'rgba(0, 0, 0, 0.3)'}
+		  },
 		  data: themeRiver_data
 		}
 	  ]
