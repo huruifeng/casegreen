@@ -76,37 +76,49 @@ const addMonths = (input, months) => {
 // console.log(addMonths(new Date('2020-02-29T00:00:00'), -12))
 // // "2019-02-28T06:00:00.000Z"
 
+function formatDate(date_x) {
+    var d = new Date(date_x),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
 function dailylinechart(value_ls,date_ls) {
-	const legend_ls =  ["New",'FP_Taken','Interviewed','RFE','Transferred','Approved','Rejected','Other','Pending'];
+	const legend_ls = ["New", 'FP_Taken', 'Interviewed', 'RFE', 'Transferred', 'Approved', 'Rejected', 'Other', 'Pending'];
 	var themeRiver_data = [];
 	for (let i = 0; i < value_ls.length; i++) {
-	  for (let j = 0; j < value_ls[i].length; j++) {
-		themeRiver_data.push([date_ls[j], value_ls[i][j], legend_ls[i]]);
-	  }
+		for (let j = 0; j < value_ls[i].length; j++) {
+			themeRiver_data.push([formatDate(date_ls[j]), value_ls[i][j], legend_ls[i]]);
+		}
 	}
 
 	var chartDom = document.getElementById('line_chart');
 	var myChart = echarts.init(chartDom);
 	var option;
 	option = {
-	  tooltip: {trigger: 'axis'},
-	  legend: {data: legend_ls},
-	  toolbox: {
-		feature: {dataZoom: {yAxisIndex: 'none'}, restore: {},}
-	  },
-	  grid: [
-		  {left: 60, right: '1%',bottom: 70,}],
-	  dataZoom: [
-		{show: true, realtime: true, startValue:addMonths(new Date(),-6), xAxisIndex: [0, 1]},
-		{type: 'inside', realtime: true, startValue: addMonths(new Date(),-6), xAxisIndex: [0, 1]}
-	  ],
-	  xAxis: [
-		  {gridIndex:0,type: 'category', boundaryGap: false, axisLine: { lineStyle: { color: '#8392A5' } }, data: date_ls,},
-	  ],
-	  yAxis: [
-		  {gridIndex:0,type: 'value', name:'Counts', nameLocation:'center', nameGap:45, axisLine: { lineStyle: { color: '#1c8007' } },},
-	  ],
-	  series: [
+		tooltip: {trigger: 'axis'},
+		legend: {data: legend_ls},
+		toolbox: {feature: {dataZoom: {yAxisIndex: 'none'}, restore: {},}},
+		grid: [	{left: 60, right: '1%'},],
+		dataZoom: [
+			{show: true, realtime: true, startValue: addMonths(new Date(), -6), endValue: new Date(), xAxisIndex: [0, 1]},
+			{type: "inside", realtime: true, startValue: addMonths(new Date(), -6), endValue: new Date(), xAxisIndex: [0, 1]},
+		],
+		xAxis: [
+			{gridIndex: 0, type: 'category', boundaryGap: false, axisLine: {lineStyle: {color: '#8392A5'}}, data: date_ls,},
+		],
+		yAxis: [
+			{gridIndex: 0, type: 'value', name: 'Counts', nameLocation: 'center', nameGap: 45, axisLine: {lineStyle: {color: '#1c8007'}},},
+		],
+		series: [
 		{name: 'New', type: 'line', data: value_ls[0], lineStyle: {color: color_ls[0]}, itemStyle: {color: color_ls[0],}},
 		{name: 'FP_Taken',type: 'line',data: value_ls[1],lineStyle: {color: color_ls[1]},itemStyle: {color: color_ls[1]}},
 		{name: 'Interviewed',type: 'line',data: value_ls[2],lineStyle: {color: color_ls[2]},itemStyle: {color: color_ls[2]}},
@@ -120,7 +132,63 @@ function dailylinechart(value_ls,date_ls) {
 	};
 
 	option && myChart.setOption(option);
+	river_chart(value_ls,date_ls,start=option.dataZoom[0].startValue,end=option.dataZoom[0].endValue);
 
+	myChart.on('dataZoom', function (evt) {
+		var option_x = myChart.getOption();
+		var startIdx = option_x.dataZoom[0].startValue;
+		var endIdx=option_x.dataZoom[0].endValue;
+
+		var axis_x = myChart.getModel().option.xAxis[0];
+		console.log(axis_x)
+		var starttime = axis_x.data[startIdx];
+		var endtime = axis_x.data[endIdx];
+		console.log(starttime,endtime);
+
+		river_chart(value_ls,date_ls,start=starttime,end=endtime);
+	});
+
+	myChart.on('restore', function (evt) {
+
+		river_chart(value_ls,date_ls, addMonths(new Date(), -6), new Date());
+	});
+}
+function river_chart(value_ls,date_ls,start,end) {
+	const legend_ls = ["New", 'FP_Taken', 'Interviewed', 'RFE', 'Transferred', 'Approved', 'Rejected', 'Other', 'Pending'];
+	var starttime = new Date(start);
+	var endtime = new Date(end);
+	var themeRiver_data = [];
+	for (let i = 0; i < value_ls.length; i++) {
+		for (let j = 0; j < value_ls[i].length; j++) {
+			var date_j = new Date(date_ls[j]);
+			if(date_j >= starttime && date_j <= endtime){
+				themeRiver_data.push([formatDate(date_ls[j]), value_ls[i][j], legend_ls[i]]);
+			}
+		}
+	}
+	/////////////////
+	var option2;
+	var chartDom2= document.getElementById('river_chart');
+	var myChart2 = echarts.init(chartDom2);
+	option2 = {
+	  tooltip: {
+		trigger: 'axis',
+		axisPointer: { type: 'line', lineStyle: {color: 'rgba(0,0,0,0.2)', width: 1, type: 'solid'}}
+	  },
+	  legend: {data: legend_ls},
+	  singleAxis: {
+		top: 5,	bottom: 20, left:60, right:"1%",
+		type: 'time',
+		splitLine: {show: true, lineStyle: {type: 'dashed', opacity: 0.2}}
+	  },
+	  series: [
+		{
+		  type: 'themeRiver',
+		  data: themeRiver_data
+		}
+	  ]
+	};
+	option2 && myChart2.setOption(option2);
 }
 
 
