@@ -212,6 +212,7 @@ function river_chart(value_ls,date_ls,start,end) {
 		// Sets chart options.
 		var options = {
 			width: 1200,
+			left:0,right:0,
 			height: height,
 			tooltip: {
 				textStyle:{fontSize: 10, bold:false, italic: false },
