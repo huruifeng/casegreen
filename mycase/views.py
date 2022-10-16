@@ -573,6 +573,7 @@ def getsankey(request):
                     status_trans_dict[date_i][source_s_l][dest_s_l] = trans_i.count
             else:
                 status_trans_dict[date_i][source_s_l]={dest_s_l:trans_i.count}
+    date_str_ls.append(dest_date)
 
     node_ls = []
     link_ls = []
@@ -580,11 +581,13 @@ def getsankey(request):
         for source_i in status_trans_dict[date_i]:
             for dest_i in status_trans_dict[date_i][source_i]:
                 link_ls.append({"action_date":date_i,"source": source_i, "target": dest_i, "value": status_trans_dict[date_i][source_i][dest_i]})
-                # date_i_depth = date_str_ls.index(date_i)
-                node_i = {"name": source_i}
+
+                date_i_depth = date_str_ls.index(source_i[:10])
+                node_i = {"name": source_i,"depth":date_i_depth}
                 if node_i not in node_ls: node_ls.append(node_i)
 
-                node_i = {"name": dest_i}
+                date_i_depth = date_str_ls.index(dest_i[:10])
+                node_i = {"name": dest_i,"depth":date_i_depth}
                 if node_i not in node_ls: node_ls.append(node_i)
 
     # data_dict = {"sankey":status_trans_dict}
