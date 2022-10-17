@@ -109,8 +109,8 @@ function dailylinechart(value_ls,date_ls) {
 		toolbox: {feature: {dataZoom: {yAxisIndex: 'none'}, restore: {},}},
 		grid: [	{left: 60, right: '1%'},],
 		dataZoom: [
-			{show: true, realtime: true, startValue: addMonths(new Date(), -6), endValue: new Date(), xAxisIndex: [0, 1]},
-			{type: "inside", realtime: true, startValue: addMonths(new Date(), -6), endValue: new Date(), xAxisIndex: [0, 1]},
+			{show: true, realtime: true, startValue: addMonths(new Date(), -3), endValue: new Date(), xAxisIndex: [0, 1]},
+			{type: "inside", realtime: true, startValue: addMonths(new Date(), -3), endValue: new Date(), xAxisIndex: [0, 1]},
 		],
 		xAxis: [
 			{gridIndex: 0, type: 'category', boundaryGap: false, axisLine: {lineStyle: {color: '#8392A5'}}, data: date_ls,},
@@ -140,17 +140,14 @@ function dailylinechart(value_ls,date_ls) {
 		var endIdx=option_x.dataZoom[0].endValue;
 
 		var axis_x = myChart.getModel().option.xAxis[0];
-		console.log(axis_x)
 		var starttime = axis_x.data[startIdx];
 		var endtime = axis_x.data[endIdx];
-		console.log(starttime,endtime);
 
 		river_chart(value_ls,date_ls,start=starttime,end=endtime);
 	});
 
 	myChart.on('restore', function (evt) {
-
-		river_chart(value_ls,date_ls, addMonths(new Date(), -6), new Date());
+		river_chart(value_ls,date_ls, addMonths(new Date(), -3), new Date());
 	});
 }
 function river_chart(value_ls,date_ls,start,end) {
