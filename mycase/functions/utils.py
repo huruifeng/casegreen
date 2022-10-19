@@ -82,13 +82,18 @@ def get_status(recepit_number):
     try_n = 0
     while True:
         ## Try N times at most
-        resp = requests.post(url, data=case_data)
-        try_n += 1
-        if resp.status_code in [200]:
-            break
-        else:
+        try:
+            resp = requests.post(url, data=case_data, verify=False)
+            try_n += 1
+            if resp.status_code in [200]:
+                break
+            else:
+                if try_n >=10:
+                    return ["try_failed",resp.status_code]
+        except Exception as e:
+            try_n +=1
             if try_n >=10:
-                return ["try_failed"]
+                return ["try_failed",e]
 
     soup = BeautifulSoup(resp.text, 'html.parser')
     status_div=soup.find("div",class_="rows text-center")

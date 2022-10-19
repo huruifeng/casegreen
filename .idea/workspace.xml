@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/js/script2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/overview.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +52,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharm_project/casegreen/static/js",
+    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/static/mycase/js",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,18 +69,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\PyCharm_project\casegreen\static\js" />
+      <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
+      <recent name="F:\PyCharm_project\casegreen\static\js" />
       <recent name="F:\PyCharm_project\casegreen\static\css" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase" />
-      <recent name="F:\PyCharm_project\casegreen\mycase\data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\mycase\templates" />
       <recent name="F:\PyCharm_project\casegreen\static\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
-      <recent name="F:\PyCharm_project\casegreen\mycase\data\bkp" />
     </key>
   </component>
   <component name="RunManager" selected="Django Server.casegreen">
@@ -214,14 +220,8 @@
       <workItem from="1665376726883" duration="32413000" />
       <workItem from="1665540616607" duration="2469000" />
       <workItem from="1665617149126" duration="2083000" />
-      <workItem from="1665632844935" duration="56923000" />
-    </task>
-    <task id="LOCAL-00028" summary="updates">
-      <created>1663516709879</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1663516709879</updated>
+      <workItem from="1665632844935" duration="59610000" />
+      <workItem from="1666069118632" duration="5805000" />
     </task>
     <task id="LOCAL-00029" summary="updates">
       <created>1663558572805</created>
@@ -559,7 +559,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665955578230</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="updates">
+      <created>1666018339921</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1666018339921</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

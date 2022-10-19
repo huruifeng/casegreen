@@ -35,7 +35,7 @@ color20 = {'Received':'#1266f1','Transferred':'#17becf','Pending':'#ff7f0e',
 color8 = {'Received':"#1072f1",'FP_Taken':"#11a9fa",'Interviewed': "#2b04da",'RFE':"#f4b824",
           'Transferred':"#c77cff",'Approved': "#1db063",'Rejected': "#ff001a",'Other':"#78787a"}
 def index(request):
-    return render(request,'mycase/index.html')
+    return render(request, 'index.html')
 
 def mycase(request):
     if request.method == "GET":
@@ -53,7 +53,9 @@ def mycase(request):
     ## try to get real-time data from uscis
     try:
         status_ls = get_status(receipt_num)
+        # print(status_ls)
     except Exception as e:
+        # print(e)
         status_ls = []
 
     ## read exist data from database
@@ -465,7 +467,7 @@ def processrn(request):
         rangesize = request.GET.get("rangesize", None)
 
     if selectform == None or center == None or fy == None or statuslevel==None or rangesize==None:
-        return redirect("/processrn?center=LIN_LB&selectform=I-485&fy=2022&statuslevel=L3&rangesize=5000", status=200)
+        return redirect("/processrn?center=LIN_LB&selectform=I-485&fy="+str(now.year)+"&statuslevel=L3&rangesize=5000", status=200)
 
     center_table = center_dict[center.lower()]
     data_dict = get_rnrangecount(center_table, center, selectform, fy, statuslevel, rangesize)
@@ -506,7 +508,7 @@ def processrd(request):
         rangesize = request.GET.get("rangesize", None)
 
     if selectform == None or center == None or fy == None or statuslevel==None or rangesize==None:
-        return redirect("/processrd?center=LIN_LB&selectform=I-485&fy=2022&statuslevel=L3&rangesize=weekly", status=200)
+        return redirect("/processrd?center=LIN_LB&selectform=I-485&fy="+str(now.year)+"&statuslevel=L3&rangesize=weekly", status=200)
 
     center_table = center_dict[center.lower()]
     data_dict = get_rdcount(center_table, center, selectform, fy, statuslevel, rangesize)
@@ -594,6 +596,35 @@ def getsankey(request):
     data_dict = {"nodes":node_ls,"links":link_ls}
     return JsonResponse(data_dict, status=200)
 
+def overview(request):
+    ####
+    sys_params = sysparam.objects.get(pk=1)
+    year_n = sys_params.fiscal_year_n
+
+    year_ls = []
+    now = datetime.now()
+    for i in range(year_n):
+        year_ls.append(str(now.year - i))
+    if now.month > 9:
+        if not (now.month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            year_ls = [str(now.year + 1)] + year_ls
+
+    ######
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        fy = request.GET.get("fy", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        fy = request.POST.get("fy", None)
+
+    if center == None or fy == None:
+        return redirect("/overview?center=LIN_LB&fy="+str(now.year), status=200)
+
+    center_table = center_dict[center.lower()]
+
+    context = {"page_title": "Overview", "year_ls": year_ls[::-1],"center": center, "fy": fy}
+    return render(request,'mycase/overview.html', context)
 
 def today(request):
     if request.method == "GET":
@@ -607,4 +638,6 @@ def about(request):
         return render(request,'mycase/about.html')
     elif request.method == "POST":
         return render(request,'mycase/about.html')
+
+
 
