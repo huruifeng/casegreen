@@ -14,7 +14,11 @@ function form_bar_plot(form_status_count) {
 
 	option = {
 		title: {
-			text: 'Form types'
+			text: 'Form types',
+			left: '50%',
+			top: 0,
+			textAlign: 'center',
+			subtext: 'Click the bar number to chack the status distributions'
 		},
 		tooltip: {
 			trigger: 'axis',
@@ -54,16 +58,17 @@ function form_bar_plot(form_status_count) {
 
 	option && myChart.setOption(option);
 
-	form_pie_plot(form_status_count[Object.keys(form_count)[0]])
+	form_pie_plot(Object.keys(form_count)[0])
 
 	myChart.on('click', function (params) {
-		form_pie_plot(form_status_count[params.name])
+		form_pie_plot(params.name)
 	});
 
 }
 
 
-function form_pie_plot(data) {
+function form_pie_plot(form) {
+	var data = form_status_count[form];
 	var data_ls = [];
 	for(let status_i in data){
 		data_ls.push({"name":status_i,"value":data[status_i]})
@@ -73,6 +78,12 @@ function form_pie_plot(data) {
 	var option;
 
 	option = {
+		title: {
+			text: form,
+			left: '50%',
+			top: 0,
+			textAlign: 'center'
+		},
 		tooltip: {
 			trigger: 'item'
 		},
@@ -80,7 +91,9 @@ function form_pie_plot(data) {
 			{
 				name: 'Status',
 				type: 'pie',
-				radius: '85%',
+				top: 20,
+				bottom:15,
+				radius: '95%',
 				data: data_ls,
 				label: {
 				  formatter: '{b}: {c} ({d}%)'
