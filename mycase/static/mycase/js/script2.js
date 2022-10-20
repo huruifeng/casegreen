@@ -1,93 +1,100 @@
-function form_bar_plot() {
+function form_bar_plot(form_status_count) {
+	var form_count = {}
+	for(let form_i in form_status_count){
+		var n = 0;
+		for(let status_i in form_status_count[form_i]){
+			n += form_status_count[form_i][status_i]
+		}
+		form_count[form_i] = n
+	}
+
 	var chartDom = document.getElementById('form_bar');
 	var myChart = echarts.init(chartDom);
 	var option;
 
 	option = {
-		legend: {},
+		title: {
+			text: 'Form types'
+		},
 		tooltip: {
-		  trigger: 'axis',
-		  showContent: false
-		},
-		dataset: {
-		  source: [
-			['product', '2012', '2013', '2014', '2015', '2016', '2017'],
-			['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
-			['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
-			['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
-			['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1]
-		  ]
-		},
-		xAxis: { type: 'category' },
-		yAxis: { gridIndex: 0 },
-		grid: { top: '55%' },
-		series: [
-		  {
-			type: 'line',
-			smooth: true,
-			seriesLayoutBy: 'row',
-			emphasis: { focus: 'series' }
-		  },
-		  {
-			type: 'line',
-			smooth: true,
-			seriesLayoutBy: 'row',
-			emphasis: { focus: 'series' }
-		  },
-		  {
-			type: 'line',
-			smooth: true,
-			seriesLayoutBy: 'row',
-			emphasis: { focus: 'series' }
-		  },
-		  {
-			type: 'line',
-			smooth: true,
-			seriesLayoutBy: 'row',
-			emphasis: { focus: 'series' }
-		  },
-		  {
-			type: 'pie',
-			id: 'pie',
-			radius: '30%',
-			center: ['50%', '25%'],
-			emphasis: {
-			  focus: 'self'
-			},
-			label: {
-			  formatter: '{b}: {@2012} ({d}%)'
-			},
-			encode: {
-			  itemName: 'product',
-			  value: '2012',
-			  tooltip: '2012'
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow'
 			}
-		  }
+		},
+		legend: {},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '3%',
+			containLabel: true
+		},
+		xAxis: {
+			type: 'value',
+			boundaryGap: [0, 0.01]
+		},
+		yAxis: {
+			type: 'category',
+			data: Object.keys(form_count)
+		},
+		series: [
+			{
+				name: '',
+				type: 'bar',
+				data: Object.values(form_count),
+				showBackground: true,
+				label: {
+					position: 'right',
+					show: true
+				},
+
+			}
 		]
 	};
 
 	option && myChart.setOption(option);
 
-	myChart.on('updateAxisPointer', function (event) {
-	const xAxisInfo = event.axesInfo[0];
-	if (xAxisInfo) {
-	  const dimension = xAxisInfo.value + 1;
-	  myChart.setOption({
-		series: {
-		  id: 'pie',
-		  label: {
-			formatter: '{b}: {@[' + dimension + ']} ({d}%)'
-		  },
-		  encode: {
-			value: dimension,
-			tooltip: dimension
-		  }
-		}
-	  });
-	}
+	form_pie_plot(form_status_count[Object.keys(form_count)[0]])
+
+	myChart.on('click', function (params) {
+		form_pie_plot(form_status_count[params.name])
 	});
 
+}
 
 
+function form_pie_plot(data) {
+	var data_ls = [];
+	for(let status_i in data){
+		data_ls.push({"name":status_i,"value":data[status_i]})
+	}
+	var chartDom = document.getElementById('form_pie');
+	var myChart = echarts.init(chartDom);
+	var option;
 
+	option = {
+		tooltip: {
+			trigger: 'item'
+		},
+		series: [
+			{
+				name: 'Status',
+				type: 'pie',
+				radius: '85%',
+				data: data_ls,
+				label: {
+				  formatter: '{b}: {c} ({d}%)'
+				},
+				emphasis: {
+					itemStyle: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}
+		]
+	};
+
+	option && myChart.setOption(option);
 }

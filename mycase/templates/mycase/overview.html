@@ -48,10 +48,10 @@
 
                      </div>
                     <hr style="height: 1px;color: #666666">
-                     <div class="chart" id="char_div">
-                        <div id="form_bar" style="height: 800px; width: 1200px;">
 
-                        </div>
+                     <div class="chart" id="char_div">
+                         <div id="form_pie" style="height: 300px; width: 1200px;"></div>
+                        <div id="form_bar" style="height: 600px; width: 1200px;"></div>
                      </div>
                  </div>
              </div>
@@ -63,7 +63,43 @@
 </div>
     <script src="{% static "mycase/js/script2.js" %}" charset="utf-8"></script>
    <script type="text/javascript">
-     form_bar_plot();
+       $(".cnt_btn").click(function () {
+            $(".cnt_btn").removeClass("btn-primary");
+            $(".cnt_btn").addClass("btn-outline-primary");
+            $(this).removeClass("btn-outline-primary");
+            $(this).addClass("btn-primary");
+            load_page();
+        });
+
+       $(".fy_btn").click(function () {
+            $(".fy_btn").removeClass("btn-primary");
+            $(".fy_btn").addClass("btn-outline-primary");
+            $(this).removeClass("btn-outline-primary");
+            $(this).addClass("btn-primary");
+            load_page();
+        });
+
+       function load_page(){
+            var center = "LIN_LB";
+            $('.cnt_btn').each(function(){
+                if($(this).hasClass("btn-primary")){
+                    center = $(this).text();
+                    return false;
+                }
+            });
+            var fy = 2022;
+            $('.fy_btn').each(function(){
+                if($(this).hasClass("btn-primary")){
+                    fy = $(this).text();
+                    return false;
+                }
+            });
+
+            var selectform = $("#selectform").val();
+            location.href = '{% url "mycase:overview" %}?center='+center+'&fy='+fy;
+       }
+       var form_status_count ={{ form_status_count|safe }};
+       form_bar_plot(form_status_count);
    </script>
 
  {% endblock %}

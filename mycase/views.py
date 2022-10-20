@@ -1,13 +1,13 @@
 import json
+import os
 from datetime import datetime, timedelta
 
 from bottleneck import median
-from django.db.models import Max, F
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
 from mycase.functions.utils import get_status, getcase_in_range, get_l_status, get_rnrangecount, get_dailyrecords, \
-    get_rdcount
+    get_rdcount, overview_x
 from mycase.models import *
 
 # Create your views here.
@@ -621,9 +621,24 @@ def overview(request):
     if center == None or fy == None:
         return redirect("/overview?center=LIN_LB&fy="+str(now.year), status=200)
 
-    center_table = center_dict[center.lower()]
+    form_status_count = {}
+    file_name = "_".join([center.upper(), fy[-2:]]) + ".json"
+    folder = "mycase/data/statistics/overview"
+    file_name = folder + "/" + file_name
+    while True:
+        if os.path.exists(file_name):
+            try:
+                with open(file_name) as json_file:
+                    form_status_count = json.load(json_file)
+                break
+            except Exception as e:
+                print(e)
+        else:
+            ok = overview_x(center,fy)
+            if "Error" in ok:
+                break
 
-    context = {"page_title": "Overview", "year_ls": year_ls[::-1],"center": center, "fy": fy}
+    context = {"page_title": "Overview", "year_ls": year_ls[::-1],"center": center, "fy": fy,"form_status_count":form_status_count}
     return render(request,'mycase/overview.html', context)
 
 def today(request):

@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import re
 
 from ctrlpanel.functions.utils import get_status_dict
-from mycase.models import status_daily
+from mycase.models import *
 
 months = ['January', 'February', 'March', 'April', 'May', 'June',
           'July', 'August', 'September', 'October', 'November', 'December']
@@ -69,6 +69,21 @@ color20 = {'Received':'#1266f1','Transferred':'#17becf','Pending':'#ff7f0e',
 
 color8 = {'Received':"#1072f1",'FP_Taken':"#11a9fa",'Interviewed': "#2b04da",'RFE':"#f4b824",
           'Transferred':"#c77cff",'Approved': "#1db063",'Rejected': "#ff001a",'Other':"#78787a"}
+
+center_dict = {"lin_lb":case_status_lin_lb,
+               "msc_lb":case_status_msc_lb,
+               "src_lb":case_status_src_lb,
+               "wac_lb":case_status_wac_lb,
+               "eac_lb":case_status_eac_lb,
+               "ysc_lb":case_status_ysc_lb,
+               "lin_sc":case_status_lin_sc,
+               "msc_sc":case_status_msc_sc,
+               "src_sc":case_status_src_sc,
+               "wac_sc":case_status_wac_sc,
+               "eac_sc":case_status_eac_sc,
+               "ysc_sc":case_status_ysc_sc,
+               "ioe":case_status_ioe
+               }
 
 status_dict = get_status_dict()
 
@@ -537,3 +552,66 @@ def get_dailyrecords(center,selectform):
     count_ls = [rec, fp, itv, rfe, trf, apv, rej, oth, pending]
     data_dict = {"label_ls": date_ls, "count_ls": count_ls}
     return data_dict
+
+def generate_overview(center_ls):
+    ####
+    sys_params = sysparam.objects.get(pk=1)
+    year_n = sys_params.fiscal_year_n
+
+    year_ls = []
+    now = datetime.now()
+    for i in range(year_n):
+        year_ls.append(str(now.year - i))
+    if now.month > 9:
+        if not (now.month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            year_ls = [str(now.year + 1)] + year_ls
+
+    ## Check if there is the statistics file for the selected options
+    ## first time visiting will save the results to json file
+    for center_i in center_ls:
+        for fy in year_ls:
+            ok = overview_x(center_i,fy)
+            if "Error" in ok:
+                return "Error:Overview"
+    return "OK"
+
+def overview_x(center,fy):
+    file_name = "_".join([center.upper(), fy[-2:]]) + ".json"
+    folder = "mycase/data/statistics/overview"
+    file_name = folder + "/" + file_name
+
+    center_table = center_dict[center.lower()]
+    rn_pattern = center.split("_")[0] + fy[-2:]
+    case_qs = center_table.objects.filter(receipt_number__startswith=rn_pattern).order_by("receipt_number", "-add_date")
+
+    form_status_count = {}
+    rn_status = {}
+    for case_i in case_qs:
+        if case_i.receipt_number in rn_status: continue
+        status_l = get_l_status(case_i.status, "L3")
+        rn_status[case_i.receipt_number] = 1
+        form_type = case_i.form
+        if form_type=="":
+            form_type="Unknown"
+        if form_type not in form_status_count:
+            form_status_count[form_type] = {}
+            form_status_count[form_type][status_l] = 1
+        else:
+            if status_l not in form_status_count[form_type]:
+                form_status_count[form_type][status_l] = 1
+            else:
+                form_status_count[form_type][status_l] += 1
+
+    try:
+        with open(file_name,"w") as json_file:
+            json.dump(form_status_count, json_file)
+    except Exception as e:
+        print(e)
+        return "Error:Dump"
+
+    return "OK"
+
+
+
+

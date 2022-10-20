@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from ctrlpanel.functions.utils import bkp_table, run_initalization, run_center
+from mycase.functions.utils import generate_overview
 from mycase.models import *
 
 # Create your views here.
@@ -196,6 +197,11 @@ def centerrun(request):
                     break
                 except OSError:
                     pass
+        ####
+        print("-------------------------------")
+        print("Generate overview...")
+        generate_overview(center_ls)
+        print("Generate overview... Done!")
 
         print("*******************************")
         print("All done!")

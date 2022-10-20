@@ -158,36 +158,36 @@ function river_chart(value_ls,date_ls,start,end) {
 	for (let i = 0; i < value_ls.length; i++) {
 		for (let j = 0; j < value_ls[i].length; j++) {
 			var date_j = new Date(date_ls[j]);
-			if(date_j >= starttime && date_j <= endtime){
+			if (date_j >= starttime && date_j <= endtime) {
 				themeRiver_data.push([formatDate(date_ls[j]), value_ls[i][j], legend_ls[i]]);
 			}
 		}
 	}
 	/////////////////
 	var option2;
-	var chartDom2= document.getElementById('river_chart');
+	var chartDom2 = document.getElementById('river_chart');
 	var myChart2 = echarts.init(chartDom2);
 	option2 = {
-	  tooltip: {
-		trigger: 'axis',
-		axisPointer: { type: 'line', lineStyle: {color: 'rgba(0,0,0,0.2)', width: 1, type: 'solid'}}
-	  },
-	  color:color_ls,
-	  legend: {data: legend_ls,show:false},
-	  singleAxis: {
-		top: 5,	bottom: 20, left:60, right:"1%",
-		type: 'time',
-		splitLine: {show: true, lineStyle: {type: 'dashed', opacity: 0.2}}
-	  },
-	  series: [
-		{
-		  type: 'themeRiver',
-		  emphasis: {
-			itemStyle: {shadowBlur: 5, shadowColor: 'rgba(0, 0, 0, 0.3)'}
-		  },
-		  data: themeRiver_data
-		}
-	  ]
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {type: 'line', lineStyle: {color: 'rgba(0,0,0,0.2)', width: 1, type: 'solid'}}
+		},
+		color: color_ls,
+		legend: {data: legend_ls, show: false},
+		singleAxis: {
+			top: 5, bottom: 20, left: 60, right: "1%",
+			type: 'time',
+			splitLine: {show: true, lineStyle: {type: 'dashed', opacity: 0.2}}
+		},
+		series: [
+			{
+				type: 'themeRiver',
+				emphasis: {
+					itemStyle: {shadowBlur: 5, shadowColor: 'rgba(0, 0, 0, 0.3)'}
+				},
+				data: themeRiver_data
+			}
+		]
 	};
 	option2 && myChart2.setOption(option2);
 }
