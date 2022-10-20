@@ -582,7 +582,7 @@ def overview_x(center,fy):
     file_name = folder + "/" + file_name
 
     center_table = center_dict[center.lower()]
-    rn_pattern = center.split("_")[0] + fy[-2:]
+    rn_pattern = center.upper().split("_")[0] + fy[-2:]
     case_qs = center_table.objects.filter(receipt_number__startswith=rn_pattern).order_by("receipt_number", "-add_date")
 
     form_status_count = {}
