@@ -651,11 +651,20 @@ def today(request):
     today_count = {}
     for center_i in center_running_dict:
         today_count[center_i] = get_dailyrecords(center=center_i,selectform="",date_number=center_running_dict[center_i][1])
-
     ytd_count = get_ytdcount()
 
-    print(today_count)
-    context = {"page_title": "Today!","today_count":today_count,"ytd_count":ytd_count}
+    for center_i in ytd_count:
+        for form_i in ytd_count[center_i]:
+            if center_i not in today_count:
+                ytd_count[center_i][form_i] = {**ytd_count[center_i][form_i], **{"rec_d": 0, "fp_d": 0, "itv_d": 0, "rfe_d": 0, "trf_d": 0, "apv_d": 0,"rej_d": 0, "pending_d": 0, "oth_d": 0}}
+            else:
+                if form_i not in today_count[center_i]:
+                    ytd_count[center_i][form_i] = {**ytd_count[center_i][form_i], **{"rec_d": 0, "fp_d": 0, "itv_d": 0, "rfe_d": 0, "trf_d": 0, "apv_d": 0,"rej_d": 0, "pending_d": 0, "oth_d": 0}}
+                else:
+                    ytd_count[center_i][form_i] = {**ytd_count[center_i][form_i],**today_count[center_i][form_i]}
+
+
+    context = {"page_title": "Today!","ytd_count":ytd_count}
     return render(request,'mycase/today.html',context)
 
 
