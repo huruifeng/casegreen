@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/static/css/datepicker2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/datepicker2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/today.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/today.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/static/mycase/js",
+    "last_opened_file_path": "F:/PyCharm_project/casegreen/static/css",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -65,10 +66,10 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\static\css" />
+      <recent name="F:\PyCharm_project\casegreen\static\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
-      <recent name="F:\PyCharm_project\casegreen\static\js" />
-      <recent name="F:\PyCharm_project\casegreen\static\css" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -217,14 +218,7 @@
       <workItem from="1665540616607" duration="2469000" />
       <workItem from="1665617149126" duration="2083000" />
       <workItem from="1665632844935" duration="59610000" />
-      <workItem from="1666069118632" duration="44820000" />
-    </task>
-    <task id="LOCAL-00034" summary="updates">
-      <created>1664134920808</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1664134920808</updated>
+      <workItem from="1666069118632" duration="50185000" />
     </task>
     <task id="LOCAL-00035" summary="updates">
       <created>1664310703202</created>
@@ -562,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666571400031</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="updates">
+      <created>1666574378790</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1666574378790</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

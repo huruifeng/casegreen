@@ -1,6 +1,7 @@
 {% extends "mycase_basic.html" %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href={% static "css/datepicker2.css" %}>
 
 <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
      <div class="row justify-content-center">
@@ -21,27 +22,57 @@
               </form>
             <br>
              <!--Main content-->
-             <table class="table table-sm table-hover"  id="i485_table>
-                 <thead class="bg-light"  id="i485_thead">
-                    <tr><th rowspan="2">Center</th><th colspan="8">Today</th><th colspan="8">This fiscal year</th></tr>
-                    <tr><th>New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th><th>New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th></tr>
-                 </thead>
-                 <tbody id="i485_tbody">
-                    {% for center_x, value_x in ytd_count.items %}
-                        {% for form_i, count_i in value_x.items %}
-                           {% if form_i == "I-485"%}
-                           <tr>
-                               <td>{{ center_x }}</td><td>{{ count_i.rec_d }}</td><td>{{ count_i.apv_d }}</td><td>{{ count_i.fp_d }}</td><td>{{ count_i.rfe_d }}</td><td>{{ count_i.trf_d }}</td><td>{{ count_i.rej_d }}</td><td>{{ count_i.pending_d }}</td><td>{{ count_i.oth_d }}</td>
-                               <td>{{ count_i.rec_y }}</td><td>{{ count_i.apv_y }}</td><td>{{ count_i.fp_y }}</td><td>{{ count_i.rfe_y }}</td><td>{{ count_i.trf_y }}</td><td>{{ count_i.rej_y }}</td><td>{{ count_i.pending_y }}</td><td>{{ count_i.oth_y }}</td>
-                           </tr>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                 </tbody>
-             </table>
+             <h3>The updates in Last Day</h3>
+             <hr style="height: 1px;color: #cccccc">
+             <div class="input-group">
+                 <span class="input-group-text border-0" style="font-size: 20px;">Select a date</span>
+                 <input type="text" placeholder="Pick date" aria-label="Pick a date" class="form-control pickeddate" style="min-width:200px;max-width: 300px;">
+                 <span class="input-group-text"><i class="fa-solid fa-calendar-day"></i></span>
+                 <span class="input-group-text border-0">(Or pick a date to check the numbers.)</span>
+             </div>
+
+             <div class="card">
+                 <h4 class="card-header">I-485</h4>
+                 <div class="card-body">
+                     <table class="table table-sm table-hover"  id="i485_table">
+                         <thead class="bg-light"  id="i485_thead">
+                            <tr><th rowspan="2">Center</th><th colspan="8">Today</th><th class="border-start" colspan="8">This fiscal year</th></tr>
+                            <tr>
+                                <th>New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th>
+                                <th class="border-start">New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th>
+                            </tr>
+                         </thead>
+                         <tbody id="i485_tbody">
+                            {% for center_x, value_x in ytd_count.items %}
+                                {% for form_i, count_i in value_x.items %}
+                                   {% if form_i == "I-485"%}
+                                   <tr>
+                                       <td>{{ center_x }}</td><td>{{ count_i.rec_d }}</td><td>{{ count_i.apv_d }}</td><td>{{ count_i.fp_d }}</td><td>{{ count_i.rfe_d }}</td><td>{{ count_i.trf_d }}</td><td>{{ count_i.rej_d }}</td><td>{{ count_i.pending_d }}</td><td>{{ count_i.oth_d }}</td>
+                                       <td class="border-start">{{ count_i.rec_y }}</td><td>{{ count_i.apv_y }}</td><td>{{ count_i.fp_y }}</td><td>{{ count_i.rfe_y }}</td><td>{{ count_i.trf_y }}</td><td>{{ count_i.rej_y }}</td><td>{{ count_i.pending_y }}</td><td>{{ count_i.oth_y }}</td>
+                                   </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                         </tbody>
+                     </table>
+                 </div>
+             </div>
 
              <!--Main content end-->
         </div> <!--col-6-->
     </div><!--row-->
 </div>
+
+<script src={% static "js/datepicker2.js"  %}></script>
+    <script type="text/javascript">
+        $(function() {
+            var $pickeddate = $('.pickeddate');
+            $pickeddate.datepicker({
+                autoHide: true,
+                startDate: "09/25/2022"
+            });
+            var now = new Date();
+            $pickeddate.val((now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear());
+        });
+    </script>
  {% endblock %}
