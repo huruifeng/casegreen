@@ -24,31 +24,31 @@
              <!--Main content-->
              <h3>The updates in Last Day</h3>
              <hr style="height: 1px;color: #cccccc">
-             <div class="input-group">
+             <div class="input-group mb-3">
                  <span class="input-group-text border-0" style="font-size: 20px;">Select a date</span>
                  <input type="text" placeholder="Pick date" aria-label="Pick a date" class="form-control pickeddate" style="min-width:200px;max-width: 300px;">
                  <span class="input-group-text"><i class="fa-solid fa-calendar-day"></i></span>
                  <span class="input-group-text border-0">(Or pick a date to check the numbers.)</span>
              </div>
-
+            {% for show_form_i in show_form_ls %}
              <div class="card">
-                 <h4 class="card-header">I-485</h4>
+                 <h4 class="card-header bg-light">{{ show_form_i }}</h4>
                  <div class="card-body">
-                     <table class="table table-sm table-hover"  id="i485_table">
-                         <thead class="bg-light"  id="i485_thead">
+                     <table class="table table-sm table-hover">
+                         <thead class="bg-light">
                          <tr><th rowspan="2">Center</th><th colspan="8">Today: <span id="slected_date">{{ today_date }}</span></th><th class="border-start" colspan="8">This fiscal year: <span id="slected_fy">{{fy}}  [10-01-{{fy|add:"-1"}} ~ Today]</span></th></tr>
                             <tr>
-                                <th>New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th>
-                                <th class="border-start">New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th>
+                                <th class="REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
+                                <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
                             </tr>
                          </thead>
-                         <tbody id="i485_tbody">
+                         <tbody>
                             {% for center_x, value_x in ytd_count.items %}
                                 {% for form_i, count_i in value_x.items %}
-                                   {% if form_i == "I-485"%}
+                                   {% if form_i == show_form_i %}
                                    <tr>
-                                       <td>{{ center_x }}</td><td>{{ count_i.rec_d }}</td><td>{{ count_i.apv_d }}</td><td>{{ count_i.fp_d }}</td><td>{{ count_i.rfe_d }}</td><td>{{ count_i.trf_d }}</td><td>{{ count_i.rej_d }}</td><td>{{ count_i.pending_d }}</td><td>{{ count_i.oth_d }}</td>
-                                       <td class="border-start">{{ count_i.rec_y }}</td><td>{{ count_i.apv_y }}</td><td>{{ count_i.fp_y }}</td><td>{{ count_i.rfe_y }}</td><td>{{ count_i.trf_y }}</td><td>{{ count_i.rej_y }}</td><td>{{ count_i.pending_y }}</td><td>{{ count_i.oth_y }}</td>
+                                       <td>{{ center_x }}</td><td class="REC_color">{{ count_i.rec_d }}</td><td class="APV_color">{{ count_i.apv_d }}</td><td>{{ count_i.fp_d }}</td><td>{{ count_i.rfe_d }}</td><td>{{ count_i.trf_d }}</td><td class="RJC_color">{{ count_i.rej_d }}</td><td>{{ count_i.pending_d }}</td><td>{{ count_i.oth_d }}</td>
+                                       <td class="border-start REC_color">{{ count_i.rec_y }}</td><td class="APV_color">{{ count_i.apv_y }}</td><td>{{ count_i.fp_y }}</td><td>{{ count_i.rfe_y }}</td><td>{{ count_i.trf_y }}</td><td class="RJC_color">{{ count_i.rej_y }}</td><td>{{ count_i.pending_y }}</td><td>{{ count_i.oth_y }}</td>
                                    </tr>
                                     {% endif %}
                                 {% endfor %}
@@ -57,6 +57,7 @@
                      </table>
                  </div>
              </div>
+         {% endfor %}
 
              <!--Main content end-->
         </div> <!--col-6-->

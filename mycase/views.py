@@ -668,7 +668,8 @@ def today(request):
         fy = datetime.now().year + 1
     else:
         fy = datetime.now().year
-    context = {"page_title": "Today!","ytd_count":ytd_count,"today_date":today_date,"fy":fy}
+    show_form_ls = ["I-485","I-140","I-765","I-131","I-129","I-539","I-130"]
+    context = {"page_title": "Today!","ytd_count":ytd_count,"today_date":today_date,"fy":fy,"show_form_ls":show_form_ls}
     return render(request,'mycase/today.html',context)
 
 
