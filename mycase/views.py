@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
 from mycase.functions.utils import get_status, getcase_in_range, get_l_status, get_rnrangecount, get_dailyrecords, \
-    get_rdcount, overview_x
+    get_rdcount, overview_x, get_ytdcount
 from mycase.models import *
 
 # Create your views here.
@@ -43,7 +43,7 @@ def mycase(request):
     elif request.method == "POST":
         receipt_num = request.POST.get("receipt_number", None)
 
-    if receipt_num == None:
+    if receipt_num == None or receipt_num.strip()=="":
         return redirect("casegreen:home")
 
     center = receipt_num[:3]
@@ -642,17 +642,26 @@ def overview(request):
     return render(request,'mycase/overview.html', context)
 
 def today(request):
-    if request.method == "GET":
-        return render(request,'mycase/today.html')
-    elif request.method == "POST":
-        return render(request,'mycase/today.html')
+    ##center_running
+    center_running_dict = {}
+    center_running_qs = center_running.objects.all()
+    for center_running_i in center_running_qs:
+        center_running_dict[center_running_i.center_lsi] = [center_running_i.start,center_running_i.update_day]
+
+    today_count = {}
+    for center_i in center_running_dict:
+        today_count[center_i] = get_dailyrecords(center=center_i,selectform="",date_number=center_running_dict[center_i][1])
+
+    ytd_count = get_ytdcount()
+
+    print(today_count)
+    context = {"page_title": "Today!","today_count":today_count,"ytd_count":ytd_count}
+    return render(request,'mycase/today.html',context)
 
 
 def about(request):
-    if request.method == "GET":
-        return render(request,'mycase/about.html')
-    elif request.method == "POST":
-        return render(request,'mycase/about.html')
+    context = {"page_title": "About"}
+    return render(request,'mycase/about.html',context)
 
 
 

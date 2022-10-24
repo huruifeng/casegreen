@@ -7,12 +7,12 @@
          <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
             <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
          </div>
-         <div class="col-md-6" style="min-width: min-content;">
+         <div class="col-md-8" style="min-width: min-content;">
              <form action="/mycase" method="get">
                 <div class="input-group" style="max-width: 960px;">
                   <div class="form-outline flex-fill">
                     <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control-lg" style="color: black;" value="{{ receipt_num }}" />
-                    <label class="form-label" for="form1">Enter you receipt number</label>
+                    <label class="form-label" for="form1">Enter your receipt number</label>
                   </div>
                   <button type="submit" class="btn btn-primary" style="box-shadow: none;">
                     <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
@@ -21,6 +21,25 @@
               </form>
             <br>
              <!--Main content-->
+
+             <table class="table table-sm table-hover">
+                 <thead class="bg-light">
+                    <tr><th rowspan="2">Center</th><th colspan="8">Today</th><th colspan="8">This fiscal year</th></tr>
+                    <tr><th>New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th><th>New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th></tr>
+                 </thead>
+                 <tbody>
+                    {% for center_x, value_x in today_count.items %}
+                        {% for form_i, count_i in value_x.items %}
+                           {% if form_i == "I-485"%}
+                           <tr>
+                               <td>{{ center_x }}</td><td>{{ count_i.rec }}</td><td>{{ count_i.apv }}</td><td>{{ count_i.fp }}</td><td>{{ count_i.rfe }}</td><td>{{ count_i.trf }}</td><td>{{ count_i.rej }}</td><td>{{ count_i.pending }}</td><td>{{ count_i.oth }}</td>
+                               <td>{{ count_i.rec }}</td><td>{{ count_i.apv }}</td><td>{{ count_i.fp }}</td><td>{{ count_i.rfe }}</td><td>{{ count_i.trf }}</td><td>{{ count_i.rej }}</td><td>{{ count_i.pending }}</td><td>{{ count_i.oth }}</td>
+                           </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                 </tbody>
+             </table>
 
              <!--Main content end-->
         </div> <!--col-6-->

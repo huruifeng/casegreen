@@ -7,6 +7,21 @@
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashbordajax.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashbordajax.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/dashborddaily.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/dashborddaily.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/overview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/processajax.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/processajax.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/processrd.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/processrd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/processrn.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/processrn.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/today.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/today.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/visabulletin.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/visabulletin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/mdb.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/mdb.min.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,14 +230,7 @@
       <workItem from="1665540616607" duration="2469000" />
       <workItem from="1665617149126" duration="2083000" />
       <workItem from="1665632844935" duration="59610000" />
-      <workItem from="1666069118632" duration="23191000" />
-    </task>
-    <task id="LOCAL-00032" summary="updates">
-      <created>1663765781750</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1663765781750</updated>
+      <workItem from="1666069118632" duration="41653000" />
     </task>
     <task id="LOCAL-00033" summary="updates">
       <created>1664117787038</created>
@@ -560,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666232458977</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="updates">
+      <created>1666268671771</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1666268671771</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

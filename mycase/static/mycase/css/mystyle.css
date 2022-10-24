@@ -18,3 +18,8 @@
 
 .cnt_btn{padding-left: 10px;padding-right: 10px; vertical-align:middle;}
 .fy_btn{padding-left: 10px;padding-right: 10px;vertical-align:middle;}
+
+th{
+  font-weight: bold;
+}
+

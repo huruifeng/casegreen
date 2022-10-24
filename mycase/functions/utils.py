@@ -524,34 +524,80 @@ def get_rdcount(center_table,center,selectform,fy,statuslevel,rangesize):
     return data_dict
 
 
-def get_dailyrecords(center,selectform):
-    date_s = datetime.today() + timedelta(days=-365)
-    count_qs = status_daily.objects.filter(form=selectform, center=center, add_date__gte=date_s).order_by("add_date")
-    date_ls = []
-    rec = []
-    fp = []
-    itv = []
-    rfe = []
-    trf = []
-    apv = []
-    rej = []
-    oth = []
-    pending = []
-    for count_i in count_qs:
-        date_ls.append((count_i.add_date.date() + timedelta(days=-1)).strftime("%m-%d-%Y"))
-        rec.append(count_i.new_n)
-        fp.append(count_i.fp_taken_n + count_i.fp_schduled_n)
-        itv.append(count_i.iv_schduled_n + count_i.iv_done_n)
-        rfe.append(count_i.rfe_sent_n + count_i.rfe_received_n)
-        trf.append(count_i.transferred_n)
-        apv.append(count_i.approved_n + count_i.mailed_n + count_i.produced_n)
-        rej.append(count_i.rejected_n + count_i.terminated_n)
-        pending.append(count_i.pending_n)
-        oth.append(count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
+def get_dailyrecords(center="",selectform="",date_number=0):
+    if date_number==0:
+        date_s = datetime.today() + timedelta(days=-365)
+        count_qs = status_daily.objects.filter(form=selectform, center=center, add_date__gte=date_s).order_by("add_date")
+        date_ls = []
+        rec = []
+        fp = []
+        itv = []
+        rfe = []
+        trf = []
+        apv = []
+        rej = []
+        oth = []
+        pending = []
+        for count_i in count_qs:
+            date_ls.append((count_i.add_date.date() + timedelta(days=-1)).strftime("%m-%d-%Y"))
+            rec.append(count_i.new_n)
+            fp.append(count_i.fp_taken_n + count_i.fp_schduled_n)
+            itv.append(count_i.iv_schduled_n + count_i.iv_done_n)
+            rfe.append(count_i.rfe_sent_n + count_i.rfe_received_n)
+            trf.append(count_i.transferred_n)
+            apv.append(count_i.approved_n + count_i.mailed_n + count_i.produced_n)
+            # rej.append(count_i.rejected_n + count_i.terminated_n)
+            rej.append(count_i.rejected_n)
+            pending.append(count_i.pending_n)
+            oth.append(count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n)
 
-    count_ls = [rec, fp, itv, rfe, trf, apv, rej, oth, pending]
-    data_dict = {"label_ls": date_ls, "count_ls": count_ls}
-    return data_dict
+        count_ls = [rec, fp, itv, rfe, trf, apv, rej, oth, pending]
+        data_dict = {"label_ls": date_ls, "count_ls": count_ls}
+        return data_dict
+    else:
+        count_dict = {}
+        count_qs = status_daily.objects.filter(center=center,date_number=date_number)
+        for count_i in count_qs:
+            count_dict[count_i.form] ={"rec":count_i.new_n,
+                                       "fp":count_i.fp_taken_n + count_i.fp_schduled_n,
+                                       "itv":count_i.iv_schduled_n + count_i.iv_done_n,
+                                       "rfe":count_i.rfe_sent_n + count_i.rfe_received_n,
+                                       "trf":count_i.transferred_n,
+                                       "apv":count_i.approved_n + count_i.mailed_n + count_i.produced_n,
+                                       # "rej":count_i.rejected_n + count_i.terminated_n,
+                                       "rej":count_i.rejected_n,
+                                       "pending":count_i.pending_n,
+                                       "oth":count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n}
+        return count_dict
+
+def get_ytdcount(fy=""):
+    if fy == "":
+        fy = datetime.now().year
+    start_s =  date(int(fy)-1,10,2)
+    end_s = date(fy,10,1)
+
+    count_dict = {}
+    count_qs = status_daily.objects.filter(add_date__range=(start_s,end_s))
+    for count_i in count_qs:
+        if count_i.form not in count_dict:
+            count_dict[count_i.form] = {}
+            count_dict[count_i.form][count_i.center] = {"rec":0,"fp": 0,"itv":0,"rfe":0,"trf":0,"apv":0,"rej": 0,"pending": 0,"oth": 0}
+        else:
+            if count_i.center not in count_dict[count_i.form]:
+                count_dict[count_i.form][count_i.center] = {"rec": 0, "fp": 0, "itv": 0, "rfe": 0, "trf": 0, "apv": 0,"rej": 0, "pending": 0, "oth": 0}
+
+        count_dict[count_i.form][count_i.center]["rec"] += count_i.new_n
+        count_dict[count_i.form][count_i.center]["fp"] += count_i.fp_taken_n + count_i.fp_schduled_n
+        count_dict[count_i.form][count_i.center]["itv"] +=  count_i.iv_schduled_n + count_i.iv_done_n
+        count_dict[count_i.form][count_i.center]["rfe"] += count_i.rfe_sent_n + count_i.rfe_received_n
+        count_dict[count_i.form][count_i.center]["trf"] += count_i.transferred_n
+        count_dict[count_i.form][count_i.center]["apv"] += count_i.approved_n + count_i.mailed_n + count_i.produced_n
+        count_dict[count_i.form][count_i.center]["rej"] += count_i.rejected_n
+        count_dict[count_i.form][count_i.center]["pending"] += count_i.pending_n
+        count_dict[count_i.form][count_i.center]["oth"] += count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n
+
+    return count_dict
+
 
 def generate_overview(center_ls):
     ####
