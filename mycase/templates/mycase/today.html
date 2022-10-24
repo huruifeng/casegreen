@@ -36,7 +36,7 @@
                  <div class="card-body">
                      <table class="table table-sm table-hover"  id="i485_table">
                          <thead class="bg-light"  id="i485_thead">
-                            <tr><th rowspan="2">Center</th><th colspan="8">Today</th><th class="border-start" colspan="8">This fiscal year</th></tr>
+                         <tr><th rowspan="2">Center</th><th colspan="8">Today: <span id="slected_date">{{ today_date }}</span></th><th class="border-start" colspan="8">This fiscal year: <span id="slected_fy">{{fy}} [10-01-{{fy|add:"-1"}} ~ 09-30-{{fy}}]</span></th></tr>
                             <tr>
                                 <th>New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th>
                                 <th class="border-start">New</th><th>Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th>Rej</th><th>Pend</th><th>Oth</th>

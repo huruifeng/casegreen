@@ -572,8 +572,12 @@ def get_dailyrecords(center="",selectform="",date_number=0):
 
 def get_ytdcount(fy=""):
     if fy == "":
-        fy = datetime.now().year
-    start_s =  date(int(fy)-1,10,2)
+        if datetime.now().month >=10:
+            fy = datetime.now().year + 1
+        else:
+            fy = datetime.now().year
+
+    start_s = date(int(fy)-1,10,2)
     end_s = date(fy,10,1)
 
     count_dict = {}

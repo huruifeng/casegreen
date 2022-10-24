@@ -663,8 +663,12 @@ def today(request):
                 else:
                     ytd_count[center_i][form_i] = {**ytd_count[center_i][form_i],**today_count[center_i][form_i]}
 
-
-    context = {"page_title": "Today!","ytd_count":ytd_count}
+    today_date = datetime.now().date()
+    if datetime.now().month >= 10:
+        fy = datetime.now().year + 1
+    else:
+        fy = datetime.now().year
+    context = {"page_title": "Today!","ytd_count":ytd_count,"today_date":today_date,"fy":fy}
     return render(request,'mycase/today.html',context)
 
 
