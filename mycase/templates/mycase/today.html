@@ -2,27 +2,14 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href={% static "css/datepicker2.css" %}>
+    <style>
+    .popmodal:hover{cursor: pointer;  text-decoration: underline;  }
+    </style>
+    <link href="{% static "css/datatables.min.css" %}" media="all" rel="stylesheet" />
 <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
      <div class="row justify-content-center">
          <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
             <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
-
-             <!-- Scrollspy -->
-            <div class="sticky-top mt-5 pt-5">
-              <ul class="nav flex-column nav-pills menu-sidebar">
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-485"><h5>&bull;&nbsp;I-485</h5></a></li>
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-140"><h5>&bull;&nbsp;I-140</h5></a></li>
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-765"><h5>&bull;&nbsp;I-765</h5></a></li>
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-131"><h5>&bull;&nbsp;I-131</h5></a></li>
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-129"><h5>&bull;&nbsp;I-129</h5></a></li>
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-539"><h5>&bull;&nbsp;I-539</h5></a></li>
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-130"><h5>&bull;&nbsp;I-130</h5></a></li>
-                  <li class="nav-item border-bottom"><a class="nav-link" href="#Others"><h5>&bull;&nbsp;Others</h5></a></li>
-                  <li class="nav-item border-bottom mt-3"><a class="nav-link" href="#"><h6>&#x21EA;&nbsp;Go to top</h6></a></li>
-
-              </ul>
-            </div>
-            <!-- Scrollspy -->
          </div>
          <div class="col-md-6" style="min-width: min-content;">
              <form action="/mycase" method="get">
@@ -36,13 +23,34 @@
                   </button>
                 </div>
               </form>
+         </div>
+     </div>
             <br>
+    <div class="row justify-content-center">
+         <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
+             <!-- Scrollspy -->
+            <div class="sticky-top mt-5 pt-5">
+               <ul class="nav flex-column nav-pills menu-sidebar">
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-485"><h5>&bull;&nbsp;I-485</h5></a></li>
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-140"><h5>&bull;&nbsp;I-140</h5></a></li>
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-765"><h5>&bull;&nbsp;I-765</h5></a></li>
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-131"><h5>&bull;&nbsp;I-131</h5></a></li>
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-129"><h5>&bull;&nbsp;I-129</h5></a></li>
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-539"><h5>&bull;&nbsp;I-539</h5></a></li>
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#I-130"><h5>&bull;&nbsp;I-130</h5></a></li>
+                  <li class="nav-item border-bottom"><a class="nav-link" href="#Others"><h5>&bull;&nbsp;Others</h5></a></li>
+                  <li class="nav-item border-bottom mt-3"><a class="nav-link" href="#"><h6>&#x21EA;&nbsp;Go to top</h6></a></li>
+               </ul>
+            </div>
+            <!-- Scrollspy -->
+         </div>
+         <div class="col-md-6" style="min-width: min-content;">
              <!--Main content-->
-             <h3>The updates in Last Day</h3>
+             <h3>The updates in a Date</h3>
              <hr style="height: 1px;color: #cccccc">
              <div class="input-group mb-3">
                  <span class="input-group-text border-0" style="font-size: 20px;">Select a date</span>
-                 <input type="text" placeholder="Pick date" aria-label="Pick a date" class="form-control pickeddate" style="min-width:200px;max-width: 300px;">
+                 <input type="text" placeholder="Pick date" aria-label="Pick a date" id="date_picker" class="form-control pickeddate" style="min-width:200px;max-width: 300px;">
                  <span class="input-group-text"><i class="fa-solid fa-calendar-day"></i></span>
                  <span class="input-group-text border-0">(Or pick a date to check the numbers.)</span>
              </div>
@@ -52,7 +60,7 @@
                  <div class="card-body">
                      <table class="table table-sm table-hover">
                          <thead class="bg-light">
-                         <tr><th rowspan="2">Center</th><th colspan="8">Today: <span id="slected_date">{{ today_date }}</span></th><th class="border-start" colspan="8">This fiscal year: <span id="slected_fy">{{fy}}  [10-01-{{fy|add:"-1"}} ~ Today]</span></th></tr>
+                         <tr><th rowspan="2">Center</th><th colspan="8">On date: <span id="slected_date">{{ data_date }}</span></th><th class="border-start" colspan="8">This fiscal year: <span id="slected_fy">{{fy}}  [10-01-{{fy|add:"-1"}} ~ Today]</span></th></tr>
                             <tr>
                                 <th class="REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
                                 <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
@@ -62,9 +70,25 @@
                             {% for center_x, value_x in ytd_count.items %}
                                 {% for form_i, count_i in value_x.items %}
                                    {% if form_i == show_form_i %}
-                                   <tr>
-                                       <td>{{ center_x }}</td><td class="REC_color">{{ count_i.rec_d }}</td><td class="APV_color">{{ count_i.apv_d }}</td><td>{{ count_i.fp_d }}</td><td>{{ count_i.rfe_d }}</td><td>{{ count_i.trf_d }}</td><td class="RJC_color">{{ count_i.rej_d }}</td><td>{{ count_i.pending_d }}</td><td>{{ count_i.oth_d }}</td>
-                                       <td class="border-start REC_color">{{ count_i.rec_y }}</td><td class="APV_color">{{ count_i.apv_y }}</td><td>{{ count_i.fp_y }}</td><td>{{ count_i.rfe_y }}</td><td>{{ count_i.trf_y }}</td><td class="RJC_color">{{ count_i.rej_y }}</td><td>{{ count_i.pending_y }}</td><td>{{ count_i.oth_y }}</td>
+                                   <tr id="{{ center_x }}">
+                                       <td>{{ center_x }}</td>
+                                       <td class="REC_color popmodal" id="{{center_x}}:{{form_i}}:rec"><span data-mdb-toggle="modal" data-mdb-target="#caseListModal">{{ count_i.rec_d }}</span></td>
+                                       <td class="APV_color popmodal" id="{{center_x}}:{{form_i}}:apv"><span data-mdb-toggle="modal" data-mdb-target="#caseListModal">{{ count_i.apv_d }}</span></td>
+                                       <td id="{{center_x}}:{{form_i}}:fp">{{ count_i.fp_d }}</td>
+                                       <td id="{{center_x}}:{{form_i}}:rfe">{{ count_i.rfe_d }}</td>
+                                       <td id="{{center_x}}:{{form_i}}:trf">{{ count_i.trf_d }}</td>
+                                       <td class="RJC_color popmodal" id="{{center_x}}:{{form_i}}:rej"><span data-mdb-toggle="modal" data-mdb-target="#caseListModal">{{ count_i.rej_d }}</span></td>
+                                       <td id="{{center_x}}:{{form_i}}:pd">{{ count_i.pending_d }}</td>
+                                       <td id="{{center_x}}:{{form_i}}:oth">{{ count_i.oth_d }}</td>
+
+                                       <td class="border-start REC_color">{{ count_i.rec_y }}</td>
+                                       <td class="APV_color">{{ count_i.apv_y }}</td>
+                                       <td>{{ count_i.fp_y }}</td>
+                                       <td>{{ count_i.rfe_y }}</td>
+                                       <td>{{ count_i.trf_y }}</td>
+                                       <td class="RJC_color">{{ count_i.rej_y }}</td>
+                                       <td>{{ count_i.pending_y }}</td>
+                                       <td>{{ count_i.oth_y }}</td>
                                    </tr>
                                     {% endif %}
                                 {% endfor %}
@@ -74,21 +98,141 @@
                  </div>
              </div>
             {% endfor %}
+
+             <div id="Others" class="card">
+                 <h4 class="card-header bg-light d-inline"><strong>Other Form: </strong>
+                 <select id="selectform" onchange="load_form()" style="font-size: 18px;">
+                     {% for form_i in form_ls %}
+                         {% if form_i not in show_form_ls %}
+                            <option value="{{ form_i }}" >{{ form_i }}</option>
+                         {% endif %}
+                     {% endfor %}
+                  </select>
+                 </h4>
+                 <div class="card-body">
+                     <table class="table table-sm table-hover">
+                         <thead class="bg-light">
+                         <tr><th rowspan="2">Center</th><th colspan="8">On date: <span id="slected_date">{{ data_date }}</span></th><th class="border-start" colspan="8">This fiscal year: <span id="slected_fy">{{fy}}  [10-01-{{fy|add:"-1"}} ~ Today]</span></th></tr>
+                            <tr>
+                                <th class="REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
+                                <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
+                            </tr>
+                         </thead>
+                         <tbody id="other_tboday"></tbody>
+                     </table>
+                 </div>
+             </div>
              <!--Main content end-->
         </div> <!--col-6-->
     </div><!--row-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="caseListModal" tabindex="-1" aria-labelledby="caseListModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Case list</h4>
+            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modalCaseList">
+              <table class="table table-sm table-hover" id="modalCaseList_table">
+                  <thead class="bg-light">
+                    <tr>
+                        <th>Processing center</th><th>Receipt number</th><th>Form type</th><th>Case status</th><th>Action date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="modalCaseList_tbody"></tbody>
+              </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 
-<script src={% static "js/datepicker2.js"  %}></script>
+    <script src={% static "js/datepicker2.js"  %}></script>
+     <script src="{% static "js/datatables.min.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
-        $(function() {
-            var $pickeddate = $('.pickeddate');
-            $pickeddate.datepicker({
-                autoHide: true,
-                startDate: "09/25/2022"
-            });
-            var now = new Date();
-            $pickeddate.val((now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear());
+    $(function() {
+        var $pickeddate = $('#date_picker');
+        $pickeddate.datepicker({
+            format: 'mm-dd-yyyy',
+            autoHide: true,
+            startDate: "09-25-2022",
+            endDate: "{{ data_date }}"
         });
+        $pickeddate.val("{{ data_date }}");
+    });
+    // Other tables
+    var ctdata ={{ ytd_count|safe }};
+    function load_form() {
+        var selectform = $("#selectform").val();
+        var html_str = "";
+        for(let center_i in ctdata){
+            for(let form_i in ctdata[center_i]){
+                if(form_i == selectform){
+                    html_str += "<tr>"
+                    html_str += "<td>"+center_i+"</td>" +
+                        "<td class='REC_color popmodal' id='"+center_i+":"+form_i+":rec'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rec_d"]+"</span></td>" +
+                        "<td class='APV_color popmodal' id='"+center_i+":"+form_i+":rec'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["apv_d"]+"</span></td>" +
+                        "<td>"+ctdata[center_i][form_i]["fp_d"]+"</td>" +
+                        "<td>"+ctdata[center_i][form_i]["rfe_d"]+"</td>" +
+                        "<td>"+ctdata[center_i][form_i]["trf_d"]+"</td>" +
+                        "<td class='RJC_color popmodal' id='"+center_i+":"+form_i+":rec'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rej_d"]+"</span></td>" +
+                        "<td>"+ctdata[center_i][form_i]["pending_d"]+"</td>" +
+                        "<td>"+ctdata[center_i][form_i]["oth_d"]+"</td>"
+                    html_str += "<td class='border-start REC_color'>"+ctdata[center_i][form_i]["rec_y"]+"</td><td class='APV_color'>"+ctdata[center_i][form_i]["apv_y"]+"</td><td>"+ctdata[center_i][form_i]["fp_y"]+"</td><td>"+ctdata[center_i][form_i]["rfe_y"]+"</td><td>"+ctdata[center_i][form_i]["trf_y"]+"</td><td class='RJC_color'>"+ctdata[center_i][form_i]["rej_y"]+"</td><td>"+ctdata[center_i][form_i]["pending_y"]+"</td><td>"+ctdata[center_i][form_i]["oth_y"]+"</td>"
+                    html_str += "</tr>"
+                }
+            }
+        }
+        $("#other_tboday").html(html_str);
+    }
+    load_form();
+
+    // pop modal
+    $('.popmodal').click(function () {
+        $("#modalCaseList_tbody").empty();
+        $("#modalCaseList_tbody").html("<div class='row text-center'><img src='{% static 'img/loading.gif' %}' style='height:100px; width:120px;' /></div>");
+        var center_form_status = this.id;
+        var picked_date =  $('#date_picker').val();
+        $.ajax({
+              type: "GET",
+              url: "/ajax/todaymodalcasetable",
+              async: true,
+              data:{"center_form_status":center_form_status,"picked_date":picked_date},
+              success : function(data) {
+                  console.log(data);
+                  var html_str = "";
+                  var error_msg = data["error_msg"];
+                  if(error_msg !=""){html_str = error_msg}else{
+                      for(let case_i of data["case_qs"]){
+                          html_str += "<tr><td>"+data['center']+"</td><td>"+case_i[0]+"</td><td>"+case_i[1]+"</td><td>"+case_i[2]+"</td><td>"+case_i[3]+"</td></tr>"
+                      }
+                  }
+
+                  if ($.fn.DataTable.isDataTable("#modalCaseList_table")) {
+                        $("#modalCaseList_table").DataTable().clear().draw();
+                        $("#modalCaseList_table").dataTable().fnDestroy();
+                        $('#modalCaseList_tbody').empty();
+                  }
+                  $("#modalCaseList_tbody").html(html_str);
+
+
+                  $('#modalCaseList_table').DataTable({
+                    order: [[0, 'asc']],
+                    pageLength: 10
+                  });
+              },
+              error: function() {
+                    alert("Error occurs!")
+                }
+        });
+    });
+
+
+
     </script>
  {% endblock %}

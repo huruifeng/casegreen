@@ -20,6 +20,7 @@ urlpatterns = [
     path('ajax/dailyrecords', views.dailyrecords, name = "dailyrecords"),
     path('ajax/rnrangecount', views.rnrangecount, name = "rnrangecount"),
     path('ajax/getsankey', views.getsankey, name = "getsankey"),
+    path('ajax/todaymodalcasetable', views.todaymodalcasetable, name = "todaymodalcasetable"),
 
 ]
 

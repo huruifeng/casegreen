@@ -642,19 +642,29 @@ def overview(request):
     return render(request,'mycase/overview.html', context)
 
 def today(request):
+    if request.method == "GET":
+        data_date = request.GET.get("data_date", None)
+
+    data_date = datetime(2000, 1, 1)
     ##center_running
     center_running_dict = {}
     center_running_qs = center_running.objects.all()
     for center_running_i in center_running_qs:
         center_running_dict[center_running_i.center_lsi] = [center_running_i.start,center_running_i.update_day]
+        if center_running_i.start > data_date:
+            data_date = center_running_i.start
+
+
 
     today_count = {}
     for center_i in center_running_dict:
         today_count[center_i] = get_dailyrecords(center=center_i,selectform="",date_number=center_running_dict[center_i][1])
     ytd_count = get_ytdcount()
 
+    form_ls = []
     for center_i in ytd_count:
         for form_i in ytd_count[center_i]:
+            if form_i not in form_ls: form_ls.append(form_i)
             if center_i not in today_count:
                 ytd_count[center_i][form_i] = {**ytd_count[center_i][form_i], **{"rec_d": 0, "fp_d": 0, "itv_d": 0, "rfe_d": 0, "trf_d": 0, "apv_d": 0,"rej_d": 0, "pending_d": 0, "oth_d": 0}}
             else:
@@ -663,14 +673,43 @@ def today(request):
                 else:
                     ytd_count[center_i][form_i] = {**ytd_count[center_i][form_i],**today_count[center_i][form_i]}
 
-    today_date = datetime.now().date()
     if datetime.now().month >= 10:
         fy = datetime.now().year + 1
     else:
         fy = datetime.now().year
+    data_date = (data_date.date() + timedelta(days=-1)).strftime("%m-%d-%Y")
     show_form_ls = ["I-485","I-140","I-765","I-131","I-129","I-539","I-130"]
-    context = {"page_title": "Today!","ytd_count":ytd_count,"today_date":today_date,"fy":fy,"show_form_ls":show_form_ls}
+    context = {"page_title": "Today!","ytd_count":ytd_count,"data_date":data_date,"fy":fy,"show_form_ls":show_form_ls,"form_ls":form_ls}
     return render(request,'mycase/today.html',context)
+
+
+def todaymodalcasetable(request):
+    center_form_status = request.GET.get("center_form_status", None)
+    picked_date = request.GET.get("picked_date", None)
+
+    error_msg = ""
+    if center_form_status != None:
+        center,form,status = center_form_status.split(":")
+    else:
+        error_msg = "Center/Form/Status is not defined!"
+
+    if picked_date != None:
+        picked_date = datetime.strptime(picked_date, "%m-%d-%Y")
+        picked_days =  (picked_date - datetime(2000, 1, 1)).days
+    else:
+        error_msg = "Date is not defined!"
+
+    center_obj = center_dict[center.lower()]
+    case_qs = center_obj.objects.filter(form=form,date_number=picked_days)
+    status_map = {"rec":["Received"],"apv":["Approved","Mailed","Produced"],"rej":["Rejected"]}
+    case_qs_final = []
+    for case_i in case_qs:
+        l2_status= get_l_status(case_i.status,"L2")
+        if l2_status in status_map[status]:
+            case_qs_final.append([case_i.receipt_number,case_i.form,case_i.status,case_i.action_date])
+
+    data_dict = {"center":center,"case_qs":case_qs_final,"error_msg":error_msg}
+    return JsonResponse(data_dict, status=200)
 
 
 def about(request):
