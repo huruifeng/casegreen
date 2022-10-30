@@ -570,15 +570,14 @@ def get_dailyrecords(center="",selectform="",date_number=0):
                                        "oth_d":count_i.others_n + count_i.notice_sent_n + count_i.hold_n + count_i.return_hold_n + count_i.withdrawal_acknowledged_n}
         return count_dict
 
-def get_ytdcount(fy=""):
-    if fy == "":
-        if datetime.now().month >=10:
-            fy = datetime.now().year + 1
-        else:
-            fy = datetime.now().year
+def get_ytdcount(endDate):
+    if endDate.month >=10:
+        fy = endDate.year + 1
+    else:
+        fy = endDate.year
 
-    start_s = date(int(fy)-1,10,2)
-    end_s = date(fy,10,1)
+    start_s = datetime(int(fy)-1,10,2)
+    end_s = endDate + timedelta(days=2)
 
     count_dict = {}
     count_qs = status_daily.objects.filter(add_date__range=(start_s,end_s))

@@ -46,7 +46,7 @@
          </div>
          <div class="col-md-6" style="min-width: min-content;">
              <!--Main content-->
-             <h3>The updates in a Date</h3>
+             <h3>The numbers in the Date</h3>
              <hr style="height: 1px;color: #cccccc">
              <div class="input-group mb-3">
                  <span class="input-group-text border-0" style="font-size: 20px;">Select a date</span>
@@ -60,10 +60,10 @@
                  <div class="card-body">
                      <table class="table table-sm table-hover">
                          <thead class="bg-light">
-                         <tr><th rowspan="2">Center</th><th colspan="8">On date: <span id="slected_date">{{ data_date }}</span></th><th class="border-start" colspan="8">This fiscal year: <span id="slected_fy">{{fy}}  [10-01-{{fy|add:"-1"}} ~ Today]</span></th></tr>
+                         <tr><th rowspan="2">Center</th><th colspan="8">On date: <span id="slected_date">{{ data_date }}</span></th><th class="border-start" colspan="8">YTD: <span id="slected_fy"> 10-01-{{fy|add:"-1"}} ~ {{ fy_end }} (Fiscal year: {{ fy }})</span></th></tr>
                             <tr>
-                                <th class="REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
-                                <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
+                                <th class="REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trans</th><th class="RJC_color">Rej</th><th>Pend</th><th>Other</th>
+                                <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trans</th><th class="RJC_color">Rej</th><th>Pend</th><th>Other</th>
                             </tr>
                          </thead>
                          <tbody>
@@ -72,7 +72,7 @@
                                    {% if form_i == show_form_i %}
                                    <tr id="{{ center_x }}">
                                        <td>{{ center_x }}</td>
-                                       <td class="REC_color popmodal" id="{{center_x}}:{{form_i}}:rec"><span data-mdb-toggle="modal" data-mdb-target="#caseListModal">{{ count_i.rec_d }}</span></td>
+                                       <td class="REC_color popmodal" id="{{center_x}}:{{form_i}}:new"><span data-mdb-toggle="modal" data-mdb-target="#caseListModal">{{ count_i.rec_d }}</span></td>
                                        <td class="APV_color popmodal" id="{{center_x}}:{{form_i}}:apv"><span data-mdb-toggle="modal" data-mdb-target="#caseListModal">{{ count_i.apv_d }}</span></td>
                                        <td id="{{center_x}}:{{form_i}}:fp">{{ count_i.fp_d }}</td>
                                        <td id="{{center_x}}:{{form_i}}:rfe">{{ count_i.rfe_d }}</td>
@@ -112,10 +112,10 @@
                  <div class="card-body">
                      <table class="table table-sm table-hover">
                          <thead class="bg-light">
-                         <tr><th rowspan="2">Center</th><th colspan="8">On date: <span id="slected_date">{{ data_date }}</span></th><th class="border-start" colspan="8">This fiscal year: <span id="slected_fy">{{fy}}  [10-01-{{fy|add:"-1"}} ~ Today]</span></th></tr>
+                         <tr><th rowspan="2">Center</th><th colspan="8">On date: <span id="slected_date">{{ data_date }}</span></th><th class="border-start" colspan="8">YTD: <span id="slected_fy">10-01-{{fy|add:"-1"}} ~ {{ fy_end }} (Fiscal year: {{ fy }})</span></th></tr>
                             <tr>
-                                <th class="REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
-                                <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trs</th><th class="RJC_color">Rej</th><th>Pend</th><th>Oth</th>
+                                <th class="REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trans</th><th class="RJC_color">Rej</th><th>Pend</th><th>Other</th>
+                                <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trans</th><th class="RJC_color">Rej</th><th>Pend</th><th>Other</th>
                             </tr>
                          </thead>
                          <tbody id="other_tboday"></tbody>
@@ -138,7 +138,7 @@
               <table class="table table-sm table-hover" id="modalCaseList_table">
                   <thead class="bg-light">
                     <tr>
-                        <th>Processing center</th><th>Receipt number</th><th>Form type</th><th>Case status</th><th>Action date</th>
+                        <th style="width: 15%;">Processing center</th><th style="width: 15%;">Receipt number</th><th style="width: 10%;">Form type</th><th style="width: 40%;">Case status</th><th style="width: 20%;">Action date</th>
                     </tr>
                   </thead>
                   <tbody id="modalCaseList_tbody"></tbody>
@@ -161,9 +161,13 @@
             format: 'mm-dd-yyyy',
             autoHide: true,
             startDate: "09-25-2022",
-            endDate: "{{ data_date }}"
+            endDate: "{{ last_date }}"
         });
         $pickeddate.val("{{ data_date }}");
+        $pickeddate.on('change', function () {
+            var data_date= $pickeddate.val()
+            location.href = '{% url "mycase:today" %}?data_date='+data_date;
+        });
     });
     // Other tables
     var ctdata ={{ ytd_count|safe }};
@@ -175,12 +179,12 @@
                 if(form_i == selectform){
                     html_str += "<tr>"
                     html_str += "<td>"+center_i+"</td>" +
-                        "<td class='REC_color popmodal' id='"+center_i+":"+form_i+":rec'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rec_d"]+"</span></td>" +
-                        "<td class='APV_color popmodal' id='"+center_i+":"+form_i+":rec'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["apv_d"]+"</span></td>" +
+                        "<td class='REC_color popmodal' id='"+center_i+":"+form_i+":new'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rec_d"]+"</span></td>" +
+                        "<td class='APV_color popmodal' id='"+center_i+":"+form_i+":new'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["apv_d"]+"</span></td>" +
                         "<td>"+ctdata[center_i][form_i]["fp_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["rfe_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["trf_d"]+"</td>" +
-                        "<td class='RJC_color popmodal' id='"+center_i+":"+form_i+":rec'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rej_d"]+"</span></td>" +
+                        "<td class='RJC_color popmodal' id='"+center_i+":"+form_i+":new'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rej_d"]+"</span></td>" +
                         "<td>"+ctdata[center_i][form_i]["pending_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["oth_d"]+"</td>"
                     html_str += "<td class='border-start REC_color'>"+ctdata[center_i][form_i]["rec_y"]+"</td><td class='APV_color'>"+ctdata[center_i][form_i]["apv_y"]+"</td><td>"+ctdata[center_i][form_i]["fp_y"]+"</td><td>"+ctdata[center_i][form_i]["rfe_y"]+"</td><td>"+ctdata[center_i][form_i]["trf_y"]+"</td><td class='RJC_color'>"+ctdata[center_i][form_i]["rej_y"]+"</td><td>"+ctdata[center_i][form_i]["pending_y"]+"</td><td>"+ctdata[center_i][form_i]["oth_y"]+"</td>"
@@ -231,7 +235,6 @@
                 }
         });
     });
-
 
 
     </script>
