@@ -189,6 +189,15 @@ def centerrun(request):
                 except OSError:
                     pass
         ##
+        file_ls = os.listdir("mycase/data/statistics/center_range_count_heatmap")
+        for f_i in file_ls:
+            while True:
+                try:
+                    os.remove("mycase/data/statistics/center_range_count_heatmap/" + f_i)
+                    break
+                except OSError:
+                    pass
+        ##
         file_ls = os.listdir("mycase/data/statistics/center_rd_count")
         for f_i in file_ls:
             while True:

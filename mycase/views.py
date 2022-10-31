@@ -6,8 +6,7 @@ from bottleneck import median
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
-from mycase.functions.utils import get_status, getcase_in_range, get_l_status, get_rnrangecount, get_dailyrecords, \
-    get_rdcount, overview_x, get_ytdcount
+from mycase.functions.utils import *
 from mycase.models import *
 
 # Create your views here.
@@ -782,6 +781,47 @@ def todaymodalcasetable(request):
     data_dict = {"center": center, "case_qs": case_qs_final, "error_msg": error_msg}
     return JsonResponse(data_dict, status=200)
 
+def query(request):
+    context = {"page_title": "Query"}
+    return render(request, 'mycase/query.html', context)
+
+def countscalendar(request):
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+
+    ####
+    sys_params = sysparam.objects.get(pk=1)
+    year_n = sys_params.fiscal_year_n
+
+    year_ls = []
+    now = datetime.now()
+    for i in range(year_n):
+        year_ls.append(str(now.year - i))
+    if now.month > 9:
+        if not (now.month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            year_ls = [str(now.year + 1)] + year_ls
+
+    ######
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("selectform", None)
+        fy = request.GET.get("fy", None)
+        rangesize = request.GET.get("rangesize", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("selectform", None)
+        fy = request.POST.get("fy", None)
+        rangesize = request.GET.get("rangesize", None)
+
+    if selectform is None or center is None or fy is None or rangesize is None:
+        return redirect("/countscalendar?center=LIN_LB&selectform=I-485&fy=" + str(now.year) + "&rangesize=5000",status=200)
+
+    count_data = get_rangestatuscount(center,fy, selectform,rangesize)
+
+    context = {"page_title": "Count calendar", "form_ls": form_ls, "year_ls": year_ls[::-1],
+               "chart_data": json.dumps(count_data), "center": center, "fy": fy, "selectform": selectform, "rangesize": rangesize}
+    return render(request, 'mycase/countscalendar.html', context)
 
 def about(request):
     context = {"page_title": "About"}

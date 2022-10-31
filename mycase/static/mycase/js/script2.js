@@ -111,3 +111,16 @@ function form_pie_plot(form) {
 
 	option && myChart.setOption(option);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

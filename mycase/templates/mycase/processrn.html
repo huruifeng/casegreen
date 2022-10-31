@@ -33,18 +33,18 @@
 
                      <div class="mb-3">
                          <h5 class="d-inline">Centers: </h5>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "LIN_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN_LB</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "LIN_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN_SC</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "MSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_LB</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "MSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_SC</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "SRC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_LB</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "SRC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_SC</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "EAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_LB</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "EAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_SC</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "WAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_LB</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "WAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_SC</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "YSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_LB</button>
-                         <button type="button" class="btn me-1 mb-1 cnt_btn {% if center == "YSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "LIN_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN_LB</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "LIN_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN_SC</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "MSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "MSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "SRC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "SRC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "EAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "EAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "WAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "WAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_LB</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_SC</button>
                      </div>
                      <div>
                           <h5 class="me-1 d-inline">Form type: </h5>
@@ -83,9 +83,9 @@
     </div><!--row-->
 </div>
     <script type="text/javascript">
-    $(".cnt_btn").click(function () {
-        $(".cnt_btn").removeClass("btn-primary");
-        $(".cnt_btn").addClass("btn-outline-primary");
+    $(".ctr_btn").click(function () {
+        $(".ctr_btn").removeClass("btn-primary");
+        $(".ctr_btn").addClass("btn-outline-primary");
         $(this).removeClass("btn-outline-primary");
         $(this).addClass("btn-primary");
         load_page();
@@ -102,7 +102,7 @@
     function load_page(){
         var center = "LIN_LB";
         var fy = "2022";
-        $('.cnt_btn').each(function(){
+        $('.ctr_btn').each(function(){
             if($(this).hasClass("btn-primary")){
                 center = $(this).text();
                 return false;

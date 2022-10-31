@@ -11,6 +11,8 @@ urlpatterns = [
     path('processrn/', views.processrn, name='processrn'),
     path('processrd/', views.processrd, name='processrd'),
     path('processajax/', views.processajax, name='processajax'),
+    path('countscalendar/', views.countscalendar, name='countscalendar'),
+    path('query/', views.query, name='query'),
     path('today/', views.today, name='today'),
     path('about/', views.about, name='about'),
 

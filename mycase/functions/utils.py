@@ -399,8 +399,7 @@ def get_rnrangecount(center_table,center,selectform,fy,statuslevel,rangesize):
                 status_count[range_key] = {
                     'Received': 0, 'FP_Scheduled': 0, 'FP_Taken': 0, 'InterviewScheduled': 0, 'InterviewCompleted': 0,
                     'RFE_Sent': 0, 'RFE_Received': 0, 'Transferred': 0, 'Approved': 0, 'Produced': 0, 'Mailed': 0,
-                    'Pending': 0,
-                    'Hold': 0, 'ReturnHold': 0, 'NoticeSent': 0, 'Reopened': 0, 'Other': 0, 'Rejected': 0,
+                    'Pending': 0, 'Hold': 0, 'ReturnHold': 0, 'NoticeSent': 0, 'Reopened': 0, 'Other': 0, 'Rejected': 0,
                     'Terminated': 0, 'WithdrawalAcknowledged': 0
                 }
 
@@ -661,6 +660,55 @@ def overview_x(center,fy):
 
     return "OK"
 
+def get_rangestatuscount(center,fy, selectform,rangesize):
+    ## Check if there is the statistics file for the selected options
+    ## first time visiting will save the results to json file
+    file_name = "_".join([center, selectform, fy, rangesize]) + ".json"
+    folder = "mycase/data/statistics/center_range_count_heatmap"
+    file_name = folder + "/" + file_name
+    if os.path.exists(file_name):
+        try:
+            with open(file_name) as json_file:
+                data_dict = json.load(json_file)
+            return data_dict
+        except Exception as e:
+            print(e)
 
+    #####################
+    rn_range = int(rangesize)
+    fy = fy[-2:]
+    c_code = center.split("_")[0]
+
+    center_table = center_dict[center.lower()]
+
+    date_s = datetime.now() + timedelta(days=-60)
+
+    rn_pattern = c_code + fy
+    case_qs = center_table.objects.filter(form=selectform, receipt_number__startswith=rn_pattern, action_date_x__gte=date_s).order_by("receipt_number")
+    date_ls = [(date_s + timedelta(days=i)).strftime("%m-%d-%Y") for i in range(60)]
+
+    range_ls = []
+
+    status_count = {'Received': {}, 'FP_Taken': {}, 'Interviewed': {}, 'RFE': {}, 'Transferred': {}, 'Approved': {},'Rejected': {}, 'Other': {}}
+    for case_i in case_qs:
+        status_l = get_l_status(case_i.status, "L3")
+        action_date = case_i.action_date_x.strftime("%m-%d-%Y")
+
+        rn = int(case_i.receipt_number[3:])
+        range_key = rn - (rn % rn_range)
+        if range_key not in range_ls: range_ls.append(range_key)
+
+        if range_key not in status_count[status_l]:
+            status_count[status_l][range_key]={date_ls[i]:0 for i in range(60)}
+
+        if action_date in date_ls:
+            status_count[status_l][range_key][action_date] +=1
+
+    data_dict = {"status_count": status_count, "range_ls":range_ls,"date_ls": date_ls, "color": color8}
+
+    with open(file_name, "w") as json_file:
+        json.dump(data_dict, json_file)
+
+    return data_dict
 
 
