@@ -64,16 +64,16 @@
                      <hr style="height: 1px;color: #666666">
                     <div class="btn-group-sm mb-3">
                          <h5 class="d-inline">Status: </h5>
-                          <select id="status_select" onchange="plot_heatmap()">
-                             <option value="0">New received</option>
-                             <option value="1">FP_Taken</option>
-                             <option value="2">Interviewed</option>
-                             <option value="3">RFE</option>
-                             <option value="4">Transferred</option>
-                             <option value="5" selected>Approved</option>
-                              <option value="6">Rejected</option>
-                             <option value="7">Other</option>
-                             <option value="8">Pending</option>
+                          <select id="status_select" onchange="load_data()">
+                             <option value="New">New received</option>
+                             <option value="FP_Taken">FP_Taken</option>
+                             <option value="Interviewed">Interviewed</option>
+                             <option value="RFE">RFE</option>
+                             <option value="Transferred">Transferred</option>
+                             <option value="Approved" selected>Approved</option>
+                              <option value="Rejected">Rejected</option>
+                              <option value="Pending">Pending</option>
+                              <option value="Other">Other</option>
                           </select>
                     </div>
                     <div class="chart" id="heatmap_div">
@@ -95,6 +95,8 @@
 </div>
     <script src="{% static "mycase/js/script.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
+    var color8 = {'New':"#1072f1",'Received':"#1072f1",'FP_Taken':"#11a9fa",'Interviewed': "#2b04da",'RFE':"#f4b824",
+          'Transferred':"#c77cff",'Approved': "#1db063",'Rejected': "#ff001a",'Other':"#78787a","Pending":"#a6f110"}
     $(".ctr_btn").click(function () {
         $(".ctr_btn").removeClass("btn-primary");
         $(".ctr_btn").addClass("btn-outline-primary");
@@ -127,20 +129,37 @@
                 return false;
             }
         });
-        $("#range_bar_chart").addClass("d-none");
-        $("#bar_loading").removeClass("d-none");
-        $("#bar_container").css("height","400px");
+        $("#range_heatmap_chart").addClass("d-none");
+        $("#heatmap_loading").removeClass("d-none");
+        $("#heatmap_container").css("height","400px");
         $(".na-h4").addClass("d-none");
 
-        var statuslevel = $("#status_level").val();
         var selectform = $("#selectform").val();
         var rangesize = $("#range_size").val();
-        location.href = '{% url "mycase:countscalendar" %}?center='+center+'&selectform='+selectform+'&fy='+fy+'&statuslevel='+statuslevel+'&rangesize='+rangesize;
+        location.href = '{% url "mycase:countscalendar" %}?center='+center+'&selectform='+selectform+'&fy='+fy+'&rangesize='+rangesize;
     }
-    
-    
-    
-    plot_heatmap();
+
+    function load_data() {
+        var status_x = $('#status_select').val()
+        var data ={{ chart_data|safe }};
+
+        var dataset = data["status_count"][status_x];
+        var rnrange_n = data["range_ls"].length;
+
+        if(rnrange_n!=0){
+            $("#heatmap_loading").addClass("d-none");
+            $("#range_heatmap_chart").removeClass("d-none");
+            $(".na-h4").addClass("d-none");
+            plot_heatmap(dataset,data["range_ls"],data["date_ls"],status_x,color8[status_x]);
+        }else{
+            $(".na-h4").removeClass("d-none");
+            $("#range_bar_chart").addClass("d-none");
+        }
+   }
+   load_data();
+
+
+
 
     </script>
  {% endblock %}
