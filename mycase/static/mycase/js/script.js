@@ -276,17 +276,16 @@ function plot_heatmap(dataset,range_ls,date_ls, status,color_x) {
 			data.push([date_i,range_i,dataset[range_i][date_i]])
 		}
 	}
-	console.log(data);
-
 	option = {
 		tooltip: {
 			position: 'top'
 		},
 		grid: {
-			height: '95%',
 			top: 10,
-			left: 110,
-			right: 70
+			left: 10,
+			right: 70,
+			bottom:10,
+			containLabel: true
 		},
 		xAxis: {
 			type: 'category',

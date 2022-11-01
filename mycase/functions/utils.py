@@ -715,6 +715,11 @@ def get_rangestatuscount(center,fy, selectform,rangesize):
         if action_date in date_ls:
             status_count[status_l][range_key][action_date] +=1
 
+    for status_i in status_count:
+        for range_key_i in range_ls:
+            if range_key_i not in status_count[status_i]:
+                status_count[status_i][range_key_i] = {date_ls[i]:0 for i in range(60)}
+
     data_dict = {"status_count": status_count, "range_ls":range_ls[::-1],"date_ls": date_ls}
 
     with open(file_name, "w") as json_file:
