@@ -531,6 +531,9 @@ def get_rdcount(center_table,center,selectform,fy,statuslevel,rangesize):
 def get_dailyrecords(center="",selectform="",date_number=0):
     if date_number==0:
         date_s = datetime.today() + timedelta(days=-365)
+        if date_s < datetime(2022,9,26):
+            date_s = datetime(2022,9,26) ## 09-25-2022 is the first data date
+
         count_qs = status_daily.objects.filter(form=selectform, center=center, add_date__gte=date_s).order_by("add_date")
         date_ls = []
         rec = []
