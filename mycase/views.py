@@ -27,12 +27,11 @@ center_dict = {"lin_lb": case_status_lin_lb,
 
 color20 = {'Received': '#1266f1', 'Transferred': '#17becf', 'Pending': '#ff7f0e',
            'FP_Scheduled': '#1f77b4', 'FP_Taken': '#aec7e8', 'InterviewScheduled': '#9467bd',
-           'InterviewCompleted': '#c5b0d5',
-           'RFE_Sent': '#bcbd22', 'RFE_Received': '#dbdb8d', 'Approved': '#2ca02c', 'Produced': '#98df8a',
-           'Mailed': '#a1d99b',
+           'InterviewCompleted': '#c5b0d5','RFE_Sent': '#bcbd22', 'RFE_Received': '#dbdb8d',
+           'Approved': '#2ca02c', 'Produced': '#98df8a','Mailed': '#a1d99b',
            'Hold': '#ffbb78', 'ReturnHold': '#8c564b', 'NoticeSent': '#c49c94', 'Reopened': '#e377c2',
-           'Other': '#f7b6d2',
-           'Rejected': '#d62728', 'Terminated': '#ff9896', 'bk1': '#7f7f7f', 'bk2': '#c7c7c7', 'bk3': '#9edae5'}
+           'Other': '#f7b6d2','Rejected': '#d62728', 'Terminated': '#ff9896',
+           'bk1': '#7f7f7f', 'bk2': '#c7c7c7', 'bk3': '#9edae5'}
 
 color8 = {'Received': "#1072f1", 'FP_Taken': "#11a9fa", 'Interviewed': "#2b04da", 'RFE': "#f4b824",
           'Transferred': "#c77cff", 'Approved': "#1db063", 'Rejected': "#ff001a", 'Other': "#78787a"}
@@ -597,21 +596,21 @@ def getsankey(request):
     selectform = request.GET.get("selectform", None)
     statuslevel = request.GET.get("statuslevel", None)
 
-    days = 7
+    days = 8
     date_ls = status_trans.objects.order_by('-action_date').values('action_date').distinct()[:days][::-1]
 
     status_trans_dict = {}
     date_str_ls = []
-    for date_i in date_ls:
-        date_i = date_i["action_date"]
+
+    source_date = date_ls[0]["action_date"].strftime("%m-%d-%Y")
+    for d_i in range(1,days):
+        date_i = date_ls[d_i]["action_date"]
         trans_qs = status_trans.objects.filter(center=center, form_type=selectform, action_date=date_i)
 
-        source_date = (date_i + timedelta(days=-1)).strftime("%m-%d-%Y")
         dest_date = date_i.strftime("%m-%d-%Y")
-        date_i = dest_date
         date_str_ls.append(source_date)
 
-        status_trans_dict[date_i] = {}
+        status_trans_dict[dest_date] = {}
         for trans_i in trans_qs:
             source_s = trans_i.source_status
             dest_s = trans_i.dest_status
@@ -623,14 +622,17 @@ def getsankey(request):
             source_s_l = source_date + ":" + get_l_status(source_s, statuslevel)
             dest_s_l = dest_date + ":" + get_l_status(dest_s, statuslevel)
 
-            if source_s_l in status_trans_dict[date_i]:
-                if dest_s_l in status_trans_dict[date_i][source_s_l]:
-                    status_trans_dict[date_i][source_s_l][dest_s_l] += trans_i.count
+            if source_s_l in status_trans_dict[dest_date]:
+                if dest_s_l in status_trans_dict[dest_date][source_s_l]:
+                    status_trans_dict[dest_date][source_s_l][dest_s_l] += trans_i.count
                 else:
-                    status_trans_dict[date_i][source_s_l][dest_s_l] = trans_i.count
+                    status_trans_dict[dest_date][source_s_l][dest_s_l] = trans_i.count
             else:
-                status_trans_dict[date_i][source_s_l] = {dest_s_l: trans_i.count}
+                status_trans_dict[dest_date][source_s_l] = {dest_s_l: trans_i.count}
+        source_date = dest_date
+
     date_str_ls.append(dest_date)
+    # print(date_str_ls)
 
     node_ls = []
     link_ls = []
@@ -776,7 +778,7 @@ def todaymodalcasetable(request):
     for case_i in case_qs:
         l_status = case_i.status if status == "new" else get_l_status(case_i.status, "L2")
         if l_status in status_map[status]:
-            case_qs_final.append([case_i.receipt_number, case_i.form, case_i.status, case_i.action_date])
+            case_qs_final.append([case_i.receipt_number, case_i.form, case_i.status, case_i.action_date,case_i.add_date.date()])
 
     data_dict = {"center": center, "case_qs": case_qs_final, "error_msg": error_msg}
     return JsonResponse(data_dict, status=200)

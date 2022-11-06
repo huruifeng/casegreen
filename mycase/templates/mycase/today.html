@@ -138,7 +138,7 @@
               <table class="table table-sm table-hover" id="modalCaseList_table">
                   <thead class="bg-light">
                     <tr>
-                        <th style="width: 15%;">Processing center</th><th style="width: 15%;">Receipt number</th><th style="width: 10%;">Form type</th><th style="width: 40%;">Case status</th><th style="width: 20%;">Action date</th>
+                        <th style="width: 15%;">Processing center</th><th style="width: 15%;">Receipt number</th><th style="width: 10%;">Form type</th><th style="width: 30%;">Case status</th><th style="width: 15%;">Action date</th><th style="width: 15%;">Update date</th>
                     </tr>
                   </thead>
                   <tbody id="modalCaseList_tbody"></tbody>
@@ -180,11 +180,11 @@
                     html_str += "<tr>"
                     html_str += "<td>"+center_i+"</td>" +
                         "<td class='REC_color popmodal' id='"+center_i+":"+form_i+":new'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rec_d"]+"</span></td>" +
-                        "<td class='APV_color popmodal' id='"+center_i+":"+form_i+":new'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["apv_d"]+"</span></td>" +
+                        "<td class='APV_color popmodal' id='"+center_i+":"+form_i+":apv'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["apv_d"]+"</span></td>" +
                         "<td>"+ctdata[center_i][form_i]["fp_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["rfe_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["trf_d"]+"</td>" +
-                        "<td class='RJC_color popmodal' id='"+center_i+":"+form_i+":new'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rej_d"]+"</span></td>" +
+                        "<td class='RJC_color popmodal' id='"+center_i+":"+form_i+":rej'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rej_d"]+"</span></td>" +
                         "<td>"+ctdata[center_i][form_i]["pending_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["oth_d"]+"</td>"
                     html_str += "<td class='border-start REC_color'>"+ctdata[center_i][form_i]["rec_y"]+"</td><td class='APV_color'>"+ctdata[center_i][form_i]["apv_y"]+"</td><td>"+ctdata[center_i][form_i]["fp_y"]+"</td><td>"+ctdata[center_i][form_i]["rfe_y"]+"</td><td>"+ctdata[center_i][form_i]["trf_y"]+"</td><td class='RJC_color'>"+ctdata[center_i][form_i]["rej_y"]+"</td><td>"+ctdata[center_i][form_i]["pending_y"]+"</td><td>"+ctdata[center_i][form_i]["oth_y"]+"</td>"
@@ -213,7 +213,7 @@
                   var error_msg = data["error_msg"];
                   if(error_msg !=""){html_str = error_msg}else{
                       for(let case_i of data["case_qs"]){
-                          html_str += "<tr><td>"+data['center']+"</td><td>"+case_i[0]+"</td><td>"+case_i[1]+"</td><td>"+case_i[2]+"</td><td>"+case_i[3]+"</td></tr>"
+                          html_str += "<tr><td>"+data['center']+"</td><td>"+case_i[0]+"</td><td>"+case_i[1]+"</td><td>"+case_i[2]+"</td><td>"+case_i[3]+"</td><td>"+case_i[4]+"</td></tr>"
                       }
                   }
 

@@ -178,12 +178,12 @@ def run_center(request,center):
             print(f"Reading data - Today...")
             file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + ".json"
             with open(file_i) as json_file:
-                data = json.load(json_file)
+                data_today = json.load(json_file)
             shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + ".json")
 
             file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + "_case_final.json"
             with open(file_i) as json_file:
-                data ={**data, **(json.load(json_file))}
+                data_today ={**data_today, **(json.load(json_file))}
             shutil.move(file_i, "mycase/data/bkp/status_files/" + center + "_" + str(fy_i) + "_case_final.json")
             print(f"Reading data - Today...Done!")
         except Exception as e:
@@ -191,14 +191,14 @@ def run_center(request,center):
             return "Warning: reading "+file_i +"[Skip]"
             # return "Error: reading "+file_i
 
-        total_x = len(data)
+        total_x = len(data_today)
         n_i = 0
 
         case_list = []
-        for case_i in data:
-            form_i = data[case_i][0]
-            act_date_i = data[case_i][1]
-            status_i = data[case_i][2]
+        for case_i in data_today:
+            form_i = data_today[case_i][0]
+            act_date_i = data_today[case_i][1]
+            status_i = data_today[case_i][2]
 
             if status_i == "try_failed": continue
 
@@ -206,12 +206,12 @@ def run_center(request,center):
             if n_i % 100000 == 0:
                 print(f"{center}-{fy_i}:{n_i}/{total_x}")
 
-            # data : {case_num:[form,action_date,statue],...}
+            # data_today : {case_num:[form,action_date,statue],...}
             if case_i in data_yesterday:
                 ## when form == "", check saved data
                 if form_i == "":
                     if data_yesterday[case_i][0] != "":
-                        data[case_i][0] = data_yesterday[case_i][0]
+                        data_today[case_i][0] = data_yesterday[case_i][0]
                         form_i = data_yesterday[case_i][0]
 
                 yesterday_status =  data_yesterday[case_i][2]
@@ -239,7 +239,7 @@ def run_center(request,center):
                     else:
                         status_trans_dict[form_i]["no_yesterday"][status_i] = 1
 
-            data_yesterday[case_i] = data[case_i]
+            data_yesterday[case_i] = data_today[case_i]
 
             ## form
             if form_i != "":
@@ -255,24 +255,24 @@ def run_center(request,center):
                 if status_i in status_dict:
                     l2_name = status_dict[status_i]["L2"]
                     if l2_name == "Received": counts_today[form_i]["received_n"] += 1
-                    if l2_name == "RFE_Sent": counts_today[form_i]["rfe_sent_n"] += 1
-                    if l2_name == "RFE_Received": counts_today[form_i]["rfe_received_n"] += 1
-                    if l2_name == "Approved": counts_today[form_i]["approved_n"] += 1
-                    if l2_name == "FP_Scheduled": counts_today[form_i]["fp_schduled_n"] += 1
-                    if l2_name == "FP_Taken": counts_today[form_i]["fp_taken_n"] += 1
-                    if l2_name == "InterviewScheduled": counts_today[form_i]["iv_schduled_n"] += 1
-                    if l2_name == "InterviewCompleted": counts_today[form_i]["iv_done_n"] += 1
-                    if l2_name == "Rejected": counts_today[form_i]["rejected_n"] += 1
-                    if l2_name == "Terminated": counts_today[form_i]["terminated_n"] += 1
-                    if l2_name == "Transferred": counts_today[form_i]["transferred_n"] += 1
-                    if l2_name == "Hold": counts_today[form_i]["hold_n"] += 1
-                    if l2_name == "NoticeSent": counts_today[form_i]["notice_sent_n"] += 1
-                    if l2_name == "Pending": counts_today[form_i]["pending_n"] += 1
-                    if l2_name == "Mailed": counts_today[form_i]["mailed_n"] += 1
-                    if l2_name == "Produced": counts_today[form_i]["produced_n"] += 1
-                    if l2_name == "ReturnHold": counts_today[form_i]["return_hold_n"] += 1
-                    if l2_name == "WithdrawalAcknowledged": counts_today[form_i]["withdrawal_acknowledged_n"] += 1
-                    if l2_name == "Other": counts_today[form_i]["others_n"] += 1
+                    elif l2_name == "RFE_Sent": counts_today[form_i]["rfe_sent_n"] += 1
+                    elif l2_name == "RFE_Received": counts_today[form_i]["rfe_received_n"] += 1
+                    elif l2_name == "Approved": counts_today[form_i]["approved_n"] += 1
+                    elif l2_name == "FP_Scheduled": counts_today[form_i]["fp_schduled_n"] += 1
+                    elif l2_name == "FP_Taken": counts_today[form_i]["fp_taken_n"] += 1
+                    elif l2_name == "InterviewScheduled": counts_today[form_i]["iv_schduled_n"] += 1
+                    elif l2_name == "InterviewCompleted": counts_today[form_i]["iv_done_n"] += 1
+                    elif l2_name == "Rejected": counts_today[form_i]["rejected_n"] += 1
+                    elif l2_name == "Terminated": counts_today[form_i]["terminated_n"] += 1
+                    elif l2_name == "Transferred": counts_today[form_i]["transferred_n"] += 1
+                    elif l2_name == "Hold": counts_today[form_i]["hold_n"] += 1
+                    elif l2_name == "NoticeSent": counts_today[form_i]["notice_sent_n"] += 1
+                    elif l2_name == "Pending": counts_today[form_i]["pending_n"] += 1
+                    elif l2_name == "Mailed": counts_today[form_i]["mailed_n"] += 1
+                    elif l2_name == "Produced": counts_today[form_i]["produced_n"] += 1
+                    elif l2_name == "ReturnHold": counts_today[form_i]["return_hold_n"] += 1
+                    elif l2_name == "WithdrawalAcknowledged": counts_today[form_i]["withdrawal_acknowledged_n"] += 1
+                    elif l2_name == "Other": counts_today[form_i]["others_n"] += 1
                 else:
                     counts_today[form_i]["others_n"] += 1
 

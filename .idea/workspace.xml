@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/manul_correction.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/today.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/today.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,21 +81,37 @@
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Django Server.casegreen">
-    <configuration name="manul_correction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.check_case">
+    <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mycase/data/status_data/yesterday" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mycase/data/status_data/yesterday/check_case.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dailycount_correction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="casegreen" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ctrlpanel/functions" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ctrlpanel/functions/manul_correction.py" />
+      <option name="SCRIPT_NAME" value="F:\PyCharm_project\casegreen\ctrlpanel\functions\dailycount_correction.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -148,7 +168,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.manul_correction" />
+        <item itemvalue="Python.check_case" />
+        <item itemvalue="Python.dailycount_correction" />
         <item itemvalue="Python.utils" />
       </list>
     </recent_temporary>
@@ -218,14 +239,7 @@
       <workItem from="1666069118632" duration="55074000" />
       <workItem from="1666666216052" duration="4388000" />
       <workItem from="1666672254403" duration="78636000" />
-      <workItem from="1667702185776" duration="1224000" />
-    </task>
-    <task id="LOCAL-00047" summary="updates">
-      <created>1664593065755</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1664593065755</updated>
+      <workItem from="1667702185776" duration="21782000" />
     </task>
     <task id="LOCAL-00048" summary="updates">
       <created>1664596119535</created>
@@ -563,7 +577,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667276474176</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="updates">
+      <created>1667706918346</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1667706918346</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
