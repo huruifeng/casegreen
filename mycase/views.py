@@ -702,7 +702,7 @@ def overview(request):
     return render(request, 'mycase/overview.html', context)
 
 
-def today(request):
+def todaycounts(request):
     ##center_running
     center_running_latest = center_running.objects.all().order_by("-start").first()
     last_date = center_running_latest.start

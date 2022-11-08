@@ -13,7 +13,7 @@ urlpatterns = [
     path('processajax/', views.processajax, name='processajax'),
     path('countscalendar/', views.countscalendar, name='countscalendar'),
     path('query/', views.query, name='query'),
-    path('today/', views.today, name='today'),
+    path('today/', views.todaycounts, name='today'),
     path('about/', views.about, name='about'),
 
     path('visabulletin/', views.visabulletin, name='visabulletin'),
