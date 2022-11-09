@@ -258,6 +258,9 @@ function status_sankey(sankey_data) {
 
 
 function plot_heatmap(dataset,range_ls,date_ls, status,color_x) {
+	if(status=="New"){var scale_max=200}
+	else{var scale_max=10}
+
 	var chartDom = document.getElementById('range_heatmap_chart');
 	var myChart = echarts.init(chartDom);
 	var option;
@@ -307,7 +310,7 @@ function plot_heatmap(dataset,range_ls,date_ls, status,color_x) {
 		},
 		visualMap: {
 			min: 0,
-			max: 10,
+			max: scale_max,
 			calculable: true,
 			orient: 'vertical',
 			top: 10,
