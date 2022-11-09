@@ -322,6 +322,7 @@ def run_center(request,center):
 
     print("---------------------------------")
     print("Updating daily counts...")
+    # update_todaycounts(now_days,center)
     for form_ii in counts_today:
         countstoday_new = status_daily(center=center.upper(), form=form_ii,
                                        new_n=counts_today[form_ii]["new_n"],

@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +80,7 @@
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.check_case">
+  <component name="RunManager" selected="Python.dailycount_correction">
     <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -109,7 +110,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="F:\PyCharm_project\casegreen\ctrlpanel\functions\dailycount_correction.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -166,6 +167,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.dailycount_correction" />
         <item itemvalue="Python.check_case" />
         <item itemvalue="Python.dailycount_correction" />
         <item itemvalue="Python.utils" />
@@ -237,14 +239,7 @@
       <workItem from="1666069118632" duration="55074000" />
       <workItem from="1666666216052" duration="4388000" />
       <workItem from="1666672254403" duration="78636000" />
-      <workItem from="1667702185776" duration="30877000" />
-    </task>
-    <task id="LOCAL-00050" summary="updates">
-      <created>1664648804517</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1664648804518</updated>
+      <workItem from="1667702185776" duration="34956000" />
     </task>
     <task id="LOCAL-00051" summary="updates">
       <created>1664649956320</created>
@@ -582,7 +577,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667775984646</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="updates">
+      <created>1667884445257</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1667884445257</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

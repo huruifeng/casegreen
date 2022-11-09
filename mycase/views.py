@@ -147,8 +147,7 @@ def mycase(request):
         form_ls = [form_i.code for form_i in form_qs]
 
     context = {
-        "status": {'form': status_ls[0], 'date': status_ls[1], 'status': status_ls[2], 'status_text': status_ls[3],
-                   "days": days},
+        "status": {'form': status_ls[0], 'date': status_ls[1], 'status': status_ls[2], 'status_text': status_ls[3],"days": days},
         "receipt_num": receipt_num, "case_range": str(case_range_s) + "-" + str(case_range_e), "form_ls": form_ls,
         "status_qs": status_qs, "page_title": "myCase"}
     return render(request, 'mycase/mycase.html', context)

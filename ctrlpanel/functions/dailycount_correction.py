@@ -28,7 +28,7 @@ case_status_df = pd.read_csv("../../mycase/data/case_status.csv", header=0, inde
 status_dict = case_status_df.to_dict(orient="index")
 
 start_date = datetime.datetime(2022,9,24,1,5,10)
-end_date = datetime.datetime(2022,11,6,1,5,10)
+end_date = datetime.datetime(2022,11,7,1,5,10)
 
 add_date = start_date
 while add_date <=end_date:
@@ -103,34 +103,30 @@ while add_date <=end_date:
 
         print("Updating daily counts...")
         for form_ii in counts_today:
-            counts_today_new = status_daily.objects.update_or_create(center=center.upper(), form=form_ii, date_number=date_num,
-                                                                     defaults={
-                                                                         "center": center.upper(),
-                                                                         "form": form_ii,
-                                                                         "new_n": counts_today[form_ii]["new_n"],
-                                                                         "received_n": counts_today[form_ii]["received_n"],
-                                                                         "rfe_sent_n": counts_today[form_ii]["rfe_sent_n"],
-                                                                         "rfe_received_n": counts_today[form_ii]["rfe_received_n"],
-                                                                         "approved_n": counts_today[form_ii]["approved_n"],
-                                                                         "fp_schduled_n": counts_today[form_ii]["fp_schduled_n"],
-                                                                         "fp_taken_n": counts_today[form_ii]["fp_taken_n"],
-                                                                         "iv_schduled_n": counts_today[form_ii]["iv_schduled_n"],
-                                                                         "iv_done_n": counts_today[form_ii]["iv_done_n"],
-                                                                         "rejected_n": counts_today[form_ii]["rejected_n"],
-                                                                         "terminated_n": counts_today[form_ii]["terminated_n"],
-                                                                         "transferred_n": counts_today[form_ii]["transferred_n"],
-                                                                         "hold_n": counts_today[form_ii]["hold_n"],
-                                                                         "notice_sent_n": counts_today[form_ii]["notice_sent_n"],
-                                                                         "pending_n": counts_today[form_ii]["pending_n"],
-                                                                         "mailed_n": counts_today[form_ii]["mailed_n"],
-                                                                         "produced_n": counts_today[form_ii]["produced_n"],
-                                                                         "return_hold_n": counts_today[form_ii]["return_hold_n"],
-                                                                         "withdrawal_acknowledged_n": counts_today[form_ii]["withdrawal_acknowledged_n"],
-                                                                         "others_n": counts_today[form_ii]["others_n"],
-                                                                         "add_date": add_date + datetime.timedelta(hours=6),
-                                                                         "date_number": date_num
-                                                                     }
-                                                                     )
+            countstoday_new = status_daily(center=center.upper(), form=form_ii,
+                                           new_n=counts_today[form_ii]["new_n"],
+                                           received_n=counts_today[form_ii]["received_n"],
+                                           rfe_sent_n=counts_today[form_ii]["rfe_sent_n"],
+                                           rfe_received_n=counts_today[form_ii]["rfe_received_n"],
+                                           approved_n=counts_today[form_ii]["approved_n"],
+                                           fp_schduled_n=counts_today[form_ii]["fp_schduled_n"],
+                                           fp_taken_n=counts_today[form_ii]["fp_taken_n"],
+                                           iv_schduled_n=counts_today[form_ii]["iv_schduled_n"],
+                                           iv_done_n=counts_today[form_ii]["iv_done_n"],
+                                           rejected_n=counts_today[form_ii]["rejected_n"],
+                                           terminated_n=counts_today[form_ii]["terminated_n"],
+                                           transferred_n=counts_today[form_ii]["transferred_n"],
+                                           hold_n=counts_today[form_ii]["hold_n"],
+                                           notice_sent_n=counts_today[form_ii]["notice_sent_n"],
+                                           pending_n=counts_today[form_ii]["pending_n"],
+                                           mailed_n=counts_today[form_ii]["mailed_n"],
+                                           produced_n=counts_today[form_ii]["produced_n"],
+                                           return_hold_n=counts_today[form_ii]["return_hold_n"],
+                                           withdrawal_acknowledged_n=counts_today[form_ii]["withdrawal_acknowledged_n"],
+                                           others_n=counts_today[form_ii]["others_n"],
+                                           add_date = add_date + datetime.timedelta(hours=6),
+                                           date_number = date_num)
+            countstoday_new.save(force_insert=True)
         print("Updating daily counts...Done!")
 
     add_date = add_date+datetime.timedelta(days=1)

@@ -132,7 +132,8 @@ def get_status(recepit_number):
         n_words = len(status_p_text_ls)
         for i in range(n_words):
             if status_p_text_ls[i] in months:
-                date = status_p_text_ls[i] + " " + status_p_text_ls[i+1]+", " + status_p_text_ls[i+2]
+                if date=="":
+                    date = status_p_text_ls[i] + " " + status_p_text_ls[i+1]+", " + status_p_text_ls[i+2]
             elif status_p_text_ls[i] == "Form":
                 form = status_p_text_ls[i+1]
                 break
