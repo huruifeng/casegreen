@@ -118,7 +118,7 @@
                                 <th class="border-start REC_color">New</th><th class="APV_color">Apv</th><th>Fpr</th><th>RFE</th><th>Trans</th><th class="RJC_color">Rej</th><th>Pend</th><th>Other</th>
                             </tr>
                          </thead>
-                         <tbody id="other_tboday"></tbody>
+                         <tbody id="other_tbody"></tbody>
                      </table>
                  </div>
              </div>
@@ -131,14 +131,14 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Case list</h4>
+              <h4 class="modal-title" id="ModalLabel">Case list: <strong><span id="modal_list_title"></span></strong></h4>
             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="modalCaseList">
               <table class="table table-sm table-hover" id="modalCaseList_table">
                   <thead class="bg-light">
                     <tr>
-                        <th style="width: 15%;">Processing center</th><th style="width: 15%;">Receipt number</th><th style="width: 10%;">Form type</th><th style="width: 30%;">Case status</th><th style="width: 15%;">Action date</th><th style="width: 15%;">Update date</th>
+                        <th style="width: 10%;">Center</th><th style="width: 15%;">Receipt #</th><th style="width: 10%;">Form type</th><th style="width: 38%;">Case status</th><th style="width: 15%;">Action date</th><th style="width: 12%;">Update date</th>
                     </tr>
                   </thead>
                   <tbody id="modalCaseList_tbody"></tbody>
@@ -169,9 +169,11 @@
             location.href = '{% url "mycase:today" %}?data_date='+data_date;
         });
     });
+
     // Other tables
     var ctdata ={{ ytd_count|safe }};
     function load_form() {
+        $("#other_tbody").empty();
         var selectform = $("#selectform").val();
         var html_str = "";
         for(let center_i in ctdata){
@@ -192,7 +194,7 @@
                 }
             }
         }
-        $("#other_tboday").html(html_str);
+        $("#other_tbody").html(html_str);
     }
     load_form();
 
@@ -202,13 +204,15 @@
         $("#modalCaseList_tbody").html("<div class='row text-center'><img src='{% static 'img/loading.gif' %}' style='height:100px; width:120px;' /></div>");
         var center_form_status = this.id;
         var picked_date =  $('#date_picker').val();
+        $('#modal_list_title').empty();
+        $('#modal_list_title').html(center_form_status);
         $.ajax({
               type: "GET",
               url: "/ajax/todaymodalcasetable",
               async: true,
               data:{"center_form_status":center_form_status,"picked_date":picked_date},
               success : function(data) {
-                  console.log(data);
+                  {#console.log(data);#}
                   var html_str = "";
                   var error_msg = data["error_msg"];
                   if(error_msg !=""){html_str = error_msg}else{
@@ -223,7 +227,6 @@
                         $('#modalCaseList_tbody').empty();
                   }
                   $("#modalCaseList_tbody").html(html_str);
-
 
                   $('#modalCaseList_table').DataTable({
                     order: [[0, 'asc']],

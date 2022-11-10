@@ -305,7 +305,7 @@ def run_center(request,center):
 
         print(f"{center}-{fy_i}:Bulk Creating...")
         try:
-            center_obj.objects.bulk_create(case_list,batch_size=3000)
+            center_obj.objects.bulk_create(case_list,batch_size=3000,ignore_conflicts=True)
         except Exception as e:
            print(e)
         print(f"{center}-{fy_i}:Bulk Creating...Done!")
@@ -367,7 +367,7 @@ def run_center(request,center):
                     fiscal_year="0", note = "" )
                 status_trans_ls.append(status_trans_new)
     try:
-        status_trans.objects.bulk_create(status_trans_ls, batch_size=1000)
+        status_trans.objects.bulk_create(status_trans_ls, batch_size=1000,ignore_conflicts=True)
     except Exception as e:
         print(e)
     print("Updating status trans counts...Done!")
