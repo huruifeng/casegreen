@@ -181,12 +181,12 @@
                 if(form_i == selectform){
                     html_str += "<tr>"
                     html_str += "<td>"+center_i+"</td>" +
-                        "<td class='REC_color popmodal' id='"+center_i+":"+form_i+":new'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rec_d"]+"</span></td>" +
-                        "<td class='APV_color popmodal' id='"+center_i+":"+form_i+":apv'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["apv_d"]+"</span></td>" +
+                        "<td class='REC_color popmodal' id='"+center_i+":"+form_i+":new' onclick='showModal(this.id)'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rec_d"]+"</span></td>" +
+                        "<td class='APV_color popmodal' id='"+center_i+":"+form_i+":apv' onclick='showModal(this.id)'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["apv_d"]+"</span></td>" +
                         "<td>"+ctdata[center_i][form_i]["fp_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["rfe_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["trf_d"]+"</td>" +
-                        "<td class='RJC_color popmodal' id='"+center_i+":"+form_i+":rej'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rej_d"]+"</span></td>" +
+                        "<td class='RJC_color popmodal' id='"+center_i+":"+form_i+":rej' onclick='showModal(this.id)'><span data-mdb-toggle='modal' data-mdb-target='#caseListModal'>"+ctdata[center_i][form_i]["rej_d"]+"</span></td>" +
                         "<td>"+ctdata[center_i][form_i]["pending_d"]+"</td>" +
                         "<td>"+ctdata[center_i][form_i]["oth_d"]+"</td>"
                     html_str += "<td class='border-start REC_color'>"+ctdata[center_i][form_i]["rec_y"]+"</td><td class='APV_color'>"+ctdata[center_i][form_i]["apv_y"]+"</td><td>"+ctdata[center_i][form_i]["fp_y"]+"</td><td>"+ctdata[center_i][form_i]["rfe_y"]+"</td><td>"+ctdata[center_i][form_i]["trf_y"]+"</td><td class='RJC_color'>"+ctdata[center_i][form_i]["rej_y"]+"</td><td>"+ctdata[center_i][form_i]["pending_y"]+"</td><td>"+ctdata[center_i][form_i]["oth_y"]+"</td>"
@@ -200,12 +200,16 @@
 
     // pop modal
     $('.popmodal').click(function () {
+        showModal(this.id);
+    });
+    function showModal(id_str) {
         $("#modalCaseList_tbody").empty();
         $("#modalCaseList_tbody").html("<div class='row text-center'><img src='{% static 'img/loading.gif' %}' style='height:100px; width:120px;' /></div>");
-        var center_form_status = this.id;
+        var center_form_status = id_str;
         var picked_date =  $('#date_picker').val();
         $('#modal_list_title').empty();
         $('#modal_list_title').html(center_form_status);
+        {#alert(center_form_status);#}
         $.ajax({
               type: "GET",
               url: "/ajax/todaymodalcasetable",
@@ -237,7 +241,7 @@
                     alert("Error occurs!")
                 }
         });
-    });
+    }
 
 
     </script>
