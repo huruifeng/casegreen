@@ -7,7 +7,7 @@ urlpatterns = [
     path('dashbord/', views.ctrl_dashbord, name='ctrldashbord'),
     path('login/', views.login_view, name='ctrllogin'),
     path('exportdb/', views.exportDB, name='ctrlexportdb'),
-    path('visabulletin/', views.visabulletin, name='ctrlvisabulletin'),
+    path('checkcase/', views.checkcase, name='ctrlcheckcase'),
 
     path('ajax/sysupdate', views.sysupdate, name='sysupdate'),
     path('ajax/centerrun', views.centerrun, name='centerrun'),

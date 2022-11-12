@@ -31,7 +31,14 @@
                 <div class="row">
                   <ul class="navbar-nav mb-2 mb-lg-0">
                       <li class="nav-item"><a class="nav-link" href="{% url "casegreen:about" %}">About</a></li>
-                      <li class="nav-item"><a class="nav-link" href="{% url "casegreen:visabulletin" %}">Bulletin</a></li>
+                       <!-- Dropdown -->
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Resources</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html" target="_blank">Visa Bulletin</a></li>
+                            <li><a class="dropdown-item" href="https://ebgreencard.com/" target="_blank">EB/485 wiki</a></li>
+                        </ul>
+                      </li>
                       {# <li class="nav-item"><a class="nav-link"href={% url "mycase:dashborddaily" %}>Dashbord</a></li>#}
                       <!-- Dropdown -->
                       <li class="nav-item dropdown">
@@ -52,7 +59,9 @@
                         </ul>
                       </li>
                       <li class="nav-item"><a class="nav-link" href={% url "casegreen:today" %}>Today!</a></li>
-                      <li class="nav-item"><a class="nav-link" href={% url "casegreen:query" %}>Query</a></li>
+                      <li class="nav-item"><a class="nav-link" href="">NextStatus</a></li>
+                      <li class="nav-item"><a class="nav-link" href="">Summary</a></li>
+                       <li class="nav-item"><a class="nav-link" href={% url "casegreen:query" %}>Query</a></li>
                       <li class="nav-item"><a class="nav-link" href={% url "casegreen:home" %}>myCase</a></li>
                   </ul>
                   <!-- Left links -->

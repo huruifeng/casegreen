@@ -1,0 +1,34 @@
+{% extends "ctrl_basic.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href={% static "css/datepicker.css" %}>
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body dashboard-tabs p-0">
+                <div class="form-control form-row p-3">
+                    <div class="input-group" style="max-width: 500px;">
+                        <h5 class="d-inline pe-3">Search a case: </h5>
+                        <div class="form-outline flex-fill">
+                            <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control" style="color: black;"  />
+                            <label class="form-label" for="form1">Enter a receipt number</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="box-shadow: none;">
+                            <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+                <div class="d-flex pb-3 pt-3 justify-content-center">
+                    <button type="button" class="btn btn-success me-3" id="all_fb_run_btn" onclick="center_run(this.id)">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

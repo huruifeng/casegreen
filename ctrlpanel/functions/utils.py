@@ -186,6 +186,9 @@ def run_center(request,center):
             print(f"Reading data - Today...Done!")
         except Exception as e:
             print(e)
+            c_running.end = datetime.now()
+            c_running.status = "Skipped"
+            c_running.save()
             return "Warning: reading "+file_i +"[Skip]"
             # return "Error: reading "+file_i
 

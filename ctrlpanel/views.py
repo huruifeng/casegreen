@@ -230,15 +230,15 @@ def centerstatus(request):
     return HttpResponse(qs_json, content_type='application/json')
 
 
-def visabulletin(request):
+def checkcase(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return redirect("ctrlpanel:ctrllogin")
         # return HttpResponse("Login: Please Login!")
 
     if request.method == "GET":
-        return render(request,'ctrlpanel/visabulletin.html')
+        return render(request,'ctrlpanel/ctrlcheckcase.html')
     elif request.method == "POST":
-        return render(request,'ctrlpanel/visabulletin.html')
+        return render(request,'ctrlpanel/ctrlcheckcase.html')
 
 
 

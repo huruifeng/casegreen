@@ -16,7 +16,6 @@ urlpatterns = [
     path('today/', views.todaycounts, name='today'),
     path('about/', views.about, name='about'),
 
-    path('visabulletin/', views.visabulletin, name='visabulletin'),
     path('ajax/caseinrange', views.caseinrange, name = "caseinrange"),
     path('ajax/nextstatus', views.nextstatus, name = "nextstatus"),
     path('ajax/dailyrecords', views.dailyrecords, name = "dailyrecords"),

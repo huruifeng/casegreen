@@ -402,14 +402,6 @@ def nextstatus(request):
     data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
     return JsonResponse(data_dict, status=200)
 
-
-def visabulletin(request):
-    if request.method == "GET":
-        return render(request, 'mycase/visabulletin.html')
-    elif request.method == "POST":
-        return render(request, 'mycase/visabulletin.html')
-
-
 def dailyrecords(request):
     if request.method == "GET":
         center = request.GET.get("center", None)
@@ -827,3 +819,4 @@ def countscalendar(request):
 def about(request):
     context = {"page_title": "About"}
     return render(request, 'mycase/about.html', context)
+
