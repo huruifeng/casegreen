@@ -11,24 +11,87 @@
                     <div class="input-group" style="max-width: 500px;">
                         <h5 class="d-inline pe-3">Search a case: </h5>
                         <div class="form-outline flex-fill">
-                            <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control" style="color: black;"  />
+                            <input type="search" id="receipt_number_input" name="receipt_number" class="form-control" style="color: black;"  />
                             <label class="form-label" for="form1">Enter a receipt number</label>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="box-shadow: none;">
+                        <button type="button" class="btn btn-primary" style="box-shadow: none;" onclick="querycase()">
                             <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
                         </button>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 ps-5 pe-5 pt-3">
+                        <form name="case_form" id="case_form">
+                            <h5 class="pb-2">Case information</h5>
+                            <div class="input-group mb-4 w-50">
+                                <span class="input-group-text border-0" id="rn-addon">Receipt number: </span>
+                                <input class="form-control rounded" type="text" id="receipt_number_show" name="receipt_number" placeholder="Receipt number" aria-label="Receipt number" aria-describedby="rn-addon" readonly />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="input-group-text border-0" id="form_type-addon">Form type: </span>
+                                <input class="form-control rounded" type="text" id="form_type" name="form_type" placeholder="Form type" aria-label="Form type" aria-describedby="form_type-addon" />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="input-group-text border-0" id="rd-addon">Receipt date: </span>
+                                <input class="form-control rounded" type="text" id="rd_date" name="rd_date" placeholder="Receipt date" aria-label="Form type" aria-describedby="rd-addon" />
+                            </div>
 
-                    </div>
-                </div>
-                <div class="d-flex pb-3 pt-3 justify-content-center">
-                    <button type="button" class="btn btn-success me-3" id="all_fb_run_btn" onclick="center_run(this.id)">Update</button>
+                            <div class="input-group mb-3">
+                                <table class="table table-sm table-bordered table-hover">
+                                    <thead><tr><th>Action date</th><th>Status</th><th>Form</th><th>Case stage</th><th>Receipt date</th><th>Action date X</th><th>Add date</th><th>Date number</th></tr></thead>
+                                    <tbody id="case_his_tbody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </form>
+                    </div> <!--// col-12 -->
+                </div> <!--// row -->
+                <div class="d-flex pb-3 justify-content-center">
+                    <button type="button" class="btn btn-outline-info me-3" id="add_row_btn" onclick="add_row()">Add row</button>
+                    <button type="button" class="btn btn-outline-warning me-5" id="del_row_btn" onclick="del_row()">Delete row</button>
+
+                    <button type="button" class="btn btn-secondary ms-3" id="edit_btn" onclick="edit()">Edit</button>
+                    <button type="button" class="btn btn-success ms-3" id="update_btn" onclick="update()">Update</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+    <script type="text/javascript">
+        function querycase() {
+            var rn = $("#receipt_number_input").val()
+
+            $.ajax({
+              type: "GET",
+              url: "querycase",
+              async: true,
+              data:{'rn':rn,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+              success : function(data) {
+                    var case_data = data["data"];
+                    var html_str = "";
+                    for(case_ri of case_data){
+                        $("#receipt_number_show").val(case_ri['receipt_number']);
+                        $("#form_type").val(case_ri['form']);
+                        $("#rd_date").val(case_ri['rd_date']);
+                        html_str += '<tr>' +
+                            '<td>'+case_ri['action_date']+'</td>' +
+                            '<td>'+case_ri['status']+'</td>' +
+                            '<td>'+case_ri['form']+'</td>' +
+                            '<td>'+case_ri['case_stage']+'</td>' +
+                            '<td>'+case_ri['rd_date']+'</td>' +
+                            '<td>'+case_ri['action_date_x']+'</td>' +
+                            '<td>'+case_ri['add_date']+'</td>' +
+                            '<td>'+case_ri['date_number']+'</td>' +
+                            '</tr>';
+                        $("#case_his_tbody").html(html_str);
+                    }
+                },
+              error: function() {
+                    alert("Error occurs!")
+                }
+        });
+
+        }
+    </script>
+
 {% endblock %}

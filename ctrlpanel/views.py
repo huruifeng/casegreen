@@ -4,7 +4,6 @@ import os
 
 from django.contrib.auth import authenticate, login
 from django.core import serializers
-from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -12,6 +11,22 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from ctrlpanel.functions.utils import bkp_table, run_initalization, run_center
 from mycase.functions.utils import generate_overview
 from mycase.models import *
+
+center_dict = {"lin_lb": case_status_lin_lb,
+               "msc_lb": case_status_msc_lb,
+               "src_lb": case_status_src_lb,
+               "wac_lb": case_status_wac_lb,
+               "eac_lb": case_status_eac_lb,
+               "ysc_lb": case_status_ysc_lb,
+               "lin_sc": case_status_lin_sc,
+               "msc_sc": case_status_msc_sc,
+               "src_sc": case_status_src_sc,
+               "wac_sc": case_status_wac_sc,
+               "eac_sc": case_status_eac_sc,
+               "ysc_sc": case_status_ysc_sc,
+               "ioe": case_status_ioe
+               }
+
 
 # Create your views here.
 @login_required()
@@ -239,6 +254,35 @@ def checkcase(request):
         return render(request,'ctrlpanel/ctrlcheckcase.html')
     elif request.method == "POST":
         return render(request,'ctrlpanel/ctrlcheckcase.html')
+
+
+def querycase(request):
+    if (not request.user.is_authenticated) or (not request.user.is_superuser):
+        return redirect("ctrlpanel:ctrllogin")
+        # return HttpResponse("Login: Please Login!")
+
+    rn = None
+    if request.method == "POST":
+        rn = request.POST.get("rn",None)
+
+    if request.method == "GET":
+        rn = request.GET.get("rn",None)
+
+    if rn == None:
+        return JsonResponse({"data":"Error: Receipt is None!"})
+
+    center = rn[:3].lower()
+    if center not in ["msc","lin","src","wac","eac","ysc","ioe"]:
+        return JsonResponse({"data": "Error: Center is None!"})
+
+    ls = ""
+    if center!="ioe":
+        ls = "lb" if rn[5]=="9" else "sc"
+    center_table = center_dict[center+ "_" + ls]
+
+    case_qs = center_table.objects.filter(receipt_number=rn).order_by("add_date")
+    # print(list(case_qs.values()))
+    return JsonResponse({"data": list(case_qs.values())},safe=False, status=200)
 
 
 
