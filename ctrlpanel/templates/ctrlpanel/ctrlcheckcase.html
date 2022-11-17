@@ -28,15 +28,15 @@
                                 <input class="form-control rounded" type="text" id="receipt_number_show" name="receipt_number" placeholder="Receipt number" aria-label="Receipt number" aria-describedby="rn-addon" readonly />
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="input-group-text border-0" id="form_type-addon">Form type: </span>
-                                <input class="form-control rounded" type="text" id="form_type" name="form_type" placeholder="Form type" aria-label="Form type" aria-describedby="form_type-addon" />
+                                <input class="form-control rounded" type="text" id="form_type" name="form_show" placeholder="Form type" aria-label="Form type" aria-describedby="form_type-addon" />
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="input-group-text border-0" id="rd-addon">Receipt date: </span>
-                                <input class="form-control rounded" type="text" id="rd_date" name="rd_date" placeholder="Receipt date" aria-label="Form type" aria-describedby="rd-addon" />
+                                <input class="form-control rounded data-box" type="text" id="rd_date" name="rd_date_show" placeholder="Receipt date" aria-label="Form type" aria-describedby="rd-addon" />
                             </div>
 
                             <div class="input-group mb-3">
                                 <table class="table table-sm table-bordered table-hover">
-                                    <thead><tr><th>Action date</th><th>Status</th><th>Form</th><th>Case stage</th><th>Receipt date</th><th>Action date X</th><th>Add date</th><th>Date number</th></tr></thead>
+                                    <thead><tr><th>Action date</th><th style="width: 30%;">Status</th><th>Form</th><th>Case stage</th><th>Receipt date</th><th>Action date X</th><th>Add date</th><th>Date number</th></tr></thead>
                                     <tbody id="case_his_tbody">
 
                                     </tbody>
@@ -47,51 +47,59 @@
                     </div> <!--// col-12 -->
                 </div> <!--// row -->
                 <div class="d-flex pb-3 justify-content-center">
-                    <button type="button" class="btn btn-outline-info me-3" id="add_row_btn" onclick="add_row()">Add row</button>
-                    <button type="button" class="btn btn-outline-warning me-5" id="del_row_btn" onclick="del_row()">Delete row</button>
-
-                    <button type="button" class="btn btn-secondary ms-3" id="edit_btn" onclick="edit()">Edit</button>
                     <button type="button" class="btn btn-success ms-3" id="update_btn" onclick="update()">Update</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+    <script src={% static "js/datepicker2.js"  %}></script>
     <script type="text/javascript">
         function querycase() {
             var rn = $("#receipt_number_input").val()
-
+            const regexp = new RegExp('^(LIN|SRC|MSC|WAC|EAC|YSC|IOE|MCT)', 'i');
+            if(!regexp.test(rn)){
+                alert("Receipt number must be NOT EMPTY\nand has to start with 'LIN','SRC','MSC','WAC','EAC','YSC','IOE','MCT'.")
+                return -1;
+            }
             $.ajax({
               type: "GET",
               url: "querycase",
               async: true,
               data:{'rn':rn,'csrfmiddlewaretoken': '{{ csrf_token }}'},
               success : function(data) {
-                    var case_data = data["data"];
-                    var html_str = "";
-                    for(case_ri of case_data){
-                        $("#receipt_number_show").val(case_ri['receipt_number']);
-                        $("#form_type").val(case_ri['form']);
-                        $("#rd_date").val(case_ri['rd_date']);
-                        html_str += '<tr>' +
-                            '<td>'+case_ri['action_date']+'</td>' +
-                            '<td>'+case_ri['status']+'</td>' +
-                            '<td>'+case_ri['form']+'</td>' +
-                            '<td>'+case_ri['case_stage']+'</td>' +
-                            '<td>'+case_ri['rd_date']+'</td>' +
-                            '<td>'+case_ri['action_date_x']+'</td>' +
-                            '<td>'+case_ri['add_date']+'</td>' +
-                            '<td>'+case_ri['date_number']+'</td>' +
-                            '</tr>';
-                        $("#case_his_tbody").html(html_str);
-                    }
-                },
+                  var case_data = data["data"];
+                  if(case_data.includes("Error")){
+                      alert(case_data)
+                  }else{
+                      var html_str = "";
+                      for(case_ri of case_data){
+                          $("#receipt_number_show").val(case_ri['receipt_number']);
+                          $("#form_type").val(case_ri['form']);
+                          $("#rd_date").val(case_ri['rd_date']);
+                          html_str += '<tr>' +
+                              '<td><input class="input-box date-box-enfull" name="action_date" value="'+case_ri['action_date']+'" onclick="pick_date(this)"></td>' +
+                              '<td><input class="input-box input-group" name="status" value="'+case_ri['status']+'"></td>' +
+                              '<td><input class="input-box" name="form" value="'+case_ri['form']+'"></td>' +
+                              '<td><input class="input-box" name="case_stage" value="'+case_ri['case_stage']+'"></td>' +
+                              '<td><input class="input-box date-box" name="rd_date" value="'+case_ri['rd_date']+'" onclick="pick_date(this)"></td>' +
+                              '<td><input class="input-box date-box" name="action_date_x" value="'+case_ri['action_date_x']+'" onclick="pick_date(this)"></td>' +
+                              '<td><input class="input-box date-box" name="add_date" value="'+case_ri['add_date']+'" onclick="pick_date(this)"></td>' +
+                              '<td><input class="input-box" name="date_number" value="'+case_ri['date_number']+'"></td>' +
+                              '</tr>';
+                          $("#case_his_tbody").html(html_str);
+                      }
+                  }
+              },
               error: function() {
                     alert("Error occurs!")
-                }
-        });
-
+              }
+            });
         }
+       function pick_date(obj){
+
+       }
+
     </script>
 
 {% endblock %}

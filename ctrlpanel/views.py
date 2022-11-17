@@ -261,14 +261,14 @@ def querycase(request):
         return redirect("ctrlpanel:ctrllogin")
         # return HttpResponse("Login: Please Login!")
 
-    rn = None
+    rn = ""
     if request.method == "POST":
         rn = request.POST.get("rn",None)
 
     if request.method == "GET":
         rn = request.GET.get("rn",None)
 
-    if rn == None:
+    if rn == None or rn=="":
         return JsonResponse({"data":"Error: Receipt is None!"})
 
     center = rn[:3].lower()
@@ -280,9 +280,13 @@ def querycase(request):
         ls = "lb" if rn[5]=="9" else "sc"
     center_table = center_dict[center+ "_" + ls]
 
-    case_qs = center_table.objects.filter(receipt_number=rn).order_by("add_date")
+    case_qs = center_table.objects.filter(receipt_number=rn.upper()).order_by("add_date")
     # print(list(case_qs.values()))
-    return JsonResponse({"data": list(case_qs.values())},safe=False, status=200)
+    if len(case_qs)>0:
+        return JsonResponse({"data": list(case_qs.values())},safe=False, status=200)
+    else:
+        return JsonResponse({"data": "Error:No record in the database!"})
+
 
 
 
