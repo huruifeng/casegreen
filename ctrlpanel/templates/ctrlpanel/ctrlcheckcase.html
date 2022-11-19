@@ -28,7 +28,7 @@
                                 <input style="min-width: 220px;" class="form-control rounded" type="text" id="receipt_number_show" name="receipt_number_show" placeholder="Receipt number" aria-label="Receipt number" aria-describedby="rn-addon" readonly />
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="input-group-text border-0" id="form_type-addon">Form type: </span>
-                                <input class="form-control rounded" type="text" id="form_type" name="form_show" placeholder="Form type" aria-label="Form type" aria-describedby="form_type-addon" />
+                                <input class="form-control rounded" type="text" id="form_type" name="form_type_show" placeholder="Form type" aria-label="Form type" aria-describedby="form_type-addon" />
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="input-group-text border-0" id="rd-addon">Receipt date: </span>
                                 <input class="form-control rounded data-box" type="text" id="rd_date" name="rd_date_show" placeholder="Receipt date" aria-label="Form type" aria-describedby="rd-addon" />
@@ -39,7 +39,7 @@
                                 <table class="table table-sm table-bordered table-hover" id="case_hist_table">
                                     <thead>
                                     <tr>
-                                        <th>Action date</th><th>Status</th><th>Form</th><th>stage</th><th>Action date X</th><th>Add date</th><th>Date number</th><th>Action</th>
+                                        <th>Action date</th><th>Status</th><th>stage</th><th>Action date X</th><th>Add date</th><th>Date number</th><th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody id="case_his_tbody">
@@ -86,12 +86,15 @@
                           html_str += '<tr>' +
                               '<td><input class="input-box date-box-enfull" style="width: 160px;" name="action_date" value="'+case_ri['action_date']+'"></td>' +
                               '<td><input class="input-box" style="min-width: 350px;" name="status" value="'+case_ri['status']+'"></td>' +
-                              '<td><input class="input-box"style="width: 100px;" name="form" value="'+case_ri['form']+'"></td>' +
                               '<td><input class="input-box" style="width: 100px;" name="case_stage" value="'+case_ri['case_stage']+'"></td>' +
                               '<td><input class="input-box date-box" style="width: 120px;" name="action_date_x" value="'+case_ri['action_date_x']+'"></td>' +
                               '<td><input class="input-box date-box" style="width: 180px;" name="add_date" value="'+case_ri['add_date']+'"></td>' +
                               '<td><input class="input-box" style="width: 60px;" name="date_number" value="'+case_ri['date_number']+'"></td>' +
-                              '<td><input class="me-2" type="button" onclick="insert_row(this)" value="Insert below"><input type="button" onclick="del_row(this)" value="Delete"></td>' +
+                              '<td>' +
+                              '<input class="me-2" type="button" onclick="insert_up(this)" value="Up +">' +
+                              '<input class="me-2" type="button" onclick="insert_bl(this)" value="Below +">' +
+                              '<input type="button" onclick="del_row(this)" value="Delete">' +
+                              '</td>' +
                               '</tr>';
                           $("#case_his_tbody").html(html_str);
                       }
@@ -103,26 +106,38 @@
             });
         }
 
-        function del_row(obj) {
-             obj.closest('tr').remove()
-        }
-
-        function insertAfter(newNode, referenceNode) {
-            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-        }
-
-       function insert_row(obj){
+       function insert_up(obj){
             var tr = obj.closest("tr");
             var new_tr = document.createElement('tr');
             new_tr.innerHTML= '<td><input class="input-box date-box-enfull" style="width: 160px;" name="action_date"></td>' +
-                              '<td><input class="input-box" style="min-width: 350px;" name="status"></td>' +
-                              '<td><input class="input-box"style="width: 100px;" name="form"></td>' +
-                              '<td><input class="input-box" style="width: 100px;" name="case_stage"></td>' +
-                              '<td><input class="input-box date-box" style="width: 120px;" name="action_date_x"></td>' +
-                              '<td><input class="input-box date-box" style="width: 180px;" name="add_date"></td>' +
-                              '<td><input class="input-box" style="width: 60px;" name="date_number"></td>' +
-                              '<td><input class="me-2" type="button" onclick="insert_row(this)" value="Insert below"><input type="button" onclick="del_row(this)" value="Delete"> </td>'
-            insertAfter(new_tr,tr);
+                '<td><input class="input-box" style="min-width: 350px;" name="status"></td>' +
+                '<td><input class="input-box" style="width: 100px;" name="case_stage"></td>' +
+                '<td><input class="input-box date-box" style="width: 120px;" name="action_date_x"></td>' +
+                '<td><input class="input-box date-box" style="width: 180px;" name="add_date"></td>' +
+                '<td><input class="input-box" style="width: 60px;" name="date_number"></td>' +
+                '<td>' +
+                    '<input class="me-2" type="button" onclick="insert_up(this)" value="Up + ">' +
+                    '<input class="me-2" type="button" onclick="insert_bl(this)" value="Below + ">' +
+                    '<input type="button" onclick="del_row(this)" value="Delete"> ' +
+                '</td>'
+            tr.parentNode.insertBefore(new_tr, tr);
+       }
+
+       function insert_bl(obj){
+            var tr = obj.closest("tr");
+            var new_tr = document.createElement('tr');
+            new_tr.innerHTML= '<td><input class="input-box date-box-enfull" style="width: 160px;" name="action_date"></td>' +
+                '<td><input class="input-box" style="min-width: 350px;" name="status"></td>' +
+                '<td><input class="input-box" style="width: 100px;" name="case_stage"></td>' +
+                '<td><input class="input-box date-box" style="width: 120px;" name="action_date_x"></td>' +
+                '<td><input class="input-box date-box" style="width: 180px;" name="add_date"></td>' +
+                '<td><input class="input-box" style="width: 60px;" name="date_number"></td>' +
+                '<td>' +
+                    '<input class="me-2" type="button" onclick="insert_up(this)" value="Up + ">' +
+                    '<input class="me-2" type="button" onclick="insert_bl(this)" value="Below + ">' +
+                    '<input type="button" onclick="del_row(this)" value="Delete"> ' +
+                '</td>'
+            tr.parentNode.insertBefore(new_tr, tr.nextSibling);
        }
 
        // this is the id of the submit button
@@ -143,12 +158,18 @@
 
         function del_row(obj) {
             var tr = $(obj).closest('tr');
+
             var status=tr.find("td:eq(1) input").val();
-            var form=tr.find("td:eq(2) input").val();
             var action_date_x=tr.find("td:eq(4) input").val();
             var date_number=tr.find("td:eq(6) input").val();
 
             var rn = $("#receipt_number_input").val()
+            var form =  $("#form_type").val();
+
+            if(status=="" || action_date_x=="" ){
+                tr.remove()
+                return 0;
+            }
 
             var answer = confirm("Are you sure to DELETE the record?");
             if (answer) {

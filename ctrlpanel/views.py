@@ -291,12 +291,11 @@ def checkcase_update(request):
     rd_date_show = request.POST.get("rd_date_show", None)
     rd_date_show = datetime.strptime(rd_date_show, "%Y-%m-%d")
 
-    form_show = request.POST.get("form_show", None)
+    form_type_show = request.POST.get("form_type_show", None)
     receipt_number_show = request.POST.get("receipt_number_show", None)
 
     # action_date = request.POST.getlist("action_date", None)
     status = request.POST.getlist("status", None)
-    # form = request.POST.getlist("form", None)
     case_stage = request.POST.getlist("case_stage", None)
     action_date_x = request.POST.getlist("action_date_x", None)
     add_date = request.POST.getlist("add_date", None)
@@ -324,7 +323,7 @@ def checkcase_update(request):
             add_date_i = datetime.strptime(add_date[i], "%Y-%m-%dT%H:%M:%S.%f")
             date_number_i =  (add_date_i - datetime(2000, 1, 1)).days
 
-            center_table.objects.update_or_create(receipt_number=receipt_number_show, form=form_show,status=status[i],action_date_x=action_date_x_i,
+            center_table.objects.update_or_create(receipt_number=receipt_number_show, form=form_type_show,status=status[i],action_date_x=action_date_x_i,
                                                   defaults={
                                                       "action_date":action_date_i,
                                                       "case_stage": case_stage[i],
