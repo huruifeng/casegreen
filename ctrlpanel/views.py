@@ -337,7 +337,7 @@ def checkcase_update(request):
         return JsonResponse({"data": "Error -"+str(e)})
 
 def checkcase_del(request):
-    statue = request.POST.get("statue", None)
+    status = request.POST.get("status", None)
     form = request.POST.get("form", None)
     action_date_x =request.POST.get("action_date_x", None)
     date_number = request.POST.get("date_number", None)
@@ -356,8 +356,11 @@ def checkcase_del(request):
     center_table = center_dict[center + "_" + ls]
 
     ## Delete record
-
-    return JsonResponse({"data": "Update - OK!"})
+    try:
+        center_table.objects.filter(receipt_number=rn, status=status,action_date_x=action_date_x,date_number=date_number,form=form).delete()
+        return JsonResponse({"data": "Delete - OK!"})
+    except Exception as e:
+        return JsonResponse({"data": "Error -"+str(e)})
 
 
 
