@@ -9,7 +9,9 @@ urlpatterns = [
     path('exportdb/', views.exportDB, name='ctrlexportdb'),
     path('checkcase/', views.checkcase, name='ctrlcheckcase'),
 
-    path('checkcase/querycase', views.querycase, name='querycase'),
+    path('checkcase/checkcase_query', views.checkcase_query, name='checkcase_query'),
+    path('checkcase/checkcase_update', views.checkcase_update, name='checkcase_update'),
+    path('checkcase/checkcase_del', views.checkcase_del, name='checkcase_del'),
 
     path('ajax/sysupdate', views.sysupdate, name='sysupdate'),
     path('ajax/centerrun', views.centerrun, name='centerrun'),

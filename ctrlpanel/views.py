@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime,timedelta
 import json
 import os
 
@@ -256,7 +257,7 @@ def checkcase(request):
         return render(request,'ctrlpanel/ctrlcheckcase.html')
 
 
-def querycase(request):
+def checkcase_query(request):
     if (not request.user.is_authenticated) or (not request.user.is_superuser):
         return redirect("ctrlpanel:ctrllogin")
         # return HttpResponse("Login: Please Login!")
@@ -286,6 +287,63 @@ def querycase(request):
         return JsonResponse({"data": list(case_qs.values())},safe=False, status=200)
     else:
         return JsonResponse({"data": "Error:No record in the database!"})
+def checkcase_update(request):
+    rd_date_show = request.POST.get("rd_date_show", None)
+    rd_date_show = datetime.strptime(rd_date_show, "%Y-%m-%d")
+
+    form_show = request.POST.get("form_show", None)
+    receipt_number_show = request.POST.get("receipt_number_show", None)
+
+    # action_date = request.POST.getlist("action_date", None)
+    status = request.POST.getlist("status", None)
+    # form = request.POST.getlist("form", None)
+    case_stage = request.POST.getlist("case_stage", None)
+    action_date_x = request.POST.getlist("action_date_x", None)
+    add_date = request.POST.getlist("add_date", None)
+    # date_number = request.POST.getlist("date_number", None)
+
+    if receipt_number_show == None or receipt_number_show=="":
+        return JsonResponse({"data":"Error: Receipt is None!"})
+
+    center = receipt_number_show[:3].lower()
+    if center not in ["msc","lin","src","wac","eac","ysc","ioe"]:
+        return JsonResponse({"data": "Error: Center is None!"})
+
+    ls = ""
+    if center!="ioe":
+        ls = "lb" if receipt_number_show[5]=="9" else "sc"
+    center_table = center_dict[center+ "_" + ls]
+
+    try:
+        for i in range(len(action_date_x)):
+            action_date_x_i = datetime.strptime(action_date_x[i], "%Y-%m-%d")
+            action_date_i = action_date_x_i.strftime("%B %d, %Y")
+
+            if len(add_date[i]) < 15:
+                add_date[i] = add_date[i]+"T06:01:01.001"
+            add_date_i = datetime.strptime(add_date[i], "%Y-%m-%dT%H:%M:%S.%f")
+            date_number_i =  (add_date_i - datetime(2000, 1, 1)).days
+
+            center_table.objects.update_or_create(receipt_number=receipt_number_show, form=form_show,status=status[i],action_date_x=action_date_x_i,
+                                                  defaults={
+                                                      "action_date":action_date_i,
+                                                      "case_stage": case_stage[i],
+                                                      "rd_date" : rd_date_show,
+                                                      "add_date": add_date_i,
+                                                      "date_number" : date_number_i
+                                                  })
+        return JsonResponse({"data": "Update - OK!"})
+    except Exception as e:
+        return JsonResponse({"data": "Error -"+str(e)})
+
+def checkcase_del(request):
+    rd_date_show = request.POST.get("rd_date_show", None)
+    rd_date_show = datetime.strptime(rd_date_show, "%Y-%m-%d")
+
+    form_show = request.POST.get("form_show", None)
+    receipt_number_show = request.POST.get("receipt_number_show", None)
+
+    return JsonResponse({"data": "Update - OK!"})
 
 
 

@@ -452,6 +452,59 @@ class case_status_ysc_sc(models.Model):
                f"Status: {self.status}\n" \
                f"Action date: {self.action_date}\n"
 
+class case_status_mct_lb(models.Model):
+    receipt_number = models.CharField(max_length=16)
+    form = models.CharField(max_length=16)
+    status = models.CharField(max_length=128)
+    action_date = models.CharField(max_length=32)
+    action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
+    add_date = models.DateTimeField('date added')
+    date_number = models.IntegerField()
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_datex_mct_lb'
+            )
+        ]
+
+    def __str__(self):
+        return f"Recepit Num: {self.receipt_number}\n" \
+               f"Form: {self.form}\n" \
+               f"Status: {self.status}\n" \
+               f"Action date: {self.action_date}\n"
+
+class case_status_mct_sc(models.Model):
+    receipt_number = models.CharField(max_length=16)
+    form = models.CharField(max_length=16)
+    status = models.CharField(max_length=128)
+    action_date = models.CharField(max_length=32)
+    action_date_x = models.DateField(default=date.today)
+    case_stage = models.CharField(max_length=32,default="")
+    rd_date = models.DateField('date received',default=date(2000,1,1))
+    add_date = models.DateTimeField('date added')
+    date_number = models.IntegerField()
+    def action_days_to_now(self):
+        days = (datetime.date(datetime.now()) - self.action_date_x).days
+        return days
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['receipt_number', 'status','action_date_x'], name='unique_receipt_status_datex_mct_sc'
+            )
+        ]
+
+    def __str__(self):
+        return f"Recepit Num: {self.receipt_number}\n" \
+               f"Form: {self.form}\n" \
+               f"Status: {self.status}\n" \
+               f"Action date: {self.action_date}\n"
+
+
 
 class case_status_ioe(models.Model):
     receipt_number = models.CharField(max_length=16)
