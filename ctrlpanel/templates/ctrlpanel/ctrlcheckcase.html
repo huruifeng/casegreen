@@ -142,18 +142,24 @@
         }
 
         function del_row(obj) {
-            var tr = obj.closest("tr");
+            var tr = $(obj).closest('tr');
+            var statue=tr.find("td:eq(1) input").val();
+            var form=tr.find("td:eq(2) input").val();
+            var action_date_x=tr.find("td:eq(4) input").val();
+            var date_number=tr.find("td:eq(6) input").val();
 
-            {#$.ajax({#}
-            {#       type: "POST",#}
-            {#       url: "checkcase_del",#}
-            {#       data: {}, // serializes the form's elements.#}
-            {#       success: function(data)#}
-            {#       {#}
-            {#           alert(data["data"]); // show response from the php script.#}
-            {#           querycase();#}
-            {#       }#}
-            {#     });#}
+            var rn = $("#receipt_number_input").val()
+
+            $.ajax({
+                   type: "POST",
+                   url: "checkcase_del",
+                   data: {'rn':rn,'action_date_x':action_date_x,'statue':statue,'form':form,'date_number':date_number,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                   success: function(data)
+                   {
+                       alert(data["data"]); // show response from the php script.
+                       querycase();
+                   }
+                 });
 
             return false; // avoid to execute the actual submit of the form.
         }

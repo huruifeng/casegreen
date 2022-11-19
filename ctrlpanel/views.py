@@ -337,11 +337,25 @@ def checkcase_update(request):
         return JsonResponse({"data": "Error -"+str(e)})
 
 def checkcase_del(request):
-    rd_date_show = request.POST.get("rd_date_show", None)
-    rd_date_show = datetime.strptime(rd_date_show, "%Y-%m-%d")
+    statue = request.POST.get("statue", None)
+    form = request.POST.get("form", None)
+    action_date_x =request.POST.get("action_date_x", None)
+    date_number = request.POST.get("date_number", None)
+    rn =request.POST.get("rn", None)
 
-    form_show = request.POST.get("form_show", None)
-    receipt_number_show = request.POST.get("receipt_number_show", None)
+    if rn == None or rn == "":
+        return JsonResponse({"data": "Error: Receipt is None!"})
+
+    center = rn[:3].lower()
+    if center not in ["msc", "lin", "src", "wac", "eac", "ysc", "ioe"]:
+        return JsonResponse({"data": "Error: Center is None!"})
+
+    ls = ""
+    if center != "ioe":
+        ls = "lb" if rn[5] == "9" else "sc"
+    center_table = center_dict[center + "_" + ls]
+
+    ## Delete record
 
     return JsonResponse({"data": "Update - OK!"})
 
