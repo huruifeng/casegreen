@@ -1,0 +1,199 @@
+{% extends "mycase_basic.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
+         <div class="row justify-content-center">
+             <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
+                <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
+             </div>
+             <div class="col-md-6" style="min-width: min-content;">
+                 <form action="/mycase" method="get">
+                    <div class="input-group" style="max-width: 960px;">
+                      <div class="form-outline flex-fill">
+                        <input type="search" id="receipt_number" name="receipt_number" class="form-control form-control-lg" style="color: black;" value="{{ receipt_num }}" />
+                        <label class="form-label" for="form1">Enter your receipt number</label>
+                      </div>
+                      <button type="submit" class="btn btn-primary" style="box-shadow: none;">
+                        <i class="fas fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;Search
+                      </button>
+                    </div>
+                  </form>
+                <br>
+                  <!-- Next step -->
+                 <div class="row" style="max-width: 1000px;">
+                     <div class="col-12">
+                        <h2 class="mb-4" style="color:#2d48cb;">Next step of the cases </h2>
+                         <hr style="height: 1px;color: #cccccc">
+                        <div class="mb-3">Based on
+                             <select id="status_level" name="status_level" onchange="get_nextstatus()">
+                                 <option value="L3" selected>L3</option>
+                                 <option value="L2">L2</option>
+                                 <option value="L1">L1</option>
+                                 <option value="L0">Original</option>
+                             </select>
+                            status changs in the:
+                             <select id="date_range" name="date_range" onchange="get_nextstatus()">
+                                 <option value="past3m" selected>Past 3 month</option>
+                                 <option value="past6m">Past 6 month</option>
+                                 <option value="past9m">Past 9 month</option>
+                                 <option value="past12m">Past 12 month</option>
+                             </select>
+                            <span>(Same case type/Same form type)</span>
+                        </div>
+                         {# <h5 id="nextbar_na_h5" class="d-none ms-5">{% if status.form != "" %}No data is available currently! {% else %} Form type is not available, please pick one at the top !{%  endif %}</h5>#}
+                        <div id="bar_chart">
+                            <div class="d-none" id="nextstatus_loading">
+                                <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                            </div>
+                            <div id="bar_container" style="position: relative; height:20px;">
+                                <canvas id="bar_next_status"></canvas>
+                            </div>
+                            <h5 id="daystofinal_h">Based on the data, it will take <span id="daystofinal"></span> days from your current status action date to FINAL action.</h5>
+                        </div>
+                     </div>
+                 </div>
+                 <!-- End of next step -->
+
+
+            </div> <!--col-6-->
+        </div><!--row-->
+    </div>
+    <script type="text/javascript">
+    var backgroundColor = ['rgba(75, 192, 192, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 159, 64, 0.5)', 'rgba(255, 205, 86, 0.5)',
+        'rgba(54, 162, 235, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(201, 203, 207, 0.5)' ];
+    var borderColor = ['rgb(75, 192, 192)','rgb(255, 99, 132)', 'rgb(255, 159, 64)','rgb(255, 205, 86)',
+            'rgb(54, 162, 235)','rgb(153, 102, 255)','rgb(201, 203, 207)' ];
+
+    function select_form() {
+        get_data();
+        get_nextstatus();
+    }
+    function get_nextstatus() {
+        var selectform = $("#selectform").val();
+        if(selectform==undefined){
+            var form_type = $("#form_type").val();
+            var selectform="no"
+        }else{
+            var form_type = selectform;
+            var selectform="yes"
+        }
+
+        if(form_type==""){
+            $("#bar_chart").empty();
+            $("#bar_chart").html("<h5 class='ms-5'>Form type is not available, please pick one at the top !</h5>");
+            return;
+        }
+
+
+
+        var status_level = $("#status_level").val();
+        var date_range = $("#date_range").val();
+        var mycase_status = $("#mycase_status").val();
+        var recepit_num = $("#recepit_num").val();
+
+        $("#nextstatus_loading").removeClass("d-none");
+        $("#bar_next_status").addClass("d-none");
+        $("#daystofinal_h").addClass("d-none");
+        $("#bar_container").css("height","20px");
+
+        $.ajax({
+          type: "GET",
+          url: "ajax/mynextstatus",
+          async: true,
+          data:{"recepit_num":recepit_num,"daterange":date_range,"mystatus":mycase_status,"form_type":form_type,"status_level":status_level,"selectform":selectform},
+          success : function(data) {
+              $("#nextstatus_loading").addClass("d-none");
+              $("#bar_next_status").removeClass("d-none");
+              $("#daystofinal_h").removeClass("d-none");
+
+              var next_status = data["next_status"];
+              var tofinal_status = data["to_endstatus"];
+              var formempty = data["formempty"];
+              if(formempty===undefined) {
+                  if (next_status["Final"] === undefined) {
+                      next_status_n = Object.keys(next_status).length;
+                      if (next_status_n > 0) {
+                          var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
+                          var col_i = 0;
+                          for (const status_i in next_status) {
+                              case_n = next_status[status_i][0];
+                              day_avg = next_status[status_i][1];
+                              day_mid = next_status[status_i][2];
+                              day_min = next_status[status_i][3];
+                              day_max = next_status[status_i][4];
+                              data_ls.push(case_n);
+                              label_ls.push(status_i + " - Num: " + case_n + ", Avg: " + day_avg + ", Median: " + day_mid + ", Min: " + day_min + ", Max: " + day_max);
+                              bg_ls.push(backgroundColor[col_i % 7]);
+                              bd_ls.push(borderColor[col_i % 7]);
+                              col_i = col_i + 1;
+                          }
+                          {#alert(next_status_n);#}
+                          if (next_status_n < 10) {
+                              $("#bar_container").css("height", (45 * next_status_n) + "px")
+                          } else if (next_status_n < 30) {
+                              $("#bar_container").css("height", (35 * next_status_n) + "px")
+                          } else {
+                              $("#bar_container").css("height", (25 * next_status_n) + "px")
+                          }
+
+                          plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+
+                          $("#daystofinal").html("<u>Avg: " + tofinal_status[0] + ",Midian: " + tofinal_status[1] + ",Min: " + tofinal_status[2] + ", Max: " + tofinal_status[3] + "</u>");
+                      } else {
+                          $("#bar_chart").empty();
+                          $("#bar_chart").html("<h5 class='ms-5'>Data is not availabe !</h5>");
+                      }
+                  } else {
+                      $("#bar_chart").empty();
+                      $("#bar_chart").html("<h5 class='ms-5'>You are already in the FINAL status !</h5>");
+                  }
+              }else{
+                   $("#bar_chart").empty();
+                   $("#bar_chart").html("<h5 class='ms-5'>Form type is not available, please pick one at the top !</h5>");
+              }
+            },
+          error: function() {
+                alert("Error occurs!")
+            }
+        });
+    }
+    get_nextstatus();
+
+    ///////////////////////////////////////////////////////////////
+    function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
+        let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
+           if (chartStatus != undefined) {
+              chartStatus.destroy();
+           }
+        const data = {
+            labels: label_ls,
+            datasets: [{
+                axis: 'y',
+                label: "Next status",
+                data: data_ls,
+                fill: false,
+                backgroundColor: bg_ls,
+                borderColor: bd_ls,
+                borderWidth: 1
+            }]
+        };
+
+         const config = {
+          type: 'bar',
+          data: data,
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend:{display: false,},
+                title: { display: true,text: 'The next status and taking days based on the data in the selected case range',fontSize:18}
+            },
+            scales: { y: { ticks: { mirror: true,}}}
+          },
+        };
+        var barChart = new Chart($('#bar_next_status'), config)
+
+    }
+    </script>
+ {% endblock %}

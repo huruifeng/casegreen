@@ -50,16 +50,16 @@
                           <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Process</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <li><a class="dropdown-item" href={% url "mycase:processrn" %}>By receipt number(RN)</a></li>
+                              <li><a class="dropdown-item" href="{% url "mycase:processrn" %}">By receipt number(RN)</a></li>
                               <li><a class="dropdown-item" href="{% url "mycase:processrd" %}">By received date(RD)</a></li>
-                               <li><a class="dropdown-item" href={% url "mycase:countscalendar" %}>Counts calendar</a></li>
+                               <li><a class="dropdown-item" href="{% url "mycase:countscalendar" %}">Counts calendar</a></li>
                             </ul>
                           </li>
-                          <li class="nav-item"><a class="nav-link" href={% url "casegreen:today" %}>Today!</a></li>
-                          <li class="nav-item"><a class="nav-link" href="">NextStatus</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url "casegreen:today" %}">Today!</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url "casegreen:nextstatus" %}">NextStatus</a></li>
                           <li class="nav-item"><a class="nav-link" href="">Summary</a></li>
-                          <li class="nav-item"><a class="nav-link" href={% url "casegreen:query" %}>Query</a></li>
-                          <li class="nav-item"><a class="nav-link" href={% url "casegreen:home" %}>myCase</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url "casegreen:query" %}">Query</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url "casegreen:home" %}">myCase</a></li>
                       </ul>
                       <!-- Left links -->
                     </div>

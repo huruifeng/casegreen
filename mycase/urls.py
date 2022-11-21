@@ -14,10 +14,11 @@ urlpatterns = [
     path('countscalendar/', views.countscalendar, name='countscalendar'),
     path('query/', views.query, name='query'),
     path('today/', views.todaycounts, name='today'),
+    path('nextstatus/', views.nextstatus, name='nextstatus'),
     path('about/', views.about, name='about'),
 
     path('ajax/caseinrange', views.caseinrange, name = "caseinrange"),
-    path('ajax/nextstatus', views.nextstatus, name = "nextstatus"),
+    path('ajax/mynextstatus', views.mynextstatus, name = "mynextstatus"),
     path('ajax/dailyrecords', views.dailyrecords, name = "dailyrecords"),
     path('ajax/rnrangecount', views.rnrangecount, name = "rnrangecount"),
     path('ajax/getsankey', views.getsankey, name = "getsankey"),

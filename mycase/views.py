@@ -305,7 +305,13 @@ def caseinrange(request):
         data_dict = {"n_cases": 0, "message": "Request error!"}
         return JsonResponse(data_dict, status=200)
 
+
 def nextstatus(request):
+    context = {}
+    return render(request, 'mycase/nextstatus.html', context)
+
+
+def mynextstatus(request):
     mycase_status = request.GET.get("mystatus", None)
     date_range = request.GET.get("daterange", None)
     form_type = request.GET.get("form_type", None)
