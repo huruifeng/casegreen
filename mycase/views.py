@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime, timedelta
 
+import pandas as pd
 from bottleneck import median
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
@@ -43,7 +44,6 @@ rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Lette
 
 def index(request):
     return render(request, 'index.html')
-
 
 def mycase(request):
     if request.method == "GET":
@@ -304,11 +304,6 @@ def caseinrange(request):
     else:  ## ajax, GET error
         data_dict = {"n_cases": 0, "message": "Request error!"}
         return JsonResponse(data_dict, status=200)
-
-
-def nextstatus(request):
-    context = {}
-    return render(request, 'mycase/nextstatus.html', context)
 
 
 def mynextstatus(request):
@@ -779,10 +774,6 @@ def todaymodalcasetable(request):
     data_dict = {"center": center, "case_qs": case_qs_final, "error_msg": error_msg}
     return JsonResponse(data_dict, status=200)
 
-def query(request):
-    context = {"page_title": "Query"}
-    return render(request, 'mycase/query.html', context)
-
 def countscalendar(request):
     form_qs = form.objects.all()
     form_ls = [form_i.code for form_i in form_qs]
@@ -820,6 +811,39 @@ def countscalendar(request):
     context = {"page_title": "Count calendar", "form_ls": form_ls, "year_ls": year_ls[::-1],
                "chart_data": json.dumps(count_data), "center": center, "fy": fy, "selectform": selectform, "rangesize": rangesize}
     return render(request, 'mycase/countscalendar.html', context)
+
+def nextstatus(request):
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+
+    ######
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("selectform", None)
+        statuslevel = request.GET.get("statuslevel", None)
+        daterange = request.GET.get("daterange", None)
+        cursta = request.GET.get("cursta", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("selectform", None)
+        statuslevel = request.POST.get("statuslevel", None)
+        daterange = request.GET.get("daterange", None)
+        cursta = request.GET.get("cursta", None)
+
+    if center is None or selectform is None or statuslevel is None or daterange is None or cursta is None:
+        return redirect("/nextstatus?center=LIN_LB&selectform=I-485&statuslevel=L3&daterange=3m&cursta=Received",status=200)
+
+    case_status_df = pd.read_csv("mycase/data/case_status.csv", header=0, index_col=None, sep=",")
+    status_lvl_ls = sorted(case_status_df[statuslevel].unique())
+
+    context = {"page_title": "NextStatus!",  "form_ls": form_ls,"status_lvl_ls":status_lvl_ls,
+               "center": center, "selectform": selectform, "statuslevel":statuslevel, "daterange": daterange,"cursta":cursta}
+    return render(request, 'mycase/nextstatus.html', context)
+
+
+def query(request):
+    context = {"page_title": "Query"}
+    return render(request, 'mycase/query.html', context)
 
 def about(request):
     context = {"page_title": "About"}
