@@ -6,7 +6,7 @@
              <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
                 <img class="img-fluid" id="logo-img" src={% static "mycase/img/mycase_logo_short.png" %} style="max-width:180px;max-height:45px;">
              </div>
-             <div class="col-md-6" style="min-width: min-content;">
+             <div class="col-md-6" style="min-width: 1200px;">
                  <form action="/mycase" method="get">
                     <div class="input-group" style="max-width: 960px;">
                       <div class="form-outline flex-fill">
@@ -20,10 +20,44 @@
                   </form>
                 <br>
                   <!-- Next step -->
-                 <div class="row" style="max-width: 1000px;">
+                 <div class="row">
                      <div class="col-12">
                         <h2 class="mb-4" style="color:#2d48cb;">Next step of the cases </h2>
-                         <hr style="height: 1px;color: #cccccc">
+                         <div class="mb-3">
+                             <h5 class="d-inline">Centers: </h5>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "LIN_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN_LB</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "LIN_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN_SC</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "MSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_LB</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "MSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_SC</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "SRC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_LB</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "SRC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_SC</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "EAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_LB</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "EAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_SC</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "WAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_LB</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "WAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_SC</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_LB</button>
+                             <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_SC</button>
+                         </div>
+                         <div>
+                              <h5 class="me-1 d-inline">Form type: </h5>
+                              <select id="selectform" onchange="load_page()">
+                                 {% for form_i in form_ls %}
+                                 <option value="{{ form_i }}" {% if form_i == selectform %}selected{% endif %}>{{ form_i }}</option>
+                                 {% endfor %}
+                              </select>
+                             <h5 class="ms-5 me-1 d-inline">Show status in level:</h5>
+                            <select id="status_level" name="status_level" onchange="load_page()">
+                                 <option value="L3" {% if statuslevel == "L3" %}selected{% endif %}>L3&nbsp;&nbsp;</option>
+                                 <option value="L2" {% if statuslevel == "L2" %}selected{% endif %}>L2&nbsp;&nbsp;</option>
+                             </select>
+                            <h5 class="ms-5 me-1 d-inline">Range size:</h5>
+                            <select id="range_size" name="range_size" onchange="load_page()">
+                                 <option value="2000" {% if rangesize == "2000" %}selected{% endif %}>2000&nbsp;&nbsp;</option>
+                                 <option value="5000" {% if rangesize == "5000" %}selected{% endif %}>5000&nbsp;&nbsp;</option>
+                                 <option value="10000" {% if rangesize == "10000" %}selected{% endif %}>10000&nbsp;&nbsp;</option>
+                             </select>
+                         </div>
+                         <hr style="height: 1px;color: #666666">
                         <div class="mb-3">Based on
                              <select id="status_level" name="status_level" onchange="get_nextstatus()">
                                  <option value="L3" selected>L3</option>
