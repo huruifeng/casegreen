@@ -2,8 +2,8 @@ import json
 import os
 from datetime import datetime, timedelta
 
+import numpy as np
 import pandas as pd
-from bottleneck import median
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
@@ -308,98 +308,26 @@ def caseinrange(request):
 
 def mynextstatus(request):
     mycase_status = request.GET.get("mystatus", None)
-    date_range = request.GET.get("daterange", None)
-    form_type = request.GET.get("form_type", None)
-    status_level = request.GET.get("status_level", None)
+    daterange = request.GET.get("daterange", None)
+    formtype = request.GET.get("form_type", None)
+    statuslvl = request.GET.get("status_level", None)
     receipt_num = request.GET.get("recepit_num", None)
-    center = request.GET.get("center", None)
 
     selectform = request.GET.get("selectform", None)
-
-    next_status = {}
-    to_endstatus = []
-
-    l4_name = get_l_status(mycase_status, "L4")
-    if l4_name == "Final":
-        next_status["Final"] = [0]
-        data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
-        return JsonResponse(data_dict, status=200)
-
-    today = datetime.today()
-    if date_range == "past3m":
-        date_s = today + timedelta(days=-90)
-    elif date_range == "past6m":
-        date_s = today + timedelta(days=-180)
-    elif date_range == "past9m":
-        date_s = today + timedelta(days=-270)
-    elif date_range == "past12m":
-        date_s = today + timedelta(days=-365)
-    else:
-        date_s = today + timedelta(days=-365)
-
-    if receipt_num is not None or center is None:
+    if receipt_num is not None:
         center = receipt_num[:3]
         lb_sc = "LB" if receipt_num[5] == "9" else "SC"
-        center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
-        if selectform == "yes" and form_type != "":
+        center = center.lower() + "_" + lb_sc.lower()
+        center_table = center_dict[center]
+        if selectform == "yes" and formtype != "":
             case_x = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date").first()
-            case_x.form = form_type
+            case_x.form = formtype
             case_x.save()
     else:
-        center_table = center_dict[center.lower()]
+        pass
 
-    if form_type == "":
-        data_dict = {"formempty": []}
-        return JsonResponse(data_dict, status=200)
 
-    case_qs = center_table.objects.filter(form=form_type, action_date_x__gte=date_s).order_by("add_date")
-    all_status = {}
-    for case_i in case_qs:
-        if case_i.receipt_number not in all_status:
-            all_status[case_i.receipt_number] = [case_i]
-        else:
-            all_status[case_i.receipt_number].append(case_i)
-
-    for rn_i in all_status:
-        rn_i_n = len(all_status[rn_i])
-        if rn_i_n <= 1: continue
-        rn_i_status_date = ""
-        for sn_i in range(rn_i_n):
-            status_i = all_status[rn_i][sn_i].status
-            if status_level != "L0":
-                status_i_l = get_l_status(status_i, status_level)
-                mycase_status_l = get_l_status(mycase_status, status_level)
-            else:
-                status_i_l = status_i
-                mycase_status_l = status_i
-            if status_i_l == mycase_status_l and (sn_i + 1) < rn_i_n and rn_i_status_date == "":
-                ## rn_i_status_date=="": only save the first pair of status change.
-                rn_i_status_date = all_status[rn_i][sn_i].action_date_x
-                next_s = get_l_status(all_status[rn_i][sn_i + 1].status, status_level)
-                next_s_days = (all_status[rn_i][sn_i + 1].action_date_x - all_status[rn_i][sn_i].action_date_x).days
-                if next_s_days <= 0: continue
-                if next_s not in next_status:
-                    next_status[next_s] = [next_s_days]
-                else:
-                    next_status[next_s].append(next_s_days)
-            if rn_i_status_date != "" and get_l_status(status_i, "L4") == "Final":
-                tofinal_days = (all_status[rn_i][sn_i].action_date_x - rn_i_status_date).days
-                if tofinal_days > 0:
-                    to_endstatus.append(tofinal_days)
-                break
-
-    for status_i in next_status:
-        x_len = len(next_status[status_i])
-        x_avg = int(sum(next_status[status_i]) / x_len)
-        x_mid = median(next_status[status_i])
-        x_min = min(next_status[status_i])
-        x_max = max(next_status[status_i])
-
-        next_status[status_i] = [x_len, x_avg, x_mid, x_min, x_max]
-    to_endstatus = [int(sum(to_endstatus) / len(to_endstatus)), median(to_endstatus), min(to_endstatus),
-                    max(to_endstatus)]
-    # print(next_status,to_endstatus)
-    data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
+    data_dict = get_nextstatus(center,formtype,mycase_status,statuslvl,daterange)
     return JsonResponse(data_dict, status=200)
 
 def dailyrecords(request):
@@ -835,6 +763,22 @@ def nextstatus(request):
 
     case_status_df = pd.read_csv("mycase/data/case_status.csv", header=0, index_col=None, sep=",")
     status_lvl_ls = sorted(case_status_df[statuslevel].unique())
+
+    ####
+    if daterange == "3m":
+        pass
+
+    if daterange == "6m":
+        pass
+
+    if daterange == "9m":
+        pass
+
+    if daterange == "12":
+        pass
+
+    if daterange == "fy":
+        pass
 
     context = {"page_title": "NextStatus!",  "form_ls": form_ls,"status_lvl_ls":status_lvl_ls,
                "center": center, "selectform": selectform, "statuslevel":statuslevel, "daterange": daterange,"cursta":cursta}

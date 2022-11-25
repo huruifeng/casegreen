@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
@@ -255,6 +258,7 @@
       <workItem from="1668476526045" duration="42908000" />
       <workItem from="1668982614021" duration="8525000" />
       <workItem from="1669170739021" duration="6783000" />
+      <workItem from="1669245100118" duration="9808000" />
     </task>
     <task id="LOCAL-00065" summary="updates">
       <created>1665417266509</created>

@@ -264,7 +264,7 @@
         }
         var center_ls_str = center_ls.join(",")
         alert(center_ls_str);
-        get_center_status_timer = setTimeout(get_center_status, 1000*10);
+        var get_center_status_timer = setInterval(get_center_status, 1000*10);
 
          $.ajax({
           type: "POST",
@@ -285,7 +285,7 @@
                   alert('Error occurs!');
             },
          complete: function (data){
-              clearTimeout(get_center_status_timer);
+              clearInterval(get_center_status_timer);
               get_center_status();
              }
          });

@@ -3,6 +3,7 @@ import json
 import os.path
 from datetime import date, timedelta, datetime
 
+import numpy as np
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -731,4 +732,82 @@ def get_rangestatuscount(center,fy, selectform,rangesize):
 
     return data_dict
 
+def get_nextstatus(center,formtype,curstat,statuslvl,daterange):
 
+    next_status = {}
+    to_endstatus = []
+
+    l4_name = get_l_status(curstat, "L4")
+    if l4_name == "Final":
+        next_status["Final"] = [0]
+        data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
+        return data_dict
+
+    today = datetime.today()
+    if daterange == "past3m":
+        date_s = today + timedelta(days=-90)
+    elif daterange == "past6m":
+        date_s = today + timedelta(days=-180)
+    elif daterange == "past9m":
+        date_s = today + timedelta(days=-270)
+    elif daterange == "past12m":
+        date_s = today + timedelta(days=-365)
+    elif  daterange == "thisfy":
+        date_s = today + timedelta(days=-365)
+
+
+    if formtype == "":
+        data_dict = {"formempty": []}
+        return data_dict
+
+    center_table = center_dict[center.lower()]
+    case_qs = center_table.objects.filter(form=formtype, action_date_x__gte=date_s).order_by("add_date")
+    all_status = {}
+    for case_i in case_qs:
+        if case_i.receipt_number not in all_status:
+            all_status[case_i.receipt_number] = [case_i]
+        else:
+            all_status[case_i.receipt_number].append(case_i)
+
+    for rn_i in all_status:
+        rn_i_n = len(all_status[rn_i])
+        if rn_i_n <= 1: continue
+        rn_i_status_date = ""
+        for sn_i in range(rn_i_n):
+            status_i = all_status[rn_i][sn_i].status
+            if statuslvl != "Status":
+                status_i_l = get_l_status(status_i, statuslvl)
+                mycase_status_l = get_l_status(curstat, statuslvl)
+            else:
+                status_i_l = status_i
+                mycase_status_l = status_i
+            if status_i_l == mycase_status_l and (sn_i + 1) < rn_i_n and rn_i_status_date == "":
+                ## rn_i_status_date=="": only save the first pair of status change.
+                rn_i_status_date = all_status[rn_i][sn_i].action_date_x
+                next_s = get_l_status(all_status[rn_i][sn_i + 1].status, statuslvl)
+                next_s_days = (all_status[rn_i][sn_i + 1].action_date_x - all_status[rn_i][sn_i].action_date_x).days
+                if next_s_days <= 0: continue
+                if next_s not in next_status:
+                    next_status[next_s] = [next_s_days]
+                else:
+                    next_status[next_s].append(next_s_days)
+            if rn_i_status_date != "" and get_l_status(status_i, "L4") == "Final":
+                tofinal_days = (all_status[rn_i][sn_i].action_date_x - rn_i_status_date).days
+                if tofinal_days > 0:
+                    to_endstatus.append(tofinal_days)
+                break
+
+    for status_i in next_status:
+        x_len = len(next_status[status_i])
+        x_avg = int(sum(next_status[status_i]) / x_len)
+        x_mid = np.median(next_status[status_i])
+        x_min = min(next_status[status_i])
+        x_max = max(next_status[status_i])
+
+        next_status[status_i] = [x_len, x_avg, x_mid, x_min, x_max]
+    to_endstatus = [int(sum(to_endstatus) / len(to_endstatus)), np.median(to_endstatus), min(to_endstatus),
+                    max(to_endstatus)]
+    # print(next_status,to_endstatus)
+    data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
+
+    return data_dict

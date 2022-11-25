@@ -50,11 +50,11 @@
                           </select>
                          <h5 class="ms-5 me-1 d-inline">Based on case action dates in: </h5>
                          <select class="select-input" id="daterange" name="daterange">
-                             <option value="2000" {% if daterange == "3m" %}selected{% endif %}>Past 3 months&nbsp;&nbsp;</option>
-                             <option value="5000" {% if daterange == "6m" %}selected{% endif %}>Past 6 months&nbsp;&nbsp;</option>
-                             <option value="10000" {% if daterange == "9m" %}selected{% endif %}>Past 9 months&nbsp;&nbsp;</option>
-                             <option value="10000" {% if daterange == "12m" %}selected{% endif %}>Past 12 months</option>
-                             <option value="10000" {% if daterange == "fy" %}selected{% endif %}>This fiscal year</option>
+                             <option value="2000" {% if daterange == "past3m" %}selected{% endif %}>Past 3 months&nbsp;&nbsp;</option>
+                             <option value="5000" {% if daterange == "past6m" %}selected{% endif %}>Past 6 months&nbsp;&nbsp;</option>
+                             <option value="10000" {% if daterange == "past9m" %}selected{% endif %}>Past 9 months&nbsp;&nbsp;</option>
+                             <option value="10000" {% if daterange == "past12m" %}selected{% endif %}>Past 12 months</option>
+                             <option value="10000" {% if daterange == "thisfy" %}selected{% endif %}>This fiscal year</option>
                          </select>
                          <h5 class="ms-5 mt-3 d-inline">Show status in level:</h5>
                          <select class="select-input" id="statuslevel" name="statuslevel">
