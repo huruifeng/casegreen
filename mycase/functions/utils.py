@@ -792,7 +792,7 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
         return data_dict
 
     center_table = center_dict[center.lower()]
-    print(datetime.now())
+    # print(datetime.now())
     case_qs = center_table.objects.filter(form=formtype, action_date_x__gte=date_s).order_by("add_date")
     all_status = {}
     for case_i in case_qs:
@@ -830,7 +830,7 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
                     if tofinal_days > 0:
                         to_endstatus.append(tofinal_days)
 
-    print(datetime.now())
+    # print(datetime.now())
     for status_i in next_status:
         x_len = len(next_status[status_i])
         x_avg = int(sum(next_status[status_i]) / x_len)
