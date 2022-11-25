@@ -326,7 +326,6 @@ def mynextstatus(request):
     else:
         pass
 
-
     data_dict = get_nextstatus(center,formtype,mycase_status,statuslvl,daterange)
     return JsonResponse(data_dict, status=200)
 
