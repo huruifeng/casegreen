@@ -758,31 +758,19 @@ def nextstatus(request):
         cursta = request.GET.get("cursta", None)
 
     if center is None or selectform is None or statuslevel is None or daterange is None or cursta is None:
-        return redirect("/nextstatus?center=LIN_LB&selectform=I-485&statuslevel=L3&daterange=3m&cursta=Received",status=200)
+        return redirect("/nextstatus?center=LIN_LB&selectform=I-485&statuslevel=L0&daterange=past3m&cursta=Case Was Received",status=200)
 
-    case_status_df = pd.read_csv("mycase/data/case_status.csv", header=0, index_col=None, sep=",")
-    status_lvl_ls = sorted(case_status_df[statuslevel].unique())
-
-    ####
-    if daterange == "3m":
-        pass
-
-    if daterange == "6m":
-        pass
-
-    if daterange == "9m":
-        pass
-
-    if daterange == "12":
-        pass
-
-    if daterange == "fy":
-        pass
-
-    context = {"page_title": "NextStatus!",  "form_ls": form_ls,"status_lvl_ls":status_lvl_ls,
+    status_lvl_ls = get_status_list()
+    data_dict = get_nextstatus(center, selectform, cursta, statuslevel, daterange)
+    context = {"page_title": "NextStatus!",  "form_ls": form_ls, "status_lvl_ls":status_lvl_ls, "data":data_dict,
                "center": center, "selectform": selectform, "statuslevel":statuslevel, "daterange": daterange,"cursta":cursta}
     return render(request, 'mycase/nextstatus.html', context)
 
+def get_status_list():
+    case_status_df = pd.read_csv("mycase/data/case_status.csv", header=0, index_col=None, sep=",")
+    status_lvl_ls = case_status_df.to_dict(orient="list")
+    status_lvl_ls = {k:sorted(set(status_lvl_ls[k])) for k in status_lvl_ls}
+    return status_lvl_ls
 
 def query(request):
     context = {"page_title": "Query"}

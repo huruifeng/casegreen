@@ -50,29 +50,25 @@
                           </select>
                          <h5 class="ms-5 me-1 d-inline">Based on case action dates in: </h5>
                          <select class="select-input" id="daterange" name="daterange">
-                             <option value="2000" {% if daterange == "past3m" %}selected{% endif %}>Past 3 months&nbsp;&nbsp;</option>
-                             <option value="5000" {% if daterange == "past6m" %}selected{% endif %}>Past 6 months&nbsp;&nbsp;</option>
-                             <option value="10000" {% if daterange == "past9m" %}selected{% endif %}>Past 9 months&nbsp;&nbsp;</option>
-                             <option value="10000" {% if daterange == "past12m" %}selected{% endif %}>Past 12 months</option>
-                             <option value="10000" {% if daterange == "thisfy" %}selected{% endif %}>This fiscal year</option>
+                             <option value="past3m" {% if daterange == "past3m" %}selected{% endif %}>Past 3 months&nbsp;&nbsp;</option>
+                             <option value="past6m" {% if daterange == "past6m" %}selected{% endif %}>Past 6 months&nbsp;&nbsp;</option>
+                             <option value="past9m" {% if daterange == "past9m" %}selected{% endif %}>Past 9 months&nbsp;&nbsp;</option>
+                             <option value="past12m" {% if daterange == "past12m" %}selected{% endif %}>Past 12 months</option>
+                             <option value="thisfy" {% if daterange == "thisfy" %}selected{% endif %}>This fiscal year</option>
                          </select>
                          <h5 class="ms-5 mt-3 d-inline">Show status in level:</h5>
-                         <select class="select-input" id="statuslevel" name="statuslevel">
+                         <select class="select-input" id="statuslevel" name="statuslevel" onchange="load_status()">
                              <option value="L3" {% if statuslevel == "L3" %}selected{% endif %}>L3&nbsp;&nbsp;</option>
                              <option value="L2" {% if statuslevel == "L2" %}selected{% endif %}>L2&nbsp;&nbsp;</option>
                              <option value="L1" {% if statuslevel == "L1" %}selected{% endif %}>L1&nbsp;&nbsp;</option>
-                             <option value="Status" {% if statuslevel == "Status" %}selected{% endif %}>Original&nbsp;&nbsp;</option>
+                             <option value="L0" {% if statuslevel == "L0" %}selected{% endif %}>Original&nbsp;&nbsp;</option>
                          </select>
                      </div>
                  </div>
                  <div class="row mt-2">
                      <div class="col-12">
                         <h5 class="ms-0 d-inline">Current status:</h5>
-                         <select class="me-5" id="cursta" name="cursta">
-                            {% for starus_i in status_lvl_ls %}
-                             <option value="{{ starus_i }}" {% if starus_i == cursta %}selected{% endif %}>{{ starus_i }}</option>
-                             {% endfor %}
-                         </select>
+                         <select class="me-5" id="cursta" name="cursta"> </select>
                          <button type="button" class="btn btn-sm btn-secondary" onclick="load_page()">Submit and Check</button>
                      </div>
                  </div>
@@ -96,7 +92,8 @@
         </div><!--row-->
     </div>
     <script type="text/javascript">
-
+    var status_lvl_ls ={{ status_lvl_ls | safe }};
+    var cursta_x ="{{ cursta | safe }}";
     $(".ctr_btn").click(function () {
         $(".ctr_btn").removeClass("btn-primary");
         $(".ctr_btn").addClass("btn-outline-primary");
@@ -112,7 +109,6 @@
                 return false;
             }
         });
-
         $("#bar_chart").addClass("d-none");
         $("#nextstatus_loading").removeClass("d-none");
         $("#bar_container").css("height","400px");
@@ -121,9 +117,25 @@
         var daterange = $("#daterange").val();
         var statuslevel = $("#statuslevel").val();
         var cursta = $("#cursta").val();
-
-        location.href = '{% url "mycase:nextstatus" %}?center='+center+'&selectform='+selectform+'&cursta='+cursta+'&statuslevel='+statuslevel+'&daterange='+daterange;
+        location.href = '{% url "mycase:nextstatus" %}?center='+center+'&selectform='+selectform+'&statuslevel='+statuslevel+'&daterange='+daterange+'&cursta='+cursta;
     }
+    
+    function load_status() {
+        var lvl = $("#statuslevel").val()
+        var status_ls = status_lvl_ls[lvl];
+        var html_str = "";
+        for(s_i of status_ls){
+            if(cursta_x == s_i){
+                html_str += "<option value='"+s_i+"' selected >"+s_i+"</option>";
+            }else{
+                html_str += "<option value='"+s_i+"' >"+s_i+"</option>";
+            }
+          $("#cursta").empty();
+          $("#cursta").html(html_str);
+        }
+    }
+    load_status();
+
 
     </script>
 
