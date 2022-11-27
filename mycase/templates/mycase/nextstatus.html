@@ -76,13 +76,13 @@
                      <div class="col-12">
                          <hr style="height: 1px;color: #666666">
                          <div id="bar_chart">
-                            <div class="d-none" id="nextstatus_loading">
+                            <div id="nextstatus_loading">
                                 <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
                             </div>
-                            <div id="bar_container" style="position: relative; height:20px;">
+                            <div class="d-none" id="bar_container" style="position: relative; height:20px;">
                                 <canvas id="bar_next_status"></canvas>
                             </div>
-                            <h5 id="daystofinal_h">Based on the data, it will take <span id="daystofinal"></span> days from your current status action date to FINAL action.</h5>
+                            <h5 class="d-none" id="daystofinal_h">Based on the data, it will take <span id="daystofinal"></span> days from your current status action date to FINAL action.</h5>
                         </div>
                      </div>
                  </div>
@@ -92,8 +92,13 @@
         </div><!--row-->
     </div>
     <script type="text/javascript">
+    var backgroundColor = ['rgba(75, 192, 192, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 159, 64, 0.5)', 'rgba(255, 205, 86, 0.5)',
+        'rgba(54, 162, 235, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(201, 203, 207, 0.5)' ];
+    var borderColor = ['rgb(75, 192, 192)','rgb(255, 99, 132)', 'rgb(255, 159, 64)','rgb(255, 205, 86)',
+            'rgb(54, 162, 235)','rgb(153, 102, 255)','rgb(201, 203, 207)' ];
     var status_lvl_ls ={{ status_lvl_ls | safe }};
     var cursta_x ="{{ cursta | safe }}";
+    var data = {{ data | safe }};
     $(".ctr_btn").click(function () {
         $(".ctr_btn").removeClass("btn-primary");
         $(".ctr_btn").addClass("btn-outline-primary");
@@ -109,10 +114,6 @@
                 return false;
             }
         });
-        $("#bar_chart").addClass("d-none");
-        $("#nextstatus_loading").removeClass("d-none");
-        $("#bar_container").css("height","400px");
-
         var selectform = $("#selectform").val();
         var daterange = $("#daterange").val();
         var statuslevel = $("#statuslevel").val();
@@ -135,6 +136,95 @@
         }
     }
     load_status();
+
+    function get_nextstatus() {
+        $("#nextstatus_loading").addClass("d-none");
+        $("#bar_container").removeClass("d-none");
+        $("#daystofinal_h").removeClass("d-none");
+
+        var next_status = data["next_status"];
+        var tofinal_status = data["to_endstatus"];
+        var formempty = data["formempty"];
+        if(formempty===undefined) {
+              if (next_status["Final"] === undefined) {
+                  next_status_n = Object.keys(next_status).length;
+                  if (next_status_n > 0) {
+                      var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
+                      var col_i = 0;
+                      for (const status_i in next_status) {
+                          case_n = next_status[status_i][0];
+                          day_avg = next_status[status_i][1];
+                          day_mid = next_status[status_i][2];
+                          day_min = next_status[status_i][3];
+                          day_max = next_status[status_i][4];
+                          data_ls.push(case_n);
+                          label_ls.push(status_i + " - Case count: " + case_n + ", Avg: " + day_avg + ", Median: " + day_mid + ", Min: " + day_min + ", Max: " + day_max);
+                          bg_ls.push(backgroundColor[col_i % 7]);
+                          bd_ls.push(borderColor[col_i % 7]);
+                          col_i = col_i + 1;
+                      }
+                      {#alert(next_status_n);#}
+                      $("#bar_container").css("height", (40 * next_status_n + 50) + "px")
+                      plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+
+                      $("#daystofinal").html("<u>Avg: " + tofinal_status[0] + ", Midian: " + tofinal_status[1] + ", Min: " + tofinal_status[2] + ",  Max: " + tofinal_status[3] + "</u>");
+
+                  } else {
+                      $("#bar_chart").empty();
+                      $("#bar_chart").html("<h5 class='ms-5'>Data is not availabe !</h5>");
+                  }
+              } else {
+                  $("#bar_chart").empty();
+                  $("#bar_chart").html("<h5 class='ms-5'>This status is defined as a FINAL status !</h5>");
+              }
+        }else{
+               $("#bar_chart").empty();
+               $("#bar_chart").html("<h5 class='ms-5'>Form type is not available, please pick one at the top !</h5>");
+        }
+    }
+    get_nextstatus();
+
+///////////////////////////////////////////////////////////////
+    function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
+        let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
+           if (chartStatus != undefined) {
+              chartStatus.destroy();
+           }
+        const data = {
+            labels: label_ls,
+            datasets: [{
+                axis: 'y',
+                label: "Next status",
+                data: data_ls,
+                fill: false,
+                backgroundColor: bg_ls,
+                borderColor: bd_ls,
+                borderWidth: 1
+            }]
+        };
+
+         const config = {
+          type: 'bar',
+          data: data,
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend:{display: false,},
+                title: {
+                    display: true,
+                    text: 'The next status and taking days based on the data in the selected date range',
+                    font: {size: 18}
+                }
+            },
+            scales: { y: { ticks: { mirror: true,}}}
+          },
+        };
+        var barChart = new Chart($('#bar_next_status'), config)
+
+    }
+
 
 
     </script>

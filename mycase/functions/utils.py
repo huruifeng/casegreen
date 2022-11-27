@@ -838,8 +838,10 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
         x_min = min(next_status[status_i])
         x_max = max(next_status[status_i])
         next_status[status_i] = [x_len, x_avg, x_mid, x_min, x_max]
-    to_endstatus = [int(sum(to_endstatus) / len(to_endstatus)), np.median(to_endstatus), min(to_endstatus),
-                    max(to_endstatus)]
+    if(len(to_endstatus))!=0:
+        to_endstatus = [int(sum(to_endstatus) / len(to_endstatus)), np.median(to_endstatus), min(to_endstatus), max(to_endstatus)]
+    else:
+        to_endstatus = ["NA","NA","NA","NA"]
     # print(next_status,to_endstatus)
     data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
 
