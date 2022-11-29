@@ -758,7 +758,7 @@ def nextstatus(request):
         cursta = request.GET.get("cursta", None)
 
     if center is None or selectform is None or statuslevel is None or daterange is None or cursta is None:
-        return redirect("/nextstatus?center=LIN_LB&selectform=I-485&statuslevel=L0&daterange=past3m&cursta=Case Was Received",status=200)
+        return redirect("/nextstatus?center=LIN_LB&selectform=I-485&statuslevel=L0NS&daterange=past3m&cursta=Case Was Received",status=200)
 
     status_lvl_ls = get_status_list()
     data_dict = get_nextstatus(center, selectform, cursta, statuslevel, daterange)

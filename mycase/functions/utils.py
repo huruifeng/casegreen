@@ -769,6 +769,15 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
     next_status = {}
     to_endstatus = []
 
+    ## Check the request from NextStatus(L1NS,L2NS,...) page or myCase("L1","L2",...) page
+    ## if from NextStatus page the "curstat" is already transferred to the level
+    ## set the "curstatuslvl" to "L0", it will keep the raw "curstat"
+    if statuslvl[-2:]=="NS":
+        curstatuslvl = "L0"
+    else:
+        curstatuslvl = statuslvl
+    statuslvl = statuslvl[:-2]
+
     l4_name = get_l_status(curstat, "L4")
     if l4_name == "Final":
         next_status["Final"] = [0]
@@ -785,7 +794,11 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
     elif daterange == "past12m":
         date_s = today + timedelta(days=-365)
     elif daterange == "thisfy":
-        date_s = today + timedelta(days=-365)
+        if today.month > 9:
+            date_s = date(today.year,10,1)
+        else:
+            date_s = date(today.year-1, 10, 1)
+
 
     if formtype == "":
         data_dict = {"formempty": []}
@@ -805,17 +818,14 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
     for rn_i in all_status:
         rn_i_n = len(all_status[rn_i])
         if rn_i_n <= 1: continue
-        rn_i_status_date = ""
         for sn_i in range(rn_i_n):
             status_i = all_status[rn_i][sn_i].status
-            if statuslvl != "Status":
-                status_i_l = get_l_status(status_i, statuslvl)
-                mycase_status_l = get_l_status(curstat, statuslvl)
-            else:
-                status_i_l = status_i
-                mycase_status_l = status_i
+            status_i_l = get_l_status(status_i, statuslvl)
+            mycase_status_l = get_l_status(curstat, curstatuslvl)
+            # print(mycase_status_l)
+
             if status_i_l == mycase_status_l and (sn_i + 1) < rn_i_n: # and rn_i_status_date == "":
-                ## Adding this: rn_i_status_date=="" to abpve only saving the first pair of status change.
+                ## Adding this: rn_i_status_date=="" to above only saving the first pair of status change.
                 rn_i_status_date = all_status[rn_i][sn_i].action_date_x
                 next_s = get_l_status(all_status[rn_i][sn_i + 1].status, statuslvl)
                 next_s_days = (all_status[rn_i][sn_i + 1].action_date_x - rn_i_status_date).days

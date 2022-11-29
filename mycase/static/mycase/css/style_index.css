@@ -1,60 +1,45 @@
 html,
-body{
+body,
+.main_content{
   height: 100vh;
 }
-
-.main_content {
-  min-height: 100vh;
-  position: relative;
-}
-
-#content-wrap{
-  padding-bottom: 90px;
-}
-
-footer {
-   position: absolute;
-   bottom: 0;
-   width: 100%;
-   height: 60px;   /* Height of the footer */
-}
-
 
 .navbar{
   box-shadow:None;
 }
+
 .navbar-nav{
   flex-direction: row;
 }
+
 .navbar-nav .nav-link {
-  color: black;
+  color: white;
   padding-left: 8px;
   padding-right: 8px;
 }
 
 .nav-link:hover {
   text-decoration: underline;
-  color: black;
+  color: white;
 }
 
 .nav-link:visited {
-  color: black;
+  color: white;
 }
 
 .header-right-icon{
-  color:#333;
+  color:white;
 }
 
 #subtitle-text{
-  color:black;
-}
-
-.card {
-  box-shadow: None;
+  color:white;
 }
 
 #dashbord-btn,#today-btn{
   box-shadow: None;
+}
+.card{
+  background-color: rgba(255,255,255,0.4);
 }
 .blue{
   color: #2d48cb;
@@ -63,3 +48,9 @@ footer {
 .black{
   color:black;
 }
+
+th{
+  font-weight: bold;
+}
+
+

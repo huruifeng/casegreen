@@ -1,31 +1,17 @@
 html,
-body{
+body,
+.main_content{
   height: 100vh;
 }
-
-.main_content {
-  min-height: 100vh;
-  position: relative;
-}
-
-#content-wrap{
-  padding-bottom: 90px;
-}
-
-footer {
-   position: absolute;
-   bottom: 0;
-   width: 100%;
-   height: 60px;   /* Height of the footer */
-}
-
 
 .navbar{
   box-shadow:None;
 }
+
 .navbar-nav{
   flex-direction: row;
 }
+
 .navbar-nav .nav-link {
   color: black;
   padding-left: 8px;

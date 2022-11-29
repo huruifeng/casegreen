@@ -12,7 +12,7 @@
     <!-- MDB -->
     <link rel="stylesheet" href={% static "css/mdb.min.css" %}/>
     <!-- Custom styles -->
-    <link rel="stylesheet" id="theme_css" href={% static "mycase/css/style_white_bg.css" %} />
+    <link rel="stylesheet" id="theme_css" href={% static "mycase/css/style_white_bg_index.css" %} />
 </head>
 <body>
 <div class="main_content">
@@ -122,7 +122,7 @@
                 <div class="col-md-6" style="max-width: 820px;">
                     <p class="h2" id="subtitle-text">Check the status of your case. <br> More than on USCIS.</p>
                     <div class="card">
-                      <div class="card-body ps-0 pe-0 pb-2">
+                      <div class="card-body ps-2 pe-2 pb-2">
                         <div class="row">
                           <div class="col-12">
                               <form action="/mycase" method="get">
@@ -161,25 +161,25 @@
             <!-- Section: Social media -->
             <section class="mb-4 footer_btn">
               <!-- Facebook -->
-              <a class="btn btn-outline-light btn-floating m-2" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-outline-black btn-floating m-2" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
               <!-- Twitter -->
-              <a class="btn btn-outline-light btn-floating m-2" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+              <a class="btn btn-outline-black btn-floating m-2" href="#!" role="button"><i class="fab fa-twitter"></i></a>
               <!-- Google -->
-              <a class="btn btn-outline-light btn-floating m-2" href="#!" role="button"><i class="fab fa-google"></i></a>
+              <a class="btn btn-outline-black btn-floating m-2" href="#!" role="button"><i class="fab fa-google"></i></a>
               <!-- Instagram -->
-              <a class="btn btn-outline-light btn-floating m-2" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+              <a class="btn btn-outline-black btn-floating m-2" href="#!" role="button"><i class="fab fa-instagram"></i></a>
               <!-- Linkedin -->
-              <a class="btn btn-outline-light btn-floating m-2" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+              <a class="btn btn-outline-black btn-floating m-2" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
               <!-- Github -->
-              <a class="btn btn-outline-light btn-floating m-2" href="#!" role="button"><i class="fab fa-github"></i></a>
+              <a class="btn btn-outline-black btn-floating m-2" href="#!" role="button"><i class="fab fa-github"></i></a>
             </section>
             <!-- Section: Social media -->
           </div>
           <!-- Grid container -->
             <!-- Copyright -->
-          <div class="text-center pb-4" id="copyright" style="color:white;">
+          <div class="text-center pb-4" id="copyright" style="color:black;">
             © 2021 Copyright:
-            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+            <a class="text-reset fw-bold" href="#">CaseGreen.com</a>
           </div>
           <!-- Copyright -->
 
@@ -218,8 +218,7 @@
                 $("section.footer_btn > a.btn").removeClass("btn-outline-light");
                 $("section.footer_btn > a.btn").addClass("btn-outline-black");
                 $("#copyright").css("color", "black");
-
-                changeCSS("{% static "mycase/css/style_white_bg.css" %}");
+                changeCSS("{% static "mycase/css/style_white_bg_index.css" %}");
             }else {
                 $(".bg-image").css("background-image", "url({% static "mycase/img/img2.jpg" %}");
                 $(".mask").css("background-color", 'rgba(0,0,0, 0.35)');
@@ -231,7 +230,7 @@
                 $("section.footer_btn > a.btn").removeClass("btn-outline-black");
                 $("section.footer_btn > a.btn").addClass("btn-outline-light");
                 $("#copyright").css("color", "white");
-                changeCSS("{% static "mycase/css/style.css" %}");
+                changeCSS("{% static "mycase/css/style_index.css" %}");
 
             }
 

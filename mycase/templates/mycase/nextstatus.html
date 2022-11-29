@@ -58,10 +58,10 @@
                          </select>
                          <h5 class="ms-5 mt-3 d-inline">Show status in level:</h5>
                          <select class="select-input" id="statuslevel" name="statuslevel" onchange="load_status()">
-                             <option value="L3" {% if statuslevel == "L3" %}selected{% endif %}>L3&nbsp;&nbsp;</option>
-                             <option value="L2" {% if statuslevel == "L2" %}selected{% endif %}>L2&nbsp;&nbsp;</option>
-                             <option value="L1" {% if statuslevel == "L1" %}selected{% endif %}>L1&nbsp;&nbsp;</option>
-                             <option value="L0" {% if statuslevel == "L0" %}selected{% endif %}>Original&nbsp;&nbsp;</option>
+                             <option value="L3NS" {% if statuslevel == "L3NS" %}selected{% endif %}>L3&nbsp;&nbsp;</option>
+                             <option value="L2NS" {% if statuslevel == "L2NS" %}selected{% endif %}>L2&nbsp;&nbsp;</option>
+                             <option value="L1NS" {% if statuslevel == "L1NS" %}selected{% endif %}>L1&nbsp;&nbsp;</option>
+                             <option value="L0NS" {% if statuslevel == "L0NS" %}selected{% endif %}>Original&nbsp;&nbsp;</option>
                          </select>
                      </div>
                  </div>
@@ -122,7 +122,7 @@
     }
     
     function load_status() {
-        var lvl = $("#statuslevel").val()
+        var lvl = $("#statuslevel").val().slice(0, 2)
         var status_ls = status_lvl_ls[lvl];
         var html_str = "";
         for(s_i of status_ls){
@@ -164,7 +164,7 @@
                           col_i = col_i + 1;
                       }
                       {#alert(next_status_n);#}
-                      $("#bar_container").css("height", (40 * next_status_n + 50) + "px")
+                      $("#bar_container").css("height", (45 * next_status_n + 70) + "px")
                       plot_bar(label_ls, data_ls, bg_ls, bd_ls);
 
                       $("#daystofinal").html("<u>Avg: " + tofinal_status[0] + ", Midian: " + tofinal_status[1] + ", Min: " + tofinal_status[2] + ",  Max: " + tofinal_status[3] + "</u>");
