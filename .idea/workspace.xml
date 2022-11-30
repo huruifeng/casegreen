@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/css/style_index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/static/mycase/css/style_white_bg_index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/style_white_bg.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/style_white_bg.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/countscalendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/countscalendar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -268,14 +260,7 @@
       <workItem from="1669480019858" duration="10875000" />
       <workItem from="1669586340349" duration="824000" />
       <workItem from="1669654443183" duration="16495000" />
-      <workItem from="1669692259305" duration="4363000" />
-    </task>
-    <task id="LOCAL-00070" summary="updates">
-      <created>1665705167833</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1665705167834</updated>
+      <workItem from="1669692259305" duration="12200000" />
     </task>
     <task id="LOCAL-00071" summary="updates">
       <created>1665725269028</created>
@@ -613,7 +598,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669525791310</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="updates">
+      <created>1669698897560</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1669698897560</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

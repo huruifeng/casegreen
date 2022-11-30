@@ -216,16 +216,40 @@
                     display: true,
                     text: 'The next status and taking days based on the data in the selected date range',
                     font: {size: 18}
+                },
+                subtitle: {
+                    display: true,
+                    text: '(Click on the bar to see the distributions of the days)',
+                    font: {size: 16}
                 }
             },
-            scales: { y: { ticks: { mirror: true,}}}
+            scales: { y: { ticks: { mirror: true,}}},
+            onClick: (event,chartElement) => {
+                    console.log(chartElement);
+                    if (chartElement.length) {
+                        const elt = chartElement[0];
+                        const label = barChart.data.labels[elt.index];
+                        const slabel = barChart.data.datasets[elt.datasetIndex].label;
+                        const value = barChart.data.datasets[elt.datasetIndex].data[elt.index];
+                        console.log(label, slabel, value);
+                        daysDistributeion();
+                      }
+
+                  },
+            onHover: (evt,chartElement)=>{
+                 if (chartElement.length) evt.native.target.style.cursor = 'pointer';
+                 else evt.native.target.style.cursor = 'default';
+            }
+
           },
         };
         var barChart = new Chart($('#bar_next_status'), config)
 
     }
 
-
+    function daysDistributeion(){
+        alert("123");
+    }
 
     </script>
 
