@@ -841,17 +841,18 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
                         to_endstatus.append(tofinal_days)
 
     # print(datetime.now())
-    for status_i in next_status:
-        x_len = len(next_status[status_i])
-        x_avg = int(sum(next_status[status_i]) / x_len)
-        x_mid = np.median(next_status[status_i])
-        x_min = min(next_status[status_i])
-        x_max = max(next_status[status_i])
-        next_status[status_i] = [x_len, x_avg, x_mid, x_min, x_max]
+    # for status_i in next_status:
+    #     x_len = len(next_status[status_i])
+    #     x_avg = int(sum(next_status[status_i]) / x_len)
+    #     x_mid = np.median(next_status[status_i])
+    #     x_min = min(next_status[status_i])
+    #     x_max = max(next_status[status_i])
+    #     next_status[status_i] = [x_len, x_avg, x_mid, x_min, x_max]
     if(len(to_endstatus))!=0:
-        to_endstatus = [int(sum(to_endstatus) / len(to_endstatus)), np.median(to_endstatus), min(to_endstatus), max(to_endstatus)]
+        pass
+        # to_endstatus = [int(sum(to_endstatus) / len(to_endstatus)), np.median(to_endstatus), min(to_endstatus), max(to_endstatus)]
     else:
-        to_endstatus = ["NA","NA","NA","NA"]
+        to_endstatus = []
     # print(next_status,to_endstatus)
     data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
 

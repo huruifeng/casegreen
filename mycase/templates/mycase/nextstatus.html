@@ -90,12 +90,37 @@
 
             </div> <!--col-6-->
         </div><!--row-->
+        <!-- Modal -->
+        <div class="modal fade" id="dayDistribution" tabindex="-1" aria-labelledby="dayDistributionLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Days distribution</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="hist_div">...</div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
+
+
     <script type="text/javascript">
     var backgroundColor = ['rgba(75, 192, 192, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 159, 64, 0.5)', 'rgba(255, 205, 86, 0.5)',
         'rgba(54, 162, 235, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(201, 203, 207, 0.5)' ];
     var borderColor = ['rgb(75, 192, 192)','rgb(255, 99, 132)', 'rgb(255, 159, 64)','rgb(255, 205, 86)',
             'rgb(54, 162, 235)','rgb(153, 102, 255)','rgb(201, 203, 207)' ];
+    const arrSum = arr => arr.reduce((a,b) => a + b, 0)
+    const arrMax = arr => Math.max(...arr);
+    const arrMin = arr => Math.min(...arr);
+    const arrMid = arr => {
+        const mid = Math.floor(arr.length / 2),
+        nums = [...arr].sort((a, b) => a - b);
+        return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+    };
     var status_lvl_ls ={{ status_lvl_ls | safe }};
     var cursta_x ="{{ cursta | safe }}";
     var data = {{ data | safe }};
@@ -152,13 +177,13 @@
                       var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
                       var col_i = 0;
                       for (const status_i in next_status) {
-                          case_n = next_status[status_i][0];
-                          day_avg = next_status[status_i][1];
-                          day_mid = next_status[status_i][2];
-                          day_min = next_status[status_i][3];
-                          day_max = next_status[status_i][4];
+                          case_n = next_status[status_i].length;
+                          day_avg = arrSum(next_status[status_i])/case_n;
+                          day_mid = arrMid(next_status[status_i]);
+                          day_min = arrMin(next_status[status_i]);
+                          day_max =  arrMax(next_status[status_i]);
                           data_ls.push(case_n);
-                          label_ls.push(status_i + " - Case count: " + case_n + ", Avg: " + day_avg + ", Median: " + day_mid + ", Min: " + day_min + ", Max: " + day_max);
+                          label_ls.push(status_i + " - Case count: " + case_n + ", Avg: " + Math.round(day_avg) + ", Median: " + day_mid + ", Min: " + day_min + ", Max: " + day_max);
                           bg_ls.push(backgroundColor[col_i % 7]);
                           bd_ls.push(borderColor[col_i % 7]);
                           col_i = col_i + 1;
@@ -167,7 +192,7 @@
                       $("#bar_container").css("height", (45 * next_status_n + 70) + "px")
                       plot_bar(label_ls, data_ls, bg_ls, bd_ls);
 
-                      $("#daystofinal").html("<u>Avg: " + tofinal_status[0] + ", Midian: " + tofinal_status[1] + ", Min: " + tofinal_status[2] + ",  Max: " + tofinal_status[3] + "</u>");
+                      $("#daystofinal").html("<u>Avg: " + Math.round(arrSum(tofinal_status)/tofinal_status.length) + ", Midian: " + arrMid(tofinal_status) + ", Min: " + arrMin(tofinal_status) + ",  Max: " + arrMax(tofinal_status) + "</u>");
 
                   } else {
                       $("#bar_chart").empty();
@@ -185,7 +210,7 @@
     get_nextstatus();
 
 ///////////////////////////////////////////////////////////////
-    function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
+    function plot_bar(label_ls,data_ls,bg_ls, bd_ls,days_ls) {
         let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
            if (chartStatus != undefined) {
               chartStatus.destroy();
@@ -225,30 +250,42 @@
             },
             scales: { y: { ticks: { mirror: true,}}},
             onClick: (event,chartElement) => {
-                    console.log(chartElement);
-                    if (chartElement.length) {
-                        const elt = chartElement[0];
-                        const label = barChart.data.labels[elt.index];
-                        const slabel = barChart.data.datasets[elt.datasetIndex].label;
-                        const value = barChart.data.datasets[elt.datasetIndex].data[elt.index];
-                        console.log(label, slabel, value);
-                        daysDistributeion();
-                      }
+                {#console.log(chartElement);#}
+                if (chartElement.length) {
+                    const elt = chartElement[0];
+                    const label = barChart.data.labels[elt.index];
+                    {#const slabel = barChart.data.datasets[elt.datasetIndex].label;#}
+                    {#const value = barChart.data.datasets[elt.datasetIndex].data[elt.index];#}
+                    {#console.log(label, slabel, value);#}
+                    daysDistributeion(label);
+                }
 
-                  },
+            },
             onHover: (evt,chartElement)=>{
-                 if (chartElement.length) evt.native.target.style.cursor = 'pointer';
-                 else evt.native.target.style.cursor = 'default';
+                if (chartElement.length) evt.native.target.style.cursor = 'pointer';
+                else evt.native.target.style.cursor = 'default';
             }
 
           },
         };
         var barChart = new Chart($('#bar_next_status'), config)
-
     }
 
-    function daysDistributeion(){
-        alert("123");
+    function daysDistributeion(label){
+        var label = label.split("-")[0].trim();
+        var days_ls = data["next_status"][label];
+
+        var days_dict = {};
+        for(let d_i of days_ls){
+            if(d_i in days_dict) days_dict[d_i] += 1;
+            else days_dict[d_i] = 1;
+        }
+        console.log(days_dict);
+        plot_hist(days_dict);
+        $("#dayDistribution").modal('show');
+    }
+    function plot_hist(days_dict) {
+
     }
 
     </script>
