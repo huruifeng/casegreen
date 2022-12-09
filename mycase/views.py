@@ -772,6 +772,15 @@ def get_status_list():
     status_lvl_ls = {k:sorted(set(status_lvl_ls[k])) for k in status_lvl_ls}
     return status_lvl_ls
 
+def summaryrn(request):
+    context = {"page_title": "Summary by Receipt Number"}
+    return render(request, 'mycase/summaryrn.html', context)
+
+def summaryrd(request):
+    context = {"page_title": "Summary by Receipt Date"}
+    return render(request, 'mycase/summaryrd.html', context)
+
+
 def query(request):
     context = {"page_title": "Query"}
     return render(request, 'mycase/query.html', context)
