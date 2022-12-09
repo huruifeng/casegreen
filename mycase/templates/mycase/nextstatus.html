@@ -92,13 +92,18 @@
         </div><!--row-->
         <!-- Modal -->
         <div class="modal fade" id="dayDistribution" tabindex="-1" aria-labelledby="dayDistributionLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
+          <div class="modal-dialog modal-xl" style="min-width: 1000px;">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Days distribution</h5>
+                  <h5 class="modal-title" id="exampleModalLabel"><strong>Days distribution:</strong> <span id="modal_title_nextstatus"></span></h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body" id="hist_div">...</div>
+              <div class="modal-body" id="hist_div">
+                  <div class="row" style="width: 100%;min-width: 1000px;">
+                    <div class="col-md-10" id="hist_chart" style="height: 450px; width:850px;"></div>
+                    <div class="col-md-2" id="box_chart" style="height: 450px; width: 150px;"></div>
+                  </div>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
               </div>
@@ -280,11 +285,88 @@
             if(d_i in days_dict) days_dict[d_i] += 1;
             else days_dict[d_i] = 1;
         }
-        console.log(days_dict);
         plot_hist(days_dict);
+        plot_box(days_ls);
+
+        $("#modal_title_nextstatus").empty();
+        $("#modal_title_nextstatus").html(label);
+
         $("#dayDistribution").modal('show');
     }
     function plot_hist(days_dict) {
+        var chartDom = document.getElementById('hist_chart');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+          xAxis: {
+              name: 'Days',
+            type: 'category',
+            data: Object.keys(days_dict)
+          },
+          yAxis: {
+              name: 'Counts',
+            type: 'value'
+          },
+          series: [
+            {
+              data: Object.values(days_dict),
+              type: 'bar'
+            }
+          ]
+        };
+
+        option && myChart.setOption(option);
+    }
+
+    function plot_box(days_ls) {
+
+        var chartDom = document.getElementById('box_chart');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+          dataset: [
+            {
+              // prettier-ignore
+              source: [days_ls,]
+            },
+            {
+              transform: {
+                type: 'boxplot',
+                config: { itemNameFormatter: 'Days' }
+              }
+            },
+            {
+              fromDatasetIndex: 1,
+              fromTransformResult: 1
+            }
+          ],
+          grid: {
+            left: '30px',
+          },
+          xAxis: {
+            type: 'category',
+          },
+          yAxis: {
+            type: 'value',
+            name: 'Days',
+          },
+          series: [
+            {
+              name: 'boxplot',
+              type: 'boxplot',
+              datasetIndex: 1
+            },
+            {
+              name: 'outlier',
+              type: 'scatter',
+              datasetIndex: 1
+            }
+          ]
+        };
+
+        option && myChart.setOption(option);
 
     }
 
