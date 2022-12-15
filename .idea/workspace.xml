@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/summaryrd.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/summaryrn.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/summaryrn.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/summaryrn.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
@@ -52,12 +55,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/templates/mycase",
+    "last_opened_file_path": "F:/PyCharm_project/casegreen/ctrlpanel/functions",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "vcs.Subversion"
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -69,11 +73,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\functions" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
       <recent name="F:\PyCharm_project\casegreen\ctrlpanel\templates\ctrlpanel" />
       <recent name="F:\PyCharm_project\casegreen\static\img" />
-      <recent name="F:\PyCharm_project\casegreen\static\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\PyCharm_project\casegreen\mycase\templates" />
@@ -120,6 +124,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="rddate_correction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="casegreen" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ctrlpanel/functions" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -176,6 +199,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.rddate_correction" />
         <item itemvalue="Python.dailycount_correction" />
         <item itemvalue="Python.check_case" />
         <item itemvalue="Python.dailycount_correction" />
@@ -266,14 +290,10 @@
       <workItem from="1669654443183" duration="16495000" />
       <workItem from="1669692259305" duration="13034000" />
       <workItem from="1669867050492" duration="3404000" />
-      <workItem from="1670381074174" duration="15630000" />
-    </task>
-    <task id="LOCAL-00074" summary="updates">
-      <created>1665935896211</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1665935896211</updated>
+      <workItem from="1670381074174" duration="16135000" />
+      <workItem from="1670653890053" duration="1327000" />
+      <workItem from="1670714131028" duration="5076000" />
+      <workItem from="1670956406805" duration="25696000" />
     </task>
     <task id="LOCAL-00075" summary="updates">
       <created>1665936796446</created>
@@ -611,7 +631,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670563065537</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="updates">
+      <created>1670563822249</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1670563822249</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

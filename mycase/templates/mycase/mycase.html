@@ -171,6 +171,26 @@
                             <h5 id="daystofinal_h">Based on the data, it will take <span id="daystofinal"></span> days from your current status action date to FINAL action.</h5>
                         </div>
                      </div>
+                     <!-- Modal -->
+                    <div class="modal fade" id="dayDistribution" tabindex="-1" aria-labelledby="dayDistributionLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl" style="min-width: 1000px;">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel"><strong>Days distribution:</strong> <span id="modal_title_nextstatus"></span></h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body" id="hist_div">
+                              <div class="row" style="width: 100%;min-width: 1000px;">
+                                <div class="col-md-10" id="hist_chart" style="height: 450px; width:850px;"></div>
+                                <div class="col-md-2" id="box_chart" style="height: 450px; width: 150px;"></div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                  </div>
                  <!-- End of next step -->
 
@@ -435,274 +455,394 @@
     var borderColor = ['rgb(75, 192, 192)','rgb(255, 99, 132)', 'rgb(255, 159, 64)','rgb(255, 205, 86)',
             'rgb(54, 162, 235)','rgb(153, 102, 255)','rgb(201, 203, 207)' ];
 
+    const arrSum = arr => arr.reduce((a,b) => a + b, 0)
+    const arrMax = arr => Math.max(...arr);
+    const arrMin = arr => Math.min(...arr);
+    const arrMid = arr => {
+        const mid = Math.floor(arr.length / 2),
+        nums = [...arr].sort((a, b) => a - b);
+        return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+    };
+
     function select_form() {
         get_data();
         get_nextstatus();
     }
     function get_data() {
-            var selectform = $("#selectform").val();
-            if(selectform==undefined){
-                var form_type = $("#form_type").val();
-                var selectform="no"
-            }else{
-                var form_type = selectform;
-                var selectform="yes"
-            }
-
-            var recepit_num = $("#recepit_num").val();
-            var range_val = $("#case_range").val();
-
-            $("#case_in_receipt_order").empty();
-            $("#lollipop_legend").empty();
-
-            $.ajax({
-              type: "GET",
-              url: "ajax/caseinrange",
-              async: true,
-              data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val,"selectform":selectform},
-              success : function(data) {
-                  var n_case = data["n_cases"];
-                  $(".n_cases").html(n_case);
-                  if(n_case == -1){
-                      alert(data["message"]);
-                  } else if(n_case == 0){
-                      $("#status_count_list").addClass("d-none");
-                      $("#myposition_RN_order").addClass("d-none");
-                      $("#myposition_status_order").addClass("d-none");
-                      $("#donut_chart").addClass("d-none");
-                      $("#recent_changes").addClass("d-none");
-                      $("#recent_cases").addClass("d-none");
-                      $(".na_h5").removeClass("d-none");
-                      alert(data["message"]);
-                  }else{
-                      $(".na_h5").addClass("d-none");
-                      $("#status_count_list").removeClass("d-none");
-                      $("#myposition_RN_order").removeClass("d-none");
-                      $("#myposition_status_order").removeClass("d-none");
-                      $("#donut_chart").removeClass("d-none");
-                      $("#recent_changes").removeClass("d-none");
-                      $("#recent_cases").removeClass("d-none");
-
-                      plot_donut(data["status_counts"]);
-                      draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
-
-                      $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
-                      $("#rec_bar").html(data["status_counts"][0]);
-
-                      $("#fp_bar").css('width', data["status_counts"][1] /n_case *100 + "%");
-                      $("#fp_bar").html(data["status_counts"][1]);
-
-                      $("#itv_bar").css('width', data["status_counts"][2] /n_case *100 + "%");
-                      $("#itv_bar").html(data["status_counts"][2]);
-
-                      $("#rfe_bar").css('width', data["status_counts"][3] /n_case *100 + "%");
-                      $("#rfe_bar").html(data["status_counts"][3]);
-
-                      $("#trf_bar").css('width', data["status_counts"][4] /n_case *100 + "%");
-                      $("#trf_bar").html(data["status_counts"][4]);
-
-                      $("#apv_bar").css('width', data["status_counts"][5] /n_case *100 + "%");
-                      $("#apv_bar").html(data["status_counts"][5]);
-
-                      $("#rjc_bar").css('width' ,data["status_counts"][6] /n_case *100 + "%");
-                      $("#rjc_bar").html(data["status_counts"][6]);
-
-                      $("#oth_bar").css('width', data["status_counts"][7] /n_case *100 + "%");
-                      $("#oth_bar").html(data["status_counts"][7]);
-
-                      $("#mypos_pointer").css('width', data["mypos"] + "%");
-                      $("#mypos_text").html(data["mypos_text"]);
-
-                       $("#fp_1d>span").html(data["status_1d"]["FP_Taken"]);$("#fp_1w>span").html(data["status_1w"]["FP_Taken"]);$("#fp_2w>span").html(data["status_2w"]["FP_Taken"]);
-                       $("#itv_1d>span").html(data["status_1d"]["Interviewed"]);$("#itv_1w>span").html(data["status_1w"]["Interviewed"]);$("#itv_2w>span").html(data["status_2w"]["Interviewed"]);
-                       $("#rfe_1d>span").html(data["status_1d"]["RFE"]);$("#rfe_1w>span").html(data["status_1w"]["RFE"]);$("#rfe_2w>span").html(data["status_2w"]["RFE"]);
-                       $("#trf_1d>span").html(data["status_1d"]["Transferred"]);$("#trf_1w>span").html(data["status_1w"]["Transferred"]);$("#trf_2w>span").html(data["status_2w"]["Transferred"]);
-                       $("#apv_1d>span").html(data["status_1d"]["Approved"]);$("#apv_1w>span").html(data["status_1w"]["Approved"]);$("#apv_2w>span").html(data["status_2w"]["Approved"]);
-                       $("#rjc_1d>span").html(data["status_1d"]["Rejected"]);$("#rjc_1w>span").html(data["status_1w"]["Rejected"]);$("#rjc_2w>span").html(data["status_2w"]["Rejected"]);
-                       $("#oth_1d>span").html(data["status_1d"]["Other"]);$("#oth_1w>span").html(data["status_1w"]["OTH"]);$("#oth_2w>span").html(data["status_2w"]["Other"]);
-
-                       var  html_str = "";
-                       for(const case_i in data["recent_apv"]){
-                           html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_apv"][case_i]+'</li>';
-                       }
-                       $("#list-recent-apv").html(html_str);
-
-                       var  html_str = "";
-                       for(const case_i in data["recent_trf"]){
-                           html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_trf"][case_i]+'</li>';
-                       }
-                       $("#list-recent-trf").html(html_str);
-
-                       var  html_str = "";
-                       for(const case_i in data["recent_rfe"]){
-                           html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_rfe"][case_i]+'</li>';
-                       }
-                       $("#list-recent-rfe").html(html_str);
-                  }
-
-                },
-              error: function() {
-                      alert('Error occurs!');
-                }
-            });
+        var selectform = $("#selectform").val();
+        if(selectform==undefined){
+            var form_type = $("#form_type").val();
+            var selectform="no"
+        }else{
+            var form_type = selectform;
+            var selectform="yes"
         }
-        get_data();
 
-        function get_nextstatus() {
-            var selectform = $("#selectform").val();
-            if(selectform==undefined){
-                var form_type = $("#form_type").val();
-                var selectform="no"
-            }else{
-                var form_type = selectform;
-                var selectform="yes"
+        var recepit_num = $("#recepit_num").val();
+        var range_val = $("#case_range").val();
+
+        $("#case_in_receipt_order").empty();
+        $("#lollipop_legend").empty();
+
+        $.ajax({
+          type: "GET",
+          url: "ajax/caseinrange",
+          async: true,
+          data:{"recepit_num":recepit_num,"form_type":form_type,"case_range":range_val,"selectform":selectform},
+          success : function(data) {
+              var n_case = data["n_cases"];
+              $(".n_cases").html(n_case);
+              if(n_case == -1){
+                  alert(data["message"]);
+              } else if(n_case == 0){
+                  $("#status_count_list").addClass("d-none");
+                  $("#myposition_RN_order").addClass("d-none");
+                  $("#myposition_status_order").addClass("d-none");
+                  $("#donut_chart").addClass("d-none");
+                  $("#recent_changes").addClass("d-none");
+                  $("#recent_cases").addClass("d-none");
+                  $(".na_h5").removeClass("d-none");
+                  alert(data["message"]);
+              }else{
+                  $(".na_h5").addClass("d-none");
+                  $("#status_count_list").removeClass("d-none");
+                  $("#myposition_RN_order").removeClass("d-none");
+                  $("#myposition_status_order").removeClass("d-none");
+                  $("#donut_chart").removeClass("d-none");
+                  $("#recent_changes").removeClass("d-none");
+                  $("#recent_cases").removeClass("d-none");
+
+                  plot_donut(data["status_counts"]);
+                  draw_lollipop(recepit_num,data["status_seq"],data["status_mut"],data["status_dom"]);
+
+                  $("#rec_bar").css('width', data["status_counts"][0] /n_case *100 + "%");
+                  $("#rec_bar").html(data["status_counts"][0]);
+
+                  $("#fp_bar").css('width', data["status_counts"][1] /n_case *100 + "%");
+                  $("#fp_bar").html(data["status_counts"][1]);
+
+                  $("#itv_bar").css('width', data["status_counts"][2] /n_case *100 + "%");
+                  $("#itv_bar").html(data["status_counts"][2]);
+
+                  $("#rfe_bar").css('width', data["status_counts"][3] /n_case *100 + "%");
+                  $("#rfe_bar").html(data["status_counts"][3]);
+
+                  $("#trf_bar").css('width', data["status_counts"][4] /n_case *100 + "%");
+                  $("#trf_bar").html(data["status_counts"][4]);
+
+                  $("#apv_bar").css('width', data["status_counts"][5] /n_case *100 + "%");
+                  $("#apv_bar").html(data["status_counts"][5]);
+
+                  $("#rjc_bar").css('width' ,data["status_counts"][6] /n_case *100 + "%");
+                  $("#rjc_bar").html(data["status_counts"][6]);
+
+                  $("#oth_bar").css('width', data["status_counts"][7] /n_case *100 + "%");
+                  $("#oth_bar").html(data["status_counts"][7]);
+
+                  $("#mypos_pointer").css('width', data["mypos"] + "%");
+                  $("#mypos_text").html(data["mypos_text"]);
+
+                   $("#fp_1d>span").html(data["status_1d"]["FP_Taken"]);$("#fp_1w>span").html(data["status_1w"]["FP_Taken"]);$("#fp_2w>span").html(data["status_2w"]["FP_Taken"]);
+                   $("#itv_1d>span").html(data["status_1d"]["Interviewed"]);$("#itv_1w>span").html(data["status_1w"]["Interviewed"]);$("#itv_2w>span").html(data["status_2w"]["Interviewed"]);
+                   $("#rfe_1d>span").html(data["status_1d"]["RFE"]);$("#rfe_1w>span").html(data["status_1w"]["RFE"]);$("#rfe_2w>span").html(data["status_2w"]["RFE"]);
+                   $("#trf_1d>span").html(data["status_1d"]["Transferred"]);$("#trf_1w>span").html(data["status_1w"]["Transferred"]);$("#trf_2w>span").html(data["status_2w"]["Transferred"]);
+                   $("#apv_1d>span").html(data["status_1d"]["Approved"]);$("#apv_1w>span").html(data["status_1w"]["Approved"]);$("#apv_2w>span").html(data["status_2w"]["Approved"]);
+                   $("#rjc_1d>span").html(data["status_1d"]["Rejected"]);$("#rjc_1w>span").html(data["status_1w"]["Rejected"]);$("#rjc_2w>span").html(data["status_2w"]["Rejected"]);
+                   $("#oth_1d>span").html(data["status_1d"]["Other"]);$("#oth_1w>span").html(data["status_1w"]["OTH"]);$("#oth_2w>span").html(data["status_2w"]["Other"]);
+
+                   var  html_str = "";
+                   for(const case_i in data["recent_apv"]){
+                       html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_apv"][case_i]+'</li>';
+                   }
+                   $("#list-recent-apv").html(html_str);
+
+                   var  html_str = "";
+                   for(const case_i in data["recent_trf"]){
+                       html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_trf"][case_i]+'</li>';
+                   }
+                   $("#list-recent-trf").html(html_str);
+
+                   var  html_str = "";
+                   for(const case_i in data["recent_rfe"]){
+                       html_str += '<li class="list-group-item list-group-item-info px-3 py-1 d-flex align-items-center">'+case_i+', '+data["recent_rfe"][case_i]+'</li>';
+                   }
+                   $("#list-recent-rfe").html(html_str);
+              }
+
+            },
+          error: function() {
+                  alert('Error occurs!');
             }
+        });
+    }
+    get_data();
 
-            if(form_type==""){
-                $("#bar_chart").empty();
-                $("#bar_chart").html("<h5 class='ms-5'>Form type is not available, please pick one at the top !</h5>");
-                return;
-            }
+    var next_status_data;
+    function get_nextstatus() {
+        var selectform = $("#selectform").val();
+        if(selectform==undefined){
+            var form_type = $("#form_type").val();
+            var selectform="no"
+        }else{
+            var form_type = selectform;
+            var selectform="yes"
+        }
 
-            var status_level = $("#status_level").val();
-            var date_range = $("#date_range").val();
-            var mycase_status = $("#mycase_status").val();
-            var recepit_num = $("#recepit_num").val();
+        if(form_type==""){
+            $("#bar_chart").empty();
+            $("#bar_chart").html("<h5 class='ms-5'>Form type is not available, please pick one at the top !</h5>");
+            return;
+        }
 
-            $("#nextstatus_loading").removeClass("d-none");
-            $("#bar_next_status").addClass("d-none");
-            $("#daystofinal_h").addClass("d-none");
-            $("#bar_container").css("height","20px");
+        var status_level = $("#status_level").val();
+        var date_range = $("#date_range").val();
+        var mycase_status = $("#mycase_status").val();
+        var recepit_num = $("#recepit_num").val();
 
-            $.ajax({
-              type: "GET",
-              url: "ajax/mynextstatus",
-              async: true,
-              data:{"recepit_num":recepit_num,"daterange":date_range,"mystatus":mycase_status,"form_type":form_type,"status_level":status_level,"selectform":selectform},
-              success : function(data) {
-                  $("#nextstatus_loading").addClass("d-none");
-                  $("#bar_next_status").removeClass("d-none");
-                  $("#daystofinal_h").removeClass("d-none");
+        $("#nextstatus_loading").removeClass("d-none");
+        $("#bar_next_status").addClass("d-none");
+        $("#daystofinal_h").addClass("d-none");
+        $("#bar_container").css("height","20px");
 
-                  var next_status = data["next_status"];
-                  var tofinal_status = data["to_endstatus"];
-                  var formempty = data["formempty"];
-                  if(formempty===undefined) {
-                      if (next_status["Final"] === undefined) {
-                          next_status_n = Object.keys(next_status).length;
-                          if (next_status_n > 0) {
-                              var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
-                              var col_i = 0;
-                              for (const status_i in next_status) {
-                                  case_n = next_status[status_i][0];
-                                  day_avg = next_status[status_i][1];
-                                  day_mid = next_status[status_i][2];
-                                  day_min = next_status[status_i][3];
-                                  day_max = next_status[status_i][4];
-                                  data_ls.push(case_n);
-                                  label_ls.push(status_i + " - Case count: " + case_n + ", Avg: " + day_avg + ", Median: " + day_mid + ", Min: " + day_min + ", Max: " + day_max);
-                                  bg_ls.push(backgroundColor[col_i % 7]);
-                                  bd_ls.push(borderColor[col_i % 7]);
-                                  col_i = col_i + 1;
-                              }
-                              {#alert(next_status_n);#}
-                              if (next_status_n < 10) {
-                                  $("#bar_container").css("height", (40 * next_status_n + 30) + "px")
-                              } else if (next_status_n < 30) {
-                                  $("#bar_container").css("height", (30 * next_status_n + 30) + "px")
-                              } else {
-                                  $("#bar_container").css("height", (20 * next_status_n + 30) + "px")
-                              }
+        $.ajax({
+          type: "GET",
+          url: "ajax/mynextstatus",
+          async: true,
+          data:{"recepit_num":recepit_num,"daterange":date_range,"mystatus":mycase_status,"form_type":form_type,"status_level":status_level,"selectform":selectform},
+          success : function(data) {
+              $("#nextstatus_loading").addClass("d-none");
+              $("#bar_next_status").removeClass("d-none");
+              $("#daystofinal_h").removeClass("d-none");
 
-                              plot_bar(label_ls, data_ls, bg_ls, bd_ls);
-
-                              $("#daystofinal").html("<u>Avg: " + tofinal_status[0] + ", Midian: " + tofinal_status[1] + ", Min: " + tofinal_status[2] + ",  Max: " + tofinal_status[3] + "</u>");
-                          } else {
-                              $("#bar_chart").empty();
-                              $("#bar_chart").html("<h5 class='ms-5'>Data is not availabe !</h5>");
+              next_status_data = data;
+              var next_status = data["next_status"];
+              var tofinal_status = data["to_endstatus"];
+              var formempty = data["formempty"];
+              if(formempty===undefined) {
+                  if (next_status["Final"] === undefined) {
+                      next_status_n = Object.keys(next_status).length;
+                      if (next_status_n > 0) {
+                          var label_ls = [], data_ls = [], bg_ls = [], bd_ls = [];
+                          var col_i = 0;
+                          for (const status_i in next_status) {
+                              case_n = next_status[status_i].length;
+                              day_avg = arrSum(next_status[status_i])/case_n;
+                              day_mid = arrMid(next_status[status_i]);
+                              day_min = arrMin(next_status[status_i]);
+                              day_max =  arrMax(next_status[status_i]);
+                              data_ls.push(case_n);
+                              label_ls.push(status_i + " - Case count: " + case_n + ", Avg: " + Math.round(day_avg) + ", Median: " + day_mid + ", Min: " + day_min + ", Max: " + day_max);
+                              bg_ls.push(backgroundColor[col_i % 7]);
+                              bd_ls.push(borderColor[col_i % 7]);
+                              col_i = col_i + 1;
                           }
+                          {#alert(next_status_n);#}
+                          if (next_status_n < 10) {
+                              $("#bar_container").css("height", (45 * next_status_n + 70) + "px")
+                          } else if (next_status_n < 30) {
+                              $("#bar_container").css("height", (30 * next_status_n + 70) + "px")
+                          } else {
+                              $("#bar_container").css("height", (20 * next_status_n + 70) + "px")
+                          }
+                          plot_bar(label_ls, data_ls, bg_ls, bd_ls);
+
+                           $("#daystofinal").html("<u>Avg: " + Math.round(arrSum(tofinal_status)/tofinal_status.length) + ", Midian: " + arrMid(tofinal_status) + ", Min: " + arrMin(tofinal_status) + ",  Max: " + arrMax(tofinal_status) + "</u>");
                       } else {
                           $("#bar_chart").empty();
-                          $("#bar_chart").html("<h5 class='ms-5'>You are already in the FINAL status !</h5>");
+                          $("#bar_chart").html("<h5 class='ms-5'>Data is not availabe !</h5>");
                       }
-                  }else{
-                       $("#bar_chart").empty();
-                       $("#bar_chart").html("<h5 class='ms-5'>Form type is not available, please pick one at the top !</h5>");
+                  } else {
+                      $("#bar_chart").empty();
+                      $("#bar_chart").html("<h5 class='ms-5'>You are already in the FINAL status !</h5>");
                   }
-              },
-              error: function() {
-                    alert("Error occurs!")
+              }else{
+                   $("#bar_chart").empty();
+                   $("#bar_chart").html("<h5 class='ms-5'>Form type is not available, please pick one at the top !</h5>");
               }
-            });
-        }
-        get_nextstatus();
+          },
+          error: function() {
+                alert("Error occurs!")
+          }
+        });
+    }
+    get_nextstatus();
 
     ///////////////////////////////////////////////////////////////
-        function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
-            let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
-               if (chartStatus != undefined) {
-                  chartStatus.destroy();
-               }
-            const data = {
-                labels: label_ls,
-                datasets: [{
-                    axis: 'y',
-                    label: "Next status",
-                    data: data_ls,
-                    fill: false,
-                    backgroundColor: bg_ls,
-                    borderColor: bd_ls,
-                    borderWidth: 1
-                }]
+    function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
+        let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
+           if (chartStatus != undefined) {
+              chartStatus.destroy();
+           }
+        const data = {
+            labels: label_ls,
+            datasets: [{
+                axis: 'y',
+                label: "Next status",
+                data: data_ls,
+                fill: false,
+                backgroundColor: bg_ls,
+                borderColor: bd_ls,
+                borderWidth: 1
+            }]
+        };
+
+         const config = {
+          type: 'bar',
+          data: data,
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend:{display: false,},
+                title: { display: true,text: 'The next status and taking days based on the data in the selected date range',font: {size: 18}}
+            },
+            scales: { y: { ticks: { mirror: true,}}},
+            onClick: (event,chartElement) => {
+                {#console.log(chartElement);#}
+                if (chartElement.length) {
+                    const elt = chartElement[0];
+                    const label = barChart.data.labels[elt.index];
+                    {#const slabel = barChart.data.datasets[elt.datasetIndex].label;#}
+                    {#const value = barChart.data.datasets[elt.datasetIndex].data[elt.index];#}
+                    {#console.log(label, slabel, value);#}
+                    daysDistributeion(label);
+                }
+
+            },
+            onHover: (evt,chartElement)=>{
+                if (chartElement.length) evt.native.target.style.cursor = 'pointer';
+                else evt.native.target.style.cursor = 'default';
+            }
+          },
+        };
+        var barChart = new Chart($('#bar_next_status'), config)
+
+    }
+
+    function plot_donut(status_count=[100,100,100,100,100,100,100,100]) {
+          let chartStatus = Chart.getChart("donut_case_percent_in_range"); // <canvas> id
+           if (chartStatus != undefined) {
+              chartStatus.destroy();
+           }
+          var labels=["REC","FPR","ITV","RFE","TRF","APV","RJC","OTH"];
+
+          var data = {
+              labels: labels,
+              datasets: [{
+                label: 'Cases statu count in the range',
+                data: status_count,
+                backgroundColor: ["#4e97f6","#11a9fa","#2b04da","#f4b824","#c77cff","#1db063","#ff001a","#78787a"],
+                hoverOffset: 4
+              }]
             };
 
-             const config = {
-              type: 'bar',
+          var config = {
+              type: 'doughnut',
               data: data,
               options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend:{display: false,},
-                    title: { display: true,text: 'The next status and taking days based on the data in the selected date range',fontSize:25}
-                },
-                scales: { y: { ticks: { mirror: true,}}}
+                  cutout: "50%",
+                  radius:"90%",
               },
-            };
-            var barChart = new Chart($('#bar_next_status'), config)
+              animation:{
+                  animateScale:true
+              },
+          };
+          var donutChart = new Chart($('#donut_case_percent_in_range'), config)
+    }
+    function daysDistributeion(label){
+        var label = label.split("-")[0].trim();
+        var days_ls = next_status_data["next_status"][label];
 
+        var days_dict = {};
+        for(let d_i of days_ls){
+            if(d_i in days_dict) days_dict[d_i] += 1;
+            else days_dict[d_i] = 1;
         }
+        plot_hist(days_dict);
+        plot_box(days_ls);
 
-        function plot_donut(status_count=[100,100,100,100,100,100,100,100]) {
-              let chartStatus = Chart.getChart("donut_case_percent_in_range"); // <canvas> id
-               if (chartStatus != undefined) {
-                  chartStatus.destroy();
-               }
-              var labels=["REC","FPR","ITV","RFE","TRF","APV","RJC","OTH"];
+        $("#modal_title_nextstatus").empty();
+        $("#modal_title_nextstatus").html(label);
 
-              var data = {
-                  labels: labels,
-                  datasets: [{
-                    label: 'Cases statu count in the range',
-                    data: status_count,
-                    backgroundColor: ["#4e97f6","#11a9fa","#2b04da","#f4b824","#c77cff","#1db063","#ff001a","#78787a"],
-                    hoverOffset: 4
-                  }]
-                };
+        $("#dayDistribution").modal('show');
+    }
+    function plot_hist(days_dict) {
+        var chartDom = document.getElementById('hist_chart');
+        var myChart = echarts.init(chartDom);
+        var option;
 
-              var config = {
-                  type: 'doughnut',
-                  data: data,
-                  options: {
-                      cutout: "50%",
-                      radius:"90%",
-                  },
-                  animation:{
-                      animateScale:true
-                  },
-              };
-              var donutChart = new Chart($('#donut_case_percent_in_range'), config)
-        }
+        option = {
+          xAxis: {
+              name: 'Days',
+            type: 'category',
+            data: Object.keys(days_dict)
+          },
+          yAxis: {
+              name: 'Counts',
+            type: 'value'
+          },
+          series: [
+            {
+              data: Object.values(days_dict),
+              type: 'bar'
+            }
+          ]
+        };
+
+        option && myChart.setOption(option);
+    }
+
+    function plot_box(days_ls) {
+        var chartDom = document.getElementById('box_chart');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+          dataset: [
+            {
+              // prettier-ignore
+              source: [days_ls,]
+            },
+            {
+              transform: {
+                type: 'boxplot',
+                config: { itemNameFormatter: 'Days' }
+              }
+            },
+            {
+              fromDatasetIndex: 1,
+              fromTransformResult: 1
+            }
+          ],
+          grid: {
+            left: '30px',
+          },
+          xAxis: {
+            type: 'category',
+          },
+          yAxis: {
+            type: 'value',
+            name: 'Days',
+          },
+          series: [
+            {
+              name: 'boxplot',
+              type: 'boxplot',
+              datasetIndex: 1
+            },
+            {
+              name: 'outlier',
+              type: 'scatter',
+              datasetIndex: 1
+            }
+          ]
+        };
+
+        option && myChart.setOption(option);
+
+    }
+
+
     </script>
  {% endblock %}

@@ -776,7 +776,7 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
         curstatuslvl = "L0"
     else:
         curstatuslvl = statuslvl
-    statuslvl = statuslvl[:-2]
+    statuslvl = statuslvl[:2]
 
     l4_name = get_l_status(curstat, "L4")
     if l4_name == "Final":
@@ -828,6 +828,7 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
                 ## Adding this: rn_i_status_date=="" to above only saving the first pair of status change.
                 rn_i_status_date = all_status[rn_i][sn_i].action_date_x
                 next_s = get_l_status(all_status[rn_i][sn_i + 1].status, statuslvl)
+                if next_s == "New Card Is Being Produced": print(rn_i)
                 next_s_days = (all_status[rn_i][sn_i + 1].action_date_x - rn_i_status_date).days
                 if next_s_days <= 0: continue
                 if next_s not in next_status:
@@ -857,3 +858,107 @@ def get_nextstatus(center, formtype, curstat, statuslvl, daterange):
     data_dict = {"next_status": next_status, "to_endstatus": to_endstatus}
 
     return data_dict
+
+def get_rnrangesummary(center_table, center, selectform, fy, rangesize):
+    fy = fy[-2:]
+    c_code = center.split("_")[0]
+    rn_range = int(rangesize)
+    statuslevel = "L3"
+
+    ## Check if there is the statistics file for the selected options
+    ## first time visiting will save the results to json file
+    file_name = "_".join([center, selectform, fy, statuslevel, rangesize]) + "_summary.json"
+    folder = "mycase/data/statistics/center_range_count"
+    file_name = folder + "/" + file_name
+    if os.path.exists(file_name):
+        try:
+            with open(file_name) as json_file:
+                data_dict = json.load(json_file)
+            return data_dict
+        except Exception as e:
+            print(e)
+
+    # #####################
+    # rn_pattern = c_code + fy
+    # case_qs = center_table.objects.filter(form=selectform, receipt_number__startswith=rn_pattern).order_by("receipt_number", "-add_date")
+    #
+    # #####
+    # all_status = {}
+    # for case_i in case_qs:
+    #     if case_i.action_date_x == date(2022, 9, 25) and case_i.action_date == "": continue
+    #     if case_i.receipt_number not in all_status:
+    #         all_status[case_i.receipt_number] = [case_i]
+    #     else:
+    #         all_status[case_i.receipt_number].append(case_i)
+    #
+    # status_count = {}
+    # for rn_i in all_status:
+    #     rd_date = None
+    #     rn_i_n = len(all_status[rn_i])
+    #     if rn_i_n <= 1: continue
+    #     for sn_i in range(rn_i_n):
+    #         status_i = all_status[rn_i][sn_i].status
+    #         if  status_i in rd_status
+    #         mycase_status_l = get_l_status(curstat, curstatuslvl)
+    #         # print(mycase_status_l)
+    #
+    #         if status_i_l == mycase_status_l and (sn_i + 1) < rn_i_n: # and rn_i_status_date == "":
+    #             ## Adding this: rn_i_status_date=="" to above only saving the first pair of status change.
+    #             rn_i_status_date = all_status[rn_i][sn_i].action_date_x
+    #             next_s = get_l_status(all_status[rn_i][sn_i + 1].status, statuslvl)
+    #             next_s_days = (all_status[rn_i][sn_i + 1].action_date_x - rn_i_status_date).days
+    #             if next_s_days <= 0: continue
+    #             if next_s not in next_status:
+    #                 next_status[next_s] = [next_s_days]
+    #             else:
+    #                 next_status[next_s].append(next_s_days)
+    #
+    #             if get_l_status(all_status[rn_i][sn_i + 1].status, "L4") == "Final":
+    #                 tofinal_days = (all_status[rn_i][sn_i+1].action_date_x - rn_i_status_date).days
+    #                 if tofinal_days > 0:
+    #                     to_endstatus.append(tofinal_days)
+    #
+    #
+    #
+    #
+    # status_count = {}
+    # rn_status = {}
+    # for case_i in case_qs:
+    #     if case_i.receipt_number in rn_status: continue
+    #     status_l = get_l_status(case_i.status, statuslevel)
+    #     rn_status[case_i.receipt_number] = 1
+    #
+    #     rn = int(case_i.receipt_number[3:])
+    #     range_key = rn - (rn % rn_range)
+    #
+    #     if range_key not in status_count:
+    #         if statuslevel == "L2":
+    #             status_count[range_key] = {
+    #                 'Received': 0, 'FP_Scheduled': 0, 'FP_Taken': 0, 'InterviewScheduled': 0, 'InterviewCompleted': 0,
+    #                 'RFE_Sent': 0, 'RFE_Received': 0, 'Transferred': 0, 'Approved': 0, 'Produced': 0, 'Mailed': 0,
+    #                 'Pending': 0, 'Hold': 0, 'ReturnHold': 0, 'NoticeSent': 0, 'Reopened': 0, 'Other': 0, 'Rejected': 0,
+    #                 'Terminated': 0, 'WithdrawalAcknowledged': 0
+    #             }
+    #
+    #         if statuslevel == "L3":
+    #             status_count[range_key] = {
+    #                 'Received': 0, 'FP_Taken': 0, 'Interviewed': 0, 'RFE': 0, 'Transferred': 0, 'Approved': 0,
+    #                 'Rejected': 0, 'Other': 0
+    #             }
+    #     status_count[range_key][status_l] += 1
+    #
+    # labels = [c_code + str(i) + "-" + str(i + rn_range - 1)[-4:] for i in status_count]
+    # dataset = {}
+    # for dataset_i in dataset_labels:
+    #     dataset[dataset_i] = []
+    #     for rnrange_i in status_count:
+    #         dataset[dataset_i].append(status_count[rnrange_i][dataset_i])
+    #
+    # data_dict = {"dataset": dataset, "label": labels, "color": color}
+    #
+    # with open(file_name, "w") as json_file:
+    #     json.dump(data_dict, json_file)
+
+    return data_dict
+
+

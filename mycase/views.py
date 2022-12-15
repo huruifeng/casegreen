@@ -773,7 +773,42 @@ def get_status_list():
     return status_lvl_ls
 
 def summaryrn(request):
-    context = {"page_title": "Summary by Receipt Number"}
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+
+    ####
+    sys_params = sysparam.objects.get(pk=1)
+    year_n = sys_params.fiscal_year_n
+
+    year_ls = []
+    now = datetime.now()
+    for i in range(year_n):
+        year_ls.append(str(now.year - i))
+    if now.month > 9:
+        if not (now.month == 10 and now.day == 1):
+            ## today is 10-1, skip
+            year_ls = [str(now.year + 1)] + year_ls
+
+    ######
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("selectform", None)
+        fy = request.GET.get("fy", None)
+        rangesize = request.GET.get("rangesize", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("selectform", None)
+        fy = request.POST.get("fy", None)
+        rangesize = request.GET.get("rangesize", None)
+
+    if selectform is None or center is None or fy is None or rangesize is None:
+        return redirect("/summaryrn?center=LIN_LB&selectform=I-485&fy=" + str(now.year) + "&rangesize=5000",status=200)
+
+    center_table = center_dict[center.lower()]
+    # data_dict = get_rnrangesummary(center_table, center, selectform, fy, rangesize)
+
+    context = {"page_title": "Summary by Receipt Number","form_ls": form_ls, "year_ls": year_ls[::-1],
+               "center": center, "fy": fy, "selectform": selectform,"rangesize": rangesize}
     return render(request, 'mycase/summaryrn.html', context)
 
 def summaryrd(request):

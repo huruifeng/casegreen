@@ -215,7 +215,7 @@
     get_nextstatus();
 
 ///////////////////////////////////////////////////////////////
-    function plot_bar(label_ls,data_ls,bg_ls, bd_ls,days_ls) {
+    function plot_bar(label_ls,data_ls,bg_ls, bd_ls) {
         let chartStatus = Chart.getChart("bar_next_status"); // <canvas> id
            if (chartStatus != undefined) {
               chartStatus.destroy();
@@ -232,8 +232,7 @@
                 borderWidth: 1
             }]
         };
-
-         const config = {
+        const config = {
           type: 'bar',
           data: data,
           options: {
@@ -320,7 +319,6 @@
     }
 
     function plot_box(days_ls) {
-
         var chartDom = document.getElementById('box_chart');
         var myChart = echarts.init(chartDom);
         var option;
