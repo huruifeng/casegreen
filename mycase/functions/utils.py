@@ -867,7 +867,7 @@ def get_rnrangesummary(center_table, center, selectform, fy, rangesize):
 
     ## Check if there is the statistics file for the selected options
     ## first time visiting will save the results to json file
-    file_name = "_".join([center, selectform, fy, statuslevel, rangesize]) + "_summary.json"
+    file_name = "_".join([center, selectform, fy, statuslevel, rangesize]) + "_APVsummary.json"
     folder = "mycase/data/statistics/center_range_count"
     file_name = folder + "/" + file_name
     if os.path.exists(file_name):
@@ -893,7 +893,7 @@ def get_rnrangesummary(center_table, center, selectform, fy, rangesize):
     today = datetime.today().date()
     status_count = {}
     for rn_i in all_status:
-        rn = int(case_i.receipt_number[3:])
+        rn = int(rn_i[3:])
         range_key = rn - (rn % rn_range)
 
         if range_key not in status_count:
@@ -909,7 +909,7 @@ def get_rnrangesummary(center_table, center, selectform, fy, rangesize):
 
                 act_date = all_status[rn_i][sn_i].action_date_x
                 dDays = (act_date - rd_date).days
-                tDays = (act_date-today).days
+                tDays = (today-act_date).days
                 if dDays > 0:
                     status_count[range_key]["days"].append(dDays)
                 if tDays <=7: status_count[range_key]["last7days"] += 1
