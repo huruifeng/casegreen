@@ -203,12 +203,24 @@ def run_center(request,center):
 
             if status_i == "try_failed": continue
 
+            try:
+                act_time_s =act_date_i
+                act_time_x = datetime.strptime(act_time_s, "%B %d, %Y")
+            except Exception as e:
+                act_time_x = date.today()
+
+            rd_date = date(2000, 1, 1)
+            if status_i in rd_status:
+                rd_date = act_time_x
+
             n_i += 1
             if n_i % 100000 == 0:
                 print(f"{center}-{fy_i}:{n_i}/{total_x}")
 
             # data_today : {case_num:[form,action_date,statue],...}
             if case_i in data_yesterday:
+                if data_yesterday[case_i][3] != "01-01-2000":
+                    rd_date = datetime.strptime(data_yesterday[case_i][3],"%m-%d-%Y")
                 ## when form == "", check saved data
                 if form_i == "":
                     if data_yesterday[case_i][0] != "":
@@ -241,6 +253,8 @@ def run_center(request,center):
                         status_trans_dict[form_i]["no_yesterday"][status_i] = 1
 
             data_yesterday[case_i] = data_today[case_i]
+            data_yesterday[case_i].append(rd_date.strftime("%m-%d-%Y"))
+
 
             ## form
             if form_i != "":
@@ -278,12 +292,6 @@ def run_center(request,center):
                     counts_today[form_i]["others_n"] += 1
 
             #################
-            try:
-                time_s =act_date_i
-                time_x = datetime.strptime(time_s, "%B %d, %Y")
-            except Exception as e:
-                time_x = date.today()
-
             case_stage = "Processing"
             if status_i in status_dict:
                 l3_name = status_dict[status_i]["L3"]
@@ -296,11 +304,8 @@ def run_center(request,center):
                 else:
                     case_stage = "Processing"
 
-            rd_date = date(2000,1,1)
-            if status_i in rd_status:
-                rd_date = time_x
             case_new = center_obj(receipt_number=case_i,form=form_i,status=status_i,
-                                  action_date=act_date_i, action_date_x=time_x,
+                                  action_date=act_date_i, action_date_x=act_time_x,
                                   case_stage = case_stage,rd_date = rd_date,
                                   add_date=datetime.now(),
                                   date_number=now_days)

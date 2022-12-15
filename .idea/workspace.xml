@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f0de90b1-e9f8-4e90-a54b-a47f7fb64374.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/mycase.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/summaryrn.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/summaryrn.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +82,7 @@
       <recent name="F:\PyCharm_project\casegreen\mycase\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Django Server.casegreen">
+  <component name="RunManager" selected="Python.rddate_correction">
     <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -293,14 +288,7 @@
       <workItem from="1670381074174" duration="16135000" />
       <workItem from="1670653890053" duration="1327000" />
       <workItem from="1670714131028" duration="5076000" />
-      <workItem from="1670956406805" duration="25696000" />
-    </task>
-    <task id="LOCAL-00075" summary="updates">
-      <created>1665936796446</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1665936796446</updated>
+      <workItem from="1670956406805" duration="32478000" />
     </task>
     <task id="LOCAL-00076" summary="updates">
       <created>1665955578230</created>
@@ -638,7 +626,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670563822249</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="updates">
+      <created>1671075759102</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1671075759102</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

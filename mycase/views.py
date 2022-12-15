@@ -805,7 +805,7 @@ def summaryrn(request):
         return redirect("/summaryrn?center=LIN_LB&selectform=I-485&fy=" + str(now.year) + "&rangesize=5000",status=200)
 
     center_table = center_dict[center.lower()]
-    # data_dict = get_rnrangesummary(center_table, center, selectform, fy, rangesize)
+    data_dict = get_rnrangesummary(center_table, center, selectform, fy, rangesize)
 
     context = {"page_title": "Summary by Receipt Number","form_ls": form_ls, "year_ls": year_ls[::-1],
                "center": center, "fy": fy, "selectform": selectform,"rangesize": rangesize}
