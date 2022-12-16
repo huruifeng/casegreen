@@ -808,7 +808,7 @@ def summaryrn(request):
     data_dict = get_rnrangesummary(center_table, center, selectform, fy, rangesize)
 
     context = {"page_title": "Summary by Receipt Number","form_ls": form_ls, "year_ls": year_ls[::-1],
-               "center": center, "fy": fy, "selectform": selectform,"rangesize": rangesize}
+               "center": center, "fy": fy, "selectform": selectform,"rangesize": rangesize,"data":data_dict}
     return render(request, 'mycase/summaryrn.html', context)
 
 def summaryrd(request):

@@ -255,7 +255,6 @@ def run_center(request,center):
             data_yesterday[case_i] = data_today[case_i]
             data_yesterday[case_i].append(rd_date.strftime("%m-%d-%Y"))
 
-
             ## form
             if form_i != "":
                 if form_i not in counts_today:

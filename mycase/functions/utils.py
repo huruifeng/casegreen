@@ -895,27 +895,47 @@ def get_rnrangesummary(center_table, center, selectform, fy, rangesize):
     for rn_i in all_status:
         rn = int(rn_i[3:])
         range_key = rn - (rn % rn_range)
+        range_key = rn_i[:3] + str(range_key) + "-" + str(range_key + rn_range - 1)[-4:]
 
         if range_key not in status_count:
-            status_count[range_key] = {"days": [],"total":0, "last7days": 0, "last14days": 0, "last28days": 0}
+            status_count[range_key] = {"days": [],"total":0,"apv":0, "last7days": 0, "last14days": 0, "last28days": 0}
         status_count[range_key]["total"] += 1
 
         rn_i_n = len(all_status[rn_i])
         for sn_i in range(rn_i_n):
             case_stage_i = all_status[rn_i][sn_i].case_stage
             if case_stage_i == "Approved":
+                status_count[range_key]["apv"] += 1
+                act_date = all_status[rn_i][sn_i].action_date_x
+                tDays = (today-act_date).days
+                if tDays <=7: status_count[range_key]["last7days"] += 1
+                if tDays <=14: status_count[range_key]["last14days"] += 1
+                if tDays <=28: status_count[range_key]["last28days"] += 1
+
                 rd_date = all_status[rn_i][sn_i].rd_date
                 if rd_date == date(2000, 1, 1): continue
-
-                act_date = all_status[rn_i][sn_i].action_date_x
                 dDays = (act_date - rd_date).days
-                tDays = (today-act_date).days
                 if dDays > 0:
                     status_count[range_key]["days"].append(dDays)
-                if tDays <=7: status_count[range_key]["last7days"] += 1
-                elif tDays <=14: status_count[range_key]["last14days"] += 1
-                elif tDays <=28: status_count[range_key]["last28days"] += 1
                 break
+
+    for range_key in status_count:
+        days = sorted(status_count[range_key]["days"])
+        if len(days)==0:
+            max_day = "N/A"
+            min_day = "N/A"
+            avg_day = "N/A"
+            med_day = "N/A"
+            p90_day = "N/A"
+        else:
+            max_day = int(np.max(days))
+            min_day = int(np.min(days))
+            avg_day = int(np.mean(days))
+            med_day = int(np.median(days))
+            p90_day = days[int(len(days)*0.9)]
+
+        status_count[range_key]["days"] = {"max":max_day,"min":min_day,"avg":avg_day,"med":med_day,"p90":p90_day}
+
     with open(file_name, "w") as json_file:
         json.dump(status_count, json_file,indent=2)
 
