@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/ctrlpanel/functions/del_records.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/summaryrd.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/summaryrd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +81,7 @@
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.rddate_correction">
+  <component name="RunManager" selected="Django Server.casegreen">
     <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -312,14 +311,7 @@
       <workItem from="1670714131028" duration="5076000" />
       <workItem from="1670956406805" duration="33547000" />
       <workItem from="1671157167202" duration="17102000" />
-      <workItem from="1671253060945" duration="1561000" />
-    </task>
-    <task id="LOCAL-00079" summary="updates">
-      <created>1666231602319</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1666231602319</updated>
+      <workItem from="1671253060945" duration="5983000" />
     </task>
     <task id="LOCAL-00080" summary="updates">
       <created>1666232458977</created>
@@ -657,7 +649,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671168838340</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="updates">
+      <created>1671255752738</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1671255752738</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -901,18 +901,115 @@ def get_rnrangesummary(center_table, center, selectform, fy, rangesize):
             status_count[range_key] = {"days": [],"total":0,"apv":0, "last7days": 0, "last14days": 0, "last28days": 0}
         status_count[range_key]["total"] += 1
 
-        rn_i_n = len(all_status[rn_i])
-        for sn_i in range(rn_i_n):
-            case_stage_i = all_status[rn_i][sn_i].case_stage
+        for case_i in all_status[rn_i]:
+            case_stage_i = case_i.case_stage
             if case_stage_i == "Approved":
                 status_count[range_key]["apv"] += 1
-                act_date = all_status[rn_i][sn_i].action_date_x
+                act_date = case_i.action_date_x
                 tDays = (today-act_date).days
                 if tDays <=7: status_count[range_key]["last7days"] += 1
                 if tDays <=14: status_count[range_key]["last14days"] += 1
                 if tDays <=28: status_count[range_key]["last28days"] += 1
 
-                rd_date = all_status[rn_i][sn_i].rd_date
+                rd_date =case_i.rd_date
+                if rd_date == date(2000, 1, 1): continue
+                dDays = (act_date - rd_date).days
+                if dDays > 0:
+                    status_count[range_key]["days"].append(dDays)
+                break
+
+    for range_key in status_count:
+        days = sorted(status_count[range_key]["days"])
+        if len(days)==0:
+            max_day = "N/A"
+            min_day = "N/A"
+            avg_day = "N/A"
+            med_day = "N/A"
+            p90_day = "N/A"
+        else:
+            max_day = int(np.max(days))
+            min_day = int(np.min(days))
+            avg_day = int(np.mean(days))
+            med_day = int(np.median(days))
+            p90_day = days[int(len(days)*0.9)]
+
+        status_count[range_key]["days"] = {"max":max_day,"min":min_day,"avg":avg_day,"med":med_day,"p90":p90_day}
+
+    with open(file_name, "w") as json_file:
+        json.dump(status_count, json_file,indent=2)
+
+    return status_count
+
+def get_rdsummary(center_table, center, selectform, fy, rangesize):
+    fy = int(fy)
+    rd_range_min = date(fy - 1, 10, 1)
+    rd_range_max = date(fy, 9, 30)
+    fy = str(fy)[-2:]
+    statuslevel = "L3"
+
+    ## Check if there is the statistics file for the selected options
+    ## first time visiting will save the results to json file
+    file_name = "_".join([center, selectform, fy, statuslevel, rangesize]) + "_APVsummary.json"
+    folder = "mycase/data/statistics/center_rd_count"
+    file_name = folder + "/" + file_name
+    if os.path.exists(file_name):
+        try:
+            with open(file_name) as json_file:
+                data_dict = json.load(json_file)
+            return data_dict
+        except Exception as e:
+            print(e)
+
+    ####################
+    ## build range keys
+    if rangesize not in ["weekly", "monthly"]:
+        rangesize = "weekly"
+    rd_x = rd_range_min
+    range_keys = {}
+    if rangesize == "weekly":
+        while rd_x < rd_range_max:
+            rd_wkn = rd_x.isocalendar()[1]
+            range_keys[rd_wkn] = rd_x.strftime("%Y-%m-%d:w%U")
+            rd_x += timedelta(weeks=+1)
+    else:
+        while rd_x < rd_range_max:
+            rd_mhn = rd_x.month
+            range_keys[rd_mhn] = rd_x.strftime("%Y-%m")
+            rd_x += timedelta(days=+31)
+
+    #####################
+    case_rd_qs = center_table.objects.filter(form=selectform, rd_date__range=(rd_range_min, rd_range_max)).order_by("add_date")
+    all_status = {}
+    for case_i in case_rd_qs:
+        if case_i.receipt_number not in all_status:
+            all_status[case_i.receipt_number] = [case_i]
+        else:
+            all_status[case_i.receipt_number].append(case_i)
+
+    today = datetime.today().date()
+    status_count = {}
+    for case_rn in all_status:
+        rd_i = all_status[case_rn][0].rd_date
+        if rangesize == "weekly":
+            rd_i_no = rd_i.isocalendar()[1]
+        else:
+            rd_i_no = rd_i.month
+        range_key = range_keys[rd_i_no]
+
+        if range_key not in status_count:
+            status_count[range_key] = {"days": [], "total": 0, "apv": 0, "last7days": 0, "last14days": 0,"last28days": 0}
+        status_count[range_key]["total"] += 1
+
+        for case_i in all_status[case_rn]:
+            if case_i.case_stage == "Approved":
+                status_count[range_key]["apv"] += 1
+                act_date = case_i.action_date_x
+                tDays = (today - act_date).days
+                if tDays <= 7: status_count[range_key]["last7days"] += 1
+                if tDays <= 14: status_count[range_key]["last14days"] += 1
+                if tDays <= 28: status_count[range_key]["last28days"] += 1
+
+                rd_date = case_i.rd_date
                 if rd_date == date(2000, 1, 1): continue
                 dDays = (act_date - rd_date).days
                 if dDays > 0:
