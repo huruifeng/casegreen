@@ -1,7 +1,9 @@
 {% extends "mycase_basic.html" %}
 {% load static %}
+{% load extras %}
 {% block content %}
 
+<link href="{% static "css/datatables.min.css" %}" media="all" rel="stylesheet" />
 <div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
      <div class="row justify-content-center">
          <div class="col-md-1 text-center" style="margin-left: 10px;width: 150px;">
@@ -23,7 +25,7 @@
              <!--Main content-->
             <div class="row">
                  <div class="col-12">
-                     <h2 class="mb-4" style="color:#2d48cb;">Case processes in Received/Notice Date ranges </h2>
+                     <h2 class="mb-4" style="color:#2d48cb;">Summary of Approved Case in Receipt Number ranges </h2>
                      <div class="mb-3">
                          <h5 class="d-inline">Fiscal year: </h5>
                          {% for y_i in year_ls %}
@@ -53,25 +55,36 @@
                              <option value="{{ form_i }}" {% if form_i == selectform %}selected{% endif %}>{{ form_i }}</option>
                              {% endfor %}
                           </select>
-                         <h5 class="ms-5 me-1 d-inline">Show status in level:</h5>
-                        <select id="status_level" name="status_level" onchange="load_page()">
-                             <option value="L3" {% if statuslevel == "L3" %}selected{% endif %}>L3&nbsp;&nbsp;</option>
-                             <option value="L2" {% if statuslevel == "L2" %}selected{% endif %}>L2&nbsp;&nbsp;</option>
-                         </select>
-                        <h5 class="ms-5 me-1 d-inline">Date range size:</h5>
+                        <h5 class="ms-5 me-1 d-inline">Range size:</h5>
                         <select id="range_size" name="range_size" onchange="load_page()">
-                             <option value="weekly" {% if rangesize == "weekly" %}selected{% endif %}>Weekly&nbsp;&nbsp;</option>
-                             <option value="monthly" {% if rangesize == "monthly" %}selected{% endif %}>Monthly&nbsp;&nbsp;</option>
+                             <option value="2000" {% if rangesize == "2000" %}selected{% endif %}>2000&nbsp;&nbsp;</option>
+                             <option value="5000" {% if rangesize == "5000" %}selected{% endif %}>5000&nbsp;&nbsp;</option>
+                             <option value="10000" {% if rangesize == "10000" %}selected{% endif %}>10000&nbsp;&nbsp;</option>
                          </select>
                      </div>
                      <hr style="height: 1px;color: #666666">
-                     <div class="chart" id="range_bar_div">
+                     <div class="chart">
                          <h4 class='ms-5 na-h4 d-none'>Data is not availabe !</h4>
-                         <div class="d-none" id="bar_loading">
+                         <div class="d-none" id="table_loading">
                             <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
                         </div>
-                        <div id="bar_container" style="position: relative; height:20px;">
-                            <canvas id="range_bar_chart"></canvas>
+                        <div id="table_container" style="position: relative; height:20px;">
+                            <table class="table table-sm table-hover" id="summary_table">
+                                <thead class="bg-light">
+                                    <tr><th rowspan="2" class="border-end">Receipt number</th><th colspan="2" class="border-end"> Case counts</th><th colspan="5" class="border-end">Days used from RD to Approved</th><th colspan="3">Recently approved</th></tr>
+                                    <tr><th>Total</th><th class="border-end">Approved</th><th>Max</th><th>Min</th><th>Avg</th><th>50%</th><th class="border-end">90%</th><th>7 Days</th><th>14 Days</th><th>28 Days</th></tr>
+                                </thead>
+                                <tbody>
+                                {% for range_x,vals in data.items %}
+                                    <tr>
+                                        <td class="border-end">{{ range_x }}</td>
+                                        <td>{{ vals|get_item:"total"}}</td><td class="border-end">{{ vals|get_item:"apv"}}</td>
+                                        <td>{{ vals|get_item:"days"|get_item:"max"}}</td><td>{{ vals|get_item:"days"|get_item:"min"}}</td><td>{{ vals|get_item:"days"|get_item:"avg"}}</td><td>{{ vals|get_item:"days"|get_item:"med"}}</td><td class="border-end">{{ vals|get_item:"days"|get_item:"p90"}}</td>
+                                        <td>{{ vals|get_item:"last7days"}}</td><td>{{ vals|get_item:"last14days"}}</td><td>{{ vals|get_item:"last28days"}}</td></tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
                         </div>
                      </div>
                  </div>
@@ -81,6 +94,7 @@
         </div> <!--col-6-->
     </div><!--row-->
 </div>
+    <script src="{% static "js/datatables.min.js" %}" charset="utf-8"></script>
     <script type="text/javascript">
     $(".ctr_btn").click(function () {
         $(".ctr_btn").removeClass("btn-primary");
@@ -114,99 +128,21 @@
                 return false;
             }
         });
-        $("#range_bar_chart").addClass("d-none");
-        $("#bar_loading").removeClass("d-none");
-        $("#bar_container").css("height","400px");
+        $("#table_loading").removeClass("d-none");
+        $("#table_container").css("height","400px");
         $(".na-h4").addClass("d-none");
 
-        var statuslevel = $("#status_level").val();
         var selectform = $("#selectform").val();
         var rangesize = $("#range_size").val();
-        location.href = '{% url "mycase:processrd" %}?center='+center+'&selectform='+selectform+'&fy='+fy+'&statuslevel='+statuslevel+'&rangesize='+rangesize;
+        location.href = '{% url "mycase:summaryrn" %}?center='+center+'&selectform='+selectform+'&fy='+fy+'&rangesize='+rangesize;
     }
+    $(document).ready( function () {
+        $('#summary_table').DataTable({
+            order: [[0, 'asc']],
+            pageLength: 15
+          });
+} );
 
-    function load_data() {
-        var data ={{ chart_data|safe }};
-
-        var dataset = data["dataset"];
-        var rnrange_n = data["label"].length;
-
-        if(dataset !=0 && rnrange_n!=0){
-            $("#bar_loading").addClass("d-none");
-            $("#range_bar_chart").removeClass("d-none");
-            $(".na-h4").addClass("d-none");
-
-            var legend_height = 90;
-            if(Object.keys(data["color"]).length > 10){
-                legend_height = 150;
-            }
-
-            if(rnrange_n <= 30){
-             $("#bar_container").css("height",(30*rnrange_n+legend_height)+"px")
-            }else if(rnrange_n <= 50) {
-                $("#bar_container").css("height", (25 * rnrange_n+legend_height) + "px")
-            }else{
-                $("#bar_container").css("height",(20*rnrange_n+legend_height)+"px")
-            }
-              plot_bar(data["label"], data["dataset"], data["color"], '{{center}}'+"  "+'{{selectform}}');
-        }else{
-            $(".na-h4").removeClass("d-none");
-            $("#range_bar_chart").addClass("d-none");
-        }
-   }
-   load_data();
-
-    function plot_bar(labels,datasets,colors,title) {
-        let chartStatus = Chart.getChart("range_bar_chart"); // <canvas> id
-        if (chartStatus != undefined) {chartStatus.destroy();}
-        var data = {
-            labels: labels,
-            datasets: []
-        };
-
-        const config = {
-          type: 'bar',
-          data: data,
-          options: {
-              indexAxis: 'y',
-              interaction: {
-                  intersect: true,
-                  mode: 'index',
-                },
-
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                title: { display: true, text: title,
-                    font: {size: 18}
-                },
-              },
-              scales: {
-                x: {stacked: true,},
-                y: {stacked: true}
-              }
-          }
-        };
-        var barChart = new Chart($('#range_bar_chart'), config)
-
-        // For every year in your data ...
-        for (status_i in datasets) {
-            // You create a new dataset with empty values and the year as the label
-            var newDataset = {
-                label: status_i,
-                backgroundColor: colors[status_i],
-                data: datasets[status_i]
-            };
-
-           // Then you add the dataset to the charts' ones
-            barChart.config.data.datasets.push(newDataset);
-        }
-
-        // Finally, make sure you update your chart, to get the result on your screen
-        barChart.update();
-
-   }
-
-    </script>
+</script>
 
  {% endblock %}
