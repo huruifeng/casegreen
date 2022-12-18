@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/queryrd.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mycase/templates/mycase/queryrn.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/summaryrd.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/summaryrd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/del_records.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/del_records.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/css/mystyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/query.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,35 +46,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/PyCharm_project/casegreen/ctrlpanel/functions&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "F:/PyCharm_project/casegreen/mycase/templates/mycase",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;azure&quot;,
-      &quot;mysql&quot;,
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "azure",
+      "mysql",
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\functions" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
+      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\functions" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
       <recent name="F:\PyCharm_project\casegreen\ctrlpanel\templates\ctrlpanel" />
       <recent name="F:\PyCharm_project\casegreen\static\img" />
@@ -81,7 +87,7 @@
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
     </key>
   </component>
-  <component name="RunManager" selected="Django Server.casegreen">
+  <component name="RunManager" selected="Python.del_records">
     <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -130,9 +136,6 @@
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ctrlpanel/functions" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -215,8 +218,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.rddate_correction" />
         <item itemvalue="Python.del_records" />
+        <item itemvalue="Python.rddate_correction" />
         <item itemvalue="Python.dailycount_correction" />
         <item itemvalue="Python.check_case" />
         <item itemvalue="Python.dailycount_correction" />
@@ -311,14 +314,7 @@
       <workItem from="1670714131028" duration="5076000" />
       <workItem from="1670956406805" duration="33547000" />
       <workItem from="1671157167202" duration="17102000" />
-      <workItem from="1671253060945" duration="5983000" />
-    </task>
-    <task id="LOCAL-00080" summary="updates">
-      <created>1666232458977</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1666232458977</updated>
+      <workItem from="1671253060945" duration="33301000" />
     </task>
     <task id="LOCAL-00081" summary="updates">
       <created>1666268671771</created>
@@ -656,7 +652,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671255752738</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="updates">
+      <created>1671259594103</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1671259594103</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

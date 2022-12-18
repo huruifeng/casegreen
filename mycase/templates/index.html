@@ -31,8 +31,8 @@
                            <li class="nav-item"><a class="nav-link" href="{% url "casegreen:about" %}">About</a></li>
                            <!-- Dropdown -->
                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Resources</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="nav-link dropdown-toggle"  href="#" id="resoursDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Resources</a>
+                            <ul class="dropdown-menu" aria-labelledby="resoursDropdown">
                                 <li><a class="dropdown-item" href="https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html" target="_blank">Visa Bulletin</a></li>
                                 <li><a class="dropdown-item" href="https://ebgreencard.com/" target="_blank">EB/485 wiki</a></li>
                             </ul>
@@ -40,29 +40,36 @@
                           {# <li class="nav-item"><a class="nav-link"href={% url "mycase:dashborddaily" %}>Dashbord</a></li>#}
                            <!-- Dropdown -->
                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Dashbords</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="nav-link dropdown-toggle"  href="#" id="dashDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Dashbords</a>
+                            <ul class="dropdown-menu" aria-labelledby="dashDropdown">
                               <li><a class="dropdown-item" href={% url "mycase:dashborddaily" %}>Status daily</a></li>
                               <li><a class="dropdown-item" href={% url "mycase:overview" %}>Center/Forms/Status</a></li>
                             </ul>
                           </li>
                           {# <li class="nav-item"><a class="nav-link" href="#">Process</a></li>#}
                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Process</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="nav-link dropdown-toggle"  href="#" id="processDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Process</a>
+                            <ul class="dropdown-menu" aria-labelledby="processDropdown">
                               <li><a class="dropdown-item" href="{% url "mycase:processrn" %}">By receipt number(RN)</a></li>
                               <li><a class="dropdown-item" href="{% url "mycase:processrd" %}">By received date(RD)</a></li>
                                <li><a class="dropdown-item" href="{% url "mycase:countscalendar" %}">Counts calendar</a></li>
                             </ul>
                           </li>
                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Summary</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="nav-link dropdown-toggle"  href="#" id="summaryDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Summary</a>
+                            <ul class="dropdown-menu" aria-labelledby="summaryDropdown">
                               <li><a class="dropdown-item" href="{% url "mycase:summaryrn" %}">By receipt number(RN)</a></li>
                               <li><a class="dropdown-item" href="{% url "mycase:summaryrd" %}">By received date(RD)</a></li>
                             </ul>
                           </li>
-                          <li class="nav-item"><a class="nav-link" href="{% url "casegreen:query" %}">Query</a></li>
+                          {# <li class="nav-item"><a class="nav-link" href="{% url "casegreen:query" %}">Query</a></li>#}
+                          <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"  href="#" id="queryDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Query</a>
+                                <ul class="dropdown-menu" aria-labelledby="queryDropdown">
+                                  <li><a class="dropdown-item" href="{% url "mycase:queryrn" %}">By receipt number(RN)</a></li>
+                                  <li><a class="dropdown-item" href="{% url "mycase:queryrd" %}">By received date(RD)</a></li>
+                                </ul>
+                          </li>
                           <li class="nav-item"><a class="nav-link" href="{% url "casegreen:nextstatus" %}">NextStatus</a></li>
                           <li class="nav-item"><a class="nav-link" href="{% url "casegreen:today" %}">Today!</a></li>
                           <li class="nav-item"><a class="nav-link" href="{% url "casegreen:home" %}">myCase</a></li>

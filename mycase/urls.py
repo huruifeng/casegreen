@@ -14,7 +14,8 @@ urlpatterns = [
     path('summaryrd/', views.summaryrd, name='summaryrd'),
     path('processajax/', views.processajax, name='processajax'),
     path('countscalendar/', views.countscalendar, name='countscalendar'),
-    path('query/', views.query, name='query'),
+    path('queryrn/', views.queryrn, name='queryrn'),
+    path('queryrd/', views.queryrd, name='queryrd'),
     path('today/', views.todaycounts, name='today'),
     path('nextstatus/', views.nextstatus, name='nextstatus'),
     path('about/', views.about, name='about'),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('ajax/rnrangecount', views.rnrangecount, name = "rnrangecount"),
     path('ajax/getsankey', views.getsankey, name = "getsankey"),
     path('ajax/todaymodalcasetable', views.todaymodalcasetable, name = "todaymodalcasetable"),
+    path('ajax/ajax_queryrn', views.ajax_queryrn, name = "ajax_queryrn"),
 
 ]
 

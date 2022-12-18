@@ -1,20 +1,20 @@
-.REC_bg{background-color: #1072f1;}
-.FP_bg{background-color: #11a9fa;}
-.ITV_bg{background-color: #2b04da;}
-.RFE_bg{background-color: #f4b824;}
-.TRF_bg{background-color: #c77cff}
-.APV_bg{background-color: #1db063}
-.RJC_bg{background-color: #ff001a}
-.OTH_bg{background-color: #78787a}
+.REC_bg{background-color: #1072f1 !important;}
+.FP_bg{background-color: #11a9fa !important;}
+.ITV_bg{background-color: #2b04da !important;}
+.RFE_bg{background-color: #f4b824 !important;}
+.TRF_bg{background-color: #c77cff !important;}
+.APV_bg{background-color: #1db063 !important;}
+.RJC_bg{background-color: #ff001a !important;}
+.OTH_bg{background-color: #78787a !important;}
 
 .REC_color{color: #1072f1;}
 .FP_color{color: #11a9fa;}
 .ITV_color{color: #2b04da;}
 .RFE_color{color: #f4b824;}
-.TRF_color{color: #c77cff}
-.APV_color{color: #1db063}
-.RJC_color{color: #ff001a}
-.OTH_color{color: #78787a}
+.TRF_color{color: #c77cff;}
+.APV_color{color: #1db063;}
+.RJC_color{color: #ff001a;}
+.OTH_color{color: #78787a;}
 
 .ctr_btn{padding-left: 10px;padding-right: 10px; vertical-align:middle;}
 .fy_btn{padding-left: 10px;padding-right: 10px;vertical-align:middle;}

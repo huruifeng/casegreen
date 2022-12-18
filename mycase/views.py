@@ -54,6 +54,7 @@ def mycase(request):
     if receipt_num is None or receipt_num.strip() == "":
         return redirect("casegreen:home")
 
+    receipt_num = receipt_num.strip()
     center = receipt_num[:3]
     year = receipt_num[3:5]
     lb_sc = "LB" if receipt_num[5] == "9" else "SC"
@@ -848,13 +849,55 @@ def summaryrd(request):
 
     context = {"page_title": "Summary by Receipt Date","form_ls": form_ls, "year_ls": year_ls[::-1],
                "center": center, "fy": fy, "selectform": selectform,"rangesize": rangesize,"data":data_dict}
-
     return render(request, 'mycase/summaryrd.html', context)
 
 
-def query(request):
-    context = {"page_title": "Query"}
-    return render(request, 'mycase/query.html', context)
+def queryrn(request):
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+    context = {"page_title": "Query by RN","form_ls": form_ls,"selectform": "I-485","rangesize": "500",}
+    return render(request, 'mycase/queryrn.html', context)
+
+def ajax_queryrn(request):
+    if request.method == "GET":
+        receipt_num = request.GET.get("receipt_num", None)
+        selectform = request.GET.get("selectform", None)
+        rangesize = request.GET.get("rangesize", None)
+    elif request.method == "POST":
+        receipt_num = request.POST.get("receipt_num", None)
+        selectform = request.POST.get("selectform", None)
+        rangesize = request.GET.get("rangesize", None)
+
+    if receipt_num is None or len(receipt_num.strip())!=13 or (receipt_num.strip()[:3] not in ['LIN','SRC','MSC','WAC','EAC','YSC','IOE','MCT']):
+        data_dict = {"data":"Error: Receipt number format is wrong!"}
+        return JsonResponse(data_dict, status=200)
+
+    receipt_num = receipt_num.strip()
+
+    center = receipt_num[:3]
+    year = receipt_num[3:5]
+    lb_sc = "LB" if receipt_num[5] == "9" else "SC"
+
+    receipt_num_pool = []
+    for i in range(int(rangesize)):
+        receipt_num_pool.append(center+str(int(receipt_num[3:])+i))
+
+    center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+    case_qs = center_table.objects.filter(form=selectform,receipt_number__in=receipt_num_pool).order_by("add_date")
+    all_status = {}
+    for case_i in case_qs:
+        if case_i.receipt_number not in all_status:
+            all_status[case_i.receipt_number] = [[case_i.status,case_i.action_date,case_i.case_stage]]
+        else:
+            all_status[case_i.receipt_number].append([case_i.status,case_i.action_date,case_i.case_stage])
+    data_dict = {"data": all_status}
+    return JsonResponse(data_dict, status=200)
+
+def queryrd(request):
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+    context = {"page_title": "Query by RD", "form_ls": form_ls, "selectform": "I-485", "rangesize": "3", }
+    return render(request, 'mycase/queryrd.html', context)
 
 def about(request):
     context = {"page_title": "About"}
