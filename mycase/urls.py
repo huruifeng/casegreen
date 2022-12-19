@@ -15,7 +15,7 @@ urlpatterns = [
     path('processajax/', views.processajax, name='processajax'),
     path('countscalendar/', views.countscalendar, name='countscalendar'),
     path('queryrn/', views.queryrn, name='queryrn'),
-    path('queryrd/', views.queryrd, name='queryrd'),
+    # path('queryrd/', views.queryrd, name='queryrd'),
     path('today/', views.todaycounts, name='today'),
     path('nextstatus/', views.nextstatus, name='nextstatus'),
     path('about/', views.about, name='about'),
@@ -27,6 +27,7 @@ urlpatterns = [
     path('ajax/getsankey', views.getsankey, name = "getsankey"),
     path('ajax/todaymodalcasetable', views.todaymodalcasetable, name = "todaymodalcasetable"),
     path('ajax/ajax_queryrn', views.ajax_queryrn, name = "ajax_queryrn"),
+    # path('ajax/ajax_queryrd', views.ajax_queryrd, name = "ajax_queryrd"),
 
 ]
 

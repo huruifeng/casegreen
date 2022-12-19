@@ -165,9 +165,9 @@ def run_center(request,center):
         data_yesterday = {}
         try:
             file_i = "mycase/data/status_data/yesterday/" + center + "_" + str(fy_i) + "_bkp.json"
-            shutil.move(file_i, "mycase/data/bkp/yesterday/" + center + "_" + str(fy_i) + "_bkp.json")
             with open(file_i) as json_file:
                 data_yesterday = json.load(json_file)
+            shutil.move(file_i, "mycase/data/bkp/yesterday/" + center + "_" + str(fy_i) + "_bkp.json")
         except Exception as e:
             print(e)
         print(f"Reading data - Yesterday...Done!")

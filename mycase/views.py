@@ -275,7 +275,7 @@ def caseinrange(request):
                 recent_apv = {}
                 recent_trf = {}
                 recent_rfe = {}
-                for case_i in case_qs.order_by("-add_date"):  ## here also can use "-action_date_x"
+                for case_i in case_qs.order_by("-action_date_x"):  ## here also can use "-add_date"
                     ## open the comments, only count the final status of a receipt number(one case can have several status changes within a few days)
                     # if case_i.receipt_number in used_case: continue
                     # else: used_case.append(case_i.receipt_number)
@@ -893,11 +893,47 @@ def ajax_queryrn(request):
     data_dict = {"data": all_status}
     return JsonResponse(data_dict, status=200)
 
-def queryrd(request):
-    form_qs = form.objects.all()
-    form_ls = [form_i.code for form_i in form_qs]
-    context = {"page_title": "Query by RD", "form_ls": form_ls, "selectform": "I-485", "rangesize": "3", }
-    return render(request, 'mycase/queryrd.html', context)
+# def queryrd(request):
+#     form_qs = form.objects.all()
+#     form_ls = [form_i.code for form_i in form_qs]
+#     context = {"page_title": "Query by RD", "form_ls": form_ls, "selectform": "I-485", "rangesize": "3", }
+#     return render(request, 'mycase/queryrd.html', context)
+
+# def ajax_queryrd(request):
+#     if request.method == "GET":
+#         received_date = request.GET.get("received_date", None)
+#         selectform = request.GET.get("selectform", None)
+#         rangesize = request.GET.get("rangesize", None)
+#     elif request.method == "POST":
+#         received_date = request.POST.get("received_date", None)
+#         selectform = request.POST.get("selectform", None)
+#         rangesize = request.GET.get("rangesize", None)
+#
+#     if received_date is None or len(received_date.strip())!=10:
+#         data_dict = {"data":"Error: Received date format is wrong!"}
+#         return JsonResponse(data_dict, status=200)
+#
+#     received_date = received_date.strip()
+#
+#     date_s = datetime.strptime(received_date, "%m-%d-%Y")
+#     date_e = date_s + timedelta(days=30*int(rangesize))
+#
+#     center = receipt_num[:3]
+#     year = receipt_num[3:5]
+#     lb_sc = "LB" if receipt_num[5] == "9" else "SC"
+#
+#
+#     center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+#     case_qs = center_table.objects.filter(form=selectform,receipt_number__in=receipt_num_pool).order_by("add_date")
+#     all_status = {}
+#     for case_i in case_qs:
+#         if case_i.receipt_number not in all_status:
+#             all_status[case_i.receipt_number] = [[case_i.status,case_i.action_date,case_i.case_stage]]
+#         else:
+#             all_status[case_i.receipt_number].append([case_i.status,case_i.action_date,case_i.case_stage])
+#     data_dict = {"data": all_status}
+#     return JsonResponse(data_dict, status=200)
+
 
 def about(request):
     context = {"page_title": "About"}

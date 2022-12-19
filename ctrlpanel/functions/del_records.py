@@ -11,14 +11,14 @@ center_tables = [case_status_lin_lb,case_status_msc_lb,case_status_src_lb, case_
 
 today = datetime.datetime.now()
 
-# ##############
-# for table_i in center_tables:
-#     table_i.objects.filter(add_date__gte= datetime.datetime(today.year,today.month,today.day, hour=2, minute=0, second=0)).delete()
-#
-# folder = "../../mycase/data/statistics/overview"
-# for file_i in os.listdir(folder):
-#     os.remove(folder + "/" + file_i)
+##############
+for table_i in center_tables:
+    table_i.objects.filter(add_date__gte= datetime.datetime(today.year,today.month,today.day, hour=2, minute=0, second=0)).delete()
+
+folder = "../../mycase/data/statistics/overview"
+for file_i in os.listdir(folder):
+    os.remove(folder + "/" + file_i)
 
 status_daily.objects.filter(add_date__gte= datetime.datetime(today.year,today.month,today.day, hour=2, minute=0, second=0)).delete()
-# status_trans.objects.filter(add_date__gte= datetime.datetime(today.year,today.month,today.day, hour=2, minute=0, second=0)).delete()
+status_trans.objects.filter(add_date__gte= datetime.datetime(today.year,today.month,today.day, hour=2, minute=0, second=0)).delete()
 

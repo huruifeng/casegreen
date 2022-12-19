@@ -62,14 +62,14 @@
                               <li><a class="dropdown-item" href="{% url "mycase:summaryrd" %}">By received date(RD)</a></li>
                             </ul>
                           </li>
-                          {# <li class="nav-item"><a class="nav-link" href="{% url "casegreen:query" %}">Query</a></li>#}
-                          <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle"  href="#" id="queryDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Query</a>
-                                <ul class="dropdown-menu" aria-labelledby="queryDropdown">
-                                  <li><a class="dropdown-item" href="{% url "mycase:queryrn" %}">By receipt number(RN)</a></li>
-                                  <li><a class="dropdown-item" href="{% url "mycase:queryrd" %}">By received date(RD)</a></li>
-                                </ul>
-                          </li>
+                           <li class="nav-item"><a class="nav-link" href="{% url "mycase:queryrn" %}">Query</a></li>
+{#                          <li class="nav-item dropdown">#}
+{#                                <a class="nav-link dropdown-toggle"  href="#" id="queryDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Query</a>#}
+{#                                <ul class="dropdown-menu" aria-labelledby="queryDropdown">#}
+{#                                  <li><a class="dropdown-item" href="{% url "mycase:queryrn" %}">By receipt number(RN)</a></li>#}
+{#                                  <li><a class="dropdown-item" href="{% url "mycase:queryrd" %}">By received date(RD)</a></li>#}
+{#                                </ul>#}
+{#                          </li>#}
                           <li class="nav-item"><a class="nav-link" href="{% url "casegreen:nextstatus" %}">NextStatus</a></li>
                           <li class="nav-item"><a class="nav-link" href="{% url "casegreen:today" %}">Today!</a></li>
                           <li class="nav-item"><a class="nav-link" href="{% url "casegreen:home" %}">myCase</a></li>
