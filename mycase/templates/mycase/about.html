@@ -4,7 +4,7 @@
 {% block content %}
 
 <link href="{% static "css/datatables.min.css" %}" media="all" rel="stylesheet" />
-<div class="container-fluid pt-3" style="width: 90%;min-width: 1200px;">
+<div class="container-fluid pt-1" style="width: 80%;min-width: 1200px;">
      <div class="row justify-content-center">
          <div class="col-md-8" style="min-width: 1200px;">
              <!--Main content-->
@@ -14,6 +14,88 @@
                      <hr style="height: 1px;color: #666666">
                  </div>
              </div>
+             <div class="row d-flex" id="about">
+                 <div class="col-md-12">
+                      <h3>What is this website?</h3>
+                      <p>
+                        <a href="https://hilites.today"><strong>hilites.today</strong></a> stands for highlights of the day today. It is a
+                        personal project I build for fun.
+                        <br>
+                        The original purpose is to create a space to share the trending videos, songs, and news of the day.
+                        After I submitted my I-485 application, I decided the build a website to track the progress of USCIS cases.
+                      </p>
+                      <p>
+                        The data shown on this website is crawled from USCIS via the following link:
+                        <br>
+                        <a href=https://egov.uscis.gov/casestatus/mycasestatus.do?appReceiptNum=#{case_number} target="_blank">https://egov.uscis.gov/casestatus/mycasestatus.do?appReceiptNum=#{case_number}</a>
+                      </p>
+
+                      <p>
+                          Thank you to all the friends for your support. That keeps the website running on AWS.
+                          As I enabled <a href="https://www.google.com/adsense/start/" target="_blank"><strong>Google Adsense</strong></a>, I
+                          removed PayPal donation link from main pages.
+                          <br>
+                          I'm sincerely sorry if the ads may be a little annoying.
+                          <br>
+                          If you insist, here is the link for you to donate<i class="fa-solid fa-heart" style="color:red"></i>
+                          <br>
+                      </p>
+                          <form action="https://www.paypal.com/donate" method="post" target="_top">
+                            <input type="hidden" name="business" value="R3X76MBCY46KC" />
+                            <input type="hidden" name="no_recurring" value="0" />
+                            <input type="hidden" name="item_name" value="Please support me to run the service on AWS" />
+                            <input type="hidden" name="currency_code" value="USD" />
+                            <input type="image" width="160" src='https://drrezy2389h2w.cloudfront.net/assets/PayPal-Donate-Button-bacd1c18ff116d91fe1cd251bedf7716d427389964e0e7e9f064c567be89eaf3.png' border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+                          </form>
+                 </div>
+             </div>
+             <br>
+             <div class="row d-flex" id="disclaimer">
+                 <div class="col-md-12">
+                      <h3>Disclaimer for <a href="https://hilites.today">hilites.today</a></h3>
+
+                      <p>If you require any more information or have any questions about our site's disclaimer, please feel free to contact
+                        us by email at jin.shen [at] hilites.today. Our Disclaimer was generated with the help of the
+                        <a href="https://www.disclaimergenerator.net/">Disclaimer Generator</a>.</p>
+                     </div>
+             </div>
+             <div class="row d-flex" id="disclaimer">
+                 <div class="col-md-12">
+                      <h3>Disclaimers for BuildForFun</h3>
+
+                      <p>All the information on this website - hilites.today - is published in good faith and for general information
+                        purpose only. BuildForFun does not make any warranties about the completeness, reliability and accuracy of this
+                        information. Any action you take upon the information you find on this website (BuildForFun), is strictly at your
+                        own risk. BuildForFun will not be liable for any losses and/or damages in connection with the use of our
+                        website.</p>
+
+                      <p>From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to
+                        provide only quality links to useful and ethical websites, we have no control over the content and nature of these
+                        sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site
+                        owners and content may change without notice and may occur before we have the opportunity to remove a link which may
+                        have gone 'bad'.</p>
+
+                      <p>Please be also aware that when you leave our website, other sites may have different privacy policies and terms
+                        which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their "Terms of
+                        Service" before engaging in any business or uploading any information.</p>
+                </div>
+             </div>
+             <div class="row d-flex" id="disclaimer">
+                 <div class="col-md-12">
+                      <h3>Consent</h3>
+
+                      <p>By using our website, you hereby consent to our disclaimer and agree to its terms.</p>
+                 </div>
+             </div>
+             <div class="row d-flex" id="disclaimer">
+                 <div class="col-md-12">
+                      <h3>Update</h3>
+
+                      <p>Should we update, amend or make any changes to this document, those changes will be prominently posted here.</p>
+                 </div>
+             </div>
+
              <!--Main content end-->
         </div> <!--col-6-->
     </div><!--row-->

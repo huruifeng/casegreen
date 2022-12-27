@@ -118,11 +118,11 @@ def run_center(request,center):
     year_n = sys_params.fiscal_year_n
     crawler_n = sys_params.crawler_number
 
-    fiscal_years = []
     now = datetime.now()
     now_days =  (now - datetime(2000, 1, 1)).days
     now_year = now.year - 2000
 
+    fiscal_years = []
     for i in range(year_n):
         fiscal_years.append(now_year-i)
 
@@ -148,6 +148,7 @@ def run_center(request,center):
         "update_day":now_days
     })
     print("===================================")
+    print("Run:", datetime.now())
     print(fiscal_years)
 
     status_dict = get_status_dict()

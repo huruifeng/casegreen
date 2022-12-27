@@ -177,6 +177,34 @@ def centerrun(request):
         return redirect("ctrlpanel:ctrllogin")
         # return HttpResponse("Login: Please Login!")
 
+    ## delete the static files
+    file_ls = os.listdir("mycase/data/statistics/center_range_count")
+    for f_i in file_ls:
+        while True:
+            try:
+                os.remove("mycase/data/statistics/center_range_count/" + f_i)
+                break
+            except OSError:
+                pass
+    ##
+    file_ls = os.listdir("mycase/data/statistics/center_range_count_heatmap")
+    for f_i in file_ls:
+        while True:
+            try:
+                os.remove("mycase/data/statistics/center_range_count_heatmap/" + f_i)
+                break
+            except OSError:
+                pass
+    ##
+    file_ls = os.listdir("mycase/data/statistics/center_rd_count")
+    for f_i in file_ls:
+        while True:
+            try:
+                os.remove("mycase/data/statistics/center_rd_count/" + f_i)
+                break
+            except OSError:
+                pass
+
     if request.is_ajax and request.method == "POST":
         # get the data from the client side.
         centers = request.POST.get("centers", None)
@@ -195,37 +223,11 @@ def centerrun(request):
             if "error" in return_code.lower():
                 return HttpResponse(return_code)
 
-        ## delete the static files
-        file_ls = os.listdir("mycase/data/statistics/center_range_count")
-        for f_i in file_ls:
-            while True:
-                try:
-                    os.remove("mycase/data/statistics/center_range_count/"+f_i)
-                    break
-                except OSError:
-                    pass
-        ##
-        file_ls = os.listdir("mycase/data/statistics/center_range_count_heatmap")
-        for f_i in file_ls:
-            while True:
-                try:
-                    os.remove("mycase/data/statistics/center_range_count_heatmap/" + f_i)
-                    break
-                except OSError:
-                    pass
-        ##
-        file_ls = os.listdir("mycase/data/statistics/center_rd_count")
-        for f_i in file_ls:
-            while True:
-                try:
-                    os.remove("mycase/data/statistics/center_rd_count/" + f_i)
-                    break
-                except OSError:
-                    pass
         ####
         print("-------------------------------")
         print("Generate overview...")
         generate_overview(center_ls)
+        print(centers)
         print("Generate overview... Done!")
 
         print("*******************************")

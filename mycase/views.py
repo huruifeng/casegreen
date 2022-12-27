@@ -690,7 +690,7 @@ def todaymodalcasetable(request):
         error_msg = "Date is not defined!"
 
     center_obj = center_dict[center.lower()]
-    case_qs = center_obj.objects.filter(form=form, date_number=picked_days)
+    case_qs = center_obj.objects.filter(date_number=picked_days,form=form)
 
     status_map = {"new": rd_status, "apv": ["Approved", "Mailed", "Produced"], "rej": ["Rejected"]}
     case_qs_final = []
