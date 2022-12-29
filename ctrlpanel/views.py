@@ -156,7 +156,7 @@ def sysupdate(request):
         return redirect("ctrlpanel:ctrllogin")
         # return HttpResponse("Login: Please Login!")
 
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST":
         # get the data from the client side.
         centers = request.POST.get("centers", None)
         fys_n = request.POST.get("fys", None)
@@ -205,7 +205,7 @@ def centerrun(request):
             except OSError:
                 pass
 
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST":
         # get the data from the client side.
         centers = request.POST.get("centers", None)
         center_ls = centers.split(",")

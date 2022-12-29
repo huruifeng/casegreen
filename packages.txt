@@ -11,4 +11,6 @@ beautifulsoup4
 
 4. migrates
 
-5. import data (SQL files)
+5. login control panel
+
+6. phpMyAdmin: import data (SQL files)

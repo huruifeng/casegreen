@@ -156,7 +156,7 @@ def mycase(request):
 
 def caseinrange(request):
     # request should be ajax and method should be GET.
-    if request.is_ajax and request.method == "GET":
+    if request.method == "GET":
         # get the data_type from the client side.
         receipt_num = request.GET.get("recepit_num", None)
         form_type = request.GET.get("form_type", None)
