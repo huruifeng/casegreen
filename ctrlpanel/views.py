@@ -133,7 +133,7 @@ def sysinit(request):
         return redirect("ctrlpanel:ctrllogin")
         # return HttpResponse("Login: Please Login!")
 
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST":
         # try:
         # backup data
         case_status_tables = [case_status_lin_lb, case_status_msc_lb, case_status_src_lb, case_status_wac_lb,
@@ -241,7 +241,7 @@ def centerstatus(request):
         # return HttpResponse("Login: Please Login!")
 
     qs_json = {}
-    if request.is_ajax and request.method == "POST":
+    if request.method == "POST":
         center_status = center_running.objects.all()
         qs_json = serializers.serialize('json', center_status)
 

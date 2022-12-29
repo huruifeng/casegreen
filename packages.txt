@@ -1,0 +1,14 @@
+1. install packages
+Django
+pandas
+mysqlclient
+requests
+beautifulsoup4
+
+2. delete contents in “migrations” folder
+
+3. makemigrations
+
+4. migrates
+
+5. import data (SQL files)
