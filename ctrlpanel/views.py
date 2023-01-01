@@ -39,10 +39,11 @@ def index(request):
     sys_params,created = sysparam.objects.get_or_create(pk=1,defaults={
         "centers": "LIN,MSC,SRC,EAC,WAC,YSC",
         "fiscal_year_n": 3,
-        "crawler_time": "21:05:00",
+        "crawler_time": "21:05",
         "crawler_number": 1,
         "sys_status": "Running"
     })
+    sys_params.crawler_time = sys_params.crawler_time.strftime("%H:%M")
     context = {'sys_params': sys_params}
     return render(request,'ctrlpanel/index.html',context)
 

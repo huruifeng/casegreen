@@ -15,10 +15,13 @@
                        <div class="d-flex flex-column justify-content-around px-3 pb-2">
                           <small class="text-muted">Fiscal years</small>
                            <select class="form-control" id="sys_fys">
-                               <option value=1 {% if sys_params.fiscal_year_n == 1 %} selected {% endif %}>1</option>
                                <option value=3 {% if sys_params.fiscal_year_n == 3 %} selected {% endif %}>3</option>
+                               <option value=4 {% if sys_params.fiscal_year_n == 4 %} selected {% endif %}>4</option>
                                <option value=5 {% if sys_params.fiscal_year_n == 5 %} selected {% endif %}>5</option>
+                               <option value=6 {% if sys_params.fiscal_year_n == 6 %} selected {% endif %}>6</option>
                                <option value=7 {% if sys_params.fiscal_year_n == 7 %} selected {% endif %}>7</option>
+                               <option value=8 {% if sys_params.fiscal_year_n == 8 %} selected {% endif %}>8</option>
+                               <option value=9 {% if sys_params.fiscal_year_n == 9 %} selected {% endif %}>9</option>
                                <option value=10 {% if sys_params.fiscal_year_n == 10 %} selected {% endif %}>10</option>
                            </select>
                       </div>
@@ -237,6 +240,7 @@
                   location.reload();
               }else{
                   alert("Update succeed! "+data)
+                  location.reload();
               }
             },
           error: function() {
