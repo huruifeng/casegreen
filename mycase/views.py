@@ -936,6 +936,15 @@ def ajax_queryrn(request):
 
 
 def about(request):
-    context = {"page_title": "About"}
+    center_counts = {}
+    for center_i in center_dict:
+        center_counts[center_i] = {"total":center_dict[center_i].objects.values('id').order_by("id").last()}
+
+    context = {"page_title": "About","center_counts":center_counts}
     return render(request, 'mycase/about.html', context)
+
+def statuslist(request):
+    status_dict = get_status_dict()
+    context = {"page_title": "Status List","status_dict":status_dict}
+    return render(request, 'mycase/statuslist.html', context)
 
