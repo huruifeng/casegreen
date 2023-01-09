@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
+      <change afterPath="$PROJECT_DIR$/casegreen/scripts/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/casegreen/scripts/check_status.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/dailycount_correction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/del_records.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/del_records.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/rddate_correction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,48 +46,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/PyCharmProjects/casegreen/mycase/templates/mycase&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Notebook.Style&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "F:/PyCharmProjects/casegreen/casegreen/scripts",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "Notebook.Style",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;azure&quot;,
-      &quot;mysql&quot;,
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "azure",
+      "mysql",
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PyCharmProjects\casegreen\casegreen\scripts" />
       <recent name="F:\PyCharmProjects\casegreen\mycase\templates\mycase" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates\mycase" />
       <recent name="F:\PyCharm_project\casegreen\ctrlpanel\functions" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
-      <recent name="F:\PyCharm_project\casegreen\ctrlpanel\templates\ctrlpanel" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\PyCharmProjects\casegreen\casegreen\scripts" />
       <recent name="F:\PyCharm_project\casegreen\mycase\data\bkp" />
       <recent name="F:\PyCharm_project\casegreen\mycase\templates" />
       <recent name="F:\PyCharm_project\casegreen\static\js" />
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
-      <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\css" />
     </key>
   </component>
-  <component name="RunManager" selected="Django Server.casegreen">
+  <component name="RunManager" selected="Python.check_status">
     <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -108,6 +109,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="check_status" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="casegreen" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/casegreen/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/casegreen/scripts/check_status.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="dailycount_correction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -121,7 +141,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" />
+      <option name="SCRIPT_NAME" value="F:\PyCharmProjects\casegreen\casegreen\scripts\dailycount_correction.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -143,7 +163,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ctrlpanel/functions/del_records.py" />
+      <option name="SCRIPT_NAME" value="F:\PyCharmProjects\casegreen\casegreen\scripts\del_records.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -165,29 +185,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="CaseGreen" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mycase/functions" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="F:\PyCharm_project\casegreen\ctrlpanel\functions\utils.py" />
+      <option name="SCRIPT_NAME" value="F:\PyCharmProjects\casegreen\casegreen\scripts\rddate_correction.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -222,11 +220,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.check_status" />
         <item itemvalue="Python.del_records" />
         <item itemvalue="Python.rddate_correction" />
         <item itemvalue="Python.dailycount_correction" />
         <item itemvalue="Python.check_case" />
-        <item itemvalue="Python.dailycount_correction" />
       </list>
     </recent_temporary>
   </component>
@@ -333,14 +331,7 @@
       <workItem from="1672501696991" duration="18099000" />
       <workItem from="1672615557591" duration="71000" />
       <workItem from="1672615789620" duration="10979000" />
-      <workItem from="1673225729059" duration="4217000" />
-    </task>
-    <task id="LOCAL-00093" summary="updates">
-      <created>1667183281064</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1667183281064</updated>
+      <workItem from="1673225729059" duration="5405000" />
     </task>
     <task id="LOCAL-00094" summary="updates">
       <created>1667190831446</created>
@@ -678,7 +669,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673069486905</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="updates">
+      <created>1673239073020</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1673239073020</updated>
+    </task>
+    <option name="localTasksCounter" value="143" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
