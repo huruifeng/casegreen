@@ -40,7 +40,7 @@ color8 = {'Received': "#1072f1", 'FP_Taken': "#11a9fa", 'Interviewed': "#2b04da"
 rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter","Case Accepted By The USCIS Lockbox",
                  "Case Was Received", "Case Was Received and A Receipt Notice Was Sent","Case Was Received At Another USCIS Office",
                  "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
-                 "Fingerprint Fee Was Received"]
+                 "Fingerprint Fee Was Received","Immigrant Visa Fee Payment Received"]
 
 def index(request):
     return render(request, 'index.html')
