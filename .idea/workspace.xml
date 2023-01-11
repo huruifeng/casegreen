@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/casegreen/scripts/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/casegreen/scripts/check_status.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/dailycount_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/dailycount_correction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/del_records.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/del_records.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/rddate_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/rddate_correction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/casegreen/scripts/check_status.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/check_status.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/casegreen/scripts/dailycount_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/dailycount_correction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,30 +45,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "F:/PyCharmProjects/casegreen/casegreen/scripts",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "Notebook.Style",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/PyCharmProjects/casegreen/casegreen/scripts&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Notebook.Style&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "azure",
-      "mysql",
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;azure&quot;,
+      &quot;mysql&quot;,
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\PyCharmProjects\casegreen\casegreen\scripts" />
@@ -86,7 +85,7 @@
       <recent name="F:\PyCharm_project\casegreen\mycase\static\mycase\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.check_status">
+  <component name="RunManager" selected="Django Server.casegreen">
     <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,6 +112,9 @@
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/casegreen/scripts" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -331,14 +333,9 @@
       <workItem from="1672501696991" duration="18099000" />
       <workItem from="1672615557591" duration="71000" />
       <workItem from="1672615789620" duration="10979000" />
-      <workItem from="1673225729059" duration="5405000" />
-    </task>
-    <task id="LOCAL-00094" summary="updates">
-      <created>1667190831446</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1667190831446</updated>
+      <workItem from="1673225729059" duration="8254000" />
+      <workItem from="1673393750389" duration="659000" />
+      <workItem from="1673402636399" duration="1474000" />
     </task>
     <task id="LOCAL-00095" summary="updates">
       <created>1667276474176</created>
@@ -676,7 +673,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673239073020</updated>
     </task>
-    <option name="localTasksCounter" value="143" />
+    <task id="LOCAL-00143" summary="updates">
+      <created>1673240445221</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1673240445221</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -713,6 +717,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CaseGreen$manage.coverage" NAME="manage Coverage Results" MODIFIED="1659312925732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/casegreen$check_status.coverage" NAME="check_status Coverage Results" MODIFIED="1673393771143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/casegreen/scripts" />
     <SUITE FILE_PATH="coverage/CaseGreen$utils.coverage" NAME="utils Coverage Results" MODIFIED="1659450101574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mycase/functions" />
     <SUITE FILE_PATH="coverage/casegreen$manul_correction.coverage" NAME="manul_correction Coverage Results" MODIFIED="1667706561262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ctrlpanel/functions" />
   </component>

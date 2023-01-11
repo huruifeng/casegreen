@@ -5,8 +5,6 @@ import shutil
 import pandas as pd
 from datetime import date, datetime, timezone, timedelta
 
-from django.shortcuts import redirect
-
 from mycase.models import *
 
 timezone_offset = -4.0  # Boston Time (UTC−04:00)
@@ -27,10 +25,16 @@ center_dict = {"lin_lb":case_status_lin_lb,
                "ioe":case_status_ioe
                }
 
-rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter", "Case Accepted By The USCIS Lockbox",
-             "Case Was Received", "Case Was Received and A Receipt Notice Was Sent", "Case Was Received At Another USCIS Office",
-             "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
-             "Fingerprint Fee Was Received","Immigrant Visa Fee Payment Received"]
+# rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter", "Case Accepted By The USCIS Lockbox",
+#              "Case Was Received", "Case Was Received and A Receipt Notice Was Sent", "Case Was Received At Another USCIS Office",
+#              "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
+#              "Fingerprint Fee Was Received","Immigrant Visa Fee Payment Received"]
+
+def get_rd_status():
+    case_status_df = pd.read_csv("mycase/data/case_status.csv", header=0, index_col=0, sep=",")
+    rd_status = case_status_df.loc[case_status_df["NewReceived"] == "YES", :].index.tolist()
+    return rd_status
+rd_status = get_rd_status()
 
 def get_status_dict():
     case_status_df = pd.read_csv("mycase/data/case_status.csv", header=0, index_col=0, sep=",")

@@ -37,10 +37,12 @@ color20 = {'Received': '#1266f1', 'Transferred': '#17becf', 'Pending': '#ff7f0e'
 color8 = {'Received': "#1072f1", 'FP_Taken': "#11a9fa", 'Interviewed': "#2b04da", 'RFE': "#f4b824",
           'Transferred': "#c77cff", 'Approved': "#1db063", 'Rejected': "#ff001a", 'Other': "#78787a"}
 
-rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter","Case Accepted By The USCIS Lockbox",
-                 "Case Was Received", "Case Was Received and A Receipt Notice Was Sent","Case Was Received At Another USCIS Office",
-                 "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
-                 "Fingerprint Fee Was Received","Immigrant Visa Fee Payment Received"]
+# rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter", "Case Accepted By The USCIS Lockbox",
+#              "Case Was Received", "Case Was Received and A Receipt Notice Was Sent", "Case Was Received At Another USCIS Office",
+#              "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
+#              "Fingerprint Fee Was Received","Immigrant Visa Fee Payment Received"]
+
+rd_status = get_rd_status()
 
 def index(request):
     return render(request, 'index.html')

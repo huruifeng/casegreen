@@ -28,3 +28,5 @@ for file_i in os.listdir(folder):
 
 x = [i for i in IOE_status if i not in status_ls]
 print(x)
+for i in x:
+    print(i)

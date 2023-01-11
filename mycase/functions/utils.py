@@ -10,7 +10,7 @@ import re
 
 from django.db.models import Count
 
-from ctrlpanel.functions.utils import get_status_dict
+from ctrlpanel.functions.utils import get_status_dict, get_rd_status
 from mycase.models import *
 
 months = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -90,13 +90,12 @@ center_dict = {"lin_lb": case_status_lin_lb,
                "ioe": case_status_ioe
                }
 
-rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter",
-             "Case Accepted By The USCIS Lockbox",
-             "Case Was Received", "Case Was Received and A Receipt Notice Was Sent",
-             "Case Was Received At Another USCIS Office",
-             "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
-             "Fingerprint Fee Was Received","Immigrant Visa Fee Payment Received"]
+# rd_status = ["Fees Were Waived", "Card Was Received By USCIS Along With My Letter", "Case Accepted By The USCIS Lockbox",
+#              "Case Was Received", "Case Was Received and A Receipt Notice Was Sent", "Case Was Received At Another USCIS Office",
+#              "Document and Letter Was Received", "Document And Letter Was Received And Under Review",
+#              "Fingerprint Fee Was Received","Immigrant Visa Fee Payment Received"]
 
+rd_status = get_rd_status()
 status_dict = get_status_dict()
 
 
