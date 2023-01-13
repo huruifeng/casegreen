@@ -21,9 +21,9 @@
              <div class="row d-flex" id="intro">
                  <div class="col-md-12">
                  <table class="table table-sm table-striped table-hover">
-                 <tr><th>Status</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th></tr>
+                 <tr><th></th><th>Status</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th></tr>
                     {% for status_i, level_i in status_dict.items  %}
-                        <tr><td>{{ status_i }}</td><td>{{ level_i.L1  }}</td><td>{{ level_i.L2 }}</td><td>{{ level_i.L3 }}</td><td>{{ level_i.L4 }}</td></tr>
+                        <tr><td>{{  forloop.counter  }}</td><td>{{ status_i }}</td><td>{{ level_i.L1  }}</td><td>{{ level_i.L2 }}</td><td>{{ level_i.L3 }}</td><td>{{ level_i.L4 }}</td></tr>
                     {% endfor  %}
                  </table>
                  </div>

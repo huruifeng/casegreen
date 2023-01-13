@@ -52,8 +52,20 @@
                                   value="{{ sys_params.sys_status }}" />
                       </div>
                       <div class="d-flex flex-column justify-content-around px-3 pb-2">
-                          <small class="text-muted">Upate</small>
+                          <small class="text-muted">Update</small>
                           <button type="button" id="sys_update_btn" class="btn btn-success me-3"><i class="fa-solid fa-pencil"></i></button>
+                      </div>
+                      <div class="d-flex flex-column justify-content-around px-3 pb-2 ps-5">
+                          <small class="text-muted">Run Crawler Once</small>
+                          <button type="button" id="run_crawler_once_btn" class="btn btn-primary me-3"><i class="fa-solid fa-hourglass-half fa-xl"></i></button>
+                      </div>
+                      <div class="d-flex flex-column justify-content-around px-3 pb-2 ps-5">
+                          <small class="text-muted">Run Crawler</small>
+                          <button type="button" id="run_crawler_btn" class="btn btn-secondary me-3"><i class="fa-solid fa-repeat fa-xl"></i></button>
+                      </div>
+                      <div class="d-flex flex-column justify-content-around px-3 pb-2">
+                          <small class="text-muted">Stop Crawler</small>
+                          <button type="button" id="stop_crawler_btn" class="btn btn-warning me-3"><i class="fa-solid fa-stop fa-xl"></i></button>
                       </div>
                   </div>
               </div>
@@ -158,17 +170,17 @@
                               </thead>
                               <tbody>
 
-                              {% for x_i in sys_params.centers_as_list %}
-                              <tr id="{{ x_i }}_ioe_tr">
-                                  <th scope="row">{{ x_i|upper }}</th><td id="{{ x_i }}_ioe_start">09-01-2022 00:00:00</td><td id="{{ x_i }}_ioe_end">09-01-2022 00:00:00</td><td class="run_status_td" id="{{ x_i }}_ioe_status">Empty</td>
+                              {% for x_i in '0123456789'|make_list  %}
+                              <tr id="ioe{{ x_i }}_tr">
+                                  <th scope="row">IOE{{ x_i }}</th><td id="IOE{{ x_i }}_start">09-01-2022 00:00:00</td><td id="IOE{{ x_i }}_end">09-01-2022 00:00:00</td><td class="run_status_td" id="IOE{{ x_i }}_status">Empty</td>
                                     <td>
                                         <!-- Checked switch -->
                                         <div class="form-check form-switch">
-                                          <input class="form-check-input run_ioe_switch" type="checkbox" role="switch" id="{{ x_i }}_ioe_switch" checked />
+                                          <input class="form-check-input run_ioe_switch" type="checkbox" role="switch" id="IOE{{ x_i }}_switch" checked />
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-success btn-rounded btn-sm me-3" id="{{ x_i }}_ioe_run_btn" onclick="center_run(this.id)">
+                                        <button type="button" class="btn btn-outline-success btn-rounded btn-sm me-3" id="IOE{{ x_i }}_run_btn" onclick="center_run(this.id)">
                                             <i class="fa-solid fa-play text-success"></i>
                                         </button>
                                     </td>
@@ -261,7 +273,7 @@
             });
         }else if(center_x.includes("all_ioe_")){
             $(".run_ioe_switch:checkbox:checked").each(function () {
-                center_ls.push(this.id.slice(0,7))
+                center_ls.push(this.id.slice(0,4))
             });
         }else {
             center_ls.push(center_x.slice(0,-8))

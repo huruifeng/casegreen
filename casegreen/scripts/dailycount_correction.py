@@ -1,6 +1,5 @@
 import pandas as pd
 
-from ctrlpanel.functions.utils import get_status_dict
 from mycase.models import *
 import datetime
 
@@ -23,6 +22,8 @@ center_dict = {"lin_lb": case_status_lin_lb,
 case_status_df = pd.read_csv("../../mycase/data/case_status.csv", header=0, index_col=0, sep=",")
 rd_status = case_status_df.loc[case_status_df["NewReceived"]=="YES",:].index.tolist()
 status_dict = case_status_df.to_dict(orient="index")
+
+stop
 
 start_date = datetime.datetime(2022,9,24,1,5,10)
 end_date = datetime.datetime(2022,11,7,1,5,10)

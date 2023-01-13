@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from ctrlpanel.functions.utils import bkp_table, run_initalization, run_center
+from ioe.functions.utils import run_center_ioe, generate_overview_ioe
 from mycase.functions.utils import generate_overview
 from mycase.models import *
 
@@ -216,18 +217,27 @@ def centerrun(request):
             except Exception as e:
                 pass
 
+        if "ioe" in center_ls or "IOE" in center_ls:
+            center_ls = ["IOE"]
+
         for center_i in center_ls:
-            return_code = run_center(request,center_i)
+            if center_i == "IOE":
+                return_code = run_center_ioe(request,center_i)
+            else:
+                return_code = run_center(request,center_i)
+
             if "skip" in return_code.lower():
                 continue
-
             if "error" in return_code.lower():
                 return HttpResponse(return_code)
 
         ####
         print("-------------------------------")
         print("Generate overview...")
-        generate_overview(center_ls)
+        if center_i == "IOE":
+            generate_overview_ioe()
+        else:
+            generate_overview(center_ls)
         print(centers)
         print("Generate overview... Done!")
 
