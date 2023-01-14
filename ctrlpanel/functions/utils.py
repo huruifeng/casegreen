@@ -178,6 +178,7 @@ def run_center(request,center):
         print(f"Reading data - Yesterday...Done!")
 
         #####################
+        data_today = {}
         try:
             print(f"Reading data - Today...")
             file_i = "mycase/data/status_data/current/" + center + "_" + str(fy_i) + ".json"
@@ -313,7 +314,7 @@ def run_center(request,center):
                                   action_date=act_date_i, action_date_x=act_time_x,
                                   case_stage = case_stage,rd_date = rd_date,
                                   add_date=datetime.now(),
-                                  date_number=now_days)
+                                  date_number=now_days,fiscal_year = int(case_i[3:5])+2000)
             case_list.append(case_new)
 
         print(f"{center}-{fy_i}:Bulk Creating...")

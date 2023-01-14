@@ -66,6 +66,7 @@ def run_center_ioe(request,center):
         print(f"Reading data - Yesterday...Done!")
 
         #####################
+        data_today = {}
         try:
             print(f"Reading data - Today...")
             file_i = "mycase/data/status_data/current/" + center + str(fy_i) + ".json"
@@ -83,7 +84,7 @@ def run_center_ioe(request,center):
             c_running.end = datetime.now()
             c_running.status = "Skipped"
             c_running.save()
-            return "Warning: reading "+file_i +"[Skip]"
+            print("Warning: reading "+file_i +"[Skip]")
             # return "Error: reading "+file_i
 
         total_x = len(data_today)
@@ -197,11 +198,14 @@ def run_center_ioe(request,center):
                 else:
                     case_stage = "Processing"
 
+            fy_x = rd_date.year
+            if rd_date.month > 9: fy_x += 1
+
             case_new = case_status_ioe(receipt_number=case_i,form=form_i,status=status_i,
                                   action_date=act_date_i, action_date_x=act_time_x,
                                   case_stage = case_stage,rd_date = rd_date,
                                   add_date=datetime.now(),
-                                  date_number=now_days,fiscal_year=rd_date.year)
+                                  date_number=now_days,fiscal_year=fy_x)
             case_list.append(case_new)
 
         print(f"{center}-{fy_i}:Bulk Creating...")
@@ -224,6 +228,7 @@ def run_center_ioe(request,center):
     print("---------------------------------")
     print("Updating daily counts...")
     # update_todaycounts(now_days,center)
+    print(counts_today)
     for form_ii in counts_today:
         countstoday_new = status_daily(center=center.upper(), form=form_ii,
                                        new_n=counts_today[form_ii]["new_n"],
@@ -255,6 +260,7 @@ def run_center_ioe(request,center):
     print("---------------------------------")
     print("Updating status trans counts...")
     status_trans_ls = []
+    print(status_trans_dict)
     for form_ii in status_trans_dict:
         for source_status in status_trans_dict[form_ii]:
             for dest_status in status_trans_dict[form_ii][source_status]:

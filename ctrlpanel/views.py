@@ -217,7 +217,7 @@ def centerrun(request):
             except Exception as e:
                 pass
 
-        if "ioe" in center_ls or "IOE" in center_ls:
+        if "ioe0" in center_ls or "IOE0" in center_ls:
             center_ls = ["IOE"]
 
         for center_i in center_ls:

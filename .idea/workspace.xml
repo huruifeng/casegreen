@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
-      <change afterPath="$PROJECT_DIR$/ioe/functions/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ioe/functions/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mycase/migrations/0002_case_status_eac_lb_fiscal_year_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/casegreen/scripts/fiscal_correction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/casegreen/scripts/dailycount_correction.py" beforeDir="false" afterPath="$PROJECT_DIR$/casegreen/scripts/dailycount_correction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/functions/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/templates/ctrlpanel/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctrlpanel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ctrlpanel/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/statuslist.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/statuslist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ioe/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ioe/functions/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,28 +86,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Django Server.casegreen">
-    <configuration name="check_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="casegreen" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mycase/data/status_data/yesterday" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mycase/data/status_data/yesterday/check_case.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="check_status" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -179,6 +152,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="fiscal_correction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="casegreen" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/casegreen/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/casegreen/scripts/fiscal_correction.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="rddate_correction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -227,11 +219,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.fiscal_correction" />
         <item itemvalue="Python.dailycount_correction" />
         <item itemvalue="Python.check_status" />
         <item itemvalue="Python.del_records" />
         <item itemvalue="Python.rddate_correction" />
-        <item itemvalue="Python.dailycount_correction" />
       </list>
     </recent_temporary>
   </component>
@@ -341,14 +333,7 @@
       <workItem from="1673225729059" duration="8254000" />
       <workItem from="1673393750389" duration="659000" />
       <workItem from="1673402636399" duration="7858000" />
-      <workItem from="1673572303669" duration="8803000" />
-    </task>
-    <task id="LOCAL-00096" summary="updates">
-      <created>1667706918346</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1667706918346</updated>
+      <workItem from="1673572303669" duration="18210000" />
     </task>
     <task id="LOCAL-00097" summary="updates">
       <created>1667774924914</created>
@@ -686,7 +671,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673404140673</updated>
     </task>
-    <option name="localTasksCounter" value="145" />
+    <task id="LOCAL-00145" summary="updates">
+      <created>1673586211566</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1673586211566</updated>
+    </task>
+    <option name="localTasksCounter" value="146" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
