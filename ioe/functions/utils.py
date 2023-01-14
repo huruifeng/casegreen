@@ -221,9 +221,10 @@ def run_center_ioe(request,center):
             json.dump(data_yesterday,json_file)
         print(f"Saving data...Done!")
 
-        c_running.end = datetime.now()
-        c_running.status="Updated"
-        c_running.save()
+        if c_running.status != "Skipped":
+            c_running.end = datetime.now()
+            c_running.status="Updated"
+            c_running.save()
 
     print("---------------------------------")
     print("Updating daily counts...")
