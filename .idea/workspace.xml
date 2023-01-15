@@ -7,6 +7,18 @@
     <list default="true" id="8cbe4c3d-e7e5-4763-a521-50e7e00980e3" name="Changes" comment="updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ioe/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ioe/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/functions/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/functions/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/static/mycase/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/countscalendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/countscalendar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/nextstatus.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/processrd.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/processrd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/queryrd.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/queryrd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/queryrn.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/queryrn.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase/summaryrd.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase/summaryrd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/templates/mycase_basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mycase/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mycase/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,6 +164,9 @@
       <module name="casegreen" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/casegreen/scripts" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -329,14 +344,8 @@
       <workItem from="1673225729059" duration="8254000" />
       <workItem from="1673393750389" duration="659000" />
       <workItem from="1673402636399" duration="7858000" />
-      <workItem from="1673572303669" duration="19208000" />
-    </task>
-    <task id="LOCAL-00098" summary="updates">
-      <created>1667775984646</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1667775984646</updated>
+      <workItem from="1673572303669" duration="22447000" />
+      <workItem from="1673732208215" duration="16821000" />
     </task>
     <task id="LOCAL-00099" summary="updates">
       <created>1667884445257</created>
@@ -674,7 +683,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673669794934</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="updates">
+      <created>1673675433589</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1673675433590</updated>
+    </task>
+    <option name="localTasksCounter" value="148" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

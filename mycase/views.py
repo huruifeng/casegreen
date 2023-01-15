@@ -831,20 +831,20 @@ def summaryrd(request):
             ## today is 10-1, skip
             year_ls = [str(now.year + 1)] + year_ls
 
-        ######
-        if request.method == "GET":
-            center = request.GET.get("center", None)
-            selectform = request.GET.get("selectform", None)
-            fy = request.GET.get("fy", None)
-            rangesize = request.GET.get("rangesize", None)
-        elif request.method == "POST":
-            center = request.POST.get("center", None)
-            selectform = request.POST.get("selectform", None)
-            fy = request.POST.get("fy", None)
-            rangesize = request.GET.get("rangesize", None)
+    ######
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        selectform = request.GET.get("selectform", None)
+        fy = request.GET.get("fy", None)
+        rangesize = request.GET.get("rangesize", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        selectform = request.POST.get("selectform", None)
+        fy = request.POST.get("fy", None)
+        rangesize = request.GET.get("rangesize", None)
 
-        if selectform is None or center is None or fy is None or rangesize is None:
-            return redirect("/summaryrd?center=LIN_LB&selectform=I-485&fy=" + str(now.year) + "&rangesize=weekly",status=200)
+    if selectform is None or center is None or fy is None or rangesize is None:
+        return redirect("/summaryrd?center=LIN_LB&selectform=I-485&fy=" + str(now.year) + "&rangesize=weekly",status=200)
 
     center_table = center_dict[center.lower()]
     data_dict = get_rdsummary(center_table, center, selectform, fy, rangesize)
@@ -884,7 +884,11 @@ def ajax_queryrn(request):
     for i in range(int(rangesize)):
         receipt_num_pool.append(center+str(int(receipt_num[3:])+i))
 
-    center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+    if center.upper() == "IOE":
+        center_table = center_dict[center.lower()]
+    else:
+        center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+    print(center_table)
     case_qs = center_table.objects.filter(form=selectform,receipt_number__in=receipt_num_pool).order_by("add_date")
     all_status = {}
     for case_i in case_qs:
@@ -895,46 +899,43 @@ def ajax_queryrn(request):
     data_dict = {"data": all_status}
     return JsonResponse(data_dict, status=200)
 
-# def queryrd(request):
-#     form_qs = form.objects.all()
-#     form_ls = [form_i.code for form_i in form_qs]
-#     context = {"page_title": "Query by RD", "form_ls": form_ls, "selectform": "I-485", "rangesize": "3", }
-#     return render(request, 'mycase/queryrd.html', context)
+def queryrd(request):
+    form_qs = form.objects.all()
+    form_ls = [form_i.code for form_i in form_qs]
+    context = {"page_title": "Query by RD", "form_ls": form_ls, "selectform": "I-485", "rangesize": "3", }
+    return render(request, 'mycase/queryrd.html', context)
 
-# def ajax_queryrd(request):
-#     if request.method == "GET":
-#         received_date = request.GET.get("received_date", None)
-#         selectform = request.GET.get("selectform", None)
-#         rangesize = request.GET.get("rangesize", None)
-#     elif request.method == "POST":
-#         received_date = request.POST.get("received_date", None)
-#         selectform = request.POST.get("selectform", None)
-#         rangesize = request.GET.get("rangesize", None)
-#
-#     if received_date is None or len(received_date.strip())!=10:
-#         data_dict = {"data":"Error: Received date format is wrong!"}
-#         return JsonResponse(data_dict, status=200)
-#
-#     received_date = received_date.strip()
-#
-#     date_s = datetime.strptime(received_date, "%m-%d-%Y")
-#     date_e = date_s + timedelta(days=30*int(rangesize))
-#
-#     center = receipt_num[:3]
-#     year = receipt_num[3:5]
-#     lb_sc = "LB" if receipt_num[5] == "9" else "SC"
-#
-#
-#     center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
-#     case_qs = center_table.objects.filter(form=selectform,receipt_number__in=receipt_num_pool).order_by("add_date")
-#     all_status = {}
-#     for case_i in case_qs:
-#         if case_i.receipt_number not in all_status:
-#             all_status[case_i.receipt_number] = [[case_i.status,case_i.action_date,case_i.case_stage]]
-#         else:
-#             all_status[case_i.receipt_number].append([case_i.status,case_i.action_date,case_i.case_stage])
-#     data_dict = {"data": all_status}
-#     return JsonResponse(data_dict, status=200)
+def ajax_queryrd(request):
+    if request.method == "GET":
+        center = request.GET.get("center", None)
+        received_date = request.GET.get("received_date", None)
+        selectform = request.GET.get("selectform", None)
+        rangesize = request.GET.get("rangesize", None)
+    elif request.method == "POST":
+        center = request.POST.get("center", None)
+        received_date = request.POST.get("received_date", None)
+        selectform = request.POST.get("selectform", None)
+        rangesize = request.GET.get("rangesize", None)
+
+    if received_date is None or len(received_date.strip())!=10 or center==None:
+        data_dict = {"data":"Error: Received date format is wrong!"}
+        return JsonResponse(data_dict, status=200)
+
+    received_date = received_date.strip()
+
+    date_s = datetime.strptime(received_date, "%m-%d-%Y")
+    date_e = date_s + timedelta(days=30*int(rangesize))
+
+    center_table = center_dict[center.lower()]
+    case_qs = center_table.objects.filter(form=selectform,rd_date__range=(date_s,date_e)).order_by("add_date")
+    all_status = {}
+    for case_i in case_qs:
+        if case_i.receipt_number not in all_status:
+            all_status[case_i.receipt_number] = [[case_i.status,case_i.action_date,case_i.case_stage,case_i.rd_date]]
+        else:
+            all_status[case_i.receipt_number].append([case_i.status,case_i.action_date,case_i.case_stage,case_i.rd_date])
+    data_dict = {"data": all_status}
+    return JsonResponse(data_dict, status=200)
 
 
 def about(request):

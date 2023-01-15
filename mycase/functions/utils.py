@@ -669,8 +669,10 @@ def overview_x(center, fy):
     file_name = folder + "/" + file_name
 
     if center == "IOE":
+        print(center,fy)
         case_qs = case_status_ioe.objects.filter(fiscal_year=fy).order_by("receipt_number","-add_date")
     else:
+        print(center, fy)
         center_table = center_dict[center.lower()]
         rn_pattern = center.upper().split("_")[0] + fy[-2:]
         case_qs = center_table.objects.filter(receipt_number__startswith=rn_pattern).order_by("receipt_number", "-add_date")
@@ -725,9 +727,12 @@ def get_rangestatuscount(center, fy, selectform, rangesize):
 
     date_s = datetime.now() + timedelta(days=-60)
 
-    rn_pattern = c_code + fy
-    case_qs = center_table.objects.filter(form=selectform, receipt_number__startswith=rn_pattern,
-                                          action_date_x__gte=date_s).order_by("receipt_number")
+    if center.upper()=="IOE":
+        case_qs = center_table.objects.filter(form=selectform, fiscal_year=2000+int(fy), action_date_x__gte=date_s).order_by("receipt_number")
+    else:
+        rn_pattern = c_code + fy
+        case_qs = center_table.objects.filter(form=selectform, receipt_number__startswith=rn_pattern,
+                                              action_date_x__gte=date_s).order_by("receipt_number")
     date_ls = [(date_s + timedelta(days=i)).strftime("%m-%d-%Y") for i in range(60)]
 
     range_ls = []
@@ -745,7 +750,7 @@ def get_rangestatuscount(center, fy, selectform, rangesize):
         action_date = case_i.action_date_x.strftime("%m-%d-%Y")
 
         rn = int(case_i.receipt_number[3:])
-        range_key = c_code + str(rn - (rn % rn_range))
+        range_key = c_code + f"{rn-(rn % rn_range):010d}"
         if range_key not in range_ls: range_ls.append(range_key)
 
         if range_key not in status_count[status_l]:
@@ -754,10 +759,17 @@ def get_rangestatuscount(center, fy, selectform, rangesize):
         if action_date in date_ls:
             status_count[status_l][range_key][action_date] += 1
 
-    for status_i in status_count:
-        for range_key_i in range_ls:
-            if range_key_i not in status_count[status_i]:
-                status_count[status_i][range_key_i] = {date_ls[i]: 0 for i in range(60)}
+    ## There are all 0s in an RN region (in a range_key).
+    ## ======================================
+    ## Option 1: fill 0s
+    # for status_i in status_count:
+    #     for range_key_i in range_ls:
+    #         if range_key_i not in status_count[status_i]:
+    #             status_count[status_i][range_key_i] = {date_ls[i]: 0 for i in range(60)}
+    ## =====================================
+    ## Option 2: not show the range_key with all 0s
+    ## How: use the status_count[status_i].keys to cover range_ls
+    ## this action was done in template, in the JS function.
 
     data_dict = {"status_count": status_count, "range_ls": range_ls[::-1], "date_ls": date_ls}
 

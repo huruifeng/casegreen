@@ -229,7 +229,7 @@ def run_center_ioe(request,center):
     print("---------------------------------")
     print("Updating daily counts...")
     # update_todaycounts(now_days,center)
-    print(counts_today)
+    # print(counts_today)
     for form_ii in counts_today:
         countstoday_new = status_daily(center=center.upper(), form=form_ii,
                                        new_n=counts_today[form_ii]["new_n"],
@@ -261,7 +261,7 @@ def run_center_ioe(request,center):
     print("---------------------------------")
     print("Updating status trans counts...")
     status_trans_ls = []
-    print(status_trans_dict)
+    # print(status_trans_dict)
     for form_ii in status_trans_dict:
         for source_status in status_trans_dict[form_ii]:
             for dest_status in status_trans_dict[form_ii][source_status]:

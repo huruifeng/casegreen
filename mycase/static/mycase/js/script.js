@@ -265,7 +265,7 @@ function plot_heatmap(dataset,range_ls,date_ls, status,color_x) {
 	var myChart = echarts.init(chartDom);
 	var option;
 
-	var height = 400;
+	var height = 500;
 	var rnrange_n = range_ls.length;
 	height = rnrange_n * 30
 	$("#range_heatmap_chart").css({'height': height+'px'});

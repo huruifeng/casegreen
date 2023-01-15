@@ -46,6 +46,7 @@
                          <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "WAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_SC</button>
                          <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_LB</button>
                          <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_SC</button>
+                         <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "IOE" %}btn-primary{% else %}btn-outline-primary{% endif %}">IOE</button>
                      </div>
                      <div>
                           <h5 class="me-1 d-inline">Form type: </h5>
@@ -144,16 +145,18 @@
         var data ={{ chart_data|safe }};
 
         var dataset = data["status_count"][status_x];
-        var rnrange_n = data["range_ls"].length;
+        {#var range_ls = data["range_ls"]; // show rows with all 0s#}
+        var range_ls = Object.keys(dataset).reverse(); // not show rows with all 0s
+        var rnrange_n = range_ls.length;
 
         if(rnrange_n!=0){
             $("#heatmap_loading").addClass("d-none");
             $("#range_heatmap_chart").removeClass("d-none");
             $(".na-h4").addClass("d-none");
-            plot_heatmap(dataset,data["range_ls"],data["date_ls"],status_x,color8[status_x]);
+            plot_heatmap(dataset,range_ls,data["date_ls"],status_x,color8[status_x]);
         }else{
             $(".na-h4").removeClass("d-none");
-            $("#range_bar_chart").addClass("d-none");
+            $("#range_heatmap_chart").addClass("d-none");
         }
    }
    load_data();

@@ -25,8 +25,26 @@
              <!--Main content-->
             <div class="row">
                  <div class="col-12">
-                     <h2 class="mb-1" style="color:#2d48cb;">Query cases in a Received Date range </h2>
+                     <h2 class="mb-3" style="color:#2d48cb;">Query cases in a Received Date range </h2>
                      <div class="form-row">
+                         <div class="row">
+                             <div class="col-12 mb-3">
+                                 <h5 class="d-inline">Centers: </h5>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn btn-primary">LIN_LB</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "LIN_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">LIN_SC</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "MSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_LB</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "MSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">MSC_SC</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "SRC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_LB</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "SRC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">SRC_SC</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "EAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_LB</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "EAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">EAC_SC</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "WAC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_LB</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "WAC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">WAC_SC</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_LB" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_LB</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "YSC_SC" %}btn-primary{% else %}btn-outline-primary{% endif %}">YSC_SC</button>
+                                 <button type="button" class="btn me-1 mb-1 ctr_btn {% if center == "IOE" %}btn-primary{% else %}btn-outline-primary{% endif %}">IOE</button>
+                             </div>
+                         </div>
                         <div class="input-group mb-3">
                              <span class="input-group-text border-0" style="font-size: 20px;">Select a start date: </span>
                              <input type="text" placeholder="Pick a date" aria-label="Pick a date" id="date_picker" class="form-control pickeddate" style="min-width:200px;max-width: 300px;">
@@ -44,8 +62,6 @@
                                  <option value="1" {% if rangesize == "1" %}selected{% endif %}>Next 1 month&nbsp;&nbsp;</option>
                                  <option value="2" {% if rangesize == "2" %}selected{% endif %}>Next 2 months&nbsp;&nbsp;</option>
                                  <option value="3" {% if rangesize == "3" %}selected{% endif %}>Next 3 months&nbsp;&nbsp;</option>
-                                 <option value="6" {% if rangesize == "6" %}selected{% endif %}>Next 6 months&nbsp;&nbsp;</option>
-                                 <option value="12" {% if rangesize == "12" %}selected{% endif %}>Next 12 months&nbsp;&nbsp;</option>
                              </select>
                             <button type="button" class="btn btn-sm btn-secondary" onclick="load_data()">Query</button>
                         </div>
@@ -87,7 +103,7 @@
               <table class="table table-sm table-hover" id="modalCaseHist_table">
                   <thead class="bg-light">
                     <tr>
-                        <th style="width: 15%;">Form type</th><th style="width: 50%;">Case status </th><th style="width: 15%;">Received date</th><th style="width: 20%;">Action date</th>
+                        <th style="width: 15%;">Form type</th><th style="width: 50%;">Case status </th><th style="width: 20%;">Action date</th>
                     </tr>
                   </thead>
                   <tbody id="modalCaseHist_tbody"></tbody>
@@ -105,6 +121,13 @@
     <script src={% static "js/datepicker2.js"  %}></script>
     <script src="{% static "js/datatables.min.js" %}" charset="utf-8"></script>
 <script type="text/javascript">
+
+$(".ctr_btn").click(function () {
+        $(".ctr_btn").removeClass("btn-primary");
+        $(".ctr_btn").addClass("btn-outline-primary");
+        $(this).removeClass("btn-outline-primary");
+        $(this).addClass("btn-primary");
+    });
 
  $(function() {
         var $pickeddate = $('#date_picker');
@@ -127,10 +150,17 @@
 
 var case_ls;
 function load_data(){
+    var center = "LIN_LB";
+    $('.ctr_btn').each(function(){
+        if($(this).hasClass("btn-primary")){
+            center = $(this).text();
+            return false;
+        }
+    });
     var received_date = $('#date_picker').val();
     var selectform = $("#selectform").val();
     var rangesize = $("#range_size").val();
-    alert(received_date);
+    {#alert(received_date);#}
     const regexp = new RegExp(/^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4}$/, 'i');
     if(!regexp.test(received_date)){
         alert("Received_date must be NOT EMPTY\nand has to be in format of MM-DD-YYYY.")
@@ -144,7 +174,7 @@ function load_data(){
           type: "GET",
           url: "/ajax/ajax_queryrd",
           async: true,
-          data:{"received_date":received_date,"selectform":selectform,"rangesize":rangesize},
+          data:{"center":center,"received_date":received_date,"selectform":selectform,"rangesize":rangesize},
           success : function(data) {
               case_ls = data["data"];
               if(typeof case_ls === 'string' || case_ls instanceof String){
@@ -162,7 +192,7 @@ function load_data(){
                          html_str += "<tr data-mdb-toggle='tooltip' title='Click to show case history.'>" ;
                     }
                     html_str += "<td>"+ case_i +"</td><td>"+ selectform +"</td>";
-                    html_str += "<td>"+ case_ls[case_i].at(-1)[0] +"</td><td>"+ case_ls[case_i].at(-1)[1] +"</td>";
+                    html_str += "<td>"+ case_ls[case_i].at(-1)[0] +"</td><td>"+case_ls[case_i].at(-1)[3]+"</td><td>"+ case_ls[case_i].at(-1)[1] +"</td>";
                     html_str += "</tr>" ;
                 }
                 if ($.fn.DataTable.isDataTable("#query_table")) {
@@ -172,11 +202,10 @@ function load_data(){
                 }
                 $("#query_tbody").html(html_str);
                 $('#query_table').DataTable({
-                    order: [[0, 'asc']],
+                    order: [[3, 'asc']],
                     pageLength: 50,
                      "bAutoWidth": false, // Disable the auto width calculation
-                    "aoColumns": [{ "sWidth": "15%" }, { "sWidth": "10%" }, { "sWidth": "45%" },{ "sWidth": "15%" },{ "sWidth": "15%" }
-                    ],
+                    "aoColumns": [{ "sWidth": "15%" }, { "sWidth": "10%" }, { "sWidth": "45%" },{ "sWidth": "15%" },{ "sWidth": "15%" }],
                      "bDestroy": true
                 });
 
