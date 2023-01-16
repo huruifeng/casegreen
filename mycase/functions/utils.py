@@ -508,10 +508,9 @@ def get_rdcount(center_table, center, selectform, fy, statuslevel, rangesize):
 
     case_qs = center_table.objects.filter(receipt_number__in=case_rn_ls).order_by("-add_date").values("receipt_number",
                                                                                                       "status")
-
     rn_status = {}
     for case_i in case_qs:
-        if case_i["receipt_number"] in rn_status: continue
+        if case_i["receipt_number"] in rn_status: continue ## Avoid duplicate count
         status_l = get_l_status(case_i["status"], statuslevel)
         rn_status[case_i["receipt_number"]] = 1
         case_rn_rd[case_i["receipt_number"]].append(status_l)
