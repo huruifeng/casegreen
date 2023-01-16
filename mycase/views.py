@@ -70,7 +70,10 @@ def mycase(request):
         status_ls = []
 
     ## read exist data from database
-    center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+    if center.upper()=="IOE":
+        center_table = case_status_ioe
+    else:
+        center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
     status_qs = center_table.objects.filter(receipt_number=receipt_num)
     if status_qs.exists():
         status_qs = status_qs.order_by("add_date")
@@ -116,9 +119,26 @@ def mycase(request):
             status_ls = ["NA", "NA", "Cannot get the data!", ""]
             days = "NA"
         else:
+            ## Case is valid but does not exist in database
+            if receipt_num.startswith("IOE"):
+                with open("mycase/data/crawler/ioetoadd/" + receipt_num, 'w') as fp:
+                    pass
+
             time_x = datetime.strptime(status_ls[1], "%B %d, %Y")
             days = (datetime.now() - time_x).days
             l3_name = get_l_status(status_ls[2], "L3")
+
+            rd_date = date(2000, 1, 1)
+            fy_x = 2000
+            if status_ls[2] in rd_status:
+                rd_date = time_x
+                fy_x = rd_date.year
+                if rd_date.month > 9: fy_x += 1
+            else:
+                if receipt_num.startswith("IOE"):
+                    pass
+                else:
+                    fy_x =int(receipt_num[3:5])+2000
 
             if l3_name in ["Approved"]:
                 case_stage = "Approved"
@@ -136,7 +156,9 @@ def mycase(request):
                                                      action_date_x=time_x,
                                                      case_stage=case_stage,
                                                      add_date=datetime.now(),
-                                                     date_number=(datetime.now() - datetime(2000, 1, 1)).days)
+                                                     date_number=(datetime.now() - datetime(2000, 1, 1)).days,
+                                                     rd_date=rd_date,
+                                                     fiscal_year=fy_x)
             new_status.save()
             status_qs = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")
 
@@ -178,7 +200,10 @@ def caseinrange(request):
             center = receipt_num[:3]
             year = receipt_num[3:5]
             lb_sc = "LB" if receipt_num[5] == "9" else "SC"
-            center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
+            if center.upper() == "IOE":
+                center_table = case_status_ioe
+            else:
+                center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
 
             if selectform == "yes" and form_type != "":
                 case_x = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date").first()
@@ -319,9 +344,12 @@ def mynextstatus(request):
     selectform = request.GET.get("selectform", None)
     if receipt_num is not None:
         center = receipt_num[:3]
-        lb_sc = "LB" if receipt_num[5] == "9" else "SC"
-        center = center.lower() + "_" + lb_sc.lower()
-        center_table = center_dict[center]
+        if center.upper() == "IOE":
+            center_table = case_status_ioe
+        else:
+            lb_sc = "LB" if receipt_num[5] == "9" else "SC"
+            center = center.lower() + "_" + lb_sc.lower()
+            center_table = center_dict[center]
         if selectform == "yes" and formtype != "":
             case_x = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date").first()
             case_x.form = formtype

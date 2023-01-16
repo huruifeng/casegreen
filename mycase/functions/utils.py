@@ -248,7 +248,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         del case_qs1
         del case_qs2
     elif case_range == "rd_n1m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-30)
             case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
@@ -261,7 +261,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_n2m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-60)
             case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
@@ -274,7 +274,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_n3m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-90)
             case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd_s, case_rd.rd_date))
@@ -287,7 +287,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_p1m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_e = case_rd.rd_date + timedelta(days=+30)
             case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
@@ -300,7 +300,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_p2m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_e = case_rd.rd_date + timedelta(days=+60)
             case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
@@ -313,7 +313,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_p3m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_e = case_rd.rd_date + timedelta(days=+90)
             case_rd_qs = center_table.objects.filter(form=form_type, rd_date__range=(case_rd.rd_date, case_rd_e))
@@ -326,7 +326,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_np1m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-30)
             case_rd_e = case_rd.rd_date + timedelta(days=+30)
@@ -340,7 +340,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_np2m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-60)
             case_rd_e = case_rd.rd_date + timedelta(days=+60)
@@ -354,7 +354,7 @@ def getcase_in_range(case_range, center, case_range_base, center_table, form_typ
         else:
             case_qs = []
     elif case_range == "rd_np3m":
-        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("add_date")[0]
+        case_rd = center_table.objects.filter(receipt_number=receipt_num).order_by("-add_date")[0]
         if case_rd.rd_date != date(2000, 1, 1):
             case_rd_s = case_rd.rd_date + timedelta(days=-90)
             case_rd_e = case_rd.rd_date + timedelta(days=+90)
