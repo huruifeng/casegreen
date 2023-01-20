@@ -974,6 +974,11 @@ def about(request):
     context = {"page_title": "About","center_counts":center_counts}
     return render(request, 'mycase/about.html', context)
 
+def comments(request):
+    context = {"page_title": "Comments"}
+    return render(request, 'mycase/comments.html', context)
+
+
 def statuslist(request):
     status_dict = get_status_dict()
     context = {"page_title": "Status List","status_dict":status_dict}

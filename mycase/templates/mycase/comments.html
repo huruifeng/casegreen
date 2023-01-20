@@ -1,0 +1,48 @@
+{% extends "mycase_basic.html" %}
+{% load static %}
+{% load extras %}
+{% block content %}
+
+    <style>
+    p { line-height: 1.5; font-size: 18px;}
+
+    </style>
+<link href="{% static "css/datatables.min.css" %}" media="all" rel="stylesheet" />
+<div class="container-fluid pt-1" style="width: 80%;min-width: 1200px;">
+     <div class="row flex-nowrap justify-content-center">
+         <div class="col-md-6" style="min-width: 1000px;">
+             <!--Main content-->
+             <div class="row">
+                 <div class="col-12">
+                     <h2 class="mb-1" style="color:#2d48cb;">Please leave your comments here (in English/Chinese)</h2>
+                     <hr style="height: 1px;color: #666666">
+                 </div>
+             </div>
+             <div class="row d-flex" id="intro">
+                 <div class="col-md-12">
+                    <div class="fb-comments" data-href="https://casegreen.info/comments" data-width="1000" data-order-by="reverse_time" data-numposts="30"></div>
+                 </div>
+             </div>
+             <br>
+             <br>
+             <br>
+              <div class="row d-flex" id="contact">
+                 <div class="col-md-12">
+                      <h3>Contacts</h3>
+                     <p>
+                          <u>We appreciate your feedbacks. Please send an Email if you wish to make a request, a comment, or report a bug.</u>
+                     </p>
+                     <p>
+                         <b>Email:</b> <a href="mailto:CaseGreen.info@gmail.com">CaseGreen.info@gmail.com</a> <br>
+                         <b>Twitter:</b> <a href="https://twitter.com/CaseGreen_Info" target="_blank">@CaseGreen_Info</a><br>
+                         <b>Facebook:</b> <a href="https://www.facebook.com/profile.php?id=100089262860558" target="_blank">@CaseGreen</a><br>
+                     </p><br><br><br><br>
+
+                 </div>
+             </div>
+             <!--Main content end-->
+        </div> <!--col-6-->
+    </div><!--row-->
+</div>
+
+ {% endblock %}

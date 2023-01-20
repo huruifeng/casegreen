@@ -23,6 +23,8 @@
 
 </head>
 <body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0" nonce="A2tFf1Rw"></script>
 <div class="main_content">
   <div id="content-wrap">
     <div class="container-fluid" style="width: 100%; min-width: 1200px;">
@@ -90,7 +92,7 @@
                     <iframe id="datetime-iframe" src="https://free.timeanddate.com/clock/i8fs8off/n43/fs16/tct/pct/ahl/pd3/tt0/tw1/tm1/ta1" frameborder="0" width="326" height="21" allowtransparency="true"></iframe>
 
                   <!-- Icon -->
-                  <a class="text-reset me-5" href="#"><i class="fa-solid fa-comments header-right-icon"></i></a>
+                  <a class="text-reset me-5" href="{% url "mycase:comments" %}" target="_blank"><i class="fa-solid fa-comments header-right-icon"></i></a>
 
                   <!-- Notifications -->
 {#                  <div class="dropdown">#}
@@ -123,6 +125,7 @@
 {#                      <li><a class="dropdown-item" href="#">Logout</a></li>#}
 {#                    </ul>#}
 {#                  </div>#}
+                    <div class="fb-like" data-href="https://www.casegreen.info/" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
                 </div>
                 <!-- Right elements -->
               </div>

@@ -19,6 +19,7 @@ urlpatterns = [
     path('today/', views.todaycounts, name='today'),
     path('nextstatus/', views.nextstatus, name='nextstatus'),
     path('about/', views.about, name='about'),
+    path('comments/', views.comments, name='comments'),
     path('statuslist/', views.statuslist, name='statuslist'),
 
     path('ajax/caseinrange', views.caseinrange, name = "caseinrange"),
