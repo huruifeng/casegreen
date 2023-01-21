@@ -145,8 +145,9 @@ def sysinit(request):
                               case_status_ioe]
         model_ls = [sysparam, status, status_daily, form, center_running] + case_status_tables
         for m_i in model_ls:
-            data = bkp_table(request, m_i.objects.all())
-
+            pass
+            # data = bkp_table(request, m_i.objects.all())
+        #
         # Init
         run_initalization(request)
         return HttpResponse("OK")

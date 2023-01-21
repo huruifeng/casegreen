@@ -916,7 +916,7 @@ def ajax_queryrn(request):
         center_table = center_dict[center.lower()]
     else:
         center_table = center_dict[center.lower() + "_" + lb_sc.lower()]
-    print(center_table)
+    # print(center_table)
     case_qs = center_table.objects.filter(form=selectform,receipt_number__in=receipt_num_pool).order_by("add_date")
     all_status = {}
     for case_i in case_qs:
